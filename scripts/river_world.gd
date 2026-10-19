@@ -55,14 +55,14 @@ func _ready():
 		if not InputMap.has_action(a):InputMap.add_action(a)
 		for key in {"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_W,KEY_UP],"interact":[KEY_E],"pause":[KEY_ESCAPE]}[a]:
 			var ev=InputEventKey.new();ev.physical_keycode=key;InputMap.action_add_event(a,ev)
-	backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v10/river.png");backdrop.centered=false;backdrop.z_index=-30;backdrop.scale=Vector2.ONE*720.0/backdrop.texture.get_height();add_child(backdrop)
+	backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v10/river.webp");backdrop.centered=false;backdrop.z_index=-30;backdrop.scale=Vector2.ONE*720.0/backdrop.texture.get_height();add_child(backdrop)
 	level=Level.new();add_child(level)
 	player=Actor.new();player.controlled=true;player.position=Vector2(200,519);player.checkpoint=Vector2(200,520);add_child(player)
 	badger=Actor.new();badger.character_id="badger";badger.position=Vector2(1085,519);add_child(badger)
 	monkey=Monkey.new();monkey.character_id="monkey";monkey.position=Vector2(935,519);add_child(monkey)
 	camera=preload("res://scripts/core/camera_rig.gd").new();camera.configure(Level.WIDTH);player.add_child(camera)
-	plank=object_sprite("plank.png",Vector2(2230,600),0.12)
-	rope=object_sprite("rope.png",Vector2(2110,360),0.12)
+	plank=object_sprite("plank.webp",Vector2(2230,600),0.12)
+	rope=object_sprite("rope.webp",Vector2(2110,360),0.12)
 	var layer=CanvasLayer.new();add_child(layer);screen=Control.new();layer.add_child(screen)
 	runner.load_data(JSON.parse_string(FileAccess.get_file_as_string("res://preproduction/story/river-dialogue.json")));runner.completed.connect(dialogue_done)
 	var loaded={"ok":true,"data":fixture()} if automated else saves.load_progress(save_path)
@@ -86,10 +86,10 @@ func reset_input():
 	player.input_axis=0;player.jump_request=false;player.jump_buffer=0;player.jump_held=false;player.velocity=Vector2.ZERO
 func build_hud():
 	clear_screen()
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(28,18,425,120),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(28,18,425,120),screen)
 	UI.label("02  /  DOSTLUK DERESİ",Rect2(57,43,350,25),16,screen,Color("ebc774"))
 	quest=UI.label("",Rect2(57,74,375,60),22,screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(911,24,239,104),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(911,24,239,104),screen)
 	counter=UI.label("",Rect2(945,48,185,60),20,screen)
 	UI.button("Ⅱ",Rect2(1158,28,96,96),screen,pause_game)
 	hint=UI.label("",Rect2(252,669,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
@@ -101,7 +101,7 @@ func build_hud():
 	for b in [left,right,use,up]:
 		b.mouse_filter=Control.MOUSE_FILTER_IGNORE
 		for key in ["normal","hover","pressed","focus"]:
-			var skin=StyleBoxTexture.new();skin.texture=load("res://assets/polish-v3/jump-button.png");skin.region_rect=Rect2(130,130,1000,1000)
+			var skin=StyleBoxTexture.new();skin.texture=load("res://assets/polish-v3/jump-button.webp");skin.region_rect=Rect2(130,130,1000,1000)
 			if b!=up:skin.modulate_color=Color(0.25,0.40,0.34)
 			b.add_theme_stylebox_override(key,skin)
 	control_display.bind([left,right,use,up])
@@ -154,7 +154,7 @@ func retry_save():
 		pending.clear()
 		if mode==prior_mode:mode="play";freeze(false);build_hud();reset_input()
 func message(title: String, body: String, callback: Callable):
-	clear_screen();UI.texture("res://assets/polish-v3/panel.png",Rect2(285,150,710,440),screen)
+	clear_screen();UI.texture("res://assets/polish-v3/panel.webp",Rect2(285,150,710,440),screen)
 	UI.label(title,Rect2(372,235,540,60),32,screen)
 	UI.label(body,Rect2(375,315,530,100),24,screen)
 	UI.button("Devam",Rect2(490,459,300,66),screen,callback,true)
@@ -163,7 +163,7 @@ func dialogue(id: String):
 	if not runner.begin(id,{"meet":not state.has(Quest.RIVER_ACCEPTED),"ready":state.has(Quest.READY) and not state.has(Quest.MONKEY),"exit":state.has(Quest.MONKEY) and not state.has(Quest.RIVER_COMPLETE)}):return
 	mode="dialogue";reset_input();freeze(true);clear_screen()
 	comic=Comic.new();screen.add_child(comic)
-	comic.build("DOSTLUK DERESİ  /  BİRLİKTE BİR KÖPRÜ",advance,"Çatpat","Maymun","res://assets/review-v2/catpat-idle-r2.png","res://assets/chapter-v10/monkey-idle.png")
+	comic.build("DOSTLUK DERESİ  /  BİRLİKTE BİR KÖPRÜ",advance,"Çatpat","Maymun","res://assets/review-v2/catpat-idle-r2.webp","res://assets/chapter-v10/monkey-idle.webp")
 	comic.portrait_right.flip_h=true;comic.portrait_right.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	comic.portrait_right.position=Vector2(797,260);comic.portrait_right.size=Vector2(420,440)
 	line_id="";refresh_line()
@@ -182,7 +182,7 @@ func finish_build():
 func pause_game():
 	if mode not in ["play","building"]:return
 	prior_mode=mode;mode="pause";freeze(true);reset_input();clear_screen()
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(325,110,630,520),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(325,110,630,520),screen)
 	UI.label("Küçük bir mola",Rect2(415,204,450,60),34,screen)
 	UI.button("Devam et",Rect2(450,300,380,65),screen,resume,true)
 	UI.button("Dereyi baştan oyna",Rect2(450,389,380,62),screen,confirm_restart)
@@ -200,7 +200,7 @@ func save_menu():persist(snapshot(),to_menu)
 func to_menu():get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
 func complete():
 	mode="complete";freeze(true);reset_input();clear_screen()
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(260,115,760,510),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(260,115,760,510),screen)
 	UI.label("Dostluk Deresi tamamlandı",Rect2(352,204,580,60),30,screen)
 	UI.label("Maymun ekibe katıldı. Sıradaki durak Papatya Bahçesi!",Rect2(355,294,565,95),25,screen)
 	UI.button("Papatya Bahçesi",Rect2(420,433,440,70),screen,go_garden,true)
@@ -329,7 +329,7 @@ func use_action():
 func capture(name: String):
 	if "--v10-capture" not in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v11/"+name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v11/"+name+".webp")
 func run_test():
 	for i in 40:await get_tree().physics_frame
 	check(state.has(Quest.COMPLETE) and not state.has(Quest.RIVER_ACCEPTED),"B01 preserved on river entry")

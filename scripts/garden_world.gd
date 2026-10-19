@@ -65,20 +65,20 @@ func _ready():
 		if not InputMap.has_action(a):InputMap.add_action(a)
 		for key in mapping[a]:
 			var ev=InputEventKey.new();ev.physical_keycode=key;InputMap.action_add_event(a,ev)
-	backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v12/garden.png");backdrop.centered=false;backdrop.z_index=-30;backdrop.scale=Vector2.ONE*720.0/backdrop.texture.get_height();add_child(backdrop)
+	backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v12/garden.webp");backdrop.centered=false;backdrop.z_index=-30;backdrop.scale=Vector2.ONE*720.0/backdrop.texture.get_height();add_child(backdrop)
 	level=Level.new();add_child(level)
 	player=Actor.new();player.controlled=true;player.position=Vector2(560,539);add_child(player)
 	badger=Actor.new();badger.character_id="badger";badger.position=Vector2(400,539);add_child(badger)
 	monkey=Monkey.new();monkey.character_id="monkey";monkey.position=Vector2(220,539);add_child(monkey)
 	rabbit=preload("res://scripts/rabbit_actor.gd").new();rabbit.character_id="rabbit";rabbit.position=Vector2(830,539);add_child(rabbit)
-	delivered_basket=Sprite2D.new();delivered_basket.texture=load("res://assets/chapter-v12/basket.png");delivered_basket.scale=Vector2.ONE*0.045;delivered_basket.position=Vector2(42,-40);delivered_basket.z_index=1;rabbit.add_child(delivered_basket)
+	delivered_basket=Sprite2D.new();delivered_basket.texture=load("res://assets/chapter-v12/basket.webp");delivered_basket.scale=Vector2.ONE*0.045;delivered_basket.position=Vector2(42,-40);delivered_basket.z_index=1;rabbit.add_child(delivered_basket)
 	camera=preload("res://scripts/core/camera_rig.gd").new();camera.configure(Level.WIDTH);player.add_child(camera)
-	tie=object_sprite("res://assets/chapter-v10/rope.png",Vector2(1960,580),0.095);tie.position.y+=24
-	basket=object_sprite("res://assets/chapter-v12/basket.png",Vector2(2310,260),0.105)
-	lever=object_sprite("res://assets/chapter-v10/rope.png",Vector2(1740,320),0.09);lever.position.y+=26
-	windscreen=object_sprite("res://assets/chapter-v12/windbreak.png",Vector2(980,515),0.18);windscreen.z_index=-8
+	tie=object_sprite("res://assets/chapter-v10/rope.webp",Vector2(1960,580),0.095);tie.position.y+=24
+	basket=object_sprite("res://assets/chapter-v12/basket.webp",Vector2(2310,260),0.105)
+	lever=object_sprite("res://assets/chapter-v10/rope.webp",Vector2(1740,320),0.09);lever.position.y+=26
+	windscreen=object_sprite("res://assets/chapter-v12/windbreak.webp",Vector2(980,515),0.18);windscreen.z_index=-8
 	flower_bed=preload("res://scripts/core/garden_flowers.gd").new();add_child(flower_bed)
-	basket_vine=Sprite2D.new();basket_vine.texture=load("res://assets/chapter-v8/vine.png");basket_vine.z_index=-6;add_child(basket_vine)
+	basket_vine=Sprite2D.new();basket_vine.texture=load("res://assets/chapter-v8/vine.webp");basket_vine.z_index=-6;add_child(basket_vine)
 	var layer=CanvasLayer.new();add_child(layer);screen=Control.new();layer.add_child(screen)
 	runner.load_data(JSON.parse_string(FileAccess.get_file_as_string("res://preproduction/story/garden-dialogue.json")));runner.completed.connect(dialogue_done)
 	var loaded={"ok":true,"data":fixture()} if automated else saves.load_progress(save_path)
@@ -101,10 +101,10 @@ func reset_input():
 	player.input_axis=0;player.jump_request=false;player.jump_buffer=0;player.jump_held=false;player.velocity=Vector2.ZERO
 func build_hud():
 	clear_screen()
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(28,18,425,120),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(28,18,425,120),screen)
 	UI.label("03  /  PAPATYA BAHÇESİ",Rect2(57,43,350,25),16,screen,Color("ebc774"))
 	quest=UI.label("",Rect2(57,74,375,60),22,screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(911,24,239,104),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(911,24,239,104),screen)
 	counter=UI.label("",Rect2(945,48,185,60),20,screen)
 	UI.button("Ⅱ",Rect2(1158,28,96,96),screen,pause_game)
 	hint=UI.label("",Rect2(252,669,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
@@ -116,7 +116,7 @@ func build_hud():
 	for b in [left,right,use,up]:
 		b.mouse_filter=Control.MOUSE_FILTER_IGNORE
 		for key in ["normal","hover","pressed","focus"]:
-			var skin=StyleBoxTexture.new();skin.texture=load("res://assets/polish-v3/jump-button.png");skin.region_rect=Rect2(130,130,1000,1000)
+			var skin=StyleBoxTexture.new();skin.texture=load("res://assets/polish-v3/jump-button.webp");skin.region_rect=Rect2(130,130,1000,1000)
 			if b!=up:skin.modulate_color=Color(0.25,0.40,0.34)
 			b.add_theme_stylebox_override(key,skin)
 	control_display.bind([left,right,use,up])
@@ -171,7 +171,7 @@ func retry_save():
 		pending.clear()
 		if mode==prior_mode:mode="play";freeze(false);build_hud();reset_input()
 func message(title: String, body: String, callback: Callable):
-	clear_screen();UI.texture("res://assets/polish-v3/panel.png",Rect2(285,150,710,440),screen)
+	clear_screen();UI.texture("res://assets/polish-v3/panel.webp",Rect2(285,150,710,440),screen)
 	UI.label(title,Rect2(372,235,540,60),32,screen)
 	UI.label(body,Rect2(375,315,530,100),24,screen)
 	UI.button("Devam",Rect2(490,459,300,66),screen,callback,true)
@@ -180,7 +180,7 @@ func dialogue(id: String):
 	if not runner.begin(id,{"meet":not state.has(Quest.GARDEN_ACCEPTED),"ready":state.has(Quest.PROTECTED) and not state.has(Quest.RABBIT),"exit":state.has(Quest.RABBIT) and not state.has(Quest.GARDEN_COMPLETE)}):return
 	mode="dialogue";reset_input();freeze(true);clear_screen()
 	comic=Comic.new();screen.add_child(comic)
-	comic.build("PAPATYA BAHÇESİ  /  DİKKATLİ ADIMLAR",advance,"Çatpat","Pıtpıt","res://assets/review-v2/catpat-idle-r2.png","res://assets/chapter-v12/rabbit-idle.png","res://assets/chapter-v12/garden.png")
+	comic.build("PAPATYA BAHÇESİ  /  DİKKATLİ ADIMLAR",advance,"Çatpat","Pıtpıt","res://assets/review-v2/catpat-idle-r2.webp","res://assets/chapter-v12/rabbit-idle.webp","res://assets/chapter-v12/garden.webp")
 	comic.portrait_right.flip_h=true;comic.portrait_right.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	comic.portrait_right.position=Vector2(797,260);comic.portrait_right.size=Vector2(420,440)
 	line_id="";refresh_line()
@@ -200,7 +200,7 @@ func finish_build():
 func pause_game():
 	if mode not in ["play","building","lowering","gathering"]:return
 	prior_mode=mode;mode="pause";freeze(true);reset_input();clear_screen()
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(325,110,630,520),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(325,110,630,520),screen)
 	UI.label("Küçük bir mola",Rect2(415,204,450,60),34,screen)
 	UI.button("Devam et",Rect2(450,300,380,65),screen,resume,true)
 	UI.button("Bahçeyi baştan oyna",Rect2(450,389,380,62),screen,confirm_restart)
@@ -219,7 +219,7 @@ func restart():
 func save_menu():persist(snapshot(),to_menu)
 func to_menu():get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
 func chapter_panel():
-	var backdrop=UI.texture("res://assets/polish-v3/panel.png",Rect2(300,120,680,520),screen)
+	var backdrop=UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,120,680,520),screen)
 	var framed=AtlasTexture.new();framed.atlas=backdrop.texture;framed.region=Rect2(80,105,2010,520);backdrop.texture=framed
 func complete():
 	mode="complete";freeze(true);reset_input();clear_screen()
@@ -391,7 +391,7 @@ func use_action():
 func capture(name: String):
 	if "--v12-capture" not in OS.get_cmdline_user_args() and "--v13-capture" not in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/"+("v13" if "--v13-capture" in OS.get_cmdline_user_args() else "v12")+"/"+name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/"+("v13" if "--v13-capture" in OS.get_cmdline_user_args() else "v12")+"/"+name+".webp")
 func run_test():
 	for i in 40:await get_tree().physics_frame
 	check(state.has(Quest.RIVER_COMPLETE) and data.party_ids==["badger","monkey"],"B02 entry keeps two friends")

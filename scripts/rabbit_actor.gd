@@ -4,7 +4,7 @@ func _build_frames():
 	var textures=[]
 	var roots={"idle":Vector2(550,1415),"step-a":Vector2(550,1470),"step-b":Vector2(550,1415)}
 	for name in ["idle","step-a","step-b"]:
-		var t=load("res://assets/chapter-v12/rabbit-"+name+".png")
+		var t=load("res://assets/chapter-v12/rabbit-"+name+".webp")
 		var a=AtlasTexture.new();a.atlas=t;a.region=Rect2(Vector2.ZERO,t.get_size())
 		a.margin=Rect2(Vector2(600,1500)-roots[name],Vector2(1400,1800)-t.get_size());textures.append(a)
 	for key in ["idle","run","jump","fall","launch","celebrate"]:

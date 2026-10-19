@@ -8,7 +8,7 @@ var plants: Array[Sprite2D]=[]
 const ROOT=Vector2(555,1375)
 func _ready():
 	z_index=-6
-	var texture=load("res://assets/chapter-v13/daisies.png")
+	var texture=load("res://assets/chapter-v13/daisies.webp")
 	for i in 5:
 		var plant=Sprite2D.new();plant.texture=texture;plant.centered=false
 		plant.offset=-ROOT

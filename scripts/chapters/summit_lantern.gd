@@ -41,13 +41,13 @@ func build_ui():
 func build(next_mode:String):
 	super.build(next_mode)
 	# The fener is on an already measured return step. Do not pile new ledges on the shore.
-	lamp=Sprite2D.new();lamp.texture=load("res://assets/polish-v3/lantern.png");lamp.centered=false
+	lamp=Sprite2D.new();lamp.texture=load("res://assets/polish-v3/lantern.webp");lamp.centered=false
 	lamp.scale=Vector2.ONE*0.12;lamp.position=LANTERN_POINT-Vector2(590,1230)*0.12;lamp.z_index=-2;arena.add_child(lamp)
 	var gradient=Gradient.new();gradient.set_color(0,Color(1,0.78,0.3,0.42));gradient.set_color(1,Color(1,0.66,0.16,0))
 	var tex=GradientTexture2D.new();tex.gradient=gradient;tex.width=256;tex.height=256;tex.fill=GradientTexture2D.FILL_RADIAL;tex.fill_from=Vector2(0.5,0.5);tex.fill_to=Vector2(1,0.5)
 	halo=Sprite2D.new();halo.texture=tex;halo.position=LANTERN_POINT+Vector2(10,-55);halo.scale=Vector2(2.5,1.6);halo.z_index=3;arena.add_child(halo)
 	# Small raised/slanted latch is an effect marker on the intact generated lamp asset.
-	lid=Sprite2D.new();lid.texture=load("res://assets/chapter-v10/plank.png");lid.scale=Vector2(0.025,0.012);lid.position=LANTERN_POINT+Vector2(16,-76);lid.z_index=-1;arena.add_child(lid)
+	lid=Sprite2D.new();lid.texture=load("res://assets/chapter-v10/plank.webp");lid.scale=Vector2(0.025,0.012);lid.position=LANTERN_POINT+Vector2(16,-76);lid.z_index=-1;arena.add_child(lid)
 	world_hint=UI.label("",Rect2(LANTERN_POINT+Vector2(-145,-177),Vector2(320,45)),22,arena)
 	world_hint.add_theme_color_override("font_shadow_color",Color("173d37"));world_hint.add_theme_constant_override("shadow_outline_size",5)
 	refresh_lantern()

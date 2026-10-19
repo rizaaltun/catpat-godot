@@ -19,10 +19,10 @@ func _ready():
 	position=Vector2(LEFT,TOP);z_index=-3
 	var shape=CollisionShape2D.new();var rect=RectangleShape2D.new();rect.size=Vector2(WIDTH,18)
 	shape.shape=rect;shape.position.y=9;shape.one_way_collision=true;shape.one_way_collision_margin=6;add_child(shape)
-	branch=load("res://assets/chapter-v6/branch.png")
-	if ResourceLoader.exists("res://assets/chapter-v8/vine.png"):
+	branch=load("res://assets/chapter-v6/branch.webp")
+	if ResourceLoader.exists("res://assets/chapter-v8/vine.webp"):
 		for i in 2:
-			var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.png");vine.z_index=-1;add_child(vine);vines.append(vine)
+			var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp");vine.z_index=-1;add_child(vine);vines.append(vine)
 	update_vines();queue_redraw()
 func update_vines():
 	for i in vines.size():

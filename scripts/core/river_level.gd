@@ -15,16 +15,16 @@ var bridge_art: Sprite2D
 var bridge_material: ShaderMaterial
 func _ready():
 	z_index=-5
-	bank=load("res://assets/chapter-v11/bank.png");rock=load("res://assets/chapter-v11/rock.png");branch=load("res://assets/chapter-v6/branch.png")
+	bank=load("res://assets/chapter-v11/bank.webp");rock=load("res://assets/chapter-v11/rock.webp");branch=load("res://assets/chapter-v6/branch.webp")
 	for s in [HUB,EXIT]+LOWER:add_surface(s,false)
 	for s in UPPER:
 		add_surface(s,true)
 		for x in [s.position.x+25,s.end.x-25]:
-			var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.png")
+			var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp")
 			vine.position=Vector2(x,(s.position.y-40)/2);vine.scale=Vector2(0.055,(s.position.y+40)/vine.texture.get_height());add_child(vine)
 	bridge_body=add_surface(BRIDGE,false);bridge_body.collision_layer=0
 	deck=Node2D.new();add_child(deck)
-	bridge_art=Sprite2D.new();bridge_art.texture=load("res://assets/chapter-v11/bridge.png");bridge_art.centered=false
+	bridge_art=Sprite2D.new();bridge_art.texture=load("res://assets/chapter-v11/bridge.webp");bridge_art.centered=false
 	bridge_art.scale=Vector2.ONE*BRIDGE.size.x/2110.0
 	bridge_art.position=BRIDGE.position-Vector2(30,292)*bridge_art.scale
 	var shader=Shader.new()

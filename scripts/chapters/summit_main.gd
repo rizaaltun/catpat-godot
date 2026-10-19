@@ -10,8 +10,8 @@ func _ready():
 	if not initial.ok or initial.data.chapter_id!="B04":
 		load_blocked=true;paused=true
 		var layer=CanvasLayer.new();add_child(layer)
-		UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),layer)
-		UI.texture("res://assets/polish-v3/panel.png",Rect2(260,145,760,450),layer)
+		UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),layer)
+		UI.texture("res://assets/polish-v3/panel.webp",Rect2(260,145,760,450),layer)
 		UI.label("Yamaç kaydı açılamadı",Rect2(350,235,590,65),34,layer)
 		UI.label("Yolculuk kaydını ana menüden yeniden açabilirsin. İlerlemen değiştirilmedi.",Rect2(350,325,575,100),26,layer)
 		UI.button("Ana menü",Rect2(420,463,440,88),layer,go_menu,true)

@@ -33,8 +33,8 @@ func _ready():
  update_hud()
 func make_block_screen():
  var canvas=CanvasLayer.new();add_child(canvas)
- UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),canvas)
- UI.texture("res://assets/polish-v3/panel.png",Rect2(240,160,800,390),canvas)
+ UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),canvas)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(240,160,800,390),canvas)
  UI.label("Festival kaydı açılamadı",Rect2(325,240,670,65),36,canvas)
  UI.label("İlerlemen değiştirilmedi. Ana menüden yeniden deneyebilirsin.",Rect2(325,325,650,100),25,canvas)
  UI.button("Ana menü",Rect2(450,455,380,75),canvas,go_menu,true)
@@ -50,7 +50,7 @@ func build_world():
   make_ground(data[0],data[1],data[2])
  actor=CharacterBody2D.new();actor.name="Catpat";actor.position=Store.new().director.anchor(save_data.checkpoint_id);add_child(actor)
  var collision=CollisionShape2D.new();var body_shape=CapsuleShape2D.new();body_shape.radius=19;body_shape.height=64;collision.shape=body_shape;actor.add_child(collision)
- var sprite=Sprite2D.new();sprite.texture=load("res://assets/review-v2/catpat-idle-r2.png");sprite.scale=Vector2.ONE*minf(0.19,66.0/maxf(1.0,sprite.texture.get_height()));actor.add_child(sprite)
+ var sprite=Sprite2D.new();sprite.texture=load("res://assets/review-v2/catpat-idle-r2.webp");sprite.scale=Vector2.ONE*minf(0.19,66.0/maxf(1.0,sprite.texture.get_height()));actor.add_child(sprite)
  camera=Camera2D.new();camera.position_smoothing_enabled=true;camera.position_smoothing_speed=6;camera.limit_left=0;camera.limit_right=int(WORLD_WIDTH);camera.limit_top=0;camera.limit_bottom=720;actor.add_child(camera);camera.make_current()
  for i in TASKS.size():
   var point=TASKS[i]
@@ -71,7 +71,7 @@ func _draw():
    draw_colored_polygon(PackedVector2Array([Vector2(x+j*34,166),Vector2(x+j*34+26,165),Vector2(x+j*34+13,190)]),[Color("d97f64"),Color("ebcb7d"),Color("7fa5b2")][j%3])
 func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
- UI.texture("res://assets/polish-v3/panel.png",Rect2(18,15,935,133),layer)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(18,15,935,133),layer)
  hud=UI.label("",Rect2(62,31,850,112),24,layer)
  action_button=UI.button("Etkileşim",Rect2(1025,532,218,80),layer,interact,true)
  UI.button("◀",Rect2(40,594,120,92),layer,func():left_pressed=true).button_up.connect(func():left_pressed=false)
@@ -80,7 +80,7 @@ func build_ui():
  UI.button("Duraklat",Rect2(1008,24,230,73),layer,toggle_pause)
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
- UI.texture("res://assets/polish-v3/panel.png",Rect2(185,126,910,490),final_panel)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
  UI.label("Hep birlikte geldik!",Rect2(330,205,665,66),43,final_panel)
  UI.label("Porsuk'un ışığı, Maymun'un flamaları ve Pıtpıt'ın çiçekleriyle festival hazır.",Rect2(325,300,650,135),26,final_panel)
  UI.button("Festivalde dolaş",Rect2(270,494,340,88),final_panel,func():final_panel.hide();paused=false,true)

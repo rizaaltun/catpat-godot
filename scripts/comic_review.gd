@@ -46,7 +46,7 @@ func portrait(path: String, pos: Vector2, height: float, flip: bool) -> Sprite2D
 
 func _ready():
 	var bg = TextureRect.new()
-	bg.texture = load("res://assets/review-v2/comic-stage-r2.png")
+	bg.texture = load("res://assets/review-v2/comic-stage-r2.webp")
 	bg.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	bg.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
 	bg.size = Vector2(1280,720)
@@ -57,8 +57,8 @@ func _ready():
 	bg.material = night_material
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
-	cat = portrait("res://assets/review-v2/catpat-idle-r2.png", Vector2(287,469), 402, true)
-	badger = portrait("res://assets/review-v2/badger-idle-r2.png", Vector2(968,466), 390, false)
+	cat = portrait("res://assets/review-v2/catpat-idle-r2.webp", Vector2(287,469), 402, true)
+	badger = portrait("res://assets/review-v2/badger-idle-r2.webp", Vector2(968,466), 390, false)
 	left = label_at("", Rect2(88,65,405,178), 29)
 	right = label_at("", Rect2(774,65,411,178), 29)
 	var strip = ColorRect.new()

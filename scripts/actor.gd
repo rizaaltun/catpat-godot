@@ -38,7 +38,7 @@ func _ready():
 	anim.play("idle")
 
 func _build_frames():
-	var texture = load("res://assets/animation/%s.png" % character_id)
+	var texture = load("res://assets/animation/%s.webp" % character_id)
 	var measured = JSON.parse_string(FileAccess.get_file_as_string("res://assets/animation/regions.json"))[character_id]
 	var frames = SpriteFrames.new()
 	frames.remove_animation("default")

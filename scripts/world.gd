@@ -79,7 +79,7 @@ func _setup_input():
 
 func _build_background():
 	background = Sprite2D.new()
-	background.texture = load("res://assets/world/forest.png")
+	background.texture = load("res://assets/world/forest.webp")
 	background.centered = false
 	background.scale = Vector2(1.25,0.8)
 	background.position.y = -70
@@ -89,7 +89,7 @@ func _build_background():
 	# Two repeating illustrated layers provide depth, never used for collision.
 	for x in range(0,6600,650):
 		var tree = Sprite2D.new()
-		tree.texture = load("res://assets/world/tree.png")
+		tree.texture = load("res://assets/world/tree.webp")
 		tree.position = Vector2(x+340,170)
 		tree.scale = Vector2(2,2)
 		tree.modulate = Color(0.35,0.65,0.49,0.6)
@@ -110,7 +110,7 @@ func _platform(x:float,y:float,w:float,kind:int=0) -> StaticBody2D:
 	body.add_child(shape)
 	var visual = Sprite2D.new()
 	var atlas = AtlasTexture.new()
-	atlas.atlas = load("res://assets/world/platforms.png")
+	atlas.atlas = load("res://assets/world/platforms.webp")
 	# Crop transparent padding only; painted platform tops align with colliders.
 	var regions = [Rect2(0,240,768,270),Rect2(780,268,750,245),Rect2(80,580,650,350),Rect2(780,670,750,300)]
 	atlas.region = regions[kind]
@@ -152,7 +152,7 @@ func _build_level():
 func _prop_sprite(index:int,box:Vector2) -> Sprite2D:
 	var s = Sprite2D.new()
 	var atlas = AtlasTexture.new()
-	atlas.atlas = load("res://assets/world/props.png")
+	atlas.atlas = load("res://assets/world/props.webp")
 	atlas.region = Rect2((index%3)*512,int(index/3)*512,512,512)
 	s.texture = atlas
 	s.scale = box/512.0
@@ -415,7 +415,7 @@ func _show_dialog(index:int,speaker:String,body:String,button_text:String):
 	# Comic artwork is raster image; no code-drawn characters.
 	var picture = TextureRect.new()
 	var atlas = AtlasTexture.new()
-	atlas.atlas = load("res://assets/world/comic.png")
+	atlas.atlas = load("res://assets/world/comic.webp")
 	atlas.region = Rect2(index*682.66,250,682.66,518)
 	picture.texture = atlas
 	picture.position = Vector2(790,175)

@@ -17,11 +17,11 @@ func _ready():
 	super._ready();refresh_rope()
 func build(next_mode:String):
 	super.build(next_mode)
-	coil=Sprite2D.new();coil.texture=load("res://assets/chapter-v10/rope.png");coil.scale=Vector2.ONE*0.09;coil.position=COIL_POINT+Vector2(-3,-30);coil.z_index=2;arena.add_child(coil)
-	winch=Sprite2D.new();winch.texture=load("res://assets/chapter-v19/rope-winch-v2.png");winch.centered=false;winch.scale=Vector2.ONE*0.13;winch.position=WINCH_POINT-Vector2(710,880)*0.13;winch.z_index=-2;arena.add_child(winch)
+	coil=Sprite2D.new();coil.texture=load("res://assets/chapter-v10/rope.webp");coil.scale=Vector2.ONE*0.09;coil.position=COIL_POINT+Vector2(-3,-30);coil.z_index=2;arena.add_child(coil)
+	winch=Sprite2D.new();winch.texture=load("res://assets/chapter-v19/rope-winch-v2.webp");winch.centered=false;winch.scale=Vector2.ONE*0.13;winch.position=WINCH_POINT-Vector2(710,880)*0.13;winch.z_index=-2;arena.add_child(winch)
 	carried_coil=Sprite2D.new();carried_coil.texture=coil.texture;carried_coil.scale=Vector2.ONE*0.065;carried_coil.position=Vector2(46,-45);carried_coil.z_index=2;player.add_child(carried_coil)
 	tied_coil=Sprite2D.new();tied_coil.texture=coil.texture;tied_coil.scale=Vector2.ONE*0.065;tied_coil.position=WINCH_POINT+Vector2(5,-63);tied_coil.z_index=-1;arena.add_child(tied_coil)
-	tow_line=Sprite2D.new();tow_line.texture=load("res://assets/chapter-v8/vine.png");tow_line.z_index=-2;arena.add_child(tow_line)
+	tow_line=Sprite2D.new();tow_line.texture=load("res://assets/chapter-v8/vine.webp");tow_line.z_index=-2;arena.add_child(tow_line)
 	winch_label=UI.label("",Rect2(WINCH_POINT+Vector2(-150,-162),Vector2(330,42)),23,arena)
 	winch_label.add_theme_color_override("font_shadow_color",Color("173d37"));winch_label.add_theme_constant_override("shadow_outline_size",5)
 	refresh_rope()
@@ -49,8 +49,8 @@ func interact():
 	elif rope_stage=="carried":commit_rope("requested")
 	elif rope_stage=="requested":begin_dialogue(ROPE_DIALOGUE,"rope.ready")
 func begin_dialogue(lines:Array,target:String):
-	if target=="rope.ready":comic.set_partner("Maymun","res://assets/chapter-v10/monkey-idle.png","RÜZGÂRLI YAMAÇ · HALAT BAĞLANTISI","Birlikte sabitleyelim",true)
-	else:comic.set_partner("Porsuk","res://assets/review-v2/badger-idle-r2.png","RÜZGÂRLI YAMAÇ · YOL FENERİ")
+	if target=="rope.ready":comic.set_partner("Maymun","res://assets/chapter-v10/monkey-idle.webp","RÜZGÂRLI YAMAÇ · HALAT BAĞLANTISI","Birlikte sabitleyelim",true)
+	else:comic.set_partner("Porsuk","res://assets/review-v2/badger-idle-r2.webp","RÜZGÂRLI YAMAÇ · YOL FENERİ")
 	super.begin_dialogue(lines,target)
 func commit_quest(target:String) -> bool:
 	if target=="rope.ready":return commit_rope("ready")

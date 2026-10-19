@@ -11,12 +11,12 @@ var soil: Texture2D
 var branch: Texture2D
 func _ready():
 	z_index=-5
-	soil=load("res://assets/chapter-v5/platform.png")
-	branch=load("res://assets/chapter-v6/branch.png")
+	soil=load("res://assets/chapter-v5/platform.webp")
+	branch=load("res://assets/chapter-v6/branch.webp")
 	for surface in SURFACES:add_surface(surface,false)
 	add_surface(PERCH,true)
 	for x in [1940.0,2060.0]:
-		var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.png")
+		var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp")
 		vine.position=Vector2(x,180);vine.scale=Vector2(0.065,440.0/vine.texture.get_height());add_child(vine)
 	build_return_bridges()
 	queue_redraw()
@@ -61,7 +61,7 @@ func build_return_bridges():
 		var body=StaticBody2D.new();body.collision_layer=0;add_child(body)
 		var collision=CollisionPolygon2D.new()
 		collision.polygon=PackedVector2Array([a,b,b+Vector2(0,24),a+Vector2(0,24)]);body.add_child(collision)
-		var art=Sprite2D.new();art.texture=load("res://assets/chapter-v9/bridge.png");art.centered=false;art.rotation=(b-a).angle()
+		var art=Sprite2D.new();art.texture=load("res://assets/chapter-v9/bridge.webp");art.centered=false;art.rotation=(b-a).angle()
 		var scale_factor=a.distance_to(b)/1730.0
 		art.scale=Vector2.ONE*scale_factor
 		art.position=a-Vector2(75,389).rotated(art.rotation)*scale_factor

@@ -28,7 +28,7 @@ static func label(text: String, rect: Rect2, font_size: int, parent: Node, color
 	return l
 static func skin(amber: bool) -> StyleBoxTexture:
 	var s = StyleBoxTexture.new()
-	s.texture = load(BASE+ ("button.png" if amber else "panel.png"))
+	s.texture = load(BASE+ ("button.webp" if amber else "panel.webp"))
 	# Art-only transparent padding excluded at runtime; original file remains intact.
 	s.region_rect = Rect2(40,125,1970,490) if amber else Rect2(Vector2.ZERO,s.texture.get_size())
 	for side in [SIDE_LEFT,SIDE_RIGHT]:

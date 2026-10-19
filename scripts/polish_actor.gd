@@ -19,10 +19,10 @@ var impact := 0.0
 var grounded_before := false
 func _build_frames():
 	var cat = character_id == "catpat"
-	var files = ["res://assets/review-v2/%s-idle-r2.png" % character_id]
+	var files = ["res://assets/review-v2/%s-idle-r2.webp" % character_id]
 	for pose in ["a","pass","b"]:
-		files.append("res://assets/polish-v3/%s-%s.png" % [character_id,pose])
-	files.append("res://assets/polish-v3/catpat-jump.png" if cat else files[2])
+		files.append("res://assets/polish-v3/%s-%s.webp" % [character_id,pose])
+	files.append("res://assets/polish-v3/catpat-jump.webp" if cat else files[2])
 	var roots = [Vector2(670,1200),Vector2(700,1210),Vector2(670,1200),Vector2(685,1210),Vector2(665,1200)] if cat else [Vector2(925,1070),Vector2(925,1070),Vector2(925,1070),Vector2(925,1070),Vector2(925,1070)]
 	var frames = SpriteFrames.new()
 	frames.remove_animation("default")

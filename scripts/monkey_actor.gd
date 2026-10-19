@@ -3,7 +3,7 @@ func _build_frames():
 	var frames=SpriteFrames.new();frames.remove_animation("default")
 	var textures=[]
 	for name in ["idle","step-a","step-b"]:
-		var t=load("res://assets/chapter-v10/monkey-"+name+".png")
+		var t=load("res://assets/chapter-v10/monkey-"+name+".webp")
 		var a=AtlasTexture.new();a.atlas=t;a.region=Rect2(Vector2.ZERO,t.get_size())
 		# Foot roots verified per full source pose; final model approval remains pending.
 		var roots={"idle":Vector2(590,1398),"step-a":Vector2(590,1392),"step-b":Vector2(590,1387)}

@@ -20,7 +20,7 @@ var waymark_events=[]
 func _ready():
 	super._ready();refresh_waymark()
 func arrow_sprite(parent:Node,point:Vector2,scale_value:float) -> Sprite2D:
-	var s=Sprite2D.new();s.texture=load("res://assets/chapter-v20/festival-arrow.png");s.scale=Vector2.ONE*scale_value;s.position=point;s.z_index=2;parent.add_child(s);return s
+	var s=Sprite2D.new();s.texture=load("res://assets/chapter-v20/festival-arrow.webp");s.scale=Vector2.ONE*scale_value;s.position=point;s.z_index=2;parent.add_child(s);return s
 func hint(text:String,point:Vector2,width:float) -> Label:
 	var label=UI.label(text,Rect2(point,Vector2(width,74)),23,arena)
 	label.add_theme_color_override("font_shadow_color",Color("173d37"));label.add_theme_constant_override("shadow_outline_size",5)
@@ -29,7 +29,7 @@ func build(next_mode:String):
 	super.build(next_mode)
 	fallen_arrow=arrow_sprite(arena,ARROW_POINT+Vector2(0,-32),0.085);fallen_arrow.rotation=-0.15
 	carried_arrow=arrow_sprite(player,Vector2(43,-47),0.05)
-	post=Sprite2D.new();post.texture=load("res://assets/chapter-v20/waymark-post.png");post.centered=false;post.scale=Vector2.ONE*0.15;post.position=POST_POINT-Vector2(512,1490)*0.15;post.z_index=-2;arena.add_child(post)
+	post=Sprite2D.new();post.texture=load("res://assets/chapter-v20/waymark-post.webp");post.centered=false;post.scale=Vector2.ONE*0.15;post.position=POST_POINT-Vector2(512,1490)*0.15;post.z_index=-2;arena.add_child(post)
 	mounted_arrow=arrow_sprite(arena,POST_POINT+Vector2(49,-180),0.12);mounted_arrow.z_index=-1
 	arrow_hint=hint("Düşen festival oku →",ARROW_POINT+Vector2(-355,-52),280)
 	fork_hint=hint("",POST_POINT+Vector2(-100,32),340)
@@ -59,7 +59,7 @@ func interact():
 func begin_dialogue(lines:Array,target:String):
 	super.begin_dialogue(lines,target)
 	if target.begins_with("waymark."):
-		comic.set_partner("Pıtpıt","res://assets/chapter-v12/rabbit-idle.png","RÜZGÂRLI YAMAÇ · FESTİVAL YÖNÜ","Birlikte sabitleyelim" if target=="waymark.ready" else "Manzaraya dön",true)
+		comic.set_partner("Pıtpıt","res://assets/chapter-v12/rabbit-idle.webp","RÜZGÂRLI YAMAÇ · FESTİVAL YÖNÜ","Birlikte sabitleyelim" if target=="waymark.ready" else "Manzaraya dön",true)
 func commit_quest(target:String) -> bool:
 	if target.begins_with("waymark."):return commit_waymark(target.trim_prefix("waymark."))
 	var ok=super.commit_quest(target)

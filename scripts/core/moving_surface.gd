@@ -22,10 +22,10 @@ func _ready():
 	position=start.lerp(finish,fraction)
 	var collider=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(width,18)
 	collider.shape=shape;collider.position.y=9;collider.one_way_collision=true;collider.one_way_collision_margin=6;add_child(collider)
-	art=Sprite2D.new();art.texture=load("res://assets/chapter-v6/branch.png");art.centered=false
+	art=Sprite2D.new();art.texture=load("res://assets/chapter-v6/branch.webp");art.centered=false
 	art.scale=Vector2.ONE*width/1800.0;art.position=Vector2(-width/2,0)-Vector2(186,310)*art.scale;add_child(art)
 	for i in 2:
-		var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.png");vine.z_index=-1;add_child(vine);vines.append(vine)
+		var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp");vine.z_index=-1;add_child(vine);vines.append(vine)
 	update_vines()
 func _physics_process(delta):
 	motion_delta=Vector2.ZERO

@@ -87,8 +87,8 @@ func _ready():
 		if not InputMap.has_action(action): InputMap.add_action(action)
 		for key in {"left":[KEY_A,KEY_LEFT],"right":[KEY_D,KEY_RIGHT],"jump":[KEY_SPACE,KEY_UP,KEY_W],"interact":[KEY_E],"pause":[KEY_ESCAPE]}[action]:
 			var ev=InputEventKey.new();ev.physical_keycode=key;InputMap.action_add_event(action,ev)
-	terrain=load("res://assets/polish-v3/terrain.png")
-	bank=load("res://assets/polish-v3/bank.png")
+	terrain=load("res://assets/polish-v3/terrain.webp")
+	bank=load("res://assets/polish-v3/bank.webp")
 	layer=CanvasLayer.new();add_child(layer)
 	screen=Control.new();layer.add_child(screen)
 	runner.load_data(JSON.parse_string(FileAccess.get_file_as_string("res://preproduction/story/lantern-dialogue.json")))
@@ -125,7 +125,7 @@ func show_menu():
 	reset_controls()
 	if is_instance_valid(player): player.frozen=true;friend.frozen=true
 	clear_screen()
-	UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
 	UI.label("BİRLİKTE GİDİLEN BİR YOLCULUK",Rect2(85,110,520,35),17,screen,Color("b6dfcf"))
 	var title=UI.label("Çatpat",Rect2(78,140,590,145),120,screen)
 	var display_font=FontVariation.new();display_font.base_font=load("res://assets/fonts/Fredoka.ttf");display_font.variation_opentype={2003265652:650.0}
@@ -135,7 +135,7 @@ func show_menu():
 	UI.label("Festival yolu bir iyilikle başlar.",Rect2(89,359,465,56),23,screen)
 	UI.button("Yolculuğa dön" if (FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak")) else "Yola çık",Rect2(84,452,338,72),screen,begin_game,true).grab_focus()
 	UI.button("Nasıl oynanır?",Rect2(76,535,355,76),screen,show_help)
-	UI.texture("res://assets/review-v2/catpat-idle-r2.png",Rect2(834,337,300,322),screen)
+	UI.texture("res://assets/review-v2/catpat-idle-r2.webp",Rect2(834,337,300,322),screen)
 	UI.label("PATİKA  ·  DERE  ·  BAHÇE  ·  YAMAÇ",Rect2(88,652,600,30),16,screen,Color("a9d3c4"))
 	if (FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak")):
 		UI.label("Yolculuğun kaldığı yerden devam eder.",Rect2(89,617,490,30),16,screen,Color("c0d7cb"))
@@ -143,16 +143,16 @@ func show_menu():
 
 func show_help():
 	clear_screen()
-	UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(550,110,650,480),screen)
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(550,110,650,480),screen)
 	UI.label("Küçük bir yardım, büyük bir yolculuk",Rect2(610,205,530,90),28,screen)
 	UI.label("A / D veya oklar: yürü\nBoşluk: zıpla · Basılı tut: daha yükseğe\nE: konuş veya görev nesnesini kullan\nEsc: mola\n\nDokunmatik ekranda alttaki düğmeleri kullan.",Rect2(610,302,520,225),22,screen)
 	UI.button("Anladım",Rect2(742,562,255,57),screen,show_menu,true)
 
 func confirm_restart():
 	clear_screen()
-	UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(290,165,700,380),screen)
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(290,165,700,380),screen)
 	UI.label("Yeni yolculuğa başlansın mı?",Rect2(377,259,520,70),30,screen)
 	UI.label("Bütün bölümlerdeki ilerleme ve yol arkadaşların sıfırlanır. Baştan başlayalım mı?",Rect2(379,345,510,60),22,screen)
 	UI.button("Vazgeç",Rect2(369,437,240,62),screen,show_menu).grab_focus()
@@ -186,7 +186,7 @@ func begin_game():
 
 func build_world():
 	bg=Node2D.new();bg.z_index=-30;add_child(bg)
-	var backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v6/panorama.png");backdrop.centered=false
+	var backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v6/panorama.webp");backdrop.centered=false
 	backdrop.scale=Vector2.ONE*720.0/backdrop.texture.get_height();bg.add_child(backdrop)
 	backdrop.modulate=Color(0.55,0.68,0.73)
 	level=Level.new();add_child(level)
@@ -196,9 +196,9 @@ func build_world():
 	party.configure(player,friend,level,moving_platform)
 	camera=Rig.new();camera.configure(Level.WIDTH);player.add_child(camera)
 	for p in Level.LANTERNS:
-		var s=Sprite2D.new();s.texture=load("res://assets/polish-v3/lantern.png");s.centered=false;s.scale=Vector2.ONE*0.15;s.position=p-Vector2(95,185);s.z_index=-1;s.modulate=Color(0.30,0.39,0.47);add_child(s)
+		var s=Sprite2D.new();s.texture=load("res://assets/polish-v3/lantern.webp");s.centered=false;s.scale=Vector2.ONE*0.15;s.position=p-Vector2(95,185);s.z_index=-1;s.modulate=Color(0.30,0.39,0.47);add_child(s)
 		lanterns.append({"node":s,"pos":p,"glow":Vector2(p.x+19,p.y-98)})
-	exit_lantern=Sprite2D.new();exit_lantern.texture=load("res://assets/polish-v3/lantern.png");exit_lantern.centered=false
+	exit_lantern=Sprite2D.new();exit_lantern.texture=load("res://assets/polish-v3/lantern.webp");exit_lantern.centered=false
 	exit_lantern.position=Vector2(3650,570)-Vector2(95,185);exit_lantern.scale=Vector2.ONE*0.15;exit_lantern.z_index=-1
 	exit_lantern.modulate=Color(0.30,0.39,0.47);add_child(exit_lantern)
 	for i in range(55): particles.append(Vector2(85+i*79,220+sin(i*2.13)*165))
@@ -208,10 +208,10 @@ func build_world():
 
 func build_hud():
 	hud=Control.new();screen.add_child(hud)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(28,18,370,119),hud)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(28,18,370,119),hud)
 	UI.label("01  /  FENERLİ PATİKA",Rect2(57,43,300,25),16,hud,Color("ebc774"))
 	quest=UI.label("Üç feneri yak",Rect2(57,72,310,38),23,hud)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(916,24,235,98),hud)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(916,24,235,98),hud)
 	count_label=UI.label("",Rect2(955,50,190,35),23,hud)
 	mote_label=UI.label("",Rect2(955,85,220,30),17,hud,Color("e4c578"))
 	UI.button("Ⅱ",Rect2(1158,28,96,96),hud,pause_game)
@@ -223,7 +223,7 @@ func build_hud():
 	var action_control=UI.button("E",Rect2(1043,593,96,96),hud,func(): interact=true)
 	var jump_control=UI.button("↑",Rect2(1154,583,106,106),hud,func(): pass,true)
 	for state in ["normal","hover","pressed","focus"]:
-		var circular=StyleBoxTexture.new();circular.texture=load("res://assets/polish-v3/jump-button.png");circular.region_rect=Rect2(130,130,1000,1000)
+		var circular=StyleBoxTexture.new();circular.texture=load("res://assets/polish-v3/jump-button.webp");circular.region_rect=Rect2(130,130,1000,1000)
 		jump_control.add_theme_stylebox_override(state,circular)
 	control_display.bind([left_control,right_control,action_control,jump_control])
 	input_router.bind_controls(left_control.get_rect(),right_control.get_rect(),jump_control.get_rect(),action_control.get_rect())
@@ -233,7 +233,7 @@ func build_hud():
 			c.mouse_filter=Control.MOUSE_FILTER_IGNORE
 			if c!=jump_control:
 				for state in ["normal","hover","pressed","focus"]:
-					var round_skin=StyleBoxTexture.new();round_skin.texture=load("res://assets/polish-v3/jump-button.png");round_skin.region_rect=Rect2(130,130,1000,1000);round_skin.modulate_color=Color(0.25,0.40,0.34)
+					var round_skin=StyleBoxTexture.new();round_skin.texture=load("res://assets/polish-v3/jump-button.webp");round_skin.region_rect=Rect2(130,130,1000,1000);round_skin.modulate_color=Color(0.25,0.40,0.34)
 					c.add_theme_stylebox_override(state,round_skin)
 			c.add_theme_font_size_override("font_size",30)
 	update_hud()
@@ -299,7 +299,7 @@ func pause_game():
 	reset_controls()
 	mode="pause";player.frozen=true;friend.frozen=true;touch_points.clear();touch_axis=0;touch_jump=false
 	var box=Control.new();box.name="Pause";screen.add_child(box)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(350,115,580,510),box)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(350,115,580,510),box)
 	UI.label("Küçük bir mola",Rect2(432,207,435,56),35,box)
 	UI.button("Devam et",Rect2(452,313,375,64),box,func():box.queue_free();reset_controls();mode="play";player.frozen=false;friend.frozen=false,true)
 	UI.button("Yolculuk defteri",Rect2(452,399,375,60),box,show_journal)
@@ -373,8 +373,8 @@ func save_progress(after: Callable=Callable()) -> bool:
 
 func show_message(title: String, body: String, proceed: Callable):
 	mode="notice";reset_controls();player.frozen=true;friend.frozen=true;clear_screen()
-	UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(260,125,760,500),screen)
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(260,125,760,500),screen)
 	UI.label(title,Rect2(358,215,570,55),32,screen,Color("efc97b"))
 	UI.label(body,Rect2(358,295,568,150),25,screen)
 	UI.button("Devam et",Rect2(483,489,314,66),screen,proceed,true).grab_focus()
@@ -406,8 +406,8 @@ func show_load_error():
 
 func show_journal():
 	mode="journal";reset_controls();player.frozen=true;friend.frozen=true;clear_screen()
-	UI.texture("res://assets/chapter-v5/menu.png",Rect2(0,0,1280,720),screen)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(195,72,890,590),screen)
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(195,72,890,590),screen)
 	UI.label("Yolculuk defteri",Rect2(305,167,670,60),38,screen,Color("efc97b"))
 	UI.label("01  /  FENERLİ PATİKA",Rect2(308,234,610,35),19,screen,Color("a9d3c4"))
 	var objective="Porsuk ile patikada keşfe devam et" if completed else "Porsuk ile çıkışa ilerle" if joined else "Porsuk’a geri dön" if lit.count(true)==3 else "Sönmüş üç feneri yak"
@@ -433,7 +433,7 @@ func show_completion():
 	reset_controls()
 	mode="complete";player.frozen=true;friend.frozen=true;clear_screen()
 	var shade=ColorRect.new();shade.color=Color(0.02,0.08,0.08,0.80);shade.size=Vector2(1280,720);screen.add_child(shade)
-	UI.texture("res://assets/polish-v3/panel.png",Rect2(288,125,704,470),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(288,125,704,470),screen)
 	UI.label("FENERLİ PATİKA TAMAMLANDI",Rect2(372,212,550,45),27,screen,Color("efc97b"))
 	UI.label("Porsuk çıkışı aydınlattı. Dere yolu göründü!",Rect2(377,275,520,80),29,screen)
 	UI.label("Birbirinize yardım ederek patikayı geçtiniz. Sıradaki durak: Dostluk Deresi.",Rect2(378,365,505,65),22,screen)
@@ -736,7 +736,7 @@ func check_surface_contact(actor):
 func capture_v4(label_name: String):
 	if not "--v4-capture" in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v4-"+label_name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v4-"+label_name+".webp")
 
 func capture_v5_sequence():
 	await get_tree().create_timer(0.5).timeout
@@ -1083,7 +1083,7 @@ func capture_v8_sequence():
 func v9_capture(name: String):
 	if "--v9-capture" not in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v9/"+name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v9/"+name+".webp")
 
 func capture_v9_sequence():
 	run_v9_test()
