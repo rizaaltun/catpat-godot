@@ -11,13 +11,13 @@
 
 ## Açık kalite ve doğrulama kapıları
 
-Yerel ortamda Godot ikilisi yok; GitHub Actions Godot 4.4.1 CI run `39267073041` başarılı: import/parse, kayıt/diyalog/çizgi roman regresyonları, B04 geçiş kontrolleri, B05 sahne-kayıt sözleşmesi ve Web export geçti. Bu kontroller temel motor/doğrulama kapılarını kapatır; gerçek cihazda B05 oynanışı, tam bölüm rotaları ve görsel QA hâlâ yapılmadı. Karakter kimliği `USER_PENDING`.
+Yerel ortamda Godot ikilisi yok; GitHub Actions Godot 4.4.1 CI run `39267669399` başarılı: import/parse, kayıt/diyalog/çizgi roman regresyonları, B04 geçiş kontrolleri, B05 sahne-kayıt sözleşmesi ve Web export geçti. Bu kontroller temel motor/doğrulama kapılarını kapatır; gerçek cihazda B05 oynanışı, tam bölüm rotaları ve görsel QA hâlâ yapılmadı. Karakter kimliği `USER_PENDING`.
 
 ## Son durum ve doğrulama
 
 - 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.
-- Başarılı CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39267073041 — Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçişi, B05 sahne-kayıt sözleşmesi ve Web export başarılı.
-- GitHub Pages repo ayarlarında kapalı; canlı tarayıcı bağlantısı henüz yok. Web çıktısı CI'da üretildi ancak hosted tarayıcı testi bekliyor.
+- Başarılı CI run (latest): https://github.com/rizaaltun/catpat-godot/actions/runs/39267669399 — Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçişi, B05 sahne-kayıt sözleşmesi ve Web export başarılı.
+- GitHub Pages repo ayarlarında kapalı; canlı tarayıcı bağlantısı henüz yok. Web çıktısı CI'da üretildi ancak hosted tarayıcı testi bekliyor. Pages ayarı için gereken tarayıcı GitHub oturumu tamamlanmadı.
 
 ## Önce yapılacak doğrulama
 
