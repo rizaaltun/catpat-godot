@@ -3,6 +3,10 @@ extends Node2D
 const Store=preload("res://scripts/core/save_service.gd")
 const Quest=preload("res://scripts/core/quest_state.gd")
 const UI=preload("res://scripts/polish_ui.gd")
+const PLATFORM_ART="res://assets/chapter-v5/platform.webp"
+const FOREST_ART="res://assets/polish-v3/forest.webp"
+const DAISY_ART="res://assets/chapter-v13/daisies.webp"
+const SIGN_ART="res://assets/chapter-v20/festival-arrow.webp"
 const TASKS=[
  {"id":Quest.FESTIVAL_LIGHT,"x":1150.0,"platform_y":446.0,"name":"Porsuk ile sahne ışıkları","character":"Porsuk","idle":"res://assets/review-v2/badger-idle-r2.webp","action":"res://assets/polish-v3/badger-pass.webp","line":"Işıklar hazır; sahne artık parlıyor."},
  {"id":Quest.FESTIVAL_FLAGS,"x":2250.0,"platform_y":465.0,"name":"Maymun ile flamalar","character":"Maymun","idle":"res://assets/chapter-v10/monkey-idle.webp","action":"res://assets/chapter-v10/monkey-step-a.webp","line":"Flamalar sağlam; rüzgârda dans ediyor."},
@@ -25,6 +29,7 @@ var near_task=-1
 var status=""
 var final_panel:Control
 var partner_sprites:Array=[]
+var flower_sprites:Array=[]
 func _ready():
  save_path=str(get_tree().get_meta("journey_save_path",save_path))
  var loaded=Store.new().load_progress(save_path)
@@ -48,7 +53,24 @@ func make_ground(x:float,width:float,top:float):
  var collision=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(width,72);collision.shape=shape;body.add_child(collision)
  var visual=Polygon2D.new();visual.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,36),Vector2(-width/2,36)]);visual.color=Color("71885b");body.add_child(visual)
  var trim=Polygon2D.new();trim.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,-23),Vector2(-width/2,-23)]);trim.color=Color("b8bf73");body.add_child(trim)
+ var art=Sprite2D.new();art.texture=load(PLATFORM_ART);art.name="MossyPlatformArt"
+ var scale_factor=width/maxf(1.0,art.texture.get_width());art.scale=Vector2.ONE*scale_factor
+ var visible_top=190.0*scale_factor;var drawn_height=art.texture.get_height()*scale_factor
+ art.position=Vector2(0,drawn_height/2.0-visible_top-36.0);art.z_index=1;body.add_child(art)
+func add_forest_backdrop():
+ var parallax=Parallax2D.new();parallax.name="FestivalForestBackdrop"
+ var backdrop=Sprite2D.new();backdrop.texture=load(FOREST_ART);backdrop.centered=false
+ var scale_factor=720.0/maxf(1.0,backdrop.texture.get_height());backdrop.scale=Vector2.ONE*scale_factor
+ parallax.repeat_size=Vector2(backdrop.texture.get_width()*scale_factor,720.0);parallax.repeat_times=8
+ parallax.scroll_scale=Vector2(0.12,0.0);parallax.add_child(backdrop);add_child(parallax)
+func add_bunting(x:float,y:float):
+ var cord=Line2D.new();cord.points=PackedVector2Array([Vector2(x,y),Vector2(x+300,y+25)]);cord.width=3;cord.default_color=Color("f3dfaa");cord.z_index=4;add_child(cord)
+ var colors=[Color("d97f64"),Color("ebcb7d"),Color("7fa5b2"),Color("a3bf81")]
+ for i in 7:
+  var flag=Polygon2D.new();flag.polygon=PackedVector2Array([Vector2.ZERO,Vector2(28,2),Vector2(14,32)])
+  flag.position=Vector2(x+i*44.0,y+i*3.7);flag.color=colors[i%colors.size()];flag.z_index=4;add_child(flag)
 func build_world():
+ add_forest_backdrop()
  # Safe ground is broken into short zones; paired low platforms form the route to each task.
  for data in [[0.0,850.0,616.0],[930.0,870.0,616.0],[1880.0,820.0,616.0],[2780.0,820.0,616.0],[3670.0,730.0,616.0]]:
   make_ground(data[0],data[1],data[2])
@@ -56,8 +78,9 @@ func build_world():
   make_ground(data[0],data[1],data[2])
  for x in [3800.0,3930.0,4060.0,4190.0]:
   add_world_sprite("res://assets/polish-v3/lantern.webp",Vector2(x,540),74.0,2)
- for x in [3730.0,3850.0,3970.0,4090.0,4210.0]:
-  add_world_sprite("res://assets/polish-v3/balloon.webp",Vector2(x,500-(int(x/120.0)%2)*35),94.0,3)
+ for x in [590.0,1650.0,2700.0,3520.0]:
+  add_world_sprite(SIGN_ART,Vector2(x,530),38.0,3)
+ for x in [300.0,1390.0,2470.0,3590.0]:add_bunting(x,170.0)
  actor=CharacterBody2D.new();actor.name="Catpat";actor.position=Store.new().director.anchor(save_data.checkpoint_id);add_child(actor)
  var collision=CollisionShape2D.new();var body_shape=CapsuleShape2D.new();body_shape.radius=19;body_shape.height=64;collision.shape=body_shape;actor.add_child(collision)
  var sprite=Sprite2D.new();sprite.texture=load("res://assets/review-v2/catpat-idle-r2.webp");sprite.scale=Vector2.ONE*minf(0.19,66.0/maxf(1.0,sprite.texture.get_height()));actor.add_child(sprite)
@@ -69,6 +92,10 @@ func build_world():
   var post=Polygon2D.new();post.polygon=PackedVector2Array([Vector2(-6,0),Vector2(6,0),Vector2(6,-110),Vector2(-6,-110)]);post.color=Color("786046");marker.add_child(post)
   var flag=Polygon2D.new();flag.polygon=PackedVector2Array([Vector2(7,-108),Vector2(68,-86),Vector2(7,-67)]);flag.color=Color("eed38c") if point.id in save_data.quest_flags else Color("ad8466");marker.add_child(flag)
   var text=Label.new();text.text=point.character.to_upper();text.position=Vector2(-55,-156);text.add_theme_font_override("font",UI.font());text.add_theme_font_size_override("font_size",26);text.add_theme_color_override("font_color",Color("fff5dd"));marker.add_child(text)
+ for x in [3180.0,3285.0,3390.0]:
+  var flowers=Sprite2D.new();flowers.texture=load(DAISY_ART);flowers.scale=Vector2.ONE*0.055
+  flowers.position=Vector2(x,575);flowers.z_index=3;flowers.visible=Quest.FESTIVAL_FLOWERS in save_data.quest_flags
+  flowers.name="FestivalDaisy";add_child(flowers);flower_sprites.append(flowers)
  var stage=Polygon2D.new();stage.polygon=PackedVector2Array([Vector2(3630,610),Vector2(4300,610),Vector2(4200,570),Vector2(3720,570)]);stage.color=Color("b99364");stage.z_index=0;add_child(stage)
  var stage_trim=Polygon2D.new();stage_trim.polygon=PackedVector2Array([Vector2(3720,575),Vector2(4200,575),Vector2(4170,588),Vector2(3750,588)]);stage_trim.color=Color("ecd39a");stage_trim.z_index=1;add_child(stage_trim)
  queue_redraw()
@@ -186,6 +213,7 @@ func build_station_state():
  for i in TASKS.size():
   var flag=get_node_or_null("Station%d/Polygon2D2"%i)
   if flag:flag.color=Color("eed38c") if TASKS[i].id in save_data.quest_flags else Color("ad8466")
+ for flower in flower_sprites:flower.visible=Quest.FESTIVAL_FLOWERS in save_data.quest_flags
 func show_final():
  paused=true
  if is_instance_valid(final_panel):final_panel.show()
