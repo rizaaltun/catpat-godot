@@ -1,0 +1,88 @@
+{
+  "status": "B03_v13_game_adaptation",
+  "scenes": [
+    {
+      "id": "garden_meet",
+      "condition": "meet",
+      "entry": "garden_meet_0",
+      "on_complete_once": "quest.garden.accepted"
+    },
+    {
+      "id": "garden_join",
+      "condition": "ready",
+      "entry": "garden_join_0",
+      "on_complete_once": "party.rabbit.joined"
+    },
+    {
+      "id": "garden_exit",
+      "condition": "exit",
+      "entry": "garden_exit_0",
+      "on_complete_once": "chapter.B03.complete"
+    }
+  ],
+  "lines": [
+    {
+      "id": "garden_meet_0",
+      "speaker": "rabbit",
+      "side": "right",
+      "text": "Bu papatyaları anneme götürecektim. Rüzgâr sepetimi yukarı savurdu!",
+      "next": "garden_meet_1"
+    },
+    {
+      "id": "garden_meet_1",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Çiçeklere basmadan taşlardan geçebilirim. Sana yardım edeyim mi?",
+      "next": "garden_meet_2"
+    },
+    {
+      "id": "garden_meet_2",
+      "speaker": "rabbit",
+      "side": "right",
+      "text": "Lütfen! Üst daldan sepetin ipini çöz. Alt taşlarda siperin bağ ipi de kaldı.",
+      "next": "garden_meet_3"
+    },
+    {
+      "id": "garden_meet_3",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Porsuk ve Maymun burada hazırlık yapsın. Ben sepeti ve bağ ipini getireyim.",
+      "next": null
+    },
+    {
+      "id": "garden_join_0",
+      "speaker": "rabbit",
+      "side": "right",
+      "text": "Teşekkür ederim! Sepetim hazır! Siperin arkasındaki papatyalar artık savrulmuyor.",
+      "next": "garden_join_1"
+    },
+    {
+      "id": "garden_join_1",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Arkadaşlarımız çiçeklere basmadan geçeceğimiz bahçe yolunu hazırladı. Bizimle festivale gelir misin?",
+      "next": "garden_join_2"
+    },
+    {
+      "id": "garden_join_2",
+      "speaker": "rabbit",
+      "side": "right",
+      "text": "Elbette! Annem de festivalde olacak. Papatyaları ona orada veririm.",
+      "next": null
+    },
+    {
+      "id": "garden_exit_0",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Dördümüz de buradayız. Üstelik papatyalar da güvende!",
+      "next": "garden_exit_1"
+    },
+    {
+      "id": "garden_exit_1",
+      "speaker": "rabbit",
+      "side": "right",
+      "text": "Dikkatli adımların için teşekkür ederim. Birlikte yürümek çok güzel.",
+      "next": null
+    }
+  ]
+}

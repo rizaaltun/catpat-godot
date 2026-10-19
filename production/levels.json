@@ -1,0 +1,468 @@
+{
+  "schema_version": 2,
+  "units": "Godot world units; draft layout budgets",
+  "levels": [
+    {
+      "id": "B00",
+      "title": "B00 — Davet ve Ev Önü • 2–3 dakika • 0–2200",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z00",
+          "x_start": 0,
+          "x_end": 450,
+          "design": "Daveti gör; yürü; SAFE: düz 450; davet anchor(180,600); spawn(90,600)",
+          "base_y": 600,
+          "spec_id": "Z00",
+          "persistent_events": [
+            "invitation.read",
+            "tutorial.walk"
+          ]
+        },
+        {
+          "id": "Z01",
+          "x_start": 450,
+          "x_end": 1000,
+          "design": "Kısa ve uzun zıplama; STEP(520,560,140); GAP x760–850; alt taban y700, iki yanda basamak",
+          "base_y": 600,
+          "spec_id": "Z01",
+          "persistent_events": [
+            "tutorial.jump"
+          ]
+        },
+        {
+          "id": "Z02",
+          "x_start": 1000,
+          "x_end": 1650,
+          "design": "Kolay yoldan ayrılıp geri gel; Ana taban600; üst STEP(1140,540,150),(1410,480,170); alt yol açık",
+          "base_y": 600,
+          "spec_id": "Z02",
+          "persistent_events": []
+        },
+        {
+          "id": "Z03",
+          "x_start": 1650,
+          "x_end": 2200,
+          "design": "Festival hedefini gör; SAFE geniş dinlenme 1650–2100; exit anchor(2110,600)",
+          "base_y": 600,
+          "spec_id": "Z03",
+          "persistent_events": [
+            "home.exit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B01",
+      "title": "B01 — Fenerli Patika / Porsuk • 7–9 dakika • 0–5400",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z10",
+          "x_start": 0,
+          "x_end": 650,
+          "design": "Porsuk karşılaşması ve dönüşte katılım; SAFE; Porsuk(430,600), talk(370,600); alt yol rampası x440–650 y600–740",
+          "base_y": 600,
+          "spec_id": "Z10",
+          "persistent_events": [
+            "quest.lanterns.accepted",
+            "party.badger.joined"
+          ]
+        },
+        {
+          "id": "Z11",
+          "x_start": 650,
+          "x_end": 1550,
+          "design": "İlk fener mandalı; STEP(720,540,140),(880,480,180); dönüş basamak(1200,540,160); alt corridor y740 kapalı",
+          "base_y": 600,
+          "spec_id": "Z11",
+          "persistent_events": [
+            "light.A"
+          ]
+        },
+        {
+          "id": "Z12",
+          "x_start": 1550,
+          "x_end": 2650,
+          "design": "Devrik gövde üstünden eriş; STEP(1640,540,170),(1900,480,180),(2170,410,220); alçak ana taban600",
+          "base_y": 600,
+          "spec_id": "Z12",
+          "persistent_events": [
+            "light.B"
+          ]
+        },
+        {
+          "id": "Z13",
+          "x_start": 2650,
+          "x_end": 3800,
+          "design": "Hareketli dal veya kolay alt yol; MOVE x2850–3010,y500,w180; STEP(2730,550,160),(3200,450,190); kolay merdiven x3340–3600 (y540/480)",
+          "base_y": 600,
+          "spec_id": "Z13",
+          "persistent_events": [
+            "cover.C.open",
+            "light.C"
+          ]
+        },
+        {
+          "id": "Z14",
+          "x_start": 3800,
+          "x_end": 4500,
+          "design": "Alt dönüş yolunu aç; Gate(3900,600); ramp x3900–4150 y600–740; alt düz corridor x650–4500,y740",
+          "base_y": 600,
+          "spec_id": "Z14",
+          "persistent_events": [
+            "return_gate.open"
+          ]
+        },
+        {
+          "id": "Z15",
+          "x_start": 4500,
+          "x_end": 5400,
+          "design": "Porsukla ilk ışıklı geçiş; Ramp x4500–4750 y740–600; SAFE x4750–5300; exit(5310,600)",
+          "base_y": 600,
+          "spec_id": "Z15",
+          "persistent_events": [
+            "party_light.ready",
+            "chapter.B01.complete"
+          ]
+        }
+      ],
+      "quest_route": [
+        "Z10",
+        "Z11",
+        "Z12",
+        "Z13",
+        "Z14",
+        "Z10",
+        "Z15"
+      ],
+      "connections": [
+        {
+          "from": "Z14",
+          "to": "Z10",
+          "type": "safe_lower_return_corridor"
+        },
+        {
+          "from": "Z10",
+          "to": "Z15",
+          "type": "same_lower_corridor_after_recruitment"
+        }
+      ]
+    },
+    {
+      "id": "B02",
+      "title": "B02 — Dostluk Deresi / Maymun • 8–10 dakika hedef • kompakt merkez 0–3600",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z20",
+          "x_start": 0,
+          "x_end": 650,
+          "design": "Dere merkezine yaklaş; SAFE x0–650; yalnız dekor su silueti; giriş spawn80",
+          "base_y": 600,
+          "spec_id": "Z20",
+          "persistent_events": []
+        },
+        {
+          "id": "Z21",
+          "x_start": 1400,
+          "x_end": 2350,
+          "design": "Alt dalda tahta; Merkezden ramp x1260–1500 y600–760; STEP(1560,710,170); GAP1740–1840, iniş1840–2070; alt su trigger y850",
+          "base_y": 760,
+          "spec_id": "Z21",
+          "persistent_events": [
+            "plank.carried"
+          ]
+        },
+        {
+          "id": "Z22",
+          "x_start": 1400,
+          "x_end": 2350,
+          "design": "Üst dalda halat; STEP(1410,530,160),(1650,460,170),(1900,390,180); MOVE x2110–2230,y390,w160",
+          "base_y": 390,
+          "spec_id": "Z22",
+          "persistent_events": [
+            "rope.carried"
+          ]
+        },
+        {
+          "id": "Z23",
+          "x_start": 1150,
+          "x_end": 1550,
+          "design": "Üst ve alt kola ayrıl; SAFE kavşak x1150–1400; işaretler yukarı/alt; iki anchor aynı ekranda",
+          "base_y": 600,
+          "spec_id": "Z23",
+          "persistent_events": []
+        },
+        {
+          "id": "Z24",
+          "x_start": 650,
+          "x_end": 1400,
+          "design": "Maymun ve sabit kurulum merkezi; Maymun(950,600); install(1130,600); bridge span x1400–2500,y600; başlangıçta görünür engel",
+          "base_y": 600,
+          "spec_id": "Z24",
+          "persistent_events": [
+            "quest.bridge.accepted",
+            "plank.installed",
+            "rope.installed",
+            "bridge.ready",
+            "party.monkey.joined"
+          ]
+        },
+        {
+          "id": "Z25",
+          "x_start": 2500,
+          "x_end": 3600,
+          "design": "Köprü sonrası birlikte geçiş; Kaya cephesi x2490–2570,y100–780; tek geçit y490–650; gate bu geçidi bridge.ready olmadan doldurur. SAFE x2570–3400,y600; exit(3500,600)",
+          "base_y": 600,
+          "spec_id": "Z25",
+          "persistent_events": [
+            "chapter.B02.complete"
+          ]
+        }
+      ],
+      "quest_route": [
+        "Z20",
+        "Z24",
+        "Z23",
+        {
+          "any_order": [
+            "Z21",
+            "Z22"
+          ]
+        },
+        "Z24",
+        "Z25"
+      ],
+      "hub": "Z24",
+      "connections": [
+        {
+          "from": "Z24",
+          "to": "Z21",
+          "type": "two_way_branch",
+          "bidirectional": true
+        },
+        {
+          "from": "Z24",
+          "to": "Z22",
+          "type": "two_way_branch",
+          "bidirectional": true
+        }
+      ]
+    },
+    {
+      "id": "B03",
+      "title": "B03 — Papatya Bahçesi / Bahçe Arkadaşı • 7–9 dakika • 0–5400",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z30",
+          "x_start": 0,
+          "x_end": 650,
+          "design": "Bahçedeki ihtiyacı dinle; SAFE x0–650; bahçe arkadaşı(400,600), talk(340,600)",
+          "base_y": 600,
+          "spec_id": "Z30",
+          "persistent_events": [
+            "quest.garden.accepted"
+          ]
+        },
+        {
+          "id": "Z31",
+          "x_start": 650,
+          "x_end": 1700,
+          "design": "Taştan taşa geç; STEP(710,560,170),(980,530,180),(1250,550,190); bitki alanı y640; emniyet tabanı700",
+          "base_y": 600,
+          "spec_id": "Z31",
+          "persistent_events": []
+        },
+        {
+          "id": "Z32",
+          "x_start": 1700,
+          "x_end": 2850,
+          "design": "Kurdele için üst/kolay rota; Üst STEP(1820,530,170),(2080,460,190); alt kolay merdiven(2400,550,170),(2580,490,170)",
+          "base_y": 600,
+          "spec_id": "Z32",
+          "persistent_events": [
+            "decor.carried"
+          ]
+        },
+        {
+          "id": "Z33",
+          "x_start": 2850,
+          "x_end": 3950,
+          "design": "Sepeti indir ve siperi sabitle; SAFE kol alanı(3060,600); sepet(3270,440→600); siper(3700,600)",
+          "base_y": 600,
+          "spec_id": "Z33",
+          "persistent_events": [
+            "basket.reachable",
+            "basket.collected",
+            "shield.secure"
+          ]
+        },
+        {
+          "id": "Z34",
+          "x_start": 3950,
+          "x_end": 4650,
+          "design": "Teslim durağı; SAFE; teslim sepeti(4230,600); bahçe arkadaşı ilk konuşma sonrası sabit bahçe içi yoldan buraya yürür",
+          "base_y": 600,
+          "spec_id": "Z34",
+          "persistent_events": [
+            "garden.restored"
+          ]
+        },
+        {
+          "id": "Z35",
+          "x_start": 4650,
+          "x_end": 5400,
+          "design": "Üçüncü arkadaş katılır; SAFE dört durak(4720/4830/4940/5050,600); exit5310",
+          "base_y": 600,
+          "spec_id": "Z35",
+          "persistent_events": [
+            "party.garden.joined",
+            "chapter.B03.complete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B04",
+      "title": "B04 — Rüzgârlı Yamaç / ekip bölümü • 8–10 dakika • 0–6200",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z40",
+          "x_start": 0,
+          "x_end": 800,
+          "design": "Rüzgarı güvenli alanda tanı; SAFE0–700; flama nesnesi oyuncuyu itmez; 60 birim prova basamağı",
+          "base_y": 600,
+          "spec_id": "Z40",
+          "persistent_events": [
+            "quest.summit.accepted"
+          ]
+        },
+        {
+          "id": "Z41",
+          "x_start": 800,
+          "x_end": 2000,
+          "design": "Porsuk ışığıyla alt geçit; Işık anchor(960,600); STEP(1170,540,170),(1430,490,180); güvenli alt taban650",
+          "base_y": 600,
+          "spec_id": "Z41",
+          "persistent_events": [
+            "light_pass.ready"
+          ]
+        },
+        {
+          "id": "Z42",
+          "x_start": 2000,
+          "x_end": 3300,
+          "design": "Maymun bağlantısı; SAFE ekip alanı2100–2650; tie(2590,600); bridge2650–3150,y600",
+          "base_y": 600,
+          "spec_id": "Z42",
+          "persistent_events": [
+            "rope_pass.ready"
+          ]
+        },
+        {
+          "id": "Z43",
+          "x_start": 3300,
+          "x_end": 4400,
+          "design": "Yol işaretini tamamla; SAFE3450–4000; mark(3810,600); kısa STEP(4120,540,180)",
+          "base_y": 600,
+          "spec_id": "Z43",
+          "persistent_events": [
+            "waymark.ready"
+          ]
+        },
+        {
+          "id": "Z44",
+          "x_start": 4400,
+          "x_end": 5450,
+          "design": "İki hareketli platform doruğu; MOVE1 x4570–4730,y520,w180; sabit4870,y500,w220; MOVE2 x5120–5280,y500,w180; alt y650 kurtarma",
+          "base_y": 600,
+          "spec_id": "Z44",
+          "persistent_events": [
+            "summit.encouraged",
+            "summit.crossed"
+          ]
+        },
+        {
+          "id": "Z45",
+          "x_start": 5450,
+          "x_end": 6200,
+          "design": "Ekip manzarası ve kapı; SAFE5500–6100; exit6120; dört anchor 5580/5690/5800/5910",
+          "base_y": 600,
+          "spec_id": "Z45",
+          "persistent_events": [
+            "summit.farewell_seen",
+            "chapter.B04.complete"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B05",
+      "title": "B05 — Festival Alanı / final • 6–8 dakika • 0–4400",
+      "status": "proposed_layout_not_implemented",
+      "zones": [
+        {
+          "id": "Z50",
+          "x_start": 0,
+          "x_end": 650,
+          "design": "Üç hazırlığı gör; SAFE0–650; panorama yalnız dekor uzak istasyonlar; oyuncu HUD3 hedef simgesi",
+          "base_y": 600,
+          "spec_id": "Z50",
+          "persistent_events": [
+            "quest.festival.accepted"
+          ]
+        },
+        {
+          "id": "Z51",
+          "x_start": 650,
+          "x_end": 1650,
+          "design": "Porsukla ışık sırası; STEP(780,540,180),(1050,480,180); switch(1150,480); geri taban600",
+          "base_y": 600,
+          "spec_id": "Z51",
+          "persistent_events": [
+            "festival.light.ready"
+          ]
+        },
+        {
+          "id": "Z52",
+          "x_start": 1650,
+          "x_end": 2700,
+          "design": "Maymunla flama; STEP(1810,540,180),(2080,480,190); tie(2190,480); ekip alt anchor",
+          "base_y": 600,
+          "spec_id": "Z52",
+          "persistent_events": [
+            "festival.flags.ready"
+          ]
+        },
+        {
+          "id": "Z53",
+          "x_start": 2700,
+          "x_end": 3550,
+          "design": "Bahçe süslerini yerleştir; STEP(2810,540,180),(3080,480,190); basket(3180,480)",
+          "base_y": 600,
+          "spec_id": "Z53",
+          "persistent_events": [
+            "festival.flowers.ready"
+          ]
+        },
+        {
+          "id": "Z54",
+          "x_start": 3550,
+          "x_end": 4400,
+          "design": "Ortak ışık ve final; Sahne SAFE3600–4320,y600; switch4200; anchor3760/3870/3980/4090",
+          "base_y": 600,
+          "spec_id": "Z54",
+          "persistent_events": [
+            "festival.final_ready",
+            "festival.switch_activated",
+            "final.complete"
+          ]
+        }
+      ]
+    }
+  ],
+  "coordinate_note": "B02 branches overlap in X at different Y; see zone_specs.json and CONNECTIONS.csv; legacy long ranges superseded"
+}

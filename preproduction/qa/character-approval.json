@@ -1,0 +1,28 @@
+{
+  "characters": {
+    "catpat": {
+      "status": "pending",
+      "approved_asset_sha256": null,
+      "user_approval_evidence": null,
+      "reason": "Kullanıcı mevcut karakter uyumunu onaylamadı; yeni model karşılaştırması gerekiyor."
+    },
+    "badger": {
+      "status": "pending",
+      "approved_asset_sha256": null,
+      "user_approval_evidence": null,
+      "reason": "Kullanıcı mevcut karakter uyumunu onaylamadı; yeni model karşılaştırması gerekiyor."
+    },
+    "monkey": {
+      "status": "pending",
+      "approved_asset_sha256": null,
+      "user_approval_evidence": null,
+      "reason": "Kullanıcı mevcut karakter uyumunu onaylamadı; yeni model karşılaştırması gerekiyor."
+    },
+    "rabbit": {
+      "status": "pending",
+      "approved_asset_sha256": null,
+      "user_approval_evidence": null,
+      "reason": "Kullanıcı mevcut karakter uyumunu onaylamadı; yeni model karşılaştırması gerekiyor."
+    }
+  }
+}

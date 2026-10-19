@@ -1,16 +1,13 @@
 # Çatpat: Festival Yolu
 
-Godot 4 / GDScript tabanlı Epsilon Yayın Grubu çocuk oyunu.
+Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak bu Godot projesidir; HTML oyunu değildir.
 
-**19 Ekim 2026:** V21 kaynakları ve T22/B05 Festival Alanı değişiklikleri önceki projeden devralındı. GitHub'a kaynaklar kademeli taşınıyor. Bu depo henüz tam değil ve doğrudan oynanabilir değildir.
+## Aktarım durumu
 
-Ana motor Godot olarak kalır. Web export yalnız test içindir. Orijinal kitap PDF/PSD ve telifli kaynaklar açık repoya aktarılmaz.
+`work/t22-source-migration` dalı, T22 proje arşivindeki 87 Godot kodu, sahne ve ayar dosyasını geri yükler. T22, B05 Festival Alanı için ilk oynanabilir kod adayını içerir. Bu sürüm Godot'ta henüz doğrulanmadı.
 
-## Yapılacaklar
-- Godot sahneleri, kod ve yayımlanabilir runtime varlıklarını aktar.
-- T22 Godot import, parse, kayıt ve dokunmatik testleri.
-- B01–B04 regresyonu ve B04→B05 akışı.
-- Festival son görsel/animasyon/ses çalışmaları.
-- Doğrulanmış canlı oynanış bağlantısı.
+Kitap PDF/PSD dosyaları, kitap sayfası/karakter referans görselleri ve dağıtım hakkı bu depoda belgelenmemiş oyun PNG'leri bu public dala eklenmedi. Karakter model onayı da kaynak kaydında beklemede. Açıkça lisanslı Fredoka yazı tipi ve OFL metni dahildir. Bu görseller olmadan depo henüz import edilebilir, oynanabilir veya web'de yayımlanabilir kabul edilmez.
 
-Bkz. docs/DEVAM-NOTU.md.
+## Test durumu
+
+Bu çalışma ortamında Godot çalıştırılabilir dosyası bulunmadığından T22 import/parse, B01–B04 regresyonları, B04→B05, kayıt/dokunmatik/pause akışı ve web export testleri çalıştırılmadı. Eski V21 test raporları T22 doğrulaması değildir. Güncel devir ve sıradaki işler `docs/DEVAM-NOTU.md` içinde.

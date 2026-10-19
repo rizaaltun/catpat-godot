@@ -1,0 +1,9 @@
+﻿chapter,from,to,entry,exit,condition,kind
+B01,Z10,Z11,"(650,600)","(650,600)",accepted,forward
+B01,Z14,Z10,"(4000,740)","(650,740)",all_lit,two_way lower corridor
+B01,Z10,Z15,"(650,740)","(4500,740)",joined.badger,lower corridor
+B02,Z20,Z24,"(650,600)","(650,600)",always,two_way
+B02,Z24,Z23,"(1250,600)","(1280,600)",accepted,two_way
+B02,Z23,Z21,"(1330,600)","(1500,760)",accepted,ramp two_way
+B02,Z23,Z22,"(1340,600)","(1490,530)",accepted,steps two_way
+B02,Z24,Z25,"(1400,600)","(2500,600)",bridge.ready,bridge two_way

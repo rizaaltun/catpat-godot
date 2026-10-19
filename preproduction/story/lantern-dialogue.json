@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "status": "B01_compact_v9",
+  "scenes": [
+    {
+      "id": "badger_meet",
+      "entry": "porsuk_01",
+      "condition": "badger_not_recruited",
+      "on_complete_once": "quest.lanterns.accepted"
+    },
+    {
+      "id": "badger_helped",
+      "entry": "porsuk_done_01",
+      "condition": "all_three_lanterns_lit",
+      "on_complete_once": "party.badger.joined"
+    },
+    {
+      "id": "badger_exit",
+      "entry": "exit_01",
+      "condition": "badger_at_exit",
+      "on_complete_once": "chapter.B01.complete"
+    }
+  ],
+  "lines": [
+    {
+      "id": "porsuk_01",
+      "speaker": "badger",
+      "side": "right",
+      "expression": "worried",
+      "text": "Çatpat? Yolun kıvrımını göremiyorum.",
+      "next": "porsuk_02"
+    },
+    {
+      "id": "porsuk_02",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "listening",
+      "text": "Buradayım. Sana nasıl yardım edebilirim?",
+      "next": "porsuk_03"
+    },
+    {
+      "id": "porsuk_03",
+      "speaker": "badger",
+      "side": "right",
+      "expression": "explaining",
+      "text": "Üç fener söndü. Biri patikada, biri üst dalda, sonuncusu sallanan dalda.",
+      "next": "porsuk_04"
+    },
+    {
+      "id": "porsuk_04",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "thoughtful",
+      "text": "Üç fener yanınca ahşap geçitler de açılır. Dönüşte yanına kolayca gelirim.",
+      "next": null
+    },
+    {
+      "id": "porsuk_done_01",
+      "speaker": "badger",
+      "side": "right",
+      "expression": "relieved",
+      "text": "Şimdi yolu görebiliyorum. Teşekkür ederim!",
+      "next": "porsuk_done_02"
+    },
+    {
+      "id": "porsuk_done_02",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "happy",
+      "text": "Ben festivale gidiyorum. Birlikte yürüyelim mi?",
+      "next": "porsuk_done_03"
+    },
+    {
+      "id": "porsuk_done_03",
+      "speaker": "badger",
+      "side": "right",
+      "expression": "happy",
+      "text": "Gelirim! Çıkıştaki feneri ben yakarım. O yolun işaretlerini bilirim.",
+      "next": "porsuk_done_04"
+    },
+    {
+      "id": "porsuk_done_04",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "curious",
+      "text": "Öyleyse geçitlerden birlikte yürüyelim!",
+      "next": null
+    },
+    {
+      "id": "exit_01",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "curious",
+      "text": "Patika aydınlandı ama çıkıştaki fener hâlâ sönük.",
+      "next": "exit_02"
+    },
+    {
+      "id": "exit_02",
+      "speaker": "badger",
+      "side": "right",
+      "expression": "happy",
+      "text": "Bu feneri ben yakayım. Işığında dere yolunu görebiliriz!",
+      "next": "exit_03"
+    },
+    {
+      "id": "exit_03",
+      "speaker": "catpat",
+      "side": "left",
+      "expression": "happy",
+      "text": "Senin yardımınla çıkışı da bulduk. Şimdi dereye gidelim!",
+      "next": null
+    }
+  ]
+}

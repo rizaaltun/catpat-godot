@@ -1,0 +1,173 @@
+﻿asset_id,scope,kind,state,export_budget,task,status,book_approval
+B00.bg.far,B00,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.bg.mid,B00,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.bg.near,B00,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.flat,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.left_edge,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.right_edge,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.slope_up,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.slope_down,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.step,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B00.ground.underside,B00,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.bg.far,B01,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.bg.mid,B01,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.bg.near,B01,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.flat,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.left_edge,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.right_edge,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.slope_up,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.slope_down,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.step,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B01.ground.underside,B01,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.bg.far,B02,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.bg.mid,B02,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.bg.near,B02,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.flat,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.left_edge,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.right_edge,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.slope_up,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.slope_down,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.step,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B02.ground.underside,B02,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.bg.far,B03,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.bg.mid,B03,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.bg.near,B03,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.flat,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.left_edge,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.right_edge,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.slope_up,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.slope_down,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.step,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B03.ground.underside,B03,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.bg.far,B04,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.bg.mid,B04,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.bg.near,B04,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.flat,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.left_edge,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.right_edge,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.slope_up,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.slope_down,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.step,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B04.ground.underside,B04,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.bg.far,B05,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.bg.mid,B05,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.bg.near,B05,environment,layer,2048x1024 başlangıç export bütçesi; cihaz profilinde gözden geçir,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.flat,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.left_edge,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.right_edge,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.slope_up,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.slope_down,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.step,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+B05.ground.underside,B05,ground,static,512x512/1024x512 modül; oynanır yüzey metadata,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.lamp.off,COMMON,interactable,off,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.lamp.uncovered,COMMON,interactable,uncovered,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.lamp.on,COMMON,interactable,on,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.bridge.broken,COMMON,interactable,broken,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.bridge.supplied,COMMON,interactable,supplied,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.bridge.building,COMMON,interactable,building,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.bridge.ready,COMMON,interactable,ready,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.plank.world,COMMON,interactable,world,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.plank.carried,COMMON,interactable,carried,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.plank.installed,COMMON,interactable,installed,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.rope.world,COMMON,interactable,world,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.rope.carried,COMMON,interactable,carried,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.rope.installed,COMMON,interactable,installed,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.basket.raised,COMMON,interactable,raised,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.basket.lowering,COMMON,interactable,lowering,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.basket.reachable,COMMON,interactable,reachable,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.basket.collected,COMMON,interactable,collected,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.shield.loose,COMMON,interactable,loose,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.shield.securing,COMMON,interactable,securing,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.shield.secure,COMMON,interactable,secure,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.flags.loose,COMMON,interactable,loose,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.flags.tying,COMMON,interactable,tying,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.flags.tied,COMMON,interactable,tied,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.decor.world,COMMON,interactable,world,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.decor.carried,COMMON,interactable,carried,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.decor.delivered,COMMON,interactable,delivered,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.gate.closed,COMMON,interactable,closed,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.gate.opening,COMMON,interactable,opening,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.gate.open,COMMON,interactable,open,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.festival_light.off,COMMON,interactable,off,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.festival_light.preparing,COMMON,interactable,preparing,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+OBJ.festival_light.on,COMMON,interactable,on,256–1024px nesne; aynı kök/pivot; durum atlası,T26–T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+CHAR.catpat.idle,CHAR.catpat,animation,idle,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.run,CHAR.catpat,animation,run,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.takeoff,CHAR.catpat,animation,takeoff,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.rise,CHAR.catpat,animation,rise,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.fall,CHAR.catpat,animation,fall,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.land,CHAR.catpat,animation,land,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.turn,CHAR.catpat,animation,turn,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.talk,CHAR.catpat,animation,talk,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.listen,CHAR.catpat,animation,listen,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.help,CHAR.catpat,animation,help,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.catpat.celebrate,CHAR.catpat,animation,celebrate,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.listening,CHAR.catpat,portrait,listening,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.worried,CHAR.catpat,portrait,worried,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.thoughtful,CHAR.catpat,portrait,thoughtful,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.explaining,CHAR.catpat,portrait,explaining,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.relieved,CHAR.catpat,portrait,relieved,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.catpat.happy,CHAR.catpat,portrait,happy,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.idle,CHAR.badger,animation,idle,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.run,CHAR.badger,animation,run,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.takeoff,CHAR.badger,animation,takeoff,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.rise,CHAR.badger,animation,rise,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.fall,CHAR.badger,animation,fall,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.land,CHAR.badger,animation,land,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.turn,CHAR.badger,animation,turn,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.talk,CHAR.badger,animation,talk,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.listen,CHAR.badger,animation,listen,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.help,CHAR.badger,animation,help,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.badger.celebrate,CHAR.badger,animation,celebrate,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.listening,CHAR.badger,portrait,listening,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.worried,CHAR.badger,portrait,worried,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.thoughtful,CHAR.badger,portrait,thoughtful,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.explaining,CHAR.badger,portrait,explaining,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.relieved,CHAR.badger,portrait,relieved,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.badger.happy,CHAR.badger,portrait,happy,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.idle,CHAR.monkey,animation,idle,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.run,CHAR.monkey,animation,run,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.takeoff,CHAR.monkey,animation,takeoff,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.rise,CHAR.monkey,animation,rise,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.fall,CHAR.monkey,animation,fall,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.land,CHAR.monkey,animation,land,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.turn,CHAR.monkey,animation,turn,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.talk,CHAR.monkey,animation,talk,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.listen,CHAR.monkey,animation,listen,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.help,CHAR.monkey,animation,help,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.monkey.celebrate,CHAR.monkey,animation,celebrate,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.listening,CHAR.monkey,portrait,listening,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.worried,CHAR.monkey,portrait,worried,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.thoughtful,CHAR.monkey,portrait,thoughtful,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.explaining,CHAR.monkey,portrait,explaining,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.relieved,CHAR.monkey,portrait,relieved,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.monkey.happy,CHAR.monkey,portrait,happy,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.idle,CHAR.garden,animation,idle,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.run,CHAR.garden,animation,run,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.takeoff,CHAR.garden,animation,takeoff,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.rise,CHAR.garden,animation,rise,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.fall,CHAR.garden,animation,fall,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.land,CHAR.garden,animation,land,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.turn,CHAR.garden,animation,turn,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.talk,CHAR.garden,animation,talk,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.listen,CHAR.garden,animation,listen,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.help,CHAR.garden,animation,help,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+CHAR.garden.celebrate,CHAR.garden,animation,celebrate,Kare/rig kararı T32; pivot ayak; en çok2048 atlas ilk bütçe,T31–T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.listening,CHAR.garden,portrait,listening,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.worried,CHAR.garden,portrait,worried,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.thoughtful,CHAR.garden,portrait,thoughtful,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.explaining,CHAR.garden,portrait,explaining,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.relieved,CHAR.garden,portrait,relieved,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+PORTRAIT.garden.happy,CHAR.garden,portrait,happy,768px uzun kenar ilk bütçe; kaynak kimlik onayı,T35,PLANNED_NOT_PRODUCED,PENDING
+UI.primary_button,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.secondary_button,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.panel,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.balloon_left,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.balloon_right,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.touch_direction,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.touch_jump,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.touch_help,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.focus_ring,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.progress,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.chapter_card,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE
+UI.settings_icon,COMMON,ui,interactive,Çözünürlükten bağımsız metin; raster çerçeve; en az3durum,T28,PLANNED_NOT_PRODUCED,NOT_APPLICABLE

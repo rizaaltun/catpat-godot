@@ -1,0 +1,88 @@
+{
+  "status": "B02_v10_provisional",
+  "scenes": [
+    {
+      "id": "river_meet",
+      "condition": "meet",
+      "entry": "river_meet_0",
+      "on_complete_once": "quest.bridge.accepted"
+    },
+    {
+      "id": "river_join",
+      "condition": "ready",
+      "entry": "river_join_0",
+      "on_complete_once": "party.monkey.joined"
+    },
+    {
+      "id": "river_exit",
+      "condition": "exit",
+      "entry": "river_exit_0",
+      "on_complete_once": "chapter.B02.complete"
+    }
+  ],
+  "lines": [
+    {
+      "id": "river_meet_0",
+      "speaker": "monkey",
+      "side": "right",
+      "text": "Sel deredeki köprüyü dağıtmış. Tek başıma karşıya geçemiyorum.",
+      "next": "river_meet_1"
+    },
+    {
+      "id": "river_meet_1",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Birlikte onarabiliriz. Nereden başlayalım?",
+      "next": "river_meet_2"
+    },
+    {
+      "id": "river_meet_2",
+      "speaker": "monkey",
+      "side": "right",
+      "text": "Alt kıyıda tahtalar, üst dallarda halat var. İkisini de buraya getirebilir misin?",
+      "next": "river_meet_3"
+    },
+    {
+      "id": "river_meet_3",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Olur! Porsuk burada köprü ayağını tutsun, sen de bağlantıları hazırla.",
+      "next": null
+    },
+    {
+      "id": "river_join_0",
+      "speaker": "monkey",
+      "side": "right",
+      "text": "Tahtaları halatla bağladım. Porsuk da ayağı sabitledi. Köprümüz hazır!",
+      "next": "river_join_1"
+    },
+    {
+      "id": "river_join_1",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Bizimle festivale gelir misin?",
+      "next": "river_join_2"
+    },
+    {
+      "id": "river_join_2",
+      "speaker": "monkey",
+      "side": "right",
+      "text": "Seve seve! Bundan sonra yolu birlikte geçeriz.",
+      "next": null
+    },
+    {
+      "id": "river_exit_0",
+      "speaker": "catpat",
+      "side": "left",
+      "text": "Üçümüz de karşı kıyıdayız. Yardımlaşınca yol açıldı!",
+      "next": "river_exit_1"
+    },
+    {
+      "id": "river_exit_1",
+      "speaker": "monkey",
+      "side": "right",
+      "text": "Şimdi festivalde anlatacak bir köprü hikâyemiz var!",
+      "next": null
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "source": "preproduction/qa/t02/envelope.json",
+  "status": "measured_controller_derived_authoring_limits_not_all_zones_tested",
+  "nominal_physics_hz": 60,
+  "max_gap_by_upward_height": {
+    "0": 120,
+    "40": 105,
+    "70": 95,
+    "90": 85
+  },
+  "interpolation_policy": "Use next higher height bucket; slopes/moving platforms require separate tests",
+  "max_required_rise": 90,
+  "landing_width_min": 140,
+  "safe_checkpoint_side_margin": 32,
+  "notes": "70% travel budget minus31takeoff setback and24landing margin; existing V4 unchanged."
+}

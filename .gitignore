@@ -1,7 +1,6 @@
 .godot/
-build/
-.DS_Store
-*.p12
-*.mobileprovision
-.env
+/originals/
+/preproduction/references/
 *.psd
+*.pdf
+*.zip

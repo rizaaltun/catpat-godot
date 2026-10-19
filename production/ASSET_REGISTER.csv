@@ -1,0 +1,37 @@
+﻿ID,Bolum_Karakter,Varlik,Butce,Uretim_Asamasi,Durum
+ENV-B00-01,Ev önü,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B00-02,Ev önü,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B00-03,Ev önü,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B01-04,Fenerli Patika,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B01-05,Fenerli Patika,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B01-06,Fenerli Patika,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B02-07,Dostluk Deresi,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B02-08,Dostluk Deresi,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B02-09,Dostluk Deresi,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B03-10,Papatya Bahçesi,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B03-11,Papatya Bahçesi,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B03-12,Papatya Bahçesi,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B04-13,Rüzgârlı Yamaç,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B04-14,Rüzgârlı Yamaç,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B04-15,Rüzgârlı Yamaç,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B05-16,Festival,Çevre katmanları,3 katman + geçişler,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B05-17,Festival,Zemin/kenar/iniş parçaları,Blok geometri kesinleşince sayılacak,T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+ENV-B05-18,Festival,Etkileşim nesneleri ve durumları,Görev başına pasif/aktif/tamamlandı,T11–T23; sanat T26–T28,Planlandı; mevcut B01 görselleri yeniden kullanım adayı
+CHAR-19,Çatpat,Model referansı,"Siluet, oran, renk, yön, kaynak sayfa",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-20,Çatpat,Hareket seti,idle/run/takeoff/rise/fall/land/turn/talk/listen/help/celebrate,T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-21,Çatpat,Diyalog portreleri,"dinleyen, endişeli, düşünen, açıklayan, rahatlamış, mutlu",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-22,Porsuk,Model referansı,"Siluet, oran, renk, yön, kaynak sayfa",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-23,Porsuk,Hareket seti,idle/run/takeoff/rise/fall/land/turn/talk/listen/help/celebrate,T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-24,Porsuk,Diyalog portreleri,"dinleyen, endişeli, düşünen, açıklayan, rahatlamış, mutlu",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-25,Maymun,Model referansı,"Siluet, oran, renk, yön, kaynak sayfa",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-26,Maymun,Hareket seti,idle/run/takeoff/rise/fall/land/turn/talk/listen/help/celebrate,T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-27,Maymun,Diyalog portreleri,"dinleyen, endişeli, düşünen, açıklayan, rahatlamış, mutlu",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-28,Bahçe Arkadaşı (kaynak bekliyor),Model referansı,"Siluet, oran, renk, yön, kaynak sayfa",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-29,Bahçe Arkadaşı (kaynak bekliyor),Hareket seti,idle/run/takeoff/rise/fall/land/turn/talk/listen/help/celebrate,T31–T35,Nihai üretim bekliyor; onay alınmış değil
+CHAR-30,Bahçe Arkadaşı (kaynak bekliyor),Diyalog portreleri,"dinleyen, endişeli, düşünen, açıklayan, rahatlamış, mutlu",T31–T35,Nihai üretim bekliyor; onay alınmış değil
+UX-AUD-31,Ortak,Menü/HUD,"ana menü, görev, etkileşim, ekip, pause, bitiş, bölüm seçimi",T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir
+UX-AUD-32,Ortak,Diyalog,"balon sol/sağ, arka plan aileleri, vurgu",T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir
+UX-AUD-33,Ortak,Erişilebilirlik UI,"metin ve kontrol boyutu, ses, hareket azaltma",T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir
+UX-AUD-34,Ortak,Müzik,3 tema + final varyasyonu,T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir
+UX-AUD-35,Ortak,Ortam,6 döngü,T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir
+UX-AUD-36,Ortak,Efekt,20–30 olay sesi,T28–T29,Planlandı; hak/köken ve mobil okunurluk denetimi gerekir

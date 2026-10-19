@@ -1,0 +1,735 @@
+{
+  "schema_version": 1,
+  "source_note": "Yeni oyun senaryosu; kitap alıntısı değil; garden kimliği T03e bağlı",
+  "scenes": [
+    {
+      "id": "D00",
+      "chapter": "B00",
+      "scene_key": "home_intro",
+      "on_complete": "invitation.read",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": null,
+      "skip_summary": "Festival yoluna çık.",
+      "lines": [
+        {
+          "id": "D00-01",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Festival bugün! Davetimi de yanıma alayım."
+        },
+        {
+          "id": "D00-02",
+          "speaker": "catpat",
+          "expression": "curious",
+          "side": "left",
+          "text": "Işıklar ağaçların ötesinde görünüyor."
+        },
+        {
+          "id": "D00-03",
+          "speaker": "catpat",
+          "expression": "determined",
+          "side": "left",
+          "text": "Patikadan gidersem oraya ulaşabilirim."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [],
+      "trigger_anchor": "B00.Z00.invitation",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D10",
+      "chapter": "B01",
+      "scene_key": "badger_meet",
+      "on_complete": "quest.lanterns.accepted",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": null,
+      "skip_summary": "Üç feneri yakıp aynı duraktaki Porsuka dön.",
+      "lines": [
+        {
+          "id": "D10-01",
+          "speaker": "badger",
+          "expression": "worried",
+          "side": "right",
+          "text": "Çatpat? Yolun kıvrımını seçemiyorum."
+        },
+        {
+          "id": "D10-02",
+          "speaker": "catpat",
+          "expression": "listening",
+          "side": "left",
+          "text": "Buradayım. Sana nasıl yardım edebilirim?"
+        },
+        {
+          "id": "D10-03",
+          "speaker": "badger",
+          "expression": "explaining",
+          "side": "right",
+          "text": "Rüzgâr fenerleri söndürdü. Şu kökün üstündeki de sönük."
+        },
+        {
+          "id": "D10-04",
+          "speaker": "catpat",
+          "expression": "thoughtful",
+          "side": "left",
+          "text": "Önce ona ulaşayım. Işık yanınca yolu birlikte görelim."
+        },
+        {
+          "id": "D10-05",
+          "speaker": "badger",
+          "expression": "hopeful",
+          "side": "right",
+          "text": "Ben burada bekleyeceğim. Dönüşte seni duyarım."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "home.exit"
+      ],
+      "trigger_anchor": "B01.Z10.badger_talk",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D11",
+      "chapter": "B01",
+      "scene_key": "badger_join",
+      "on_complete": "party.badger.joined",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": null,
+      "skip_summary": "Porsuk ekibe katılır; alt koridordan birlikte çıkışa ilerleyin.",
+      "lines": [
+        {
+          "id": "D11-01",
+          "speaker": "badger",
+          "expression": "relieved",
+          "side": "right",
+          "text": "Şimdi patikanın sonunu görebiliyorum."
+        },
+        {
+          "id": "D11-02",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Ben festivale gidiyorum. Birlikte yürüyelim mi?"
+        },
+        {
+          "id": "D11-03",
+          "speaker": "badger",
+          "expression": "happy",
+          "side": "right",
+          "text": "Seve seve. Fenerimi de alayım."
+        },
+        {
+          "id": "D11-04",
+          "speaker": "catpat",
+          "expression": "curious",
+          "side": "left",
+          "text": "Dereden bir ses geliyor. Haydi bakalım!"
+        },
+        {
+          "id": "D11-05",
+          "speaker": "badger",
+          "expression": "confident",
+          "side": "right",
+          "text": "Şu gölgeli geçitte ben ışık tutarım."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "light.A",
+        "light.B",
+        "light.C"
+      ],
+      "trigger_anchor": "B01.Z10.badger_talk",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D20",
+      "chapter": "B02",
+      "scene_key": "monkey_meet",
+      "on_complete": "quest.bridge.accepted",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": null,
+      "skip_summary": "Alt koldaki tahtayı ve üst koldaki halatı merkeze getir.",
+      "lines": [
+        {
+          "id": "D20-01",
+          "speaker": "monkey",
+          "expression": "concerned",
+          "side": "right",
+          "text": "Köprüyü bağlamadan karşıya geçemiyoruz."
+        },
+        {
+          "id": "D20-02",
+          "speaker": "catpat",
+          "expression": "listening",
+          "side": "left",
+          "text": "Neye ihtiyacın var?"
+        },
+        {
+          "id": "D20-03",
+          "speaker": "monkey",
+          "expression": "explaining",
+          "side": "right",
+          "text": "Alt kolda bir tahta, üst kökte de halat makaram kaldı."
+        },
+        {
+          "id": "D20-04",
+          "speaker": "badger",
+          "expression": "helpful",
+          "side": "right",
+          "text": "Dönüşte buradaki kıyıya ışık tutarım."
+        },
+        {
+          "id": "D20-05",
+          "speaker": "catpat",
+          "expression": "determined",
+          "side": "left",
+          "text": "Sen bağlantıyı hazırlarken ben parçaları getireyim."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "chapter.B01.complete"
+      ],
+      "trigger_anchor": "B02.Z24.monkey_talk",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D21",
+      "chapter": "B02",
+      "scene_key": "monkey_join",
+      "on_complete": "party.monkey.joined",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": null,
+      "skip_summary": "Köprü hazır; Maymun ekibe katılır. Birlikte geçin.",
+      "lines": [
+        {
+          "id": "D21-01",
+          "speaker": "monkey",
+          "expression": "relieved",
+          "side": "right",
+          "text": "Tahta yerinde, halat da sağlam."
+        },
+        {
+          "id": "D21-02",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Artık karşıya birlikte geçebiliriz."
+        },
+        {
+          "id": "D21-03",
+          "speaker": "monkey",
+          "expression": "happy",
+          "side": "right",
+          "text": "Festival yolunda size katılabilir miyim?"
+        },
+        {
+          "id": "D21-04",
+          "speaker": "badger",
+          "expression": "welcoming",
+          "side": "right",
+          "text": "Elbette. Ben önden yolu aydınlatırım."
+        },
+        {
+          "id": "D21-05",
+          "speaker": "catpat",
+          "expression": "welcoming",
+          "side": "left",
+          "text": "Birlikte gidelim!"
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "bridge.ready"
+      ],
+      "trigger_anchor": "B02.Z24.monkey_talk",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D30",
+      "chapter": "B03",
+      "scene_key": "garden_meet",
+      "on_complete": "quest.garden.accepted",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Süs demetini ve sepeti kurtar, siperi sabitle.",
+      "lines": [
+        {
+          "id": "D30-01",
+          "speaker": "garden",
+          "expression": "worried",
+          "side": "right",
+          "text": "Rüzgâr süsleri dağıttı, sepetim de yukarıda kaldı."
+        },
+        {
+          "id": "D30-02",
+          "speaker": "catpat",
+          "expression": "listening",
+          "side": "left",
+          "text": "Çiçekleri ezmeden şu taşlardan ulaşabilirim."
+        },
+        {
+          "id": "D30-03",
+          "speaker": "garden",
+          "expression": "explaining",
+          "side": "right",
+          "text": "Süs demetini ve sepeti kurtarırsak hazırlığımı bitirebilirim."
+        },
+        {
+          "id": "D30-04",
+          "speaker": "monkey",
+          "expression": "observing",
+          "side": "right",
+          "text": "Şu siper de gevşemiş. Rüzgâr oradan giriyor."
+        },
+        {
+          "id": "D30-05",
+          "speaker": "catpat",
+          "expression": "determined",
+          "side": "left",
+          "text": "Önce yolu inceleyeyim. Hepsine sırayla ulaşırız."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "chapter.B02.complete"
+      ],
+      "trigger_anchor": "B03.Z30.garden_talk",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D31",
+      "chapter": "B03",
+      "scene_key": "garden_join",
+      "on_complete": "party.garden.joined",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Bahçe hazırlığı tamam; arkadaşın ekibe katılır.",
+      "lines": [
+        {
+          "id": "D31-01",
+          "speaker": "garden",
+          "expression": "relieved",
+          "side": "right",
+          "text": "Çiçekler güvende. Süslerim de burada."
+        },
+        {
+          "id": "D31-02",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Bunları festivale birlikte götürelim mi?"
+        },
+        {
+          "id": "D31-03",
+          "speaker": "garden",
+          "expression": "happy",
+          "side": "right",
+          "text": "Çok isterim."
+        },
+        {
+          "id": "D31-04",
+          "speaker": "badger",
+          "expression": "welcoming",
+          "side": "right",
+          "text": "Yolda ışığımız var."
+        },
+        {
+          "id": "D31-05",
+          "speaker": "monkey",
+          "expression": "welcoming",
+          "side": "right",
+          "text": "Bağlanacak bir şey olursa ben de buradayım."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "garden.restored"
+      ],
+      "trigger_anchor": "B03.Z35.garden_join",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D40",
+      "chapter": "B04",
+      "scene_key": "summit_intro",
+      "on_complete": "quest.summit.accepted",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Işık, bağlantı ve yol işaretini arkadaşlarınla tamamla.",
+      "lines": [
+        {
+          "id": "D40-01",
+          "speaker": "catpat",
+          "expression": "curious",
+          "side": "left",
+          "text": "Flamalar tepeyi gösteriyor."
+        },
+        {
+          "id": "D40-02",
+          "speaker": "badger",
+          "expression": "confident",
+          "side": "right",
+          "text": "Kayanın altından geçerken ışık tutarım."
+        },
+        {
+          "id": "D40-03",
+          "speaker": "monkey",
+          "expression": "confident",
+          "side": "right",
+          "text": "İlerideki bağlantıyı birlikte sağlamlaştırırız."
+        },
+        {
+          "id": "D40-04",
+          "speaker": "garden",
+          "expression": "helpful",
+          "side": "right",
+          "text": "İşaretleri görünür tutarsak yolu şaşırmayız."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "chapter.B03.complete"
+      ],
+      "trigger_anchor": "B04.Z40.entry",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D41",
+      "chapter": "B04",
+      "scene_key": "summit_mid",
+      "on_complete": "summit.encouraged",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Hareketli dalların arasındaki güvenli taşlarda bekleyerek geç.",
+      "lines": [
+        {
+          "id": "D41-01",
+          "speaker": "catpat",
+          "expression": "thoughtful",
+          "side": "left",
+          "text": "Bir sonraki dal hareket ediyor. Burada bekleyelim."
+        },
+        {
+          "id": "D41-02",
+          "speaker": "monkey",
+          "expression": "observing",
+          "side": "right",
+          "text": "Yaklaştığında güvenli yere geçebiliriz."
+        },
+        {
+          "id": "D41-03",
+          "speaker": "badger",
+          "expression": "calm",
+          "side": "right",
+          "text": "Acele etmeyelim. Hepimiz buradayız."
+        },
+        {
+          "id": "D41-04",
+          "speaker": "garden",
+          "expression": "happy",
+          "side": "right",
+          "text": "Karşıdaki geniş taşta buluşalım."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "waymark.ready"
+      ],
+      "trigger_anchor": "B04.Z44.rest",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D42",
+      "chapter": "B04",
+      "scene_key": "summit_exit",
+      "on_complete": "summit.farewell_seen",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Ekip toplandı; festival kapısına birlikte ilerle.",
+      "lines": [
+        {
+          "id": "D42-01",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Festival kapısını görüyorum!"
+        },
+        {
+          "id": "D42-02",
+          "speaker": "badger",
+          "expression": "happy",
+          "side": "right",
+          "text": "Fenerimiz buraya kadar yolu aydınlattı."
+        },
+        {
+          "id": "D42-03",
+          "speaker": "monkey",
+          "expression": "happy",
+          "side": "right",
+          "text": "Köprüler de hepimizi taşıdı."
+        },
+        {
+          "id": "D42-04",
+          "speaker": "garden",
+          "expression": "happy",
+          "side": "right",
+          "text": "Süslerimizi yerleştirmeye hazırım."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "summit.crossed"
+      ],
+      "trigger_anchor": "B04.Z45.group",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D50",
+      "chapter": "B05",
+      "scene_key": "festival_intro",
+      "on_complete": "quest.festival.accepted",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Işık, flama ve çiçek hazırlıklarını istediğin sırada tamamla.",
+      "lines": [
+        {
+          "id": "D50-01",
+          "speaker": "catpat",
+          "expression": "curious",
+          "side": "left",
+          "text": "Hazırlayacağımız üç yer var."
+        },
+        {
+          "id": "D50-02",
+          "speaker": "badger",
+          "expression": "helpful",
+          "side": "right",
+          "text": "Ben ışıkların yanında bekleyeyim."
+        },
+        {
+          "id": "D50-03",
+          "speaker": "monkey",
+          "expression": "helpful",
+          "side": "right",
+          "text": "Flama bağlantısı benimle."
+        },
+        {
+          "id": "D50-04",
+          "speaker": "garden",
+          "expression": "helpful",
+          "side": "right",
+          "text": "Çiçek süslerini sahneye götürelim."
+        },
+        {
+          "id": "D50-05",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Son ışığı hep birlikte yakarız."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "chapter.B04.complete"
+      ],
+      "trigger_anchor": "B05.Z50.entry",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D51",
+      "chapter": "B05",
+      "scene_key": "before_light",
+      "on_complete": "festival.final_ready",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Herkes sahnede. Son ışığı aç.",
+      "lines": [
+        {
+          "id": "D51-01",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Işıklar, flamalar ve çiçekler hazır."
+        },
+        {
+          "id": "D51-02",
+          "speaker": "badger",
+          "expression": "happy",
+          "side": "right",
+          "text": "Herkes de burada."
+        },
+        {
+          "id": "D51-03",
+          "speaker": "monkey",
+          "expression": "excited",
+          "side": "right",
+          "text": "Son ışık seni bekliyor, Çatpat."
+        },
+        {
+          "id": "D51-04",
+          "speaker": "garden",
+          "expression": "happy",
+          "side": "right",
+          "text": "Yanındayız."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "festival.light.ready",
+        "festival.flags.ready",
+        "festival.flowers.ready"
+      ],
+      "trigger_anchor": "B05.Z54.stage",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal",
+        "party_on_stage"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    },
+    {
+      "id": "D52",
+      "chapter": "B05",
+      "scene_key": "ending",
+      "on_complete": "final.complete",
+      "status": "writing_draft_not_runtime",
+      "book_quote": false,
+      "provisional_speaker": "garden",
+      "skip_summary": "Yolculuk birlikte tamamlandı; alanda dolaşabilir veya menüye dönebilirsin.",
+      "lines": [
+        {
+          "id": "D52-01",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Hep birlikte geldik."
+        },
+        {
+          "id": "D52-02",
+          "speaker": "badger",
+          "expression": "grateful",
+          "side": "right",
+          "text": "Yolumu göremediğimde yanımdaydın."
+        },
+        {
+          "id": "D52-03",
+          "speaker": "monkey",
+          "expression": "grateful",
+          "side": "right",
+          "text": "Köprüyü birlikte tamamladık."
+        },
+        {
+          "id": "D52-04",
+          "speaker": "garden",
+          "expression": "grateful",
+          "side": "right",
+          "text": "Hazırladığım süsleri de kurtardık."
+        },
+        {
+          "id": "D52-05",
+          "speaker": "catpat",
+          "expression": "happy",
+          "side": "left",
+          "text": "Festival şimdi daha güzel. Çünkü hepimiz buradayız."
+        }
+      ],
+      "portrait_rule": "Çatpat solda; sağ portre konuşan arkadaş ile değişir, aynı anda en çok iki portre",
+      "requires_all": [
+        "festival.switch_activated"
+      ],
+      "trigger_anchor": "B05.Z54.stage",
+      "replay_condition": "completed event exists -> viewing_only; no event proposal on repeat",
+      "entry_transient_conditions": [
+        "grounded",
+        "safe_dialogue_anchor",
+        "no_other_modal",
+        "party_on_stage"
+      ],
+      "completion_rule": "propose on_complete to QuestState; validate registry current persistent/transient conditions; SaveService commit; only then world effects; failure retains prior stable state"
+    }
+  ]
+}

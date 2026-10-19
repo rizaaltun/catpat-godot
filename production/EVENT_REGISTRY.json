@@ -1,0 +1,572 @@
+{
+  "schema_version": 1,
+  "note": "Authoring-only contract; runtime V4 not changed. Prose aliases are never persisted. Every persistent proposal is validated by QuestState then SaveService commit.",
+  "events": [
+    {
+      "id": "invitation.read",
+      "requires_all": [],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "tutorial.walk",
+      "requires_all": [
+        "invitation.read"
+      ],
+      "requires_transient": [
+        "distance_walked_100"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "tutorial.jump",
+      "requires_all": [
+        "tutorial.walk"
+      ],
+      "requires_transient": [
+        "jump_and_landing_seen"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "home.exit",
+      "requires_all": [
+        "invitation.read",
+        "tutorial.walk",
+        "tutorial.jump"
+      ],
+      "requires_transient": [
+        "at_exit",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "quest.lanterns.accepted",
+      "requires_all": [
+        "home.exit"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "light.A",
+      "requires_all": [
+        "quest.lanterns.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "light.B",
+      "requires_all": [
+        "quest.lanterns.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "cover.C.open",
+      "requires_all": [
+        "quest.lanterns.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "light.C",
+      "requires_all": [
+        "cover.C.open"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "return_gate.open",
+      "requires_all": [
+        "light.A",
+        "light.B",
+        "light.C"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "party.badger.joined",
+      "requires_all": [
+        "light.A",
+        "light.B",
+        "light.C"
+      ],
+      "requires_transient": [
+        "at_badger_talk_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "party_light.ready",
+      "requires_all": [
+        "party.badger.joined"
+      ],
+      "requires_transient": [
+        "badger_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "chapter.B01.complete",
+      "requires_all": [
+        "party.badger.joined",
+        "party_light.ready"
+      ],
+      "requires_transient": [
+        "at_exit",
+        "party_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "quest.bridge.accepted",
+      "requires_all": [
+        "chapter.B01.complete"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "plank.carried",
+      "requires_all": [
+        "quest.bridge.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "plank.installed",
+      "requires_all": [
+        "plank.carried"
+      ],
+      "requires_transient": [
+        "at_install_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "rope.carried",
+      "requires_all": [
+        "quest.bridge.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "rope.installed",
+      "requires_all": [
+        "rope.carried"
+      ],
+      "requires_transient": [
+        "at_install_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "bridge.ready",
+      "requires_all": [
+        "plank.installed",
+        "rope.installed"
+      ],
+      "requires_transient": [
+        "bridge_build_visual_end",
+        "safe_anchors_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "party.monkey.joined",
+      "requires_all": [
+        "bridge.ready"
+      ],
+      "requires_transient": [
+        "at_monkey_talk_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "chapter.B02.complete",
+      "requires_all": [
+        "party.monkey.joined",
+        "bridge.ready"
+      ],
+      "requires_transient": [
+        "at_exit",
+        "party_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "quest.garden.accepted",
+      "requires_all": [
+        "chapter.B02.complete"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "decor.carried",
+      "requires_all": [
+        "quest.garden.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "basket.reachable",
+      "requires_all": [
+        "quest.garden.accepted"
+      ],
+      "requires_transient": [
+        "at_lever_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "basket.collected",
+      "requires_all": [
+        "basket.reachable"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "basket_visual_settled"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "shield.secure",
+      "requires_all": [
+        "quest.garden.accepted"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "grounded"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "garden.restored",
+      "requires_all": [
+        "decor.carried",
+        "basket.collected",
+        "shield.secure"
+      ],
+      "requires_transient": [
+        "at_delivery_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "party.garden.joined",
+      "requires_all": [
+        "garden.restored"
+      ],
+      "requires_transient": [
+        "garden_npc_at_join_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "chapter.B03.complete",
+      "requires_all": [
+        "party.garden.joined"
+      ],
+      "requires_transient": [
+        "at_exit",
+        "party_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "quest.summit.accepted",
+      "requires_all": [
+        "chapter.B03.complete"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "light_pass.ready",
+      "requires_all": [
+        "quest.summit.accepted",
+        "party.badger.joined"
+      ],
+      "requires_transient": [
+        "badger_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "rope_pass.ready",
+      "requires_all": [
+        "light_pass.ready",
+        "party.monkey.joined"
+      ],
+      "requires_transient": [
+        "monkey_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "waymark.ready",
+      "requires_all": [
+        "rope_pass.ready",
+        "party.garden.joined"
+      ],
+      "requires_transient": [
+        "garden_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "summit.encouraged",
+      "requires_all": [
+        "waymark.ready"
+      ],
+      "requires_transient": [
+        "at_mid_rest_anchor"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "summit.crossed",
+      "requires_all": [
+        "waymark.ready"
+      ],
+      "requires_transient": [
+        "at_far_landing"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "summit.farewell_seen",
+      "requires_all": [
+        "summit.crossed"
+      ],
+      "requires_transient": [
+        "party_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "chapter.B04.complete",
+      "requires_all": [
+        "summit.farewell_seen"
+      ],
+      "requires_transient": [
+        "at_exit",
+        "party_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "quest.festival.accepted",
+      "requires_all": [
+        "chapter.B04.complete"
+      ],
+      "requires_transient": [],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "festival.light.ready",
+      "requires_all": [
+        "quest.festival.accepted",
+        "party.badger.joined"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "badger_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "festival.flags.ready",
+      "requires_all": [
+        "quest.festival.accepted",
+        "party.monkey.joined"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "monkey_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "festival.flowers.ready",
+      "requires_all": [
+        "quest.festival.accepted",
+        "party.garden.joined"
+      ],
+      "requires_transient": [
+        "reachable_target",
+        "garden_assist_anchor_ready"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "festival.final_ready",
+      "requires_all": [
+        "festival.light.ready",
+        "festival.flags.ready",
+        "festival.flowers.ready"
+      ],
+      "requires_transient": [
+        "party_on_stage"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "festival.switch_activated",
+      "requires_all": [
+        "festival.final_ready"
+      ],
+      "requires_transient": [
+        "at_final_switch",
+        "party_on_stage"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "final.complete",
+      "requires_all": [
+        "festival.switch_activated"
+      ],
+      "requires_transient": [
+        "ending_dialogue_finished_or_skip_summary_confirmed"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    }
+  ],
+  "prose_aliases": {
+    "accepted": "context_specific_not_a_real_event",
+    "all_lit": "derived_all(light.A,light.B,light.C)",
+    "joined.badger": "party.badger.joined",
+    "joined.monkey": "party.monkey.joined",
+    "joined.garden": "party.garden.joined",
+    "garden.accepted": "quest.garden.accepted",
+    "cover.open": "cover.C.open",
+    "chapter_complete": "context_specific_not_a_real_event",
+    "intro.seen": "quest.festival.accepted",
+    "basket.lowering": "transient_visual_only",
+    "basket.reachable": "basket.reachable",
+    "gate.open": "return_gate.open",
+    "bridge.supplied": "derived_all(plank.installed,rope.installed)",
+    "bridge.building": "transient_visual_only"
+  }
+}
