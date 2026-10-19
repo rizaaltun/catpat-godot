@@ -46,12 +46,12 @@ func build_ui():
 	super.build_ui()
 	var panel=preload("res://scripts/polish_ui.gd")
 	pause_button=panel.button("Duraklat",Rect2(982,30,256,88),ui_layer,func():set_pause(true))
-	panel.texture("res://assets/polish-v3/panel.png",Rect2(35,127,890,54),ui_layer)
+	panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,127,890,54),ui_layer)
 	save_notice=panel.label("",Rect2(82,138,794,40),28,ui_layer)
 	pause_root=Control.new();pause_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);ui_layer.add_child(pause_root)
 	var shade=ColorRect.new();shade.color=Color(0.02,0.07,0.06,0.75);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);pause_root.add_child(shade)
-	var backdrop=panel.texture("res://assets/polish-v3/panel.png",Rect2(300,160,680,446),pause_root)
-	var framed=AtlasTexture.new();framed.atlas=load("res://assets/polish-v3/panel.png");framed.region=Rect2(80,105,2010,520);backdrop.texture=framed
+	var backdrop=panel.texture("res://assets/polish-v3/panel.webp",Rect2(300,160,680,446),pause_root)
+	var framed=AtlasTexture.new();framed.atlas=load("res://assets/polish-v3/panel.webp");framed.region=Rect2(80,105,2010,520);backdrop.texture=framed
 	panel.label("Biraz soluklanalım",Rect2(350,210,580,48),32,pause_root)
 	pause_detail=panel.label("",Rect2(350,274,580,78),28,pause_root)
 	resume_button=panel.button("Yolculuğa devam et",Rect2(352,363,576,88),pause_root,func():set_pause(false),true)
@@ -158,7 +158,7 @@ func build(_next_mode:String):
 		for s in carriers:s.bind_rider(a)
 		team.append(a)
 		if i==1:
-			basket=Sprite2D.new();basket.texture=load("res://assets/chapter-v12/basket.png");basket.scale=Vector2.ONE*0.045;basket.position=Vector2(42,-40);basket.z_index=1;a.add_child(basket)
+			basket=Sprite2D.new();basket.texture=load("res://assets/chapter-v12/basket.webp");basket.scale=Vector2.ONE*0.045;basket.position=Vector2(42,-40);basket.z_index=1;a.add_child(basket)
 	player=team[0];party=SharedParty.new();party.configure(player,team.slice(1),carriers,LAND,GAPS)
 	subtitle.text="← → / A D: yürü · Boşluk: zıpla · Esc: duraklat\nArkadaşların seni takip eder · Taşıyıcıya bin, atla veya geri dön"
 	update_camera(true)
@@ -267,7 +267,7 @@ func test_shared():
 func capture(name:String):
 	if not "--shared-capture" in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v17/"+name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v17/"+name+".webp")
 func finish(label:String):
 	var f=FileAccess.open("res://preproduction/qa/v17/"+label+"-results.json",FileAccess.WRITE)
 	if f:f.store_string(JSON.stringify({"results":results,"failures":failures,"events":party.events},"\t"));f.close()

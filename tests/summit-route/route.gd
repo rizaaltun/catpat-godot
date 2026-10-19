@@ -41,7 +41,7 @@ func _ready():
 	automatic="--route-test" in OS.get_cmdline_user_args() or "--party-test" in OS.get_cmdline_user_args()
 	driver=automatic
 	var background=CanvasLayer.new();background.layer=-10;add_child(background)
-	var image=TextureRect.new();image.texture=load("res://assets/chapter-v12/garden.png");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);background.add_child(image)
+	var image=TextureRect.new();image.texture=load("res://assets/chapter-v12/garden.webp");image.expand_mode=TextureRect.EXPAND_IGNORE_SIZE;image.stretch_mode=TextureRect.STRETCH_KEEP_ASPECT_COVERED;image.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);background.add_child(image)
 	arena=Node2D.new();add_child(arena)
 	camera=preload("res://tests/summit-route/route_camera.gd").new();camera.position=Vector2(650,460);camera.zoom=Vector2.ONE*0.9;add_child(camera)
 	build_ui();build("party" if "--party-test" in OS.get_cmdline_user_args() else "solo")
@@ -50,10 +50,10 @@ func _ready():
 func build_ui():
 	ui_layer=CanvasLayer.new();add_child(ui_layer)
 	var panel=preload("res://scripts/polish_ui.gd")
-	panel.texture("res://assets/polish-v3/panel.png",Rect2(24,16,900,122),ui_layer)
+	panel.texture("res://assets/polish-v3/panel.webp",Rect2(24,16,900,122),ui_layer)
 	panel.label("RÜZGÂRLI YAMAÇ · İKİ GEÇİT",Rect2(58,36,830,38),24,ui_layer)
 	status=panel.label("",Rect2(58,76,830,40),21,ui_layer)
-	panel.texture("res://assets/polish-v3/panel.png",Rect2(35,626,1210,86),ui_layer)
+	panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,626,1210,86),ui_layer)
 	subtitle=panel.label("",Rect2(80,639,1120,64),19,ui_layer)
 	for spec in [["←",Rect2(24,548,85,66)],["→",Rect2(121,548,85,66)],["Zıpla",Rect2(1143,548,113,66)]]:
 		var b=Button.new();b.text=spec[0];b.position=spec[1].position;b.size=spec[1].size;b.mouse_filter=Control.MOUSE_FILTER_IGNORE;b.add_theme_font_size_override("font_size",22);ui_layer.add_child(b);touch_buttons.append(b)
@@ -80,7 +80,7 @@ func build(next_mode: String):
 		for s in carriers:s.bind_rider(a)
 		team.append(a)
 		if id=="rabbit":
-			basket=Sprite2D.new();basket.texture=load("res://assets/chapter-v12/basket.png");basket.scale=Vector2.ONE*0.045;basket.position=Vector2(42,-40);basket.z_index=1;a.add_child(basket)
+			basket=Sprite2D.new();basket.texture=load("res://assets/chapter-v12/basket.webp");basket.scale=Vector2.ONE*0.045;basket.position=Vector2(42,-40);basket.z_index=1;a.add_child(basket)
 	player=team[0]
 	for i in 2:
 		var q=Queue.new();q.configure(carriers[i],team);q.set_stations(EDGES[i].x,EDGES[i].y);queues.append(q)
@@ -91,7 +91,7 @@ func ledge(x:float,width:float,y:float,bank_art:bool):
 	var collision=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(width,20)
 	collision.shape=shape;collision.position=Vector2(x+width/2,y+10);collision.one_way_collision=true;collision.one_way_collision_margin=6;body.add_child(collision)
 	if bank_art:
-		var art=Sprite2D.new();art.texture=load("res://assets/chapter-v11/bank.png");art.centered=false;art.scale=Vector2.ONE*width/2110.0;art.position=Vector2(x,y)-Vector2(30,160)*art.scale;art.z_index=-5;arena.add_child(art)
+		var art=Sprite2D.new();art.texture=load("res://assets/chapter-v11/bank.webp");art.centered=false;art.scale=Vector2.ONE*width/2110.0;art.position=Vector2(x,y)-Vector2(30,160)*art.scale;art.z_index=-5;arena.add_child(art)
 	else:
 		var p=Polygon2D.new();p.polygon=PackedVector2Array([Vector2(x,y),Vector2(x+width,y),Vector2(x+width,y+20),Vector2(x,y+20)]);p.color=Color("526c60");p.z_index=-4;arena.add_child(p)
 		var line=Line2D.new();line.points=PackedVector2Array([Vector2(x,y),Vector2(x+width,y)]);line.width=4;line.default_color=Color("dcc898");line.z_index=-3;arena.add_child(line)
@@ -249,7 +249,7 @@ func test_party():
 func capture(name:String):
 	if not "--route-capture" in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v15/"+name+".png")
+	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v15/"+name+".webp")
 func finish(label:String):
 	var f=FileAccess.open("res://preproduction/qa/v15/"+label+"-results.json",FileAccess.WRITE);f.store_string(JSON.stringify({"results":results,"failures":failures},"\t"));f.close()
 	print("V15 "+label+" "+("PASSED" if failures.is_empty() else "FAILED"));get_tree().quit(0 if failures.is_empty() else 1)

@@ -14,7 +14,7 @@ func check(ok,id):
 func capture(name):
 	if "--v21-capture" not in OS.get_cmdline_user_args():return
 	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("res://preproduction/qa/v21/"+("final-" if "--v21-final" in OS.get_cmdline_user_args() else "")+("small-" if root.size.x<1000 else "")+name+".png")
+	root.get_texture().get_image().save_png("res://preproduction/qa/v21/"+("final-" if "--v21-final" in OS.get_cmdline_user_args() else "")+("small-" if root.size.x<1000 else "")+name+".webp")
 func run():
 	set_meta("journey_save_path",PATH)
 	for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)

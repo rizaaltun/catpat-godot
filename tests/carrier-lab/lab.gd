@@ -19,12 +19,12 @@ var max_step=0.0
 var last_positions=[]
 func _ready():
 	process_physics_priority=-20
-	var backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v12/garden.png");backdrop.centered=false;backdrop.z_index=-30;add_child(backdrop)
+	var backdrop=Sprite2D.new();backdrop.texture=load("res://assets/chapter-v12/garden.webp");backdrop.centered=false;backdrop.z_index=-30;add_child(backdrop)
 	var cam=Camera2D.new();cam.position=Vector2(850,360);cam.zoom=Vector2.ONE*0.73;add_child(cam)
 	arena=Node2D.new();add_child(arena)
 	var ui=CanvasLayer.new();add_child(ui)
 	var panel=preload("res://scripts/polish_ui.gd")
-	panel.texture("res://assets/polish-v3/panel.png",Rect2(25,20,760,132),ui)
+	panel.texture("res://assets/polish-v3/panel.webp",Rect2(25,20,760,132),ui)
 	panel.label("RÜZGÂRLI YAMAÇ  /  GEÇİŞ HAZIRLIĞI",Rect2(58,44,710,40),22,ui)
 	status=panel.label("Tek taşıyıcı · Dört arkadaş · Sırayla geçiş",Rect2(58,82,705,48),22,ui)
 	panel.label("Çalışma sahnesi · E: karşıya geç · R: geri dön · Esc: duraklat",Rect2(175,655,1000,45),20,ui)
@@ -41,7 +41,7 @@ func clear_arena():
 func bank(x: float,w: float):
 	var body=StaticBody2D.new();arena.add_child(body)
 	var collision=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(w,500);collision.shape=shape;collision.position=Vector2(x+w/2,790);body.add_child(collision)
-	var image=Sprite2D.new();image.texture=load("res://assets/chapter-v11/bank.png");image.centered=false;image.scale=Vector2.ONE*w/2110.0;image.position=Vector2(x,540)-Vector2(30,160)*image.scale;image.z_index=-5;arena.add_child(image)
+	var image=Sprite2D.new();image.texture=load("res://assets/chapter-v11/bank.webp");image.centered=false;image.scale=Vector2.ONE*w/2110.0;image.position=Vector2(x,540)-Vector2(30,160)*image.scale;image.z_index=-5;arena.add_child(image)
 func build_queue():
 	clear_arena();bank(0,700);bank(1040,660)
 	surface=Surface.new();surface.speed=200;surface.dwell_seconds=0.12;surface.auto_cycle=false;arena.add_child(surface)

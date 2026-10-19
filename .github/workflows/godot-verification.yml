@@ -1,0 +1,47 @@
+name: Godot verification
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out project
+        uses: actions/checkout@v4
+
+      - name: Install Godot 4.4.1 and Web export templates
+        uses: chickensoft-games/setup-godot@v2
+        with:
+          version: 4.4.1
+          use-dotnet: false
+          include-templates: true
+
+      - name: Import assets and parse project
+        run: godot --headless --path . --editor --import --quit
+
+      - name: Run save, dialogue, and comic regression checks
+        run: |
+          godot --headless --path . --script res://tests/save_test.gd
+          godot --headless --path . --script res://tests/dialogue_test.gd
+          godot --headless --path . --script res://tests/comic_test.gd
+
+      - name: Run B04 transition regression checks
+        run: |
+          godot --headless --path . --script res://preproduction/qa/v21/root_transition.gd
+          godot --headless --path . --script res://preproduction/qa/v21/root_main_quest.gd
+
+      - name: Run B05 save and scene contract
+        run: godot --headless --path . --script res://tests/festival_contract.gd
+
+      - name: Export browser build
+        run: |
+          mkdir -p build/web
+          godot --headless --path . --export-debug "Web Preview" build/web/index.html
+          test -s build/web/index.html
