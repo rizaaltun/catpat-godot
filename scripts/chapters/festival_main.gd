@@ -3,7 +3,11 @@ extends Node2D
 const Store=preload("res://scripts/core/save_service.gd")
 const Quest=preload("res://scripts/core/quest_state.gd")
 const UI=preload("res://scripts/polish_ui.gd")
-const TASKS=[{"id":Quest.FESTIVAL_LIGHT,"x":1150.0,"name":"Porsuk ile sahne ışıkları"},{"id":Quest.FESTIVAL_FLAGS,"x":2250.0,"name":"Maymun ile flamalar"},{"id":Quest.FESTIVAL_FLOWERS,"x":3310.0,"name":"Pıtpıt ile çiçekler"}]
+const TASKS=[
+ {"id":Quest.FESTIVAL_LIGHT,"x":1150.0,"platform_y":446.0,"name":"Porsuk ile sahne ışıkları","character":"Porsuk","idle":"res://assets/review-v2/badger-idle-r2.webp","action":"res://assets/polish-v3/badger-pass.webp","line":"Işıklar hazır; sahne artık parlıyor."},
+ {"id":Quest.FESTIVAL_FLAGS,"x":2250.0,"platform_y":465.0,"name":"Maymun ile flamalar","character":"Maymun","idle":"res://assets/chapter-v10/monkey-idle.webp","action":"res://assets/chapter-v10/monkey-step-a.webp","line":"Flamalar sağlam; rüzgârda dans ediyor."},
+ {"id":Quest.FESTIVAL_FLOWERS,"x":3310.0,"platform_y":454.0,"name":"Pıtpıt ile çiçekler","character":"Pıtpıt","idle":"res://assets/chapter-v12/rabbit-idle.webp","action":"res://assets/chapter-v12/rabbit-step-a.webp","line":"Çiçekler yerini buldu; festival rengârenk."}
+]
 const WORLD_WIDTH=4400.0
 var save_path="user://festival_v3.json"
 var save_data:Dictionary={}
@@ -20,6 +24,7 @@ var action_pressed=false
 var near_task=-1
 var status=""
 var final_panel:Control
+var partner_sprites:Array=[]
 func _ready():
  save_path=str(get_tree().get_meta("journey_save_path",save_path))
  var loaded=Store.new().load_progress(save_path)
@@ -44,22 +49,49 @@ func make_ground(x:float,width:float,top:float):
  var visual=Polygon2D.new();visual.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,36),Vector2(-width/2,36)]);visual.color=Color("71885b");body.add_child(visual)
  var trim=Polygon2D.new();trim.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,-23),Vector2(-width/2,-23)]);trim.color=Color("b8bf73");body.add_child(trim)
 func build_world():
- # Continuous safety floor below every jump: mistakes return to the route instead of losing progress.
- make_ground(0,WORLD_WIDTH,616)
- for data in [[780.0,190.0,522.0],[1000.0,170.0,446.0],[1790.0,155.0,528.0],[2010.0,155.0,465.0],[2840.0,205.0,524.0],[3090.0,175.0,454.0],[3650.0,210.0,538.0],[3910.0,210.0,474.0]]:
+ # Safe ground is broken into short zones; paired low platforms form the route to each task.
+ for data in [[0.0,850.0,616.0],[930.0,870.0,616.0],[1880.0,820.0,616.0],[2780.0,820.0,616.0],[3670.0,730.0,616.0]]:
   make_ground(data[0],data[1],data[2])
+ for data in [[780.0,190.0,522.0],[1000.0,170.0,446.0],[1790.0,155.0,528.0],[2010.0,155.0,465.0],[2200.0,220.0,465.0],[2840.0,205.0,524.0],[3090.0,175.0,454.0],[3280.0,180.0,454.0],[3650.0,210.0,538.0],[3910.0,210.0,474.0]]:
+  make_ground(data[0],data[1],data[2])
+ for x in [3800.0,3930.0,4060.0,4190.0]:
+  add_world_sprite("res://assets/polish-v3/lantern.webp",Vector2(x,540),74.0,2)
+ for x in [3730.0,3850.0,3970.0,4090.0,4210.0]:
+  add_world_sprite("res://assets/polish-v3/balloon.webp",Vector2(x,500-(int(x/120.0)%2)*35),94.0,3)
  actor=CharacterBody2D.new();actor.name="Catpat";actor.position=Store.new().director.anchor(save_data.checkpoint_id);add_child(actor)
  var collision=CollisionShape2D.new();var body_shape=CapsuleShape2D.new();body_shape.radius=19;body_shape.height=64;collision.shape=body_shape;actor.add_child(collision)
  var sprite=Sprite2D.new();sprite.texture=load("res://assets/review-v2/catpat-idle-r2.webp");sprite.scale=Vector2.ONE*minf(0.19,66.0/maxf(1.0,sprite.texture.get_height()));actor.add_child(sprite)
  camera=Camera2D.new();camera.position_smoothing_enabled=true;camera.position_smoothing_speed=6;camera.limit_left=0;camera.limit_right=int(WORLD_WIDTH);camera.limit_top=0;camera.limit_bottom=720;actor.add_child(camera);camera.make_current()
  for i in TASKS.size():
   var point=TASKS[i]
-  var marker=Node2D.new();marker.position=Vector2(point.x,568);marker.name="Station%d"%i;add_child(marker)
+  var marker=Node2D.new();marker.position=Vector2(point.x,point.platform_y);marker.name="Station%d"%i;add_child(marker)
+  add_partner(i)
   var post=Polygon2D.new();post.polygon=PackedVector2Array([Vector2(-6,0),Vector2(6,0),Vector2(6,-110),Vector2(-6,-110)]);post.color=Color("786046");marker.add_child(post)
   var flag=Polygon2D.new();flag.polygon=PackedVector2Array([Vector2(7,-108),Vector2(68,-86),Vector2(7,-67)]);flag.color=Color("eed38c") if point.id in save_data.quest_flags else Color("ad8466");marker.add_child(flag)
-  var text=Label.new();text.text=["PORSUK","MAYMUN","PITPIT"][i];text.position=Vector2(-55,-156);text.add_theme_font_override("font",UI.font());text.add_theme_font_size_override("font_size",26);text.add_theme_color_override("font_color",Color("fff5dd"));marker.add_child(text)
+  var text=Label.new();text.text=point.character.to_upper();text.position=Vector2(-55,-156);text.add_theme_font_override("font",UI.font());text.add_theme_font_size_override("font_size",26);text.add_theme_color_override("font_color",Color("fff5dd"));marker.add_child(text)
  var stage=Polygon2D.new();stage.polygon=PackedVector2Array([Vector2(3630,610),Vector2(4300,610),Vector2(4200,570),Vector2(3720,570)]);stage.color=Color("b99364");stage.z_index=0;add_child(stage)
+ var stage_trim=Polygon2D.new();stage_trim.polygon=PackedVector2Array([Vector2(3720,575),Vector2(4200,575),Vector2(4170,588),Vector2(3750,588)]);stage_trim.color=Color("ecd39a");stage_trim.z_index=1;add_child(stage_trim)
  queue_redraw()
+func add_world_sprite(path:String,point:Vector2,target_height:float,layer:int):
+ var art=Sprite2D.new();art.texture=load(path);art.centered=false
+ art.scale=Vector2.ONE*target_height/maxf(1.0,art.texture.get_height());art.position=point;art.z_index=layer;add_child(art)
+func add_partner(index:int):
+ var art=Sprite2D.new();art.texture=load(TASKS[index].idle)
+ art.scale=Vector2.ONE*108.0/maxf(1.0,art.texture.get_height())
+ art.position=Vector2(TASKS[index].x,TASKS[index].platform_y-58.0)
+ art.z_index=4;art.name="FestivalPartner%d"%index;add_child(art);partner_sprites.append(art)
+func restore_partner(index:int):
+ if index<partner_sprites.size():
+  var art:Sprite2D=partner_sprites[index]
+  art.texture=load(TASKS[index].idle);art.scale=Vector2.ONE*108.0/maxf(1.0,art.texture.get_height())
+func play_contribution(index:int):
+ if index>=partner_sprites.size():return
+ var art:Sprite2D=partner_sprites[index];var base_y=art.position.y
+ art.texture=load(TASKS[index].action);art.scale=Vector2.ONE*108.0/maxf(1.0,art.texture.get_height())
+ var tween=create_tween()
+ tween.tween_property(art,"position:y",base_y-26.0,0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+ tween.tween_property(art,"position:y",base_y,0.20).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+ tween.tween_callback(restore_partner.bind(index))
 func _draw():
  draw_rect(Rect2(0,0,WORLD_WIDTH,720),Color("94c6a8"),true)
  for i in 18:
@@ -82,9 +114,13 @@ func build_ui():
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
  UI.label("Hep birlikte geldik!",Rect2(330,205,665,66),43,final_panel)
- UI.label("Porsuk'un ışığı, Maymun'un flamaları ve Pıtpıt'ın çiçekleriyle festival hazır.",Rect2(325,300,650,135),26,final_panel)
- UI.button("Festivalde dolaş",Rect2(270,494,340,88),final_panel,func():final_panel.hide();paused=false,true)
- UI.button("Kaydet ve ana menü",Rect2(646,494,370,88),final_panel,go_menu)
+ UI.label("Porsuk: “Işıklar hazır.”  Maymun: “Flamalar tamam.”  Pıtpıt: “Çiçekler yerinde.”",Rect2(275,284,730,80),22,final_panel)
+ for i in TASKS.size():
+  var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
+  portrait.scale=Vector2.ONE*84.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],415);final_panel.add_child(portrait)
+  UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],453,140,34),20,final_panel)
+ UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false,true)
+ UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()
 func _physics_process(delta):
  if blocked or paused:return
@@ -98,7 +134,8 @@ func _physics_process(delta):
  if actor.position.y>820:actor.position=Store.new().director.anchor(save_data.checkpoint_id);actor.velocity=Vector2.ZERO
  var nearest=-1
  for i in TASKS.size():
-  if absf(actor.position.x-TASKS[i].x)<100 and actor.is_on_floor():nearest=i
+  var task=TASKS[i];var standing_y=task.platform_y-32.0
+  if absf(actor.position.x-task.x)<100 and absf(actor.position.y-standing_y)<74 and actor.is_on_floor():nearest=i
  if nearest!=near_task:near_task=nearest;update_hud()
 func _unhandled_input(event):
  if blocked:return
@@ -118,13 +155,13 @@ func update_hud():
  var next="Son ışığı açmak için sahneye git" if remaining.is_empty() else "Hazırlık: "+", ".join(remaining)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:next="Festival tamamlandı · yeniden dolaşabilirsin"
  if near_task>=0 and TASKS[near_task].id not in save_data.quest_flags:next="E: "+TASKS[near_task].name+" hazırlığını tamamla"
- elif remaining.is_empty() and absf(actor.position.x-4080)<150:next="E: Hep birlikte festival ışığını aç"
+ elif remaining.is_empty() and absf(actor.position.x-4080)<150 and absf(actor.position.y-442)<90:next="E: Hep birlikte festival ışığını aç"
  hud.text="FESTİVAL ALANI · "+next+ ("\n"+status if status!="" else "")
  action_button.disabled=not can_interact()
 func can_interact()->bool:
  if blocked or paused:return false
  if near_task>=0 and TASKS[near_task].id not in save_data.quest_flags:return true
- return TASKS.all(func(task):return task.id in save_data.quest_flags) and absf(actor.position.x-4080)<150 and Quest.FESTIVAL_COMPLETE not in save_data.quest_flags
+ return TASKS.all(func(task):return task.id in save_data.quest_flags) and absf(actor.position.x-4080)<150 and absf(actor.position.y-442)<90 and actor.is_on_floor() and Quest.FESTIVAL_COMPLETE not in save_data.quest_flags
 func interact():
  if not can_interact():return
  var target=Quest.FESTIVAL_COMPLETE
@@ -141,7 +178,8 @@ func interact():
  save_data=proposed
  if target==Quest.FESTIVAL_COMPLETE:show_final()
  else:
-  status="Arkadaşına yardım ettin; hazırlık kaydedildi."
+  status=TASKS[near_task].line
+  play_contribution(near_task)
   build_station_state()
  update_hud()
 func build_station_state():
