@@ -8,11 +8,13 @@ const FOREST_ART="res://assets/polish-v3/forest.webp"
 const DAISY_ART="res://assets/chapter-v13/daisies.webp"
 const SIGN_ART="res://assets/chapter-v20/festival-arrow.webp"
 const TASKS=[
- {"id":Quest.FESTIVAL_LIGHT,"x":1150.0,"platform_y":446.0,"name":"Porsuk ile sahne ışıkları","character":"Porsuk","idle":"res://assets/review-v2/badger-idle-r2.webp","action":"res://assets/polish-v3/badger-pass.webp","line":"Işıklar hazır; sahne artık parlıyor."},
- {"id":Quest.FESTIVAL_FLAGS,"x":2250.0,"platform_y":465.0,"name":"Maymun ile flamalar","character":"Maymun","idle":"res://assets/chapter-v10/monkey-idle.webp","action":"res://assets/chapter-v10/monkey-step-a.webp","line":"Flamalar sağlam; rüzgârda dans ediyor."},
- {"id":Quest.FESTIVAL_FLOWERS,"x":3310.0,"platform_y":454.0,"name":"Pıtpıt ile çiçekler","character":"Pıtpıt","idle":"res://assets/chapter-v12/rabbit-idle.webp","action":"res://assets/chapter-v12/rabbit-step-a.webp","line":"Çiçekler yerini buldu; festival rengârenk."}
+ {"id":Quest.FESTIVAL_LIGHT,"x":1150.0,"platform_y":446.0,"name":"Porsuk ile sahne ışıkları","character":"Porsuk","idle":"res://assets/review-v2/badger-idle-r2.webp","action":"res://assets/polish-v3/badger-pass.webp","walk":["res://assets/review-v2/badger-idle.webp","res://assets/review-v2/badger-idle-r2.webp"],"line":"Işıklar hazır; sahne artık parlıyor."},
+ {"id":Quest.FESTIVAL_FLAGS,"x":2250.0,"platform_y":465.0,"name":"Maymun ile flamalar","character":"Maymun","idle":"res://assets/chapter-v10/monkey-idle.webp","action":"res://assets/chapter-v10/monkey-step-a.webp","walk":["res://assets/chapter-v10/monkey-step-a.webp","res://assets/chapter-v10/monkey-step-b.webp"],"line":"Flamalar sağlam; rüzgârda dans ediyor."},
+ {"id":Quest.FESTIVAL_FLOWERS,"x":3310.0,"platform_y":454.0,"name":"Pıtpıt ile çiçekler","character":"Pıtpıt","idle":"res://assets/chapter-v12/rabbit-idle.webp","action":"res://assets/chapter-v12/rabbit-step-a.webp","walk":["res://assets/chapter-v12/rabbit-step-a.webp","res://assets/chapter-v12/rabbit-step-b.webp"],"line":"Çiçekler yerini buldu; festival rengârenk."}
 ]
 const WORLD_WIDTH=4400.0
+const FINAL_ANCHOR_X=4230.0
+const STAGE_ANCHORS=[Vector2(3960.0,416.0),Vector2(4050.0,416.0),Vector2(4140.0,416.0)]
 var save_path="user://festival_v3.json"
 var save_data:Dictionary={}
 var actor:CharacterBody2D
@@ -30,6 +32,11 @@ var status=""
 var final_panel:Control
 var partner_sprites:Array=[]
 var flower_sprites:Array=[]
+var all_on_stage=false
+var gathering_partners=false
+var arrived_partners=0
+var companion_walk_clock=0.0
+var companion_walk_frame=0
 func _ready():
  save_path=str(get_tree().get_meta("journey_save_path",save_path))
  var loaded=Store.new().load_progress(save_path)
@@ -40,6 +47,7 @@ func _ready():
  save_data=loaded.data.duplicate(true)
  build_world()
  build_ui()
+ restore_party_stage()
  update_hud()
 func make_block_screen():
  var canvas=CanvasLayer.new();add_child(canvas)
@@ -78,7 +86,7 @@ func build_world():
  # Safe ground is broken into short zones; paired low platforms form the route to each task.
  for data in [[0.0,850.0,616.0],[930.0,870.0,616.0],[1880.0,820.0,616.0],[2780.0,820.0,616.0],[3670.0,730.0,616.0]]:
   make_ground(data[0],data[1],data[2])
- for data in [[780.0,190.0,522.0],[1000.0,170.0,446.0],[1790.0,155.0,528.0],[2010.0,155.0,465.0],[2200.0,220.0,465.0],[2840.0,205.0,524.0],[3090.0,175.0,454.0],[3280.0,180.0,454.0],[3650.0,210.0,538.0],[3910.0,210.0,474.0]]:
+ for data in [[780.0,190.0,522.0],[1000.0,170.0,446.0],[1790.0,155.0,528.0],[2010.0,155.0,465.0],[2200.0,220.0,465.0],[2840.0,205.0,524.0],[3090.0,175.0,454.0],[3280.0,180.0,454.0],[3650.0,210.0,538.0],[3910.0,390.0,474.0]]:
   make_ground(data[0],data[1],data[2])
  for x in [3800.0,3930.0,4060.0,4190.0]:
   add_world_sprite("res://assets/polish-v3/lantern.webp",Vector2(x,540),74.0,2)
@@ -153,6 +161,15 @@ func build_ui():
  UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false,true)
  UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()
+func _process(delta):
+ if blocked or paused or not gathering_partners:return
+ companion_walk_clock+=delta
+ if companion_walk_clock<0.18:return
+ companion_walk_clock=0.0
+ companion_walk_frame=1-companion_walk_frame
+ for i in partner_sprites.size():
+  var art:Sprite2D=partner_sprites[i]
+  art.texture=load(TASKS[i].walk[companion_walk_frame])
 func _physics_process(delta):
  if blocked or paused:return
  actor.velocity.y=minf(actor.velocity.y+1350*delta,950)
@@ -185,14 +202,15 @@ func update_hud():
   if item.id not in save_data.quest_flags:remaining.append(item.name)
  var next="Son ışığı açmak için sahneye git" if remaining.is_empty() else "Hazırlık: "+", ".join(remaining)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:next="Festival tamamlandı · yeniden dolaşabilirsin"
+ elif remaining.is_empty() and not all_on_stage:next="Arkadaşların sahneye geliyor."
  if near_task>=0 and TASKS[near_task].id not in save_data.quest_flags:next="E: "+TASKS[near_task].name+" hazırlığını tamamla"
- elif remaining.is_empty() and absf(actor.position.x-4080)<150 and absf(actor.position.y-442)<90:next="E: Hep birlikte festival ışığını aç"
+ elif remaining.is_empty() and all_on_stage and absf(actor.position.x-FINAL_ANCHOR_X)<150 and absf(actor.position.y-442)<90:next="E: Hep birlikte festival ışığını aç"
  hud.text="FESTİVAL ALANI · "+next+ ("\n"+status if status!="" else "")
  action_button.disabled=not can_interact()
 func can_interact()->bool:
  if blocked or paused:return false
  if near_task>=0 and TASKS[near_task].id not in save_data.quest_flags:return true
- return TASKS.all(func(task):return task.id in save_data.quest_flags) and absf(actor.position.x-4080)<150 and absf(actor.position.y-442)<90 and actor.is_on_floor() and Quest.FESTIVAL_COMPLETE not in save_data.quest_flags
+ return tasks_ready() and all_on_stage and absf(actor.position.x-FINAL_ANCHOR_X)<150 and absf(actor.position.y-442)<90 and actor.is_on_floor() and Quest.FESTIVAL_COMPLETE not in save_data.quest_flags
 func interact():
  if not can_interact():return
  var target=Quest.FESTIVAL_COMPLETE
@@ -212,12 +230,40 @@ func interact():
   status=TASKS[near_task].line
   play_contribution(near_task)
   build_station_state()
+  if tasks_ready():gather_partners()
  update_hud()
 func build_station_state():
  for i in TASKS.size():
   var flag=get_node_or_null("Station%d/Polygon2D2"%i)
   if flag:flag.color=Color("eed38c") if TASKS[i].id in save_data.quest_flags else Color("ad8466")
  for flower in flower_sprites:flower.visible=Quest.FESTIVAL_FLOWERS in save_data.quest_flags
+func tasks_ready()->bool:
+ return TASKS.all(func(task):return task.id in save_data.quest_flags)
+func restore_party_stage():
+ if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:
+  for i in partner_sprites.size():partner_sprites[i].position=STAGE_ANCHORS[i]
+  all_on_stage=true
+ elif tasks_ready():gather_partners()
+func gather_partners():
+ if gathering_partners or all_on_stage or partner_sprites.size()!=STAGE_ANCHORS.size():return
+ gathering_partners=true
+ arrived_partners=0
+ for i in partner_sprites.size():
+  var art:Sprite2D=partner_sprites[i]
+  var target:Vector2=STAGE_ANCHORS[i]
+  var duration=maxf(0.4,absf(target.x-art.position.x)/800.0)
+  var tween=create_tween()
+  tween.tween_property(art,"position:x",target.x,duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+  tween.tween_property(art,"position:y",target.y,0.22)
+  tween.tween_callback(partner_arrived.bind(i))
+func partner_arrived(index:int):
+ restore_partner(index)
+ arrived_partners+=1
+ if arrived_partners>=partner_sprites.size():
+  gathering_partners=false
+  all_on_stage=true
+  status="Arkadaşlar sahnede. Final ışığını açabilirsin."
+  update_hud()
 func show_final():
  paused=true
  if is_instance_valid(final_panel):final_panel.show()

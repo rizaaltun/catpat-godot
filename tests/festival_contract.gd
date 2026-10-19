@@ -68,7 +68,35 @@ func run():
  check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"flower contribution persists and appears in the world")
  var flower_save=service.load_progress(PATH)
  check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
+ playable.actor.position=Vector2(2250.0,433.0);playable.actor.velocity=Vector2.ZERO
+ await physics_frame
+ check(playable.near_task==1 and playable.can_interact(),"Maymun station is reachable from its raised platform")
+ playable.interact()
+ check(Quest.FESTIVAL_FLAGS in playable.save_data.quest_flags,"flag contribution persists after a different task order")
+ var flag_save=service.load_progress(PATH)
+ check(flag_save.ok and flag_save.data.checkpoint_id=="b05.flags","flag contribution persists its checkpoint")
+ playable.actor.position=Vector2(Festival.FINAL_ANCHOR_X,442.0);playable.actor.velocity=Vector2.ZERO
+ await physics_frame
+ check(not playable.all_on_stage and not playable.can_interact(),"final stays locked while friends are traveling")
+ await create_timer(5.0).timeout
+ await physics_frame
+ check(playable.all_on_stage and not playable.gathering_partners,"all three friends reach the stage")
+ check(playable.can_interact(),"final switch opens only after every friend is on stage")
+ playable.interact()
+ check(Quest.FESTIVAL_COMPLETE in playable.save_data.quest_flags and playable.save_data.ending_seen,"final contribution and ending are recorded")
+ var ending_save=service.load_progress(PATH)
+ check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
+ check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")
+ var final_flags=playable.save_data.quest_flags.duplicate()
+ playable.interact()
+ check(playable.save_data.quest_flags==final_flags,"completed finale cannot be triggered twice")
  playable.queue_free();await process_frame
+ var resumed=load("res://scenes/festival.tscn").instantiate()
+ get_root().add_child(resumed)
+ await process_frame;await physics_frame
+ check(not resumed.blocked and resumed.final_panel.visible and resumed.paused,"saved finale resumes intact from the canonical save")
+ check(resumed.all_on_stage and resumed.flower_sprites.all(func(flower):return flower.visible),"reopened festival restores the friends and flowers")
+ resumed.queue_free();await process_frame
  set_meta("journey_save_path","user://festival_v3.json")
  clean()
  print("FESTIVAL CONTRACT: %d checks, %d failures"%[checks,failures])
