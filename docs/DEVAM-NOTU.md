@@ -15,7 +15,7 @@
 - Kullanıcı 19 Ekim 2026'da yayınevi kitabından gelen proje görsellerinin bu oyun için aktarılmasına izin verdi. PDF/PSD orijinalleri, `preproduction/references/` kitap sayfası taramaları ve taslak temas sayfası public depoya alınmadı.
 - 54 runtime görsel WebP'ye çevrildi (24.62 MB; kaynak PNG'lerden %72 daha küçük); 22 oyun scriptinin ve ilgili QA/test scriptlerinin görsel yolları WebP'ye çevrildi. Ölçüler ve alfa kanalları kaynakla aynı kaldı; Godot importu ayrıca test edilecek.
 - B05 kaynak düzeltmesi `329449d175f0a6d1e46f42e7210fcf9847d40548` commit'inde: üç katkı istasyonuna platform çıkışı eklendi, görevler ilgili istasyon platformunda etkileşim istiyor, her istasyonda arkadaş sprite'ı ve katkı hareketi var; final paneli üç arkadaş portresi ve katkı replikleri gösteriyor. Dünya zemini teknik poligonlar, sahne ise teknik geometri kullanmaya devam ediyor.
-- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi. İlk run (`39265588944`) asset importunu geçti, birleşik regresyon adımında uzadı; `91506f76ce56834ef04695b49b75d62a20db1a95` testleri ayrı adımlara böldü ve zaman sınırları ekledi. Güncel run sonucu henüz gelmedi.
+- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi. Godot importu geçti. İlk izole regresyon koşusu `scripts/core/quest_state.gd:31` satırındaki `const EVENTS` dizi birleştirmesinde parse hatasını yakaladı; test komutunu 120 saniyede sonlandırdı. `79072dc2c7469bdbcfa0033d37b44224d64d5e1d` sabit diziyi inline tanımlayarak parse hatasını düzeltti. Yeniden koşu bekleniyor.
 
 ## Bağımsız denetim bulguları
 
@@ -34,7 +34,7 @@
 
 ## Sıradaki işler
 
-1. CI run `39265588944` sonucunu izle; import, GDScript, regresyon ve Web export hatalarını T22 hash'i üzerinde düzelt.
+1. `79072dc` sonrası CI sonucunu izle; B01–B04 regresyon ve B05 kayıt sözleşmesinde kalan hata varsa düzelt.
 2. B01–B04'ü T22 kaynaklarıyla Godot 4.4.1'de import et ve test et; B04→B05, kayıt şema10, dokunmatik, pause/devam, kesinti ve temiz tam koşu kanıtlarını build/commit hash'iyle kaydet.
 3. B05 platform rotalarını ve güvenli kolay rotayı tasarımla eşleştir; her istasyona gerçek zıplayış, düşme/checkpoint, sıra bağımsız görev ve kayıt/yeniden açılış davranışlarını motor testleriyle doğrula.
 4. B05'in gerçek sahne görüntüsünü Godot'ta incele; üç arkadaşın katkı animasyonları ve final dizilimini doğrula. Karakter kimliği onaylarını beklemeden yeni tasarım üretme.
