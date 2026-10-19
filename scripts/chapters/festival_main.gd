@@ -63,6 +63,9 @@ func add_forest_backdrop():
  var scale_factor=720.0/maxf(1.0,backdrop.texture.get_height());backdrop.scale=Vector2.ONE*scale_factor
  parallax.repeat_size=Vector2(backdrop.texture.get_width()*scale_factor,720.0);parallax.repeat_times=8
  parallax.scroll_scale=Vector2(0.12,0.0);parallax.add_child(backdrop);add_child(parallax)
+func add_festival_camp_art():
+ var art=Sprite2D.new();art.texture=load("res://assets/world/forest.webp");art.name="FestivalCampArt";art.centered=false
+ art.scale=Vector2.ONE*(720.0/maxf(1.0,art.texture.get_height()));art.position=Vector2(3300.0,0);art.z_index=0;add_child(art)
 func add_bunting(x:float,y:float):
  var cord=Line2D.new();cord.points=PackedVector2Array([Vector2(x,y),Vector2(x+300,y+25)]);cord.width=3;cord.default_color=Color("f3dfaa");cord.z_index=4;add_child(cord)
  var colors=[Color("d97f64"),Color("ebcb7d"),Color("7fa5b2"),Color("a3bf81")]
@@ -71,6 +74,7 @@ func add_bunting(x:float,y:float):
   flag.position=Vector2(x+i*44.0,y+i*3.7);flag.color=colors[i%colors.size()];flag.z_index=4;add_child(flag)
 func build_world():
  add_forest_backdrop()
+ add_festival_camp_art()
  # Safe ground is broken into short zones; paired low platforms form the route to each task.
  for data in [[0.0,850.0,616.0],[930.0,870.0,616.0],[1880.0,820.0,616.0],[2780.0,820.0,616.0],[3670.0,730.0,616.0]]:
   make_ground(data[0],data[1],data[2])
