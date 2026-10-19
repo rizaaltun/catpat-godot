@@ -11,9 +11,15 @@
 
 ## Açık kalite ve doğrulama kapıları
 
-Yerel çalışma ortamında Godot ikilisi yok; T22 GDScript import/parse, motor yaşam döngüsü, fizik, sahne görseli ve eski regresyonlar henüz **çalıştırılmadı**. GitHub Actions'ta Godot 4.4.1 import, test ve Web export işi eklendi (run 39265588944 queued). Bu paket test sonucu gelene dek **oynanabilirliği doğrulanmamış T22 adayıdır**. B05'e kitap türevi görseller ve katkı hareketleri eklendi; gerçek cihaz görsel QA'sı yapılmadı. Karakter kimliği `USER_PENDING`.
+Yerel ortamda Godot ikilisi yok; GitHub Actions Godot 4.4.1 CI run `39267073041` başarılı: import/parse, kayıt/diyalog/çizgi roman regresyonları, B04 geçiş kontrolleri, B05 sahne-kayıt sözleşmesi ve Web export geçti. Bu kontroller temel motor/doğrulama kapılarını kapatır; gerçek cihazda B05 oynanışı, tam bölüm rotaları ve görsel QA hâlâ yapılmadı. Karakter kimliği `USER_PENDING`.
 
-## Son durum ve doğrulama\n\n- 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.\n- CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39265588944 (asset import başarılı; regresyon adımı uzadı). Yeni workflow testi başına zaman sınırı ekledi.\n- GitHub Pages depo API'sinde kapalı; canlı tarayıcı bağlantısı henüz yok.\n\n## Önce yapılacak doğrulama
+## Son durum ve doğrulama
+
+- 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.
+- Başarılı CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39267073041 — Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçişi, B05 sahne-kayıt sözleşmesi ve Web export başarılı.
+- GitHub Pages repo ayarlarında kapalı; canlı tarayıcı bağlantısı henüz yok. Web çıktısı CI'da üretildi ancak hosted tarayıcı testi bekliyor.
+
+## Önce yapılacak doğrulama
 
 1. Godot 4.4.1 standart sürümünde `project.godot` aç; import, script parse ve B01-B04 eski testlerini çalıştır.
 2. Geçerli B04 waymark.seen kaydından seyir noktasında E ile B05 açılışını dene. Geçersiz kayıt ve kayıt yazma hatasında ilerlemenin korunmasını test et.
@@ -23,4 +29,4 @@ Yerel çalışma ortamında Godot ikilisi yok; T22 GDScript import/parse, motor 
 
 ## Sonraki somut iş
 
-Önce CI run sonucunu al, Godot import/parse ve mevcut regresyon hatalarını düzelt; sonra B05 görev parkurunu ve final görselini gerçek motor ekranında doğrula. Kalan işleri: kolay rota, sahne cilası, görev/checkpoint QA, Web export ve Pages yayını. Canlı link gelmeden oyunu tamamlandı sayma.
+Sonraki işler: B01–B04 tam bölüm rotası ve B05 görev/checkpoint oynanışını doğrula; kolay rota ve sahne cilasını tamamla; tarayıcıda Web build'i oynat ve Pages yayını için etkinleştirme yolunu çöz. Canlı link gelmeden oyunu tamamlandı sayma.
