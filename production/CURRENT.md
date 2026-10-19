@@ -13,7 +13,7 @@
 
 Yerel çalışma ortamında Godot ikilisi yok; T22 GDScript import/parse, motor yaşam döngüsü, fizik, sahne görseli ve eski regresyonlar henüz **çalıştırılmadı**. GitHub Actions'ta Godot 4.4.1 import, test ve Web export işi eklendi (run 39265588944 queued). Bu paket test sonucu gelene dek **oynanabilirliği doğrulanmamış T22 adayıdır**. B05'e kitap türevi görseller ve katkı hareketleri eklendi; gerçek cihaz görsel QA'sı yapılmadı. Karakter kimliği `USER_PENDING`.
 
-## Son durum ve doğrulama\n\n- 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.\n- CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39265588944 (kuyrukta).\n- GitHub Pages depo API'sinde kapalı; canlı tarayıcı bağlantısı henüz yok.\n\n## Önce yapılacak doğrulama
+## Son durum ve doğrulama\n\n- 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.\n- CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39265588944 (asset import başarılı; regresyon adımı uzadı). Yeni workflow testi başına zaman sınırı ekledi.\n- GitHub Pages depo API'sinde kapalı; canlı tarayıcı bağlantısı henüz yok.\n\n## Önce yapılacak doğrulama
 
 1. Godot 4.4.1 standart sürümünde `project.godot` aç; import, script parse ve B01-B04 eski testlerini çalıştır.
 2. Geçerli B04 waymark.seen kaydından seyir noktasında E ile B05 açılışını dene. Geçersiz kayıt ve kayıt yazma hatasında ilerlemenin korunmasını test et.
