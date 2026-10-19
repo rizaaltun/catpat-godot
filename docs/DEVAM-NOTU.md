@@ -15,7 +15,7 @@
 - Kullanıcı 19 Ekim 2026'da yayınevi kitabından gelen proje görsellerinin bu oyun için aktarılmasına izin verdi. PDF/PSD orijinalleri, `preproduction/references/` kitap sayfası taramaları ve taslak temas sayfası public depoya alınmadı.
 - 54 runtime görsel WebP'ye çevrildi (24.62 MB; kaynak PNG'lerden %72 daha küçük); 22 oyun scriptinin ve ilgili QA/test scriptlerinin görsel yolları WebP'ye çevrildi. Ölçüler ve alfa kanalları kaynakla aynı kaldı; Godot importu ayrıca test edilecek.
 - B05 kaynak düzeltmesi `329449d175f0a6d1e46f42e7210fcf9847d40548` commit'inde: üç katkı istasyonuna platform çıkışı eklendi, görevler ilgili istasyon platformunda etkileşim istiyor, her istasyonda arkadaş sprite'ı ve katkı hareketi var; final paneli üç arkadaş portresi ve katkı replikleri gösteriyor. Dünya zemini teknik poligonlar, sahne ise teknik geometri kullanmaya devam ediyor.
-- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi; iş akışı şu anda queued.
+- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi. İlk run (`39265588944`) asset importunu geçti, birleşik regresyon adımında uzadı; `91506f76ce56834ef04695b49b75d62a20db1a95` testleri ayrı adımlara böldü ve zaman sınırları ekledi. Güncel run sonucu henüz gelmedi.
 
 ## Bağımsız denetim bulguları
 
