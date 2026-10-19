@@ -11,22 +11,23 @@
 
 ## Açık kalite ve doğrulama kapıları
 
-Yerel ortamda Godot ikilisi yok; GitHub Actions Godot 4.4.1 CI run `39275862970` başarılı: Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B04 geçişleri, B05 sözleşme+oyun-içi smoke (49 kontrol, 0 hata) ve Web export geçti. Smoke testi B05’i gerçek canonical save ile açtı, platform dışından etkileşimi engelledi, Porsuk/Pıtpıt platformlarında checkpoint kaydetti ve çiçek görünürlüğünü doğruladı. Tam rota, final tekrarı, cihaz ve görsel QA sürüyor. Karakter kimliği `USER_PENDING`. Karakter kimliği `USER_PENDING`.
+Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile sürdürülüyor. CI run 39277080713 B01–B04 sahne/kayıt noktası eşleşmelerini ve B04 gerçek geçiş regresyonunu geçti. B05 runtime sözleşmesi run 39277643051 içinde 61 kontrol, 0 başarısızlıkla geçti; log eksik bir Porsuk yürüyüş karesini yakaladı. Asset 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi. Final kayıt ankrajı ve yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi. Son baş commit için CI run 39278911359 devir notu yazılırken sıradaydı; final sonucu henüz doğrulanmadı.
+
+B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. Bu smoke testi elle oynanan tam parkur ya da görsel QA değildir. Son değişikliklerle birlikte temiz Web export ve log doğrulaması bekleniyor.
 
 ## Son durum ve doğrulama
 
-- 55 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; orijinal PDF/PSD ve kitap sayfası taramaları hariç tutuldu.
-- Başarılı CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39275862970 — Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçişi, 49 B05 sözleşme/oyun-içi kontrolü ve Web export başarılı.
-- GitHub Pages kapalı; kullanıcı canlı yayın ayarını şimdilik erteledi. Web çıktısı CI'da üretildi, hosted tarayıcı testi ve canlı URL bekliyor.
+- 56 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına eklendi; toplam 25.45 MB. Orijinal PDF/PSD ve kitap sayfası taramaları public depoya alınmadı.
+- Başarılı B01–B04 hedefli CI: https://github.com/rizaaltun/catpat-godot/actions/runs/39277080713
+- B05 61/61 sözleşme/oyun-içi test: https://github.com/rizaaltun/catpat-godot/actions/runs/39277643051 — testler geçti; logdaki eksik asset ve son final ankrajı düzeltmeleri sonraki commit'lerde.
+- Son baştaki asset+ankraj doğrulaması: https://github.com/rizaaltun/catpat-godot/actions/runs/39278911359 — devir güncellemesi sırasında beklemede.
+- GitHub Pages kapalı; kullanıcı canlı yayın ayarını şimdilik erteledi. Web çıktısı CI'da üretilmiş olsa da hosted tarayıcı testi ve canlı URL açık.
 
 ## Önce yapılacak doğrulama
 
-1. B01–B04 tam bölüm rotalarını ve B04→B05 geçişini gerçek oyuncu akışında doğrula; mevcut hedefli CI regresyonları geçti.
-2. Geçerli B04 waymark.seen kaydından seyir noktasında E ile B05 açılışını dene. Geçersiz kayıt ve kayıt yazma hatasında ilerlemenin korunmasını test et.
-3. B05 üç görevi farklı sırayla tamamla, her birinden sonra kaydet/menü/Devam yap; bitişi tekrar oynatınca yinelenen görev kaydı oluşmadığını test et.
-4. Farklı genişlik/ekran oranlarında kontrol panelini, kamera ve platform boşluklarını doğrula; dokunmatik hareket tuşlarının basılı tutma davranışını fiziksel cihazda test et.
-5. Görsel ve oynanış QA turunu gerçek ekran/video ve loglarla kaydet. Sadece kaynak incelemesi geçiş kanıtı sayılmaz.
+1. Run 39278911359 tamamlanınca B05 test çıktısında resource error olmadığını, final checkpoint konumunu, bütün regresyonları ve Web export'u doğrula.
+2. B01–B04 tam rota, B04→B05 geçişinin kullanıcı kontrollü oyuncu akışı, farklı kayıt/geri yükleme ve gerçek dokunmatik kontrollerini sürdür.
+3. B05'i gerçek zıplama/düşme/checkpoint toparlanmasıyla, finalden sonra dolaşma ve farklı ekran oranlarıyla viewport'ta incele.
+4. Tam sahne/animasyon görüntü QA'sını Godot ekran kaydıyla yap; yalnız kaynak ve headless testi profesyonel görsel teslim kanıtı sayma.
+5. Pages yayını ve canlı URL'yi kullanıcı bu adımı yeniden açtığında tamamla.
 
-## Sonraki somut iş
-
-Sonraki işler: B01–B04 tam rotaları, B05 görev sırası/düşme/final tekrarı ve dokunmatik kullanım testleri; B05 sahne/animasyon görsel QA'sı; daha sonra kullanıcının tercihiyle Pages ayarı ve hosted tarayıcı testi. Canlı link gelmeden oyunu tamamlandı sayma. Canlı link gelmeden oyunu tamamlandı sayma.
