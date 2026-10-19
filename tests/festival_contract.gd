@@ -50,7 +50,7 @@ func run():
  check(playable.get_node_or_null("FestivalForestBackdrop")!=null,"B05 uses the authored forest backdrop")
  check(playable.get_node_or_null("FestivalCampArt")!=null,"B05 finale uses the shipped festival camp illustration")
  check(playable.find_children("MossyPlatformArt","Sprite2D",true,false).size()>=10,"B05 platforms use the shipped terrain art")
- check(playable.find_children("FestivalDaisy","Sprite2D",true,false).size()==3,"B05 has three completion flower visuals")
+ check(playable.flower_sprites.size()==3,"B05 has three completion flower visuals")
  playable.actor.position=Vector2(1150.0,584.0);playable.actor.velocity=Vector2.ZERO
  await physics_frame
  check(not playable.can_interact(),"walking below a station does not complete its task")
@@ -61,6 +61,13 @@ func run():
  check(Quest.FESTIVAL_LIGHT in playable.save_data.quest_flags,"station interaction records the light contribution")
  var station_save=service.load_progress(PATH)
  check(station_save.ok and station_save.data.checkpoint_id=="b05.lights","station contribution persists its checkpoint")
+ playable.actor.position=Vector2(3310.0,422.0);playable.actor.velocity=Vector2.ZERO
+ await physics_frame
+ check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is reachable from its raised platform")
+ playable.interact()
+ check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"flower contribution persists and appears in the world")
+ var flower_save=service.load_progress(PATH)
+ check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
  playable.queue_free();await process_frame
  set_meta("journey_save_path","user://festival_v3.json")
  clean()
