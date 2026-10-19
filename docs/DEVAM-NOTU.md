@@ -15,7 +15,7 @@
 - Kullanıcı 19 Ekim 2026'da yayınevi kitabından gelen proje görsellerinin bu oyun için aktarılmasına izin verdi. PDF/PSD orijinalleri, `preproduction/references/` kitap sayfası taramaları ve taslak temas sayfası public depoya alınmadı.
 - 54 runtime görsel WebP'ye çevrildi (24.62 MB; kaynak PNG'lerden %72 daha küçük); 22 oyun scriptinin ve ilgili QA/test scriptlerinin görsel yolları WebP'ye çevrildi. Ölçüler ve alfa kanalları kaynakla aynı kaldı; Godot importu ayrıca test edilecek.
 - B05 kaynak düzeltmesi `329449d175f0a6d1e46f42e7210fcf9847d40548` commit'inde: üç katkı istasyonuna platform çıkışı eklendi, görevler ilgili istasyon platformunda etkileşim istiyor, her istasyonda arkadaş sprite'ı ve katkı hareketi var; final paneli üç arkadaş portresi ve katkı replikleri gösteriyor. Dünya zemini teknik poligonlar, sahne ise teknik geometri kullanmaya devam ediyor.
-- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi. Godot importu geçti. İlk izole regresyon koşusu `scripts/core/quest_state.gd:31` satırındaki `const EVENTS` dizi birleştirmesinde parse hatasını yakaladı; test komutunu 120 saniyede sonlandırdı. `79072dc2c7469bdbcfa0033d37b44224d64d5e1d` sabit diziyi inline tanımlayarak parse hatasını düzeltti. CI run `39267073041` tüm adımları geçti: Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçiş kontrolleri, B05 sahne-kayıt sözleşmesi ve tarayıcı Web export'u.
+- `c1dc0c2f170cf90d2a34d3cf0e9d5990daa9ebd3` commit'i Godot 4.4.1 import/regresyon/Web export iş akışını ekledi. Godot importu geçti. İlk izole regresyon koşusu `scripts/core/quest_state.gd:31` satırındaki `const EVENTS` dizi birleştirmesinde parse hatasını yakaladı; test komutunu 120 saniyede sonlandırdı. `79072dc2c7469bdbcfa0033d37b44224d64d5e1d` sabit diziyi inline tanımlayarak parse hatasını düzeltti. CI run `39267669399` (https://github.com/rizaaltun/catpat-godot/actions/runs/39267669399) tüm adımları geçti: Godot importu, kayıt/diyalog/çizgi roman regresyonları, B04 geçiş kontrolleri, B05 sahne-kayıt sözleşmesi ve tarayıcı Web export'u.
 
 ## Bağımsız denetim bulguları
 
@@ -27,10 +27,10 @@
 
 ## Test ve yayın durumu
 
-- Bu çalışma ortamında Godot CLI/editor yok; CI, Godot 4.4.1 ile import/parse, kayıt, diyalog, çizgi roman, B04 geçişi, B05 sözleşmesi ve Web export kontrollerini başarıyla çalıştırdı (run `39267073041`). Bu, gerçek cihazda sahne oynanışı veya görsel QA yerine geçmez. WebP bütünlüğü, kaynakla boyut eşleşmesi ve alfa kanalları Pillow ile ayrıca doğrulandı.
+- Bu çalışma ortamında Godot CLI/editor yok; CI, Godot 4.4.1 ile import/parse, kayıt, diyalog, çizgi roman, B04 geçişi, B05 sözleşmesi ve Web export kontrollerini başarıyla çalıştırdı (run `39267669399`). Bu, gerçek cihazda sahne oynanışı veya görsel QA yerine geçmez. WebP bütünlüğü, kaynakla boyut eşleşmesi ve alfa kanalları Pillow ile ayrıca doğrulandı.
 - B01–B04 kayıt/diyalog/çizgi roman regresyonları ve B04 geçiş kontrolleri CI'da geçti. Bölümlerin baştan sona oyuncu rotası, fiziksel dokunmatik testleri, pause/devam ve kesinti senaryoları ayrıca doğrulanmalı.
 - B05 kabul vakaları A50–A54 tasarım aşamasında; görev sırası, düşme/toparlanma, kayıt/yeniden açılış, final tekrarı ve dokunmatik testleri çalıştırılmadı.
-- Godot Web export CI'da başarıyla üretildi. Tarayıcıda oynanış henüz doğrulanmadı. Depo API'si GitHub Pages'in etkin olmadığını bildiriyor; bu nedenle şu anda canlı test URL'si yok. Dal tamamlanmış teslim değildir.
+- Godot Web export CI'da başarıyla üretildi. Tarayıcıda oynanış henüz doğrulanmadı. Depo API'si GitHub Pages'in etkin olmadığını bildiriyor; tarayıcıda Pages ayarına erişim için GitHub oturumu gerekiyor ve oturum doğrulaması tamamlanmadı. Bu nedenle şu anda canlı test URL'si yok. Dal tamamlanmış teslim değildir.
 
 ## Sıradaki işler
 
