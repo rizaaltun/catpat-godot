@@ -96,6 +96,7 @@ func run():
  await process_frame;await physics_frame
  check(not resumed.blocked and resumed.final_panel.visible and resumed.paused,"saved finale resumes intact from the canonical save")
  check(resumed.all_on_stage and resumed.flower_sprites.all(func(flower):return flower.visible),"reopened festival restores the friends and flowers")
+ check(resumed.actor.position.distance_to(Vector2(Festival.FINAL_ANCHOR_X,442.0))<1.0,"final checkpoint restores Catpat on the stage")
  resumed.queue_free();await process_frame
  set_meta("journey_save_path","user://festival_v3.json")
  clean()
