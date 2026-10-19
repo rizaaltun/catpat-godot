@@ -28,21 +28,21 @@ jobs:
         run: godot --headless --path . --editor --import --quit
 
       - name: Run save regression check
-        run: timeout 120s godot --headless --path . --script res://tests/save_test.gd
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/save_test.gd
 
       - name: Run dialogue regression check
-        run: timeout 120s godot --headless --path . --script res://tests/dialogue_test.gd
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/dialogue_test.gd
 
       - name: Run comic regression check
-        run: timeout 120s godot --headless --path . --script res://tests/comic_test.gd
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/comic_test.gd
 
       - name: Run B04 transition regression checks
         run: |
-          timeout 180s godot --headless --path . --script res://preproduction/qa/v21/root_transition.gd
-          timeout 180s godot --headless --path . --script res://preproduction/qa/v21/root_main_quest.gd
+          timeout -k 10s 180s godot --headless --path . --script res://preproduction/qa/v21/root_transition.gd
+          timeout -k 10s 180s godot --headless --path . --script res://preproduction/qa/v21/root_main_quest.gd
 
       - name: Run B05 save and scene contract
-        run: timeout 120s godot --headless --path . --script res://tests/festival_contract.gd
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/festival_contract.gd
 
       - name: Export browser build
         run: |
