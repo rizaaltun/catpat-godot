@@ -4,16 +4,16 @@
 
 ## Kaynakta değiştirilenler
 
-- `scenes/festival.tscn`, `scripts/chapters/festival_main.gd`: 4400 birim uzunlukta gerçek Godot B05 sahnesi; fiziksel yürüme/zıplama, sekiz alçak platform, kamera sınırları, düşmede güvenli dönme, üç ayrı görev noktası ve sahnede final etkileşimi. Basit dünya çizimleri **geçici teknik görseldir**, kitap sanatı kabulü değildir.
+- `scenes/festival.tscn`, `scripts/chapters/festival_main.gd`: 4400 birim B05 sahnesi; fiziksel yürüme/zıplama, bölünmüş güvenli zemin, istasyonlara çıkan alçak platformlar, üç görev noktası, Porsuk/Maymun/Pıtpıt istasyon görselleri ve katkı hareketleri, portreli final paneli. Zemin ve sahne poligonları hâlâ teknik görseldir; motor testi yapılmadı.
 - `scripts/chapters/summit_main.gd`: B04 seyir görevinden sonra E ile festival girişini önce geçerli ana kayda yazar, sonra sahneyi değiştirir; başarısız sahne geçişinde önceki B04 kaydını geri yüklemeyi dener.
 - `scripts/core/{quest_state,save_service,level_director}.gd`: B05 görev kimlikleri, ön koşullar, checkpoint'ler ve kayıt doğrulaması. Mevcut ana kayıt **schema10 olarak korunmuştur**. B05 görevleri quest_flags ve ending_seen içindedir; ayrı kullanıcı kaydı yaratılmaz.
 - `scripts/polish_world.gd`: menünün Devam işlevi B05 kaydını da açar.
 
 ## Açık kalite ve doğrulama kapıları
 
-Bu ortamda Godot ikilisi olmadığı için GDScript import/parse, motor yaşam döngüsü, gerçek oyun fiziği, resim testi ve tüm eski regresyonlar **çalıştırılmadı**. Bu paket **motor testi yapılmamış T22 uygulama adayıdır**, tamamlanmış/oynanabilir olduğu onaylanmış oyun değil. B05 çevresi basit teknik geometri ve geçici istasyon işaretleri kullanıyor; kitapla bütünleşik sanat ve arkadaş animasyonları henüz üretilmedi. Gerçek mobil Safari/iPhone denetimi yapılmadı. Karakter USER_PENDING değişmedi.
+Yerel çalışma ortamında Godot ikilisi yok; T22 GDScript import/parse, motor yaşam döngüsü, fizik, sahne görseli ve eski regresyonlar henüz **çalıştırılmadı**. GitHub Actions'ta Godot 4.4.1 import, test ve Web export işi eklendi (run 39265588944 queued). Bu paket test sonucu gelene dek **oynanabilirliği doğrulanmamış T22 adayıdır**. B05'e kitap türevi görseller ve katkı hareketleri eklendi; gerçek cihaz görsel QA'sı yapılmadı. Karakter kimliği `USER_PENDING`.
 
-## Önce yapılacak doğrulama
+## Son durum ve doğrulama\n\n- 54 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına aktarıldı; PDF/PSD ve kitap sayfası taramaları hariç tutuldu.\n- CI run: https://github.com/rizaaltun/catpat-godot/actions/runs/39265588944 (kuyrukta).\n- GitHub Pages depo API'sinde kapalı; canlı tarayıcı bağlantısı henüz yok.\n\n## Önce yapılacak doğrulama
 
 1. Godot 4.4.1 standart sürümünde `project.godot` aç; import, script parse ve B01-B04 eski testlerini çalıştır.
 2. Geçerli B04 waymark.seen kaydından seyir noktasında E ile B05 açılışını dene. Geçersiz kayıt ve kayıt yazma hatasında ilerlemenin korunmasını test et.
@@ -23,4 +23,4 @@ Bu ortamda Godot ikilisi olmadığı için GDScript import/parse, motor yaşam d
 
 ## Sonraki somut iş
 
-Önce parse ve B04→B05 gerçek motor geçişini doğrula; hata varsa düzelt. Sonra B05 geçici geometriyi blueprint ve kitap sanatıyla değiştir, 3 arkadaşın fiilen görünen katkı animasyonlarını, festival diyaloglarını ve daha güvenilir dokunmatik kontrolü tamamla.
+Önce CI run sonucunu al, Godot import/parse ve mevcut regresyon hatalarını düzelt; sonra B05 görev parkurunu ve final görselini gerçek motor ekranında doğrula. Kalan işleri: kolay rota, sahne cilası, görev/checkpoint QA, Web export ve Pages yayını. Canlı link gelmeden oyunu tamamlandı sayma.
