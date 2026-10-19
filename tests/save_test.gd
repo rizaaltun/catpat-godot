@@ -71,6 +71,21 @@ func run():
 	check(not director.prepare_transition("B01","b01.island.0").ok,"double transition is rejected")
 	director.finish_transition(false,"B02")
 	check(director.chapter_id=="B01" and not director.transitioning,"failed transition releases lock without changing chapter")
+	var routes=[
+		{"chapter":"B01","points":[["b01.island.0",Vector2(190,580)],["b01.island.4",Vector2(2000,480)],["b01.island.8",Vector2(3940,570)]]},
+		{"chapter":"B02","points":[["b02.entry",Vector2(420,520)],["b02.hub",Vector2(1160,520)],["b02.exit",Vector2(3230,520)]]},
+		{"chapter":"B03","points":[["b03.entry",Vector2(560,540)],["b03.hub",Vector2(980,540)],["b03.exit",Vector2(3700,540)]]},
+		{"chapter":"B04","points":[["b04.bank.0",Vector2(590,540)],["b04.bank.1",Vector2(1810,540)],["b04.bank.2",Vector2(3030,540)]]}
+	]
+	for route in routes:
+		for point in route.points:
+			var resolved=director.prepare_transition(route.chapter,point[0])
+			check(resolved.ok and resolved.scene is PackedScene and resolved.chapter_id==route.chapter and resolved.checkpoint_id==point[0] and resolved.anchor==point[1],route.chapter+" resolves scene and checkpoint "+point[0])
+			director.finish_transition(true,route.chapter)
+	for invalid in [["B01","b01.island.999"],["B02","b02.unknown"],["B03","b03.unknown"],["B04","b04.unknown"]]:
+		var rejected=director.prepare_transition(invalid[0],invalid[1])
+		check(not rejected.ok and not director.transitioning,"reject invalid route "+invalid[0]+" "+invalid[1])
+	check(director.chapter_id=="B04","valid route resolutions advance chapter registry through B04")
 	clean()
 	print("SAVE CONTRACT: ",checks," checks, ",failures," failures")
 	quit(1 if failures else 0)
