@@ -27,7 +27,7 @@
 - Bu çalışma ortamında Godot CLI/editor yok; T22 import, GDScript parse, sahne çalıştırma veya görsel inceleme yapılamadı.
 - B01–B04 için T22 regresyonu ve temiz tam koşu kanıtı yok. Arşivdeki V21 testleri tarihsel kanıttır; T22 kaynak hash'ini doğrulamaz. B04→B05 geçişi de T22'de çalıştırılmadı.
 - B05 kabul vakaları A50–A54 tasarım aşamasında; görev sırası, düşme/toparlanma, kayıt/yeniden açılış, final tekrarı ve dokunmatik testleri çalıştırılmadı.
-- Canlı tarayıcı test bağlantısı bu aşamada yok. Eksik runtime görselleri nedeniyle GitHub dalı henüz import edilebilir/oynanabilir bir teslim değil. Godot web export'u da üretilmedi.
+- Canlı tarayıcı test bağlantısı bu aşamada yok. Eksik runtime görselleri nedeniyle GitHub dalının importu ve oynanabilirliği henüz doğrulanmadı; dal şu an tamamlanmış bir teslim değil. Godot web export'u da üretilmedi.
 
 ## Sıradaki işler
 
