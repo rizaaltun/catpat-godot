@@ -41,13 +41,14 @@ func run():
  for id in journey:before_festival.apply(id)
  start.quest_flags=before_festival.flags.duplicate();start.party_ids=before_festival.party_ids();start.summit={}
  check(service.save(PATH,start),"valid B04-complete save opens B05")
- get_tree().set_meta("journey_save_path",PATH)
+ set_meta("journey_save_path",PATH)
  var playable=load("res://scenes/festival.tscn").instantiate()
  get_root().add_child(playable)
  await process_frame
  await physics_frame
  check(not playable.blocked and playable.actor!=null,"B05 builds a playable world from the canonical save")
  check(playable.get_node_or_null("FestivalForestBackdrop")!=null,"B05 uses the authored forest backdrop")
+ check(playable.get_node_or_null("FestivalCampArt")!=null,"B05 finale uses the shipped festival camp illustration")
  check(playable.find_children("MossyPlatformArt","Sprite2D",true,false).size()>=10,"B05 platforms use the shipped terrain art")
  check(playable.find_children("FestivalDaisy","Sprite2D",true,false).size()==3,"B05 has three completion flower visuals")
  playable.actor.position=Vector2(1150.0,584.0);playable.actor.velocity=Vector2.ZERO
@@ -61,7 +62,7 @@ func run():
  var station_save=service.load_progress(PATH)
  check(station_save.ok and station_save.data.checkpoint_id=="b05.lights","station contribution persists its checkpoint")
  playable.queue_free();await process_frame
- get_tree().set_meta("journey_save_path","user://festival_v3.json")
+ set_meta("journey_save_path","user://festival_v3.json")
  clean()
  print("FESTIVAL CONTRACT: %d checks, %d failures"%[checks,failures])
  quit(1 if failures else 0)
