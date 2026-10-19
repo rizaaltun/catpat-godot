@@ -1,5 +1,5 @@
 extends RefCounted
-## Canonical idempotent quest events.
+## Canonical, idempotent B01 event state. Runtime art and counters are projections.
 const LIGHTS=["light.A","light.B","light.C"]
 const ACCEPTED="quest.lanterns.accepted"
 const JOINED="party.badger.joined"
