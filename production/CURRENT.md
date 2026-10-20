@@ -13,7 +13,7 @@
 
 Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile yapılıyor. CI run 39383518955 B01, B02 ve B03 tam sahne/fizik oyun akışı testlerini; B04 geçiş ve ana görev regresyonlarını; B05 68/68 sözleşme/hareket kontrolünü ve Web export'u geçti. B01-B03 senaryoları Godot headless altında gerçek sahne ve oyuncu hareket simülasyonu kullanıyor; elle cihaz QA'sı sayılmaz. B01-B04 kayıt noktası/ankraj eşleşmesi run 39277080713'te geçti. Eksik Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi; final kayıt ankrajı ve yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi.
 
-B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. Bu otomatik kontroller elle oynanan tam parkur ya da görsel QA değildir.
+B05'in son sözleşme testi 68 kontrol, 0 hata verdi: istasyon ve kayıt davranışına ek olarak giriş kıyısından Porsuk platformuna gerçek zıplama ve kayıtlı noktaya düşme dönüşü sınandı. Diğer istasyon ve final erişimi hâlâ testte konumlandırmayla doğrulanıyor; bu tam oyuncu rotası veya görsel QA değildir.
 
 ## Son durum ve doğrulama
 

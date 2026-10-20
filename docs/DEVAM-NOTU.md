@@ -29,7 +29,7 @@
 ## Test ve yayın durumu
 
 - Yerel ortamda Godot CLI/editor yok; doğrulama Godot 4.4.1 GitHub Actions üzerinden yapılıyor.
-- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 68/68 sözleşme ve hareket kontrolü, ve Web export adımlarının tümünü geçti.
+- CI run 39385190445 (https://github.com/rizaaltun/catpat-godot/actions/runs/39385190445) Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 68/68 sözleşme ve hareket kontrolü, ve Web export adımlarının tümünü geçti.
 - B01 `--v9-test` (V9 chapter suite), B02 `--v10-test` (V10 river suite), B03 `--v13-test` (V12 garden suite) gerçek sahne ve fizik üstünde otomatik hareket/etkileşim rotalarını yürüttü; her suite başarı mesajı verdi ve CI adımı exit code 0 ile tamamlandı. Bu, otomatik headless rotalara kanıttır; cihazda elle oynanış ya da görsel QA değildir.
 - B04 `root_transition.gd` ve `root_main_quest.gd` geçiş/ana görev kontrolleri geçti; B04 parkurunun bütün alternatif oyuncu rotaları ve fiziksel cihaz testi ayrı doğrulanmadı.
 - `tests/save_test.gd` ayrıca B01-B04 giriş/orta/çıkış veya banka kayıt noktalarını, ankrajları ve geçersiz kayıt noktalarını doğruluyor (run 39277080713).
@@ -41,7 +41,7 @@
 
 ## Sıradaki işler
 
-1. B04 parkurunun kalan elle/cihaz rotalarını ve B05'in gerçek hareketle tam rotasını, düşme/kurtarma ve ekran oranlarını Godot viewport'unda doğrula.
+1. B04 parkurunun kalan elle/cihaz rotalarını ve B05'in diğer istasyon/final rotalarını Godot viewport'unda doğrula.
 2. Festival final alanı, arkadaş animasyonları, dokunmatik basılı tutma ve pause/devam için viewport/video QA'sı üret.
 3. Epsilon rehberine göre ortak oyun kataloğu, beceri sözlüğü ve gözlem şeması eksiklerini kapat; görev bayraklarını beceri gelişimi kanıtı gibi sunma.
 4. Pages yayını ve canlı URL'yi kullanıcı yayın ayarını yeniden açtığında tamamla.
