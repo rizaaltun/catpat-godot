@@ -117,7 +117,7 @@
 ## 20 Ekim 2026 — devam oturumu: yayın durumu ve katalog taslağı
 
 - Kullanıcı Türkçe metin sorununun düzeldiğini bildirdi; bu oturumda Windows cihazında yeni görsel yakalama yapılmadı. Son kod düzeltmesi doğrudan `assets/fonts/Baloo2.ttf` kaynağını kullanıyor; CI font ölçüm testini geçiyor.
-- Güncel head `9839de17dc8423dabeefb540db791199f9f1d792`. CI run 39425479868 başarılı: Godot 4.4.1 import, açılış/font/kurtarma, B01–B04 regresyonları, B05, Web export ve Pages dağıtımı.
+- Devam notu eklenirken son doğrulanmış oyun kodu head'i `9839de17dc8423dabeefb540db791199f9f1d792` idi. CI run 39425479868 başarılı: Godot 4.4.1 import, açılış/font/kurtarma, B01–B04 regresyonları, B05, Web export ve Pages dağıtımı.
 - Canlı test bağlantısı: https://rizaaltun.github.io/catpat-godot/ . Doğrudan görsel/touch QA bu oturumda çalıştırılmadı; geçmiş uzak tarayıcı WebGL2 desteklemedi.
 - README'deki “oynanabilir değil / test edilmedi / canlı link yok” bilgisi artık yanlıştı; güncel CI, canlı URL ve kaynak hakları sınırıyla düzeltildi.
 - `production/GAME_PROFILE.md` eklendi. B01–B05 tasarım amacı ve geçici beceri eşlemesi kayıt altına alındı. Kitap künyesi/hedef yaş ve uzman onayı depoda yok; varsayılmadı. Mevcut `quest_flags` yalnızca bölüm ilerlemesidir; beceri gözlemi veya ebeveyn raporu uygulanmış sayılmıyor.
@@ -126,3 +126,11 @@
 
 
 - Düzeltme kaydı: doküman commit'i oluşturulurken ağaç tabanı `517f60d` sürümünden alındığı için son Baloo 2 font fix'ini ve buna bağlı açılış regresyonunu geri almıştı. Bu commit `9839de1` ile doğrulanan `scripts/polish_ui.gd`, `scripts/polish_world.gd` ve `tests/startup_regression.gd` sürümlerini geri yükleyip CI ile yeniden doğruluyor. Bundan sonraki ağaç tabanları her zaman güncel branch head'inden alınmalı.
+
+
+## 20 Ekim 2026 — font düzeltmesi geri yüklendi ve yeniden doğrulandı
+
+- `ba011321` doküman commit'i için yanlışlıkla eski Git tree taban alınmış; ortak font dosyasını ve açılış regresyonunu önceki sürüme döndürmüştü. `c4584a235062210fce8b83a5cecb4434294094b9` bu üç dosyayı `9839de17` doğrulanmış içeriklerine geri aldı: `scripts/polish_ui.gd`, `scripts/polish_world.gd` ve `tests/startup_regression.gd`.
+- Run 39427875628 tamamlandı ve başarılı oldu: import, kayıt/diyalog/çizgi roman, Türkçe font/açılış/kurtarma, B01, B02, B03, B04, B05, Web export ve Pages deploy.
+- Canlı oyun: https://rizaaltun.github.io/catpat-godot/ .
+- Bundan sonraki kod yazımında ağaç tabanı güncel branch head'inden alınmalı; dosya farkları commit öncesi karşılaştırılmalı.
