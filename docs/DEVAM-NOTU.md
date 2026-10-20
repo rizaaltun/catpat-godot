@@ -86,3 +86,13 @@
 - CI run 39414967417 (https://github.com/rizaaltun/catpat-godot/actions/runs/39414967417) Godot importu, kayıt/diyalog/çizgi roman testleri, yeni açılış/font/kurtarma testi, B01, B02, B03, B04, B05 (87 kontrol), Web export ve GitHub Pages dağıtımını başarıyla tamamladı.
 - Canlı oyun: https://rizaaltun.github.io/catpat-godot/ . Bu ortamda Godot canvas'ı görsel olarak oynatacak WebGL2 tarayıcı doğrulaması hâlâ mümkün değil; yeni CI, menünün sahne ağacında gerçekten açıldığını ve başlatma düğmesinin çalıştığını doğruluyor. WebGL2 destekli normal masaüstü tarayıcıda görsel/dokunmatik QA açık.
 - PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar depoya eklenmedi.
+
+
+## 20 Ekim 2026 — kullanıcı tekrar bildirimi ve gerçek etkileşim QA'sı
+
+- Kullanıcı, önceki yayındaki arızaların sürdüğünü bildirdi. Canlı GitHub Pages sekmesi bu çalışma ortamında açıldı; Godot başlangıç hata paneli `WebGL2` desteğinin bulunmadığını bildiriyor. Bu nedenle bu tarayıcıda oyun görüntüsü/etkileşimi doğrulanamıyor; önceki headless CI başarıları bu sınırın yerine geçmez.
+- Godot 4 Web export'u Compatibility renderer ile WebGL 2.0 gerektirir. Resmî Godot 4.4 dokümantasyonu: https://docs.godotengine.org/en/4.4/tutorials/export/exporting_for_web.html
+- Commit `777c3c2aee2b9b85b58f2083d3e2881b095da07a`, Web export'u commit'e özgü JS/WASM/PCK adlarıyla üretir ve ana HTML'e no-cache yönergeleri ekler. Amaç, tarayıcının eski aynı adlı oyun paketini kullanma olasılığını kaldırmak; CI export aşaması üç hash'li dosyayı ve giriş HTML'sini denetledi.
+- B05 önceki sözleşme testi etkileşimi doğrudan `interact()` çağırarak yapıyordu. Gerçek tuş işleyicisi ve görünür eylem düğmesi bu rotadan geçmiyordu. `tests/festival_contract.gd` artık Porsuk için E tuşu işleyicisini; Maymun, Pıtpıt ve final için oyun içi düğme sinyallerini tetikliyor. Bu test değişikliği henüz CI ile doğrulanmadı.
+- Önceki "oyun düzeldi" ifadesi fazla kesin olmuştu: bu araçta WebGL2 olmadığından canlı oyunun görüntüsü ve tıklaması denenmemişti. Geriye kalan QA: yeni yayın sonrası WebGL2 destekli tarayıcıda görsel oynanış ve dokunmatik rotalar.
+- PDF/PSD kitap kaynakları ve hakları doğrulanmamış görseller eklenmedi.
