@@ -134,3 +134,11 @@
 - Run 39427875628 tamamlandı ve başarılı oldu: import, kayıt/diyalog/çizgi roman, Türkçe font/açılış/kurtarma, B01, B02, B03, B04, B05, Web export ve Pages deploy.
 - Canlı oyun: https://rizaaltun.github.io/catpat-godot/ .
 - Bundan sonraki kod yazımında ağaç tabanı güncel branch head'inden alınmalı; dosya farkları commit öncesi karşılaştırılmalı.
+
+
+## 20 Ekim 2026 — B05 dokunmatik kontrolleri
+
+- Godot 4.4 belgeleri standart Button düğmelerinin çoklu dokunmayı desteklemediğini belirtiyor. B05 yön düğmeleri basma/bırakma sinyallerini birleştiriyordu; basılı tutma ve eşzamanlı yön+zıplama güvenilir değildi.
+- B05 oyun kontrolü artık ham parmak olaylarını InputRouter ile okuyor; HUD görselleri korundu. Her parmak başladığı kontrolde kalıyor, yön ve zıplama birlikte çalışıyor. Touch kaynaklı mouse olayı ikinci kez işlenmiyor. Pause ve uygulama odağı kaybı tutulmuş girdileri temizliyor.
+- tests/festival_contract.gd gerçek touch olaylarıyla bırakmadan önce hareketi, eşzamanlı yön/zıplamayı, release davranışını ve Maymun/Pıtpıt etkileşim alanını kontrol edecek biçimde genişletildi.
+- Gerçek cihaz ergonomisi ayrıca kontrol edilmeli; CI sonucu eklenecek.

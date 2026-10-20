@@ -21,6 +21,8 @@ var actor:CharacterBody2D
 var camera:Camera2D
 var hud:Label
 var action_button:Button
+var control_display=preload("res://scripts/core/control_display.gd").new()
+var input_router=preload("res://scripts/core/input_router.gd").new()
 var paused=false
 var blocked=false
 var left_pressed=false
@@ -145,9 +147,14 @@ func build_ui():
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(18,15,935,133),layer)
  hud=UI.label("",Rect2(62,31,850,112),24,layer)
  action_button=UI.button("Etkileşim",Rect2(1025,532,218,80),layer,interact,true)
- UI.button("◀",Rect2(40,594,120,92),layer,func():left_pressed=true).button_up.connect(func():left_pressed=false)
- UI.button("▶",Rect2(175,594,120,92),layer,func():right_pressed=true).button_up.connect(func():right_pressed=false)
- UI.button("Zıpla",Rect2(1030,626,200,74),layer,func():jump_pressed=true,true)
+ var left_control=UI.button("◀",Rect2(40,594,120,92),layer,func():left_pressed=true)
+ var right_control=UI.button("▶",Rect2(175,594,120,92),layer,func():right_pressed=true)
+ var jump_control=UI.button("Zıpla",Rect2(1030,626,200,74),layer,func():jump_pressed=true,true)
+ control_display.bind([left_control,right_control,jump_control,action_button])
+ input_router.bind_controls(left_control.get_rect(),right_control.get_rect(),jump_control.get_rect(),action_button.get_rect())
+ # Read pointer ownership directly so held and simultaneous touch controls work.
+ for control in [left_control,right_control,jump_control,action_button]:
+  control.mouse_filter=Control.MOUSE_FILTER_IGNORE
  UI.button("Duraklat",Rect2(1008,24,230,73),layer,toggle_pause)
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
@@ -185,13 +192,31 @@ func _physics_process(delta):
   var task=TASKS[i];var standing_y=task.platform_y-32.0
   if absf(actor.position.x-task.x)<100 and absf(actor.position.y-standing_y)<74 and actor.is_on_floor():nearest=i
  if nearest!=near_task:near_task=nearest;update_hud()
+func _input(event):
+ if blocked or paused:return
+ if control_display.observe(event):clear_gameplay_inputs()
+ # A touch emits an emulated mouse event too; route the real finger only.
+ if control_display.touch_mode and event is InputEventMouseButton:return
+ if control_display.accepts(event) and input_router.consume(event):
+  left_pressed=input_router.axis<0.0
+  right_pressed=input_router.axis>0.0
+  jump_pressed=input_router.jump_held
+  if input_router.interact_pressed:interact()
+func _notification(what):
+ if what==NOTIFICATION_APPLICATION_FOCUS_OUT:
+  clear_gameplay_inputs()
+  if not blocked and not paused:toggle_pause()
 func _unhandled_input(event):
  if blocked:return
  if event is InputEventKey and event.pressed and not event.echo:
   if event.keycode==KEY_E:interact()
   elif event.keycode==KEY_ESCAPE:toggle_pause()
+func clear_gameplay_inputs():
+ input_router.reset()
+ left_pressed=false;right_pressed=false;jump_pressed=false;action_pressed=false
 func toggle_pause():
  if blocked:return
+ clear_gameplay_inputs()
  paused=not paused
  status="Duraklatıldı. Tekrar basarak devam et." if paused else ""
  update_hud()

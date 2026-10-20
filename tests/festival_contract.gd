@@ -69,6 +69,18 @@ func run():
  await process_frame
  await physics_frame
  check(not playable.blocked and playable.actor!=null,"B05 builds a playable world from the canonical save")
+ var left_touch=InputEventScreenTouch.new();left_touch.index=41;left_touch.position=Vector2(80,640);left_touch.pressed=true
+ var start_x=playable.actor.position.x
+ playable._input(left_touch)
+ check(playable.left_pressed and playable.control_display.touch_mode,"touching the left control engages continuous movement")
+ for frame in 12:await physics_frame
+ check(playable.actor.position.x<start_x,"holding touch moves the player before release")
+ var jump_touch=InputEventScreenTouch.new();jump_touch.index=42;jump_touch.position=Vector2(1120,650);jump_touch.pressed=true
+ playable._input(jump_touch);await physics_frame
+ check(playable.left_pressed and playable.actor.velocity.y<0.0,"two touch pointers hold direction and jump together")
+ left_touch.pressed=false;playable._input(left_touch)
+ jump_touch.pressed=false;playable._input(jump_touch)
+ check(not playable.left_pressed and not playable.right_pressed and not playable.jump_pressed,"releasing touch pointers clears gameplay input")
  check(playable.get_node_or_null("FestivalForestBackdrop")!=null,"B05 uses the authored forest backdrop")
  check(playable.get_node_or_null("FestivalCampArt")!=null,"B05 finale uses the shipped festival camp illustration")
  check(playable.find_children("MossyPlatformArt","Sprite2D",true,false).size()>=10,"B05 platforms use the shipped terrain art")
@@ -100,8 +112,10 @@ func run():
  check(await jump_and_land(playable,20),"B05 jumps the gap toward the Maymun station")
  check(await walk_to(playable,2250.0),"B05 reaches the Maymun station under player control")
  check(playable.near_task==1 and playable.can_interact(),"Maymun station is physically reachable")
- playable.action_button.pressed.emit()
- check(Quest.FESTIVAL_FLAGS in playable.save_data.quest_flags,"on-screen action button completes and saves the Maymun station interaction")
+ var monkey_touch=InputEventScreenTouch.new();monkey_touch.index=43;monkey_touch.position=Vector2(1120,570);monkey_touch.pressed=true
+ playable._input(monkey_touch)
+ check(Quest.FESTIVAL_FLAGS in playable.save_data.quest_flags,"touching the action area completes and saves the Maymun station interaction")
+ monkey_touch.pressed=false;playable._input(monkey_touch)
  var flag_save=service.load_progress(PATH)
  check(flag_save.ok and flag_save.data.checkpoint_id=="b05.flags","flag contribution persists its checkpoint")
  check(await walk_to(playable,2690.0),"B05 crosses the next central bank")
@@ -112,8 +126,10 @@ func run():
  check(await jump_and_land(playable,15),"B05 steps across the final upper gap")
  check(await walk_to(playable,3310.0),"B05 reaches the Pıtpıt station under player control")
  check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is physically reachable")
- playable.action_button.pressed.emit()
- check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"on-screen action button completes the Pıtpıt task and shows the flowers")
+ var rabbit_touch=InputEventScreenTouch.new();rabbit_touch.index=44;rabbit_touch.position=Vector2(1120,570);rabbit_touch.pressed=true
+ playable._input(rabbit_touch)
+ check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"touching the action area completes the Pıtpıt task and shows the flowers")
+ rabbit_touch.pressed=false;playable._input(rabbit_touch)
  var flower_save=service.load_progress(PATH)
  check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
  check(not playable.all_on_stage,"friends begin traveling only after all three contributions")
