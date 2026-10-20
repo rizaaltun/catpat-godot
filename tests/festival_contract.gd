@@ -133,6 +133,17 @@ func run():
  var flower_save=service.load_progress(PATH)
  check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
  check(not playable.all_on_stage,"friends begin traveling only after all three contributions")
+ await process_frame
+ var moving_partner:Sprite2D=playable.partner_sprites[0]
+ var partner_before_pause=moving_partner.position
+ var actor_before_pause:Vector2=playable.actor.position
+ playable.toggle_pause()
+ check(playable.paused,"pause control pauses the active festival journey")
+ for frame in 24:await physics_frame
+ check(moving_partner.position.distance_to(partner_before_pause)<0.01,"partner stage-walk tween stays frozen while paused")
+ check(playable.actor.position.distance_to(actor_before_pause)<0.01,"Catpat physics stays frozen while paused")
+ playable.toggle_pause()
+ check(not playable.paused,"pause control resumes the festival journey")
  await create_timer(5.0).timeout
  await physics_frame
  check(playable.all_on_stage and not playable.gathering_partners,"all three friends reach the stage")

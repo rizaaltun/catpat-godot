@@ -33,6 +33,7 @@ var near_task=-1
 var status=""
 var final_panel:Control
 var partner_sprites:Array=[]
+var partner_tweens:Array[Tween]=[]
 var flower_sprites:Array=[]
 var all_on_stage=false
 var gathering_partners=false
@@ -165,7 +166,7 @@ func build_ui():
   var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
   portrait.scale=Vector2.ONE*84.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],415);final_panel.add_child(portrait)
   UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],453,140,34),20,final_panel)
- UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false,true)
+ UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false;set_partner_tweens_paused(false),true)
  UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()
 func _process(delta):
@@ -218,6 +219,7 @@ func toggle_pause():
  if blocked:return
  clear_gameplay_inputs()
  paused=not paused
+ set_partner_tweens_paused(paused)
  status="Duraklatıldı. Tekrar basarak devam et." if paused else ""
  update_hud()
 func update_hud():
@@ -273,11 +275,13 @@ func gather_partners():
  if gathering_partners or all_on_stage or partner_sprites.size()!=STAGE_ANCHORS.size():return
  gathering_partners=true
  arrived_partners=0
+ partner_tweens.clear()
  for i in partner_sprites.size():
   var art:Sprite2D=partner_sprites[i]
   var target:Vector2=STAGE_ANCHORS[i]
   var duration=maxf(0.4,absf(target.x-art.position.x)/800.0)
   var tween=create_tween()
+  partner_tweens.append(tween)
   tween.tween_property(art,"position:x",target.x,duration).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
   tween.tween_property(art,"position:y",target.y,0.22)
   tween.tween_callback(partner_arrived.bind(i))
@@ -289,8 +293,14 @@ func partner_arrived(index:int):
   all_on_stage=true
   status="Arkadaşlar sahnede. Final ışığını açabilirsin."
   update_hud()
+func set_partner_tweens_paused(should_pause:bool):
+ for tween in partner_tweens:
+  if not is_instance_valid(tween) or not tween.is_valid():continue
+  if should_pause:tween.pause()
+  else:tween.play()
 func show_final():
  paused=true
+ set_partner_tweens_paused(true)
  if is_instance_valid(final_panel):final_panel.show()
 func go_menu():
  get_tree().set_meta("journey_save_path",save_path)
