@@ -74,3 +74,15 @@
 - Canlı oyun: https://rizaaltun.github.io/catpat-godot/. Tarayıcı sayfası açıldı ve başlık `Çatpat: Festival Yolu` olarak doğrulandı.
 - Kullanılan doğrulama tarayıcısı WebGL2 desteği sağlamadığı için Godot canvas'ı bu tarayıcıda başlatamadı. Bu, bu tarayıcı ortamındaki WebGL2 kısıtıdır; B01–B04 regresyonları, B05'in 87 kontrolü ve Godot Web export CI'da başarılıdır. Kullanıcının WebGL2 destekli güncel masaüstü tarayıcısında oyun etkileşimi ayrıca denenmeli.
 - PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar yayımlanmadı.
+
+
+## 20 Ekim 2026 — açılış, Türkçe yazılar ve görev kurtarma
+
+- Kullanıcı geri bildirimi: oyunda bazı yazılar görünmüyor, görev tamamlanmıyor ve giriş ekranı hatalı.
+- Commit `b3fcb026002fd9d491060aed755b4e6062d8ed7f`, Fredoka fontunun eksik Türkçe glifleri için SIL Open Font License'lı Baloo 2 fallback fontunu ve lisans dosyasını ekledi. Menü başlığı da ortak font oluşturucusuna alındı.
+- Aynı commit'te `_dialogue_done` reddedilen görev olayında artık sessizce çıkmıyor; mevcut ilerlemeyi değiştirmeden oyuncu kontrollerini çözüp kurtarma mesajı gösteriyor.
+- Commit `8fc7398673be2a33186b2ea7bcad1b43f6c25e0f`, açılış ve glif regresyonundaki test-harness Unicode byte dolaşımını açık kod noktalarıyla düzeltti.
+- `tests/startup_regression.gd` 12 Türkçe glifi, başlangıç ana menüsünü, “Yola çık” düğmesinin ilk konuşmayı başlatmasını ve reddedilen görev sonrası kurtarma ekranını denetliyor. Tüm bu kontroller CI'da geçti.
+- CI run 39414967417 (https://github.com/rizaaltun/catpat-godot/actions/runs/39414967417) Godot importu, kayıt/diyalog/çizgi roman testleri, yeni açılış/font/kurtarma testi, B01, B02, B03, B04, B05 (87 kontrol), Web export ve GitHub Pages dağıtımını başarıyla tamamladı.
+- Canlı oyun: https://rizaaltun.github.io/catpat-godot/ . Bu ortamda Godot canvas'ı görsel olarak oynatacak WebGL2 tarayıcı doğrulaması hâlâ mümkün değil; yeni CI, menünün sahne ağacında gerçekten açıldığını ve başlatma düğmesinin çalıştığını doğruluyor. WebGL2 destekli normal masaüstü tarayıcıda görsel/dokunmatik QA açık.
+- PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar depoya eklenmedi.
