@@ -142,8 +142,10 @@ func run():
  check(await jump_and_land(playable,25),"B05 climbs onto the final stage platform")
  check(await walk_to(playable,Festival.FINAL_ANCHOR_X),"B05 reaches the final switch under player control")
  check(playable.can_interact(),"final switch opens after every friend arrives and Catpat reaches it")
- playable.action_button.pressed.emit()
- check(Quest.FESTIVAL_COMPLETE in playable.save_data.quest_flags and playable.save_data.ending_seen,"on-screen action button completes the final interaction and records the ending")
+ var final_touch=InputEventScreenTouch.new();final_touch.index=45;final_touch.position=Vector2(1120,570);final_touch.pressed=true
+ playable._input(final_touch)
+ check(Quest.FESTIVAL_COMPLETE in playable.save_data.quest_flags and playable.save_data.ending_seen,"touching the action area completes the final interaction and records the ending")
+ final_touch.pressed=false;playable._input(final_touch)
  var ending_save=service.load_progress(PATH)
  check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
  check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")

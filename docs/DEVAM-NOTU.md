@@ -142,3 +142,6 @@
 - B05 oyun kontrolü artık ham parmak olaylarını InputRouter ile okuyor; HUD görselleri korundu. Her parmak başladığı kontrolde kalıyor, yön ve zıplama birlikte çalışıyor. Touch kaynaklı mouse olayı ikinci kez işlenmiyor. Pause ve uygulama odağı kaybı tutulmuş girdileri temizliyor.
 - tests/festival_contract.gd gerçek touch olaylarıyla bırakmadan önce hareketi, eşzamanlı yön/zıplamayı, release davranışını ve Maymun/Pıtpıt etkileşim alanını kontrol edecek biçimde genişletildi.
 - Gerçek cihaz ergonomisi ayrıca kontrol edilmeli; CI sonucu eklenecek.
+
+
+- B05 dokunmatik kontrol uygulaması CI run 39430536599 içinde Godot import, B01–B04, B05 fizik/etkileşim rotaları, Web export ve Pages deploy ile geçti. B05 sonucu 92 kontrol, 0 hata; test basılı parmakla hareketi, aynı anda yön+zıplamayı ve Maymun/Pıtpıt görevlerine touch ile dokunmayı kapsıyor. Final etkileşimi de aynı gerçek touch yolu üzerinden doğrulanacak ek kontrolde.
