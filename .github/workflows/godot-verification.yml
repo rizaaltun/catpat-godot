@@ -65,7 +65,14 @@ jobs:
       - name: Export browser build
         run: |
           mkdir -p build/web
-          godot --headless --path . --export-debug "Web Preview" build/web/index.html
+          build_name="catpat-${GITHUB_SHA}"
+          godot --headless --path . --export-debug "Web Preview" "build/web/${build_name}.html"
+          cp "build/web/${build_name}.html" build/web/index.html
+          python3 -c 'from pathlib import Path; p=Path("build/web/index.html"); s=p.read_text(); assert "<head>" in s; s=s.replace("<head>", "<head>\\n<meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\">\\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\\n<meta http-equiv=\"Expires\" content=\"0\">", 1); p.write_text(s)'
+          grep -q "${build_name}" build/web/index.html
+          test -s "build/web/${build_name}.js"
+          test -s "build/web/${build_name}.wasm"
+          test -s "build/web/${build_name}.pck"
           test -s build/web/index.html
 
       - name: Configure GitHub Pages for a confirmed publish
