@@ -39,3 +39,11 @@ B05'in son sözleşme testi 68 kontrol, 0 hata verdi: istasyon ve kayıt davran�
 - Bu sonuç headless Godot regresyonudur; görsel kalite, animasyon, farklı en-boy oranları ve dokunmatik cihaz testi değildir. Yerel editör/cihaz QA'sı ve B04 elle rota QA'sı açık kalıyor.
 - Web export başarılı; Pages hâlâ kapalı ve canlı tarayıcı URL'si yok. Yayın ayarı daha önce ertelenmişti.
 - Orijinal PDF/PSD ve kitap sayfası taramaları public depoya eklenmedi.
+
+
+## 20 Ekim 2026 — tarayıcı yayını hazırlığı
+
+- Commit `68e1444df4fa1c6330c5f732ee83500d1c4f8e52` Pages dağıtım akışını ekledi. CI run 39390231629 (https://github.com/rizaaltun/catpat-godot/actions/runs/39390231629) B01–B05 doğrulaması ve Web export'u geçti; Pages dağıtımı `publish` seçeneği varsayılan kapalı olduğundan çalıştırılmadı.
+- Canlı test linki henüz yok. İlk yayın için repo Settings > Pages kaynağı `GitHub Actions` seçilmeli; ardından Actions > Godot verification > Run workflow, `work/t22-source-migration` ve `publish=true) seçilerek çalıştırılmalı. Akış tüm doğrulamaları geçtikten sonra yayımlar.
+- Beklenen adres `https://rizaaltun.github.io/catpat-godot/`; dağıtım tamamlanıp URL kontrol edilmeden canlı bağlantı olarak paylaşılmamalı.
+- Repo bağlantısı içerik ve Actions yetkisine sahip olsa da Pages ayarını değiştirme aracı sunmuyor. PDF/PSD kitap orijinalleri yayımlanmadı.

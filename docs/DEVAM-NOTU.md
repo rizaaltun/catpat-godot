@@ -55,3 +55,12 @@
 - B01–B04 regresyonları aynı koşuda geçti. Tarayıcı Web export'u da başarıyla üretildi; bu GitHub Pages yayını değildir ve henüz canlı test URL'si yoktur.
 - Bu yeni CI sonucu, yukarıdaki 68/68 B05 kapsam notunu ve istasyon/finalin doğrudan konumlandırmayla sınandığı eski notu geçersiz kılar. Görsel viewport/animasyon QA'sı, gerçek dokunmatik cihaz testi ve B04'ün elle oynanış QA'sı hâlâ açık. Yerel Godot editörü mevcut değil.
 - PDF/PSD kitap orijinalleri ve kitap sayfası taramaları public dala alınmadı.
+
+
+## 20 Ekim 2026 — GitHub Pages dağıtım akışı hazır
+
+- Commit `68e1444df4fa1c6330c5f732ee83500d1c4f8e52` Godot doğrulama akışına isteğe bağlı Pages yayını ekledi. `workflow_dispatch` girdisindeki `publish` varsayılan olarak kapalıdır; yalnızca `work/t22-source-migration` dalında açıkça seçilirse doğrulama başarılı olduktan sonra Web derlemesini Pages'e yollar. Normal CI koşusu dağıtım yapmaz.
+- CI run 39390231629 tüm regresyonları ve Web export'u geçti; Pages yayın adımları kasıtlı olarak atlandı. Henüz canlı oyun URL'si yok.
+- GitHub Actions iş akışının ilk dağıtımı için repo Settings > Pages altında Build and deployment kaynağı `GitHub Actions` yapılmalı ve Actions sekmesinde bu dal seçilip `publish` işaretlenerek akış elle başlatılmalı. GitHub proje bağlantısı kod/Actions yazma yetkisi veriyor; Pages hesap ayarını değiştirecek bir bağlı araç mevcut değil.
+- Bir kez Pages kurulup yayınlandıktan sonra beklenen proje adresi `https://rizaaltun.github.io/catpat-godot/` olur; gerçek dağıtım tamamlanmadan bu adres canlı kabul edilmemeli.
+- PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar yayımlanmadı.
