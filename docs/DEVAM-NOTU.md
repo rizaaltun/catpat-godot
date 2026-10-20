@@ -66,3 +66,11 @@
 - Gerekli repo ayarı: Settings > Environments > `github-pages` > Deployment branches and tags bölümünde yalnızca `work/t22-source-migration` dalına izin ver. Bu değişiklikten sonra başarısız `deploy` işini yeniden çalıştırıp sayfayı doğrula: `https://rizaaltun.github.io/catpat-godot/`.
 - GitHub bağlantısı kaynak ve Actions iş akışına yazabiliyor; ortam dağıtım dalı korumasını değiştiren bir bağlı GitHub aracı bulunmuyor. Bu tek repo ayarı kullanıcı tarafından yapılmalı; kimlik bilgisi istenmemeli.
 - PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar yayımlanmadı.
+
+
+## 20 Ekim 2026 — GitHub Pages canlı
+
+- `github-pages` ortamına `work/t22-source-migration` dalı için izin verildikten sonra run 39398487268'in `deploy` işi yeniden çalıştırıldı ve başarılı tamamlandı: https://github.com/rizaaltun/catpat-godot/actions/runs/39398487268.
+- Canlı oyun: https://rizaaltun.github.io/catpat-godot/. Tarayıcı sayfası açıldı ve başlık `Çatpat: Festival Yolu` olarak doğrulandı.
+- Kullanılan doğrulama tarayıcısı WebGL2 desteği sağlamadığı için Godot canvas'ı bu tarayıcıda başlatamadı. Bu, bu tarayıcı ortamındaki WebGL2 kısıtıdır; B01–B04 regresyonları, B05'in 87 kontrolü ve Godot Web export CI'da başarılıdır. Kullanıcının WebGL2 destekli güncel masaüstü tarayıcısında oyun etkileşimi ayrıca denenmeli.
+- PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar yayımlanmadı.
