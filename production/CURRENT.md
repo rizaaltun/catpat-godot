@@ -11,20 +11,20 @@
 
 ## Açık kalite ve doğrulama kapıları
 
-Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile yapılıyor. CI run 39383518955 B01, B02 ve B03 tam sahne/fizik oyun akışı testlerini; B04 geçiş ve ana görev regresyonlarını; B05 sözleşme testini ve Web export'u geçti. B01-B03 senaryoları Godot headless altında gerçek sahne ve oyuncu hareket simülasyonu kullanıyor; elle cihaz QA'sı sayılmaz. B01-B04 kayıt noktası/ankraj eşleşmesi run 39277080713'te geçti. Eksik Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi; final kayıt ankrajı ve yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi.
+Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile yapılıyor. CI run 39383518955 B01, B02 ve B03 tam sahne/fizik oyun akışı testlerini; B04 geçiş ve ana görev regresyonlarını; B05 68/68 sözleşme/hareket kontrolünü ve Web export'u geçti. B01-B03 senaryoları Godot headless altında gerçek sahne ve oyuncu hareket simülasyonu kullanıyor; elle cihaz QA'sı sayılmaz. B01-B04 kayıt noktası/ankraj eşleşmesi run 39277080713'te geçti. Eksik Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi; final kayıt ankrajı ve yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi.
 
 B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. Bu otomatik kontroller elle oynanan tam parkur ya da görsel QA değildir.
 
 ## Son durum ve doğrulama
 
 - 56 runtime görsel kullanıcı izniyle WebP olarak GitHub dalına eklendi; toplam 25.45 MB. Orijinal PDF/PSD ve kitap sayfası taramaları public depoya alınmadı.
-- B01-B03 tam sahne/fizik rotaları, B04 geçiş/ana görev, B05 sözleşmesi ve Web export: https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955 — başarılı.
+- B01-B03 tam sahne/fizik rotaları, B04 geçiş/ana görev, B05 68/68 sözleşme/hareket kontrolü ve Web export: https://github.com/rizaaltun/catpat-godot/actions/runs/39385190445 — başarılı.
 - B01-B04 kayıt noktası/ankraj eşleşmesi: https://github.com/rizaaltun/catpat-godot/actions/runs/39277080713 — başarılı.
 - GitHub Pages kapalı; kullanıcı canlı yayın ayarını şimdilik erteledi. Hosted tarayıcı testi ve canlı URL açık.
 
 ## Önce yapılacak doğrulama
 
-1. B04'ün tam elle oynanış rotasını ve B05'in gerçek zıplama/düşme/checkpoint toparlanmasını Godot viewport'unda test et.
+1. B04'ün tam elle oynanış rotasını ve B05'in diğer istasyonlara ve final alanına gerçek zıplama rotasını Godot viewport'unda test et; Porsuk platformuna erişim ve son kayıt noktasına düşüş dönüşü headless senaryoda geçti.
 2. Festival final alanı, arkadaş animasyonları ve farklı ekran oranlarını görüntü kaydıyla incele; otomatik headless test görsel kalite onayı değildir.
 3. B05 için dokunmatik basılı tutma, pause/devam ve kaydet/yeniden aç akışını cihazda kontrol et.
 4. Ortak beceri kataloğu, gözlem şeması ve ebeveyn raporu gereksinimlerini Epsilon rehberine göre sürdür; görev işaretlerini gelişim kanıtı olarak sunma.

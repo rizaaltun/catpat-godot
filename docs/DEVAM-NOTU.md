@@ -29,15 +29,15 @@
 ## Test ve yayın durumu
 
 - Yerel ortamda Godot CLI/editor yok; doğrulama Godot 4.4.1 GitHub Actions üzerinden yapılıyor.
-- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 sözleşmesi ve Web export adımlarının tümünü geçti.
+- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 68/68 sözleşme ve hareket kontrolü, ve Web export adımlarının tümünü geçti.
 - B01 `--v9-test` (V9 chapter suite), B02 `--v10-test` (V10 river suite), B03 `--v13-test` (V12 garden suite) gerçek sahne ve fizik üstünde otomatik hareket/etkileşim rotalarını yürüttü; her suite başarı mesajı verdi ve CI adımı exit code 0 ile tamamlandı. Bu, otomatik headless rotalara kanıttır; cihazda elle oynanış ya da görsel QA değildir.
 - B04 `root_transition.gd` ve `root_main_quest.gd` geçiş/ana görev kontrolleri geçti; B04 parkurunun bütün alternatif oyuncu rotaları ve fiziksel cihaz testi ayrı doğrulanmadı.
 - `tests/save_test.gd` ayrıca B01-B04 giriş/orta/çıkış veya banka kayıt noktalarını, ankrajları ve geçersiz kayıt noktalarını doğruluyor (run 39277080713).
-- B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. İlk koşudaki eksik Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 commit'inde eklendi; yeni run 39383518955 bütün kontrolleri ve Web export'u geçti.
+- B05 son koşusu 39385190445 içinde 68 kontrolü, 0 başarısızlıkla geçti. Üç katkı, görev sırası, final, kayıt/yeniden açılışın yanında gerçek fizik adımlarıyla giriş kıyısından Porsuk platformuna iki zıplama ve kayıtlı noktaya gerçek düşüş sonrası dönüş sınandı. Diğer istasyonlar ve final parkuruna geçiş hâlâ testte doğrudan konumlanıyor; tam B05 oyuncu rotası sayılmaz. İlk koşuda eksik kalan Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi.
 - Final sonrası b05.stage kayıt noktası gerçek final platformuna taşındı ve yeniden açılış testi 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 commit'inde eklendi.
 - Kullanıcının 19 Ekim 2026 tarihli izniyle oyunun kullandığı 56 yayımlanabilir WebP görsel public dala eklendi (25.45 MB; 90.13 MB kaynak PNG toplamına göre yaklaşık %72 daha küçük). PDF/PSD kitap orijinalleri ve `preproduction/references/` sayfa taramaları public depoya alınmadı.
 - GitHub Actions Godot Web export'u başarılı oldu. GitHub Pages kapalı; kullanıcı yayın ayarını şimdilik erteledi. Canlı tarayıcı URL'si henüz yok.
-- Görsel viewport/cihaz QA, B04'ün tam elle oynanış rotaları, B05 gerçek hareketle tam rota/düşme-kurtarma ve farklı ekran oranı/dokunmatik kontrolleri hâlâ açık. Headless testler gerçek cihaz testi yerine geçmez.
+- Görsel viewport/cihaz QA, B04'ün tam elle oynanış rotaları, B05'in tüm istasyonları ve finali kapsayan gerçek hareket rotası, viewport/görsel QA ve farklı ekran oranı/dokunmatik kontrolleri hâlâ açık. Headless testler gerçek cihaz testi yerine geçmez.
 
 ## Sıradaki işler
 
