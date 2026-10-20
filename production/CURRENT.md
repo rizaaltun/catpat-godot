@@ -1,4 +1,4 @@
-# T22 çalışma kopyası — B05 Festival Alanı (19 Ekim 2026)
+# T22 çalışma kopyası — B05 Festival Alanı ve bölüm regresyonları (20 Ekim 2026)
 
 Önceki doğrulanmış sürüm: V21 (12 Ekim 2026). Bu çalışma V21 kaynaklarının üzerine yapılmıştır; eski test sonuçları bu değişikliklere aktarılmaz.
 
@@ -11,7 +11,7 @@
 
 ## Açık kalite ve doğrulama kapıları
 
-Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile sürdürülüyor. CI run 39277080713 B01–B04 sahne/kayıt noktası eşleşmelerini ve B04 gerçek geçiş regresyonunu geçti. B05 runtime sözleşmesi run 39277643051 içinde 61 kontrol, 0 başarısızlıkla geçti; log eksik bir Porsuk yürüyüş karesini yakaladı. Asset 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi. Final kayıt ankrajı ve yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi. Son baş commit için CI run 39278911359 devir notu yazılırken sıradaydı; final sonucu henüz doğrulanmadı.
+Yerel ortamda Godot ikilisi yok; Godot 4.4.1 doğrulaması GitHub Actions ile sürdürülüyor. Yeni CI run 39383518955 B01, B02 ve B03 tam sahne/fizik oyun akışı testlerini; B04 geçiş ve ana görev regresyonlarını; B05 sözleşme testini ve Web export'u geçti. B01-B03 senaryoları Godot headless altında gerçek sahne ve oyuncu hareket simülasyonu kullanıyor; elle cihaz QA'sı sayılmaz. B01-B04 kayıt noktası/ankraj eşleşmesi run 39277080713'te geçmişti. Asset 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi; final kayıt ankrajı 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 ile güncellendi.
 
 B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. Bu smoke testi elle oynanan tam parkur ya da görsel QA değildir. Son değişikliklerle birlikte temiz Web export ve log doğrulaması bekleniyor.
 
@@ -25,9 +25,9 @@ B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkp
 
 ## Önce yapılacak doğrulama
 
-1. Run 39278911359 tamamlanınca B05 test çıktısında resource error olmadığını, final checkpoint konumunu, bütün regresyonları ve Web export'u doğrula.
-2. B01–B04 tam rota, B04→B05 geçişinin kullanıcı kontrollü oyuncu akışı, farklı kayıt/geri yükleme ve gerçek dokunmatik kontrollerini sürdür.
-3. B05'i gerçek zıplama/düşme/checkpoint toparlanmasıyla, finalden sonra dolaşma ve farklı ekran oranlarıyla viewport'ta incele.
-4. Tam sahne/animasyon görüntü QA'sını Godot ekran kaydıyla yap; yalnız kaynak ve headless testi profesyonel görsel teslim kanıtı sayma.
+1. B04'ün tam elle oynanış rotasını ve B05'in gerçek zıplama/düşme/checkpoint toparlanmasını Godot viewport'unda test et.
+2. Festival final alanı, arkadaş animasyonları ve farklı ekran oranlarını görüntü kaydıyla incele; otomatik headless test görsel kalite onayı değildir.
+3. B05 için dokunmatik basılı tutma, pause/devam ve kaydet/yeniden aç akışını cihazda kontrol et.
+4. Ortak beceri kataloğu, gözlem şeması ve ebeveyn raporu gereksinimlerini Epsilon rehberine göre sürdür; görev işaretlerini gelişim kanıtı olarak sunma.
 5. Pages yayını ve canlı URL'yi kullanıcı bu adımı yeniden açtığında tamamla.
 
