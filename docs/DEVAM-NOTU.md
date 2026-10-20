@@ -144,4 +144,6 @@
 - Gerçek cihaz ergonomisi ayrıca kontrol edilmeli; CI sonucu eklenecek.
 
 
-- B05 dokunmatik kontrol uygulaması CI run 39430536599 içinde Godot import, B01–B04, B05 fizik/etkileşim rotaları, Web export ve Pages deploy ile geçti. B05 sonucu 92 kontrol, 0 hata; test basılı parmakla hareketi, aynı anda yön+zıplamayı ve Maymun/Pıtpıt görevlerine touch ile dokunmayı kapsıyor. Final etkileşimi de aynı gerçek touch yolu üzerinden doğrulanacak ek kontrolde.
+- B05 dokunmatik kontrol uygulaması CI run 39430536599 içinde Godot import, B01–B04, B05 fizik/etkileşim rotaları, Web export ve Pages deploy ile geçti. B05 sonucu 92 kontrol, 0 hata; test basılı parmakla hareketi, aynı anda yön+zıplamayı ve Maymun/Pıtpıt görevlerine touch ile dokunmayı kapsıyor.
+- Final sahne etkileşimi de son test commit'inde gerçek touch rotasına alındı. CI run 39431638234 B01–B05, web export ve Pages dağıtımını geçti; B05 tekrar 92 kontrol, 0 hata verdi. Final ışığı dokunmayla açıldı, final paneli ve kayıtlı final yeniden açılışı doğrulandı.
+- Canlı test adresi son başarılı dağıtımdan sonra güncel: https://rizaaltun.github.io/catpat-godot/.
