@@ -12,6 +12,28 @@ func check(ok:bool,label:String):
 func clean():
  for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)
 func _initialize():call_deferred("run")
+func walk_to(world, target_x:float, limit:int=240) -> bool:
+ for frame in limit:
+  var dx=target_x-world.actor.position.x
+  world.right_pressed=dx>7.0
+  world.left_pressed=dx< -7.0
+  await physics_frame
+  if absf(target_x-world.actor.position.x)<8.0 and world.actor.is_on_floor():
+   world.right_pressed=false;world.left_pressed=false
+   return true
+ world.right_pressed=false;world.left_pressed=false
+ return false
+func jump_and_land(world, move_frames:int) -> bool:
+ if not world.actor.is_on_floor():return false
+ world.jump_pressed=true;world.right_pressed=true
+ await physics_frame
+ world.jump_pressed=false
+ for frame in range(move_frames-1):await physics_frame
+ world.right_pressed=false
+ for frame in 60:
+  await physics_frame
+  if world.actor.is_on_floor():return true
+ return false
 func run():
  clean()
  check(load("res://scenes/festival.tscn") is PackedScene,"B05 scene and script parse")
@@ -51,16 +73,20 @@ func run():
  check(playable.get_node_or_null("FestivalCampArt")!=null,"B05 finale uses the shipped festival camp illustration")
  check(playable.find_children("MossyPlatformArt","Sprite2D",true,false).size()>=10,"B05 platforms use the shipped terrain art")
  check(playable.flower_sprites.size()==3,"B05 has three completion flower visuals")
- playable.actor.position=Vector2(1150.0,584.0);playable.actor.velocity=Vector2.ZERO
- await physics_frame
- check(not playable.can_interact(),"walking below a station does not complete its task")
- playable.actor.position=Vector2(1150.0,414.0);playable.actor.velocity=Vector2.ZERO
- await physics_frame
- check(playable.near_task==0 and playable.can_interact(),"Porsuk station is reachable from its raised platform")
+ check(await walk_to(playable,730.0),"B05 walks across the entry bank")
+ check(await jump_and_land(playable,32),"B05 jumps from the ground onto the first raised platform")
+ check(absf(playable.actor.position.y-490.0)<8.0,"B05 lands on the first raised platform at its collision height")
+ check(await walk_to(playable,930.0),"B05 traverses the first raised platform")
+ check(await jump_and_land(playable,25),"B05 makes the second jump to the Porsuk station platform")
+ check(await walk_to(playable,1150.0),"B05 walks to the Porsuk station under player control")
+ check(playable.near_task==0 and playable.can_interact(),"Porsuk station is reachable from the raised platform")
  playable.interact()
  check(Quest.FESTIVAL_LIGHT in playable.save_data.quest_flags,"station interaction records the light contribution")
  var station_save=service.load_progress(PATH)
  check(station_save.ok and station_save.data.checkpoint_id=="b05.lights","station contribution persists its checkpoint")
+ playable.actor.position=Vector2(1850.0,720.0);playable.actor.velocity=Vector2(0.0,950.0)
+ for frame in 12:await physics_frame
+ check(playable.actor.position.distance_to(Vector2(1050.0,570.0))<1.0 and playable.actor.velocity==Vector2.ZERO,"B05 real fall returns to the last saved contribution checkpoint")
  playable.actor.position=Vector2(3310.0,422.0);playable.actor.velocity=Vector2.ZERO
  await physics_frame
  check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is reachable from its raised platform")
