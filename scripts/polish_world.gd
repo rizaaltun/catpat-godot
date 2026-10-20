@@ -128,7 +128,7 @@ func show_menu():
 	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
 	UI.label("BİRLİKTE GİDİLEN BİR YOLCULUK",Rect2(85,110,520,35),17,screen,Color("b6dfcf"))
 	var title=UI.label("Çatpat",Rect2(78,140,590,145),120,screen)
-	var display_font=FontVariation.new();display_font.base_font=load("res://assets/fonts/Fredoka.ttf");display_font.variation_opentype={2003265652:650.0}
+	var display_font=UI.font();display_font.variation_opentype={2003265652:650.0}
 	title.add_theme_font_override("font",display_font)
 	title.add_theme_color_override("font_shadow_color",Color("173d38"));title.add_theme_constant_override("shadow_offset_y",5)
 	UI.label("FESTİVAL YOLU",Rect2(87,282,510,55),34,screen,Color("efc97b"))
@@ -266,7 +266,16 @@ func advance_dialogue():
 
 func _dialogue_done(event_id: String, _first: bool):
 	var next=quest_state.copy()
-	if not next.apply(event_id):return
+	if not next.apply(event_id):
+		runner.active=false
+		mode="play"
+		reset_controls()
+		if is_instance_valid(dialogue):dialogue.queue_free()
+		if is_instance_valid(player):player.frozen=false
+		if is_instance_valid(friend):friend.frozen=false
+		clear_screen()
+		show_message("Görev ilerlemesi kaydedilemedi","Son güvenli kaydın korunuyor. Bu konuşma görevi tamamlayamadı; yeniden deneyebilirsin.",Callable(self,"begin_game"))
+		return
 	commit_snapshot(snapshot_for(next),func():
 		if is_instance_valid(dialogue):dialogue.queue_free()
 		mode="play";reset_controls();player.frozen=false;friend.frozen=false

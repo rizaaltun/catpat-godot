@@ -42,6 +42,9 @@ jobs:
       - name: Run comic regression check
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/comic_test.gd
 
+      - name: Run menu, font, and recovery regression check
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/startup_regression.gd
+
       - name: Run B01 full gameplay regression
         run: timeout -k 10s 180s godot --headless --path . res://scenes/polish_v3.tscn -- --v9-test
 
