@@ -105,3 +105,10 @@
 - tests/startup_regression.gd açılış metninin tamamını, tests/festival_contract.gd final metninin içerik bütünlüğünü doğrulayacak şekilde genişletildi.
 - Commit `517f60d239ffeb9b3843a24d81ca99010fd2e498` CI run `39421114316` içinde başarıyla doğrulandı: Godot import/parse, açılış/font/kurtarma, B01–B04 regresyonları, B05 88 kontrolü, Web export ve GitHub Pages dağıtımı geçti. Canlı sayfa: https://rizaaltun.github.io/catpat-godot/.
 - Testler metinlerin sahne ağacında bulunduğunu ve export'un üretildiğini doğrular. Bu oturumun tarayıcısında WebGL2 yok; gerçek piksel çizimi ve yerleşimini gözle kontrol edemedim. WebGL2 destekli tarayıcıda okunurluk kontrolü açık.
+
+
+## 20 Ekim 2026 — Windows ekran görüntüsündeki boş yazılar
+
+- Kullanıcının Windows ekran görüntüsünde arka plan ve düğme kaplamaları görünürken ana başlık, menü yazıları ve düğme etiketlerinin tamamı boştu. Belirti işletim sisteminin kendisinden çok ortak font kaynağının çizilmediğini gösteriyor; Windows nedeni doğrulanmış değil.
+- Ortak arayüz fontu `FontVariation` sarmalayıcısı ve iki değişken ekseni/fallback zinciri yerine tek, depoda bulunan `assets/fonts/Baloo2.ttf` dosyasından doğrudan yükleniyor. Menü başlığındaki ek değişken-font override kaldırıldı.
+- Açılış regresyonuna font kaynağının Türkçe metin için gerçek ölçü döndürdüğü kontrolü eklendi. Windows cihazda görsel doğrulama hâlâ yapılmalı; bu çalışma alanında kullanıcı bilgisayarındaki dosyalar okunamıyor.
