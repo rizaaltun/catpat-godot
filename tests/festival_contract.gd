@@ -91,27 +91,40 @@ func run():
   if absf(playable.actor.position.x-1050.0)<1.0 and playable.actor.position.y<=575.0:
    recovered=true;break
  check(recovered,"B05 real fall returns to the last saved contribution checkpoint; position "+str(playable.actor.position))
- playable.actor.position=Vector2(3310.0,422.0);playable.actor.velocity=Vector2.ZERO
- await physics_frame
- check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is reachable from its raised platform")
- playable.interact()
- check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"flower contribution persists and appears in the world")
- var flower_save=service.load_progress(PATH)
- check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
- playable.actor.position=Vector2(2250.0,433.0);playable.actor.velocity=Vector2.ZERO
- await physics_frame
- check(playable.near_task==1 and playable.can_interact(),"Maymun station is reachable from its raised platform")
+ check(await walk_to(playable,1710.0),"B05 walks the central festival bank")
+ check(await jump_and_land(playable,32),"B05 jumps onto the first Maymun approach platform")
+ check(await walk_to(playable,1930.0),"B05 crosses the first Maymun approach platform")
+ check(await jump_and_land(playable,25),"B05 climbs to the Maymun station height")
+ check(await walk_to(playable,2140.0),"B05 reaches the edge of the Maymun route")
+ check(await jump_and_land(playable,20),"B05 jumps the gap toward the Maymun station")
+ check(await walk_to(playable,2250.0),"B05 reaches the Maymun station under player control")
+ check(playable.near_task==1 and playable.can_interact(),"Maymun station is physically reachable")
  playable.interact()
  check(Quest.FESTIVAL_FLAGS in playable.save_data.quest_flags,"flag contribution persists after a different task order")
  var flag_save=service.load_progress(PATH)
  check(flag_save.ok and flag_save.data.checkpoint_id=="b05.flags","flag contribution persists its checkpoint")
- playable.actor.position=Vector2(Festival.FINAL_ANCHOR_X,442.0);playable.actor.velocity=Vector2.ZERO
- await physics_frame
- check(not playable.all_on_stage and not playable.can_interact(),"final stays locked while friends are traveling")
+ check(await walk_to(playable,2690.0),"B05 crosses the next central bank")
+ check(await jump_and_land(playable,36),"B05 crosses the central gap onto the Pıtpıt approach platform")
+ check(await walk_to(playable,3010.0),"B05 traverses the first Pıtpıt approach platform")
+ check(await jump_and_land(playable,25),"B05 climbs to the Pıtpıt station height")
+ check(await walk_to(playable,3250.0),"B05 crosses the upper Pıtpıt approach")
+ check(await jump_and_land(playable,15),"B05 steps across the final upper gap")
+ check(await walk_to(playable,3310.0),"B05 reaches the Pıtpıt station under player control")
+ check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is physically reachable")
+ playable.interact()
+ check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"flower contribution persists and appears in the world")
+ var flower_save=service.load_progress(PATH)
+ check(flower_save.ok and flower_save.data.checkpoint_id=="b05.flowers","flower contribution persists its checkpoint")
+ check(not playable.all_on_stage,"friends begin traveling only after all three contributions")
  await create_timer(5.0).timeout
  await physics_frame
  check(playable.all_on_stage and not playable.gathering_partners,"all three friends reach the stage")
- check(playable.can_interact(),"final switch opens only after every friend is on stage")
+ check(await walk_to(playable,3590.0),"B05 walks toward the festival stage")
+ check(await jump_and_land(playable,32),"B05 jumps onto the stage approach platform")
+ check(await walk_to(playable,3850.0),"B05 crosses the stage approach platform")
+ check(await jump_and_land(playable,25),"B05 climbs onto the final stage platform")
+ check(await walk_to(playable,Festival.FINAL_ANCHOR_X),"B05 reaches the final switch under player control")
+ check(playable.can_interact(),"final switch opens after every friend arrives and Catpat reaches it")
  playable.interact()
  check(Quest.FESTIVAL_COMPLETE in playable.save_data.quest_flags and playable.save_data.ending_seen,"final contribution and ending are recorded")
  var ending_save=service.load_progress(PATH)
