@@ -153,4 +153,6 @@
 
 - Oyun içi düzeltme: B05'te üç görev tamamlanınca arkadaşları sahneye götüren Godot Tween animasyonları, sahne `paused` durumuna geçse de ilerliyordu. Aktif arkadaş Tween'leri artık pause/resume düğmesiyle birlikte durup devam ediyor; final ekranı da güvenli şekilde donduruyor.
 - `tests/festival_contract.gd` sahneye yürüyüş sürerken duraklatmayı, 24 fizik karesinde arkadaşın ve Catpat'in konumlarının değişmemesini, devam ettikten sonra arkadaşların sahneye varmasını denetliyor.
-- Bu kod commit'inin CI ve Pages dağıtım sonucu eklenecek. Bu not yazılırken yeni CI koşusu henüz başlamadı.
+- Oyun kodu commit'i `28eaab2adde73e39c1bb759bca92f8951e2d26bc`; CI run `39434597233` başarılı tamamlandı: Godot import/parse, kayıt/diyalog/çizgi roman, açılış/font/kurtarma, B01–B04 regresyonları, B05, Web export ve GitHub Pages dağıtımı geçti.
+- B05 fizik/etkileşim sözleşmesi 96 kontrol ve 0 hata verdi. Yeni üç pause kontrolü geçti; devamdan sonra arkadaşların sahneye ulaşması da doğrulandı.
+- Canlı test adresi: https://rizaaltun.github.io/catpat-godot/. Bu ortamda görsel WebGL2 tarayıcı QA'sı ve gerçek cihaz dokunmatik ergonomisi ayrıca denenmeli.
