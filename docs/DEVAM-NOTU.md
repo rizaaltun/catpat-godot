@@ -1,4 +1,4 @@
-# Çatpat devam notu — T22 kaynak aktarımı ve denetim, 19 Ekim 2026
+# Çatpat devam notu — T22 kaynak aktarımı ve test genişletmesi, 20 Ekim 2026
 
 ## Proje ve standartlar
 
@@ -29,12 +29,15 @@
 ## Test ve yayın durumu
 
 - Yerel ortamda Godot CLI/editor yok; doğrulama Godot 4.4.1 GitHub Actions üzerinden yapılıyor.
-- B01–B04 bölüm yöneticisi regresyonu tests/save_test.gd içinde her bölümün giriş/orta/çıkış veya banka kayıt noktasında sahne ve ankraj çözümlemesini, ayrıca geçersiz kayıt noktalarını doğruluyor. CI run 39277080713 geçti. Bu, tam bölüm rotalarının gerçek oyuncu akışında tamamlandığı anlamına gelmez.
+- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, save/dialogue/comic testleri, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 sözleşmesi ve Web export adımlarının tümünü geçti.
+- B01 `--v9-test` (V9 chapter suite), B02 `--v10-test` (V10 river suite), B03 `--v13-test` (V12 garden suite) gerçek sahne ve fizik üstünde otomatik hareket/etkileşim rotalarını yürüttü; üç suite başarı mesajı verdi, CI adımı exit code 0 ile tamamlandı. Bu, otomatikleştirilmiş headless rotalara kanıttır; cihazda elle oynanış ya da görsel QA değildir.
+- B04 `root_transition.gd` ve `root_main_quest.gd` geçiş/ana görev kontrolleri geçti; B04 parkurunun tüm alternatif oyuncu rotaları ve fiziksel cihaz testi ayrı doğrulanmadı.
+- `tests/save_test.gd` ayrıca B01-B04 giriş/orta/çıkış veya banka kayıt noktalarını, ankrajları ve geçersiz kayıt noktalarını doğruluyor (run 39277080713).
 - B05 genişletilmiş oyun-içi sözleşme testi CI run 39277643051 içinde 61 kontrol, 0 başarısızlıkla geçti: üç istasyon, farklı görev sırası, arkadaşların sahneye varışı, final kilidi, final, kayıt ve yeniden açılış. Aynı logda Porsuk yürüyüş karesi res://assets/review-v2/badger-idle.webp eksik uyarısı verdi; dosya 4547a4158a14e9331a2b174a18a76c7d59809133 commit'inde eklendi.
-- Final sonrası b05.stage kayıt noktası gerçek final platformuna taşındı; bu konum için yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 commit'inde eklendi. Asset ve ankrajı kapsayan son CI run 39278911359 not güncellenirken sıradaydı; sonucun tamamlanmasını doğrula.
+- Final sonrası b05.stage kayıt noktası gerçek final platformuna taşındı; bu konum için yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 commit'inde eklendi. Asset ve ankrajı kapsayan son Asset ve ankraj düzeltmelerinden sonraki CI run 39278911359 geçti; daha geniş yeni run 39383518955 de bütün adımları geçti.
 - Kullanıcının 19 Ekim 2026 tarihli izniyle oyunun kullandığı 56 yayımlanabilir WebP görsel public dala eklendi (25.45 MB; 90.13 MB kaynak PNG toplamına göre yaklaşık %72 daha küçük). Orijinal kitap PDF/PSD'leri ve preproduction/references/ sayfa taramaları depoya alınmadı; son dal ağacı denetiminde PDF/PSD/XCF ve kitap sayfası referansı bulunmadı.
-- GitHub Actions Godot Web export'u 39277643051 run'ında başarılı oldu. GitHub Pages kapalı; kullanıcı yayın ayarını şimdilik erteledi. Canlı tarayıcı URL'si henüz yok.
-- Görsel viewport/cihaz QA, B01–B04 tam oynanış rotaları, B05 gerçek hareketle tam rota ve farklı ekran oranı/dokunmatik kontrolleri hâlâ açık. Godot headless kontrolleri gerçek cihaz testi yerine geçmez.
+- GitHub Actions Godot Web export'u run 39383518955 içinde başarılı oldu. GitHub Pages kapalı; kullanıcı yayın ayarını şimdilik erteledi. Canlı tarayıcı URL'si henüz yok.
+- Görsel viewport/cihaz QA, B04'ün tam elle oynanış rotaları, B05 gerçek hareketle tam rota/düşme-kurtarma ve farklı ekran oranı/dokunmatik kontrolleri hâlâ açık. Headless testler gerçek cihaz testi yerine geçmez.
 
 ## Sıradaki işler
 
