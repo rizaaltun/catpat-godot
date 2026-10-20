@@ -34,6 +34,7 @@ var status=""
 var final_panel:Control
 var partner_sprites:Array=[]
 var partner_tweens:Array[Tween]=[]
+var contribution_tweens:Array[Tween]=[]
 var flower_sprites:Array=[]
 var all_on_stage=false
 var gathering_partners=false
@@ -131,6 +132,7 @@ func play_contribution(index:int):
  var art:Sprite2D=partner_sprites[index];var base_y=art.position.y
  art.texture=load(TASKS[index].action);art.scale=Vector2.ONE*108.0/maxf(1.0,art.texture.get_height())
  var tween=create_tween()
+ contribution_tweens.append(tween)
  tween.tween_property(art,"position:y",base_y-26.0,0.20).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
  tween.tween_property(art,"position:y",base_y,0.20).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
  tween.tween_callback(restore_partner.bind(index))
@@ -294,7 +296,10 @@ func partner_arrived(index:int):
   status="Arkadaşlar sahnede. Final ışığını açabilirsin."
   update_hud()
 func set_partner_tweens_paused(should_pause:bool):
- for tween in partner_tweens:
+ pause_tween_list(partner_tweens,should_pause)
+ pause_tween_list(contribution_tweens,should_pause)
+func pause_tween_list(tweens:Array[Tween],should_pause:bool):
+ for tween in tweens:
   if not is_instance_valid(tween) or not tween.is_valid():continue
   if should_pause:tween.pause()
   else:tween.play()

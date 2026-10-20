@@ -136,11 +136,14 @@ func run():
  await process_frame
  var moving_partner:Sprite2D=playable.partner_sprites[0]
  var partner_before_pause=moving_partner.position
+ var contributing_partner:Sprite2D=playable.partner_sprites[2]
+ var contribution_before_pause=contributing_partner.position
  var actor_before_pause:Vector2=playable.actor.position
  playable.toggle_pause()
  check(playable.paused,"pause control pauses the active festival journey")
  for frame in 24:await physics_frame
  check(moving_partner.position.distance_to(partner_before_pause)<0.01,"partner stage-walk tween stays frozen while paused")
+ check(contributing_partner.position.distance_to(contribution_before_pause)<0.01,"task contribution animation stays frozen while paused")
  check(playable.actor.position.distance_to(actor_before_pause)<0.01,"Catpat physics stays frozen while paused")
  playable.toggle_pause()
  check(not playable.paused,"pause control resumes the festival journey")
