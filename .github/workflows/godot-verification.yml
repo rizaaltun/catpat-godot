@@ -5,6 +5,12 @@ on:
   pull_request:
     branches: ["**"]
   workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the verified Web build to GitHub Pages
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   contents: read
@@ -58,3 +64,28 @@ jobs:
           mkdir -p build/web
           godot --headless --path . --export-debug "Web Preview" build/web/index.html
           test -s build/web/index.html
+
+      - name: Configure GitHub Pages for a confirmed publish
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+        uses: actions/configure-pages@v5
+
+      - name: Upload verified browser build to Pages
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build/web
+
+  deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
