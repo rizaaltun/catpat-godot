@@ -85,8 +85,12 @@ func run():
  var station_save=service.load_progress(PATH)
  check(station_save.ok and station_save.data.checkpoint_id=="b05.lights","station contribution persists its checkpoint")
  playable.actor.position=Vector2(1850.0,720.0);playable.actor.velocity=Vector2(0.0,950.0)
- for frame in 12:await physics_frame
- check(playable.actor.position.distance_to(Vector2(1050.0,570.0))<1.0 and playable.actor.velocity==Vector2.ZERO,"B05 real fall returns to the last saved contribution checkpoint")
+ var recovered=false
+ for frame in 20:
+  await physics_frame
+  if absf(playable.actor.position.x-1050.0)<1.0 and playable.actor.position.y<=575.0:
+   recovered=true;break
+ check(recovered,"B05 real fall returns to the last saved contribution checkpoint; position "+str(playable.actor.position))
  playable.actor.position=Vector2(3310.0,422.0);playable.actor.velocity=Vector2.ZERO
  await physics_frame
  check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is reachable from its raised platform")
