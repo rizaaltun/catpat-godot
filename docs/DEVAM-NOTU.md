@@ -45,3 +45,13 @@
 2. Festival final alanı, arkadaş animasyonları, dokunmatik basılı tutma ve pause/devam için viewport/video QA'sı üret.
 3. Epsilon rehberine göre ortak oyun kataloğu, beceri sözlüğü ve gözlem şeması eksiklerini kapat; görev bayraklarını beceri gelişimi kanıtı gibi sunma.
 4. Pages yayını ve canlı URL'yi kullanıcı yayın ayarını yeniden açtığında tamamla.
+
+
+## 20 Ekim 2026 — B05 tam fizik rotası CI doğrulaması
+
+- Commit: `6acae68141b10e8675fd9477a74059136a144e41` — `test: traverse B05 stations and finale with physics controls`.
+- CI run 39387504240 (https://github.com/rizaaltun/catpat-godot/actions/runs/39387504240) geçti: Godot 4.4.1 import/parse, kayıt/diyalog/çizgi roman testleri, B01, B02, B03 tam oyun akışı, B04 geçiş regresyonları, B05 ve Web export başarılı.
+- B05 artık başlangıç kıyısından Porsuk'a, Maymun istasyonuna, Pıtpıt istasyonuna ve final sahnesine yürüme/zıplama/yerçekimi ile ulaşmayı deniyor. Katkıların ve arkadaşların sahneye varışının ardından final anahtarı, final ekranı, kaydın yeniden açılması ve sahne durumunun geri kurulması doğrulandı. Sonuç: 87 kontrol, 0 hata. Tüm hareketler testte kontrollerle yapıldı; istasyon ve final rotaları testin başında doğrudan konumlanmıyor.
+- B01–B04 regresyonları aynı koşuda geçti. Tarayıcı Web export'u da başarıyla üretildi; bu GitHub Pages yayını değildir ve henüz canlı test URL'si yoktur.
+- Bu yeni CI sonucu, yukarıdaki 68/68 B05 kapsam notunu ve istasyon/finalin doğrudan konumlandırmayla sınandığı eski notu geçersiz kılar. Görsel viewport/animasyon QA'sı, gerçek dokunmatik cihaz testi ve B04'ün elle oynanış QA'sı hâlâ açık. Yerel Godot editörü mevcut değil.
+- PDF/PSD kitap orijinalleri ve kitap sayfası taramaları public dala alınmadı.

@@ -29,3 +29,13 @@ B05'in son sözleşme testi 68 kontrol, 0 hata verdi: istasyon ve kayıt davran�
 3. B05 için dokunmatik basılı tutma, pause/devam ve kaydet/yeniden aç akışını cihazda kontrol et.
 4. Ortak beceri kataloğu, gözlem şeması ve ebeveyn raporu gereksinimlerini Epsilon rehberine göre sürdür; görev işaretlerini gelişim kanıtı olarak sunma.
 5. Pages yayını ve canlı URL'yi kullanıcı bu adımı yeniden açtığında tamamla.
+
+
+## 20 Ekim 2026 güncellemesi — genişletilmiş B05 rotası
+
+- Yeni test commit'i: `6acae68141b10e8675fd9477a74059136a144e41`.
+- CI run 39387504240 başarıyla tamamlandı: B01, B02 ve B03 tam oyun akışı; B04 geçiş/ana görev regresyonu; B05 87 kontrol, 0 hata; Web export.
+- B05 test oyuncusu giriş kıyısından Porsuk, Maymun, Pıtpıt ve final alanına fizik ve kontrol girdileriyle ilerliyor. Üç katkı, arkadaşların sahneye varışı, final anahtarı, final paneli, kaydın yeniden açılması ve arkadaş/çiçek/oyuncu konumlarının geri yüklenmesi test edildi. Önceki 68 kontrollü smoke kapsamı ve test içi doğrudan konumlandırma bu yeni rota kapsamıyla güncellendi.
+- Bu sonuç headless Godot regresyonudur; görsel kalite, animasyon, farklı en-boy oranları ve dokunmatik cihaz testi değildir. Yerel editör/cihaz QA'sı ve B04 elle rota QA'sı açık kalıyor.
+- Web export başarılı; Pages hâlâ kapalı ve canlı tarayıcı URL'si yok. Yayın ayarı daha önce ertelenmişti.
+- Orijinal PDF/PSD ve kitap sayfası taramaları public depoya eklenmedi.
