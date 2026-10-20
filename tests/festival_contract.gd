@@ -131,6 +131,10 @@ func run():
  var ending_save=service.load_progress(PATH)
  check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
  check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")
+ var ending_copy=""
+ for label in playable.final_panel.find_children("*","Label",true,false):
+  if label.text.contains("Yolumu göremediğimde"):ending_copy=label.text
+ check(ending_copy.contains("Köprüyü birlikte tamamladık.") and ending_copy.contains("Çünkü hepimiz buradayız."), "festival finale displays the full restored story ending")
  var final_flags=playable.save_data.quest_flags.duplicate()
  playable.interact()
  check(playable.save_data.quest_flags==final_flags,"completed finale cannot be triggered twice")

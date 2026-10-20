@@ -96,3 +96,10 @@
 - B05 önceki sözleşme testi etkileşimi doğrudan `interact()` çağırarak yapıyordu. Gerçek tuş işleyicisi ve görünür eylem düğmesi bu rotadan geçmiyordu. `tests/festival_contract.gd` artık Porsuk için E tuşu işleyicisini; Maymun, Pıtpıt ve final için oyun içi düğme sinyallerini tetikliyor. CI run 39419422369 içinde B05 sözleşmesi 87 kontrol ve 0 hata ile geçti.
 - Commit `777c3c2aee2b9b85b58f2083d3e2881b095da07a` Web çıktısını commit SHA içeren dosya adlarıyla üretip ana HTML'e no-cache yönergeleri ekledi; CI run 39418462087 export doğrulaması ve Pages dağıtımını geçti. Ardından commit `5768635a6efa612f6039e6d98210ca584a6cad93` B05 kontrollerini gerçek giriş işleyicileriyle sınadı. CI run 39419422369 tüm B01–B05 regresyonlarını, hash'li Web export'u ve Pages dağıtımını geçti. Canlı URL: https://rizaaltun.github.io/catpat-godot/. Önceki "oyun düzeldi" ifadesi fazla kesin olmuştu: bu araçta WebGL2 olmadığından canlı oyunun görüntüsü/tıklaması denenmemişti. Kalan QA: WebGL2 destekli tarayıcıda görsel oynanış ve dokunmatik rotalar.
 - PDF/PSD kitap kaynakları ve hakları doğrulanmamış görseller eklenmedi.
+
+
+## 20 Ekim 2026 — oyun içi hikâye metni aktarım düzeltmesi
+
+- Kullanıcı yeniden bildirdiğinde menüde yalnızca kısa bir slogan bulunduğu ve B05 finalinde senaryo metninin tek satırlık özetle değiştirildiği denetlendi. production/STORY_SCRIPT.json içindeki D00 açılış ve B05 final metinleri runtime arayüzünde kullanılmıyordu.
+- Açılış ekranına D00 senaryosunun üç cümlesi geri eklendi. B05 final paneline arkadaşların yardımını ve birlikte varışı anlatan beş cümle geri eklendi; dar panelde okunması için metin kutusu ve punto düzenlendi.
+- tests/startup_regression.gd açılış metninin tamamını, tests/festival_contract.gd final metninin içerik bütünlüğünü doğrulayacak şekilde genişletildi. CI sonucu ve canlı dağıtım SHA'sı tamamlanınca bu not güncellenecek.
