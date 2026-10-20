@@ -8,7 +8,7 @@ func _initialize():
 
 func _run():
 	var font = UI.font()
-	for codepoint in "ÇĞİÖŞÜçğıöşü".to_utf32_buffer():
+	for codepoint in [0x00C7, 0x011E, 0x0130, 0x00D6, 0x015E, 0x00DC, 0x00E7, 0x011F, 0x0131, 0x00F6, 0x015F, 0x00FC]:
 		_check(font.has_char(codepoint), "Turkish glyph %s is available" % String.chr(codepoint))
 
 	var game = load("res://scenes/polish_v3.tscn").instantiate()
