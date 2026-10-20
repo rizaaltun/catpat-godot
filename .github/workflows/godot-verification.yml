@@ -36,6 +36,15 @@ jobs:
       - name: Run comic regression check
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/comic_test.gd
 
+      - name: Run B01 full gameplay regression
+        run: timeout -k 10s 180s godot --headless --path . res://scenes/polish_v3.tscn -- --v9-test
+
+      - name: Run B02 full gameplay regression
+        run: timeout -k 10s 180s godot --headless --path . res://scenes/river.tscn -- --v10-test
+
+      - name: Run B03 full gameplay regression
+        run: timeout -k 10s 180s godot --headless --path . res://scenes/garden.tscn -- --v13-test
+
       - name: Run B04 transition regression checks
         run: |
           timeout -k 10s 180s godot --headless --path . --script res://preproduction/qa/v21/root_transition.gd
