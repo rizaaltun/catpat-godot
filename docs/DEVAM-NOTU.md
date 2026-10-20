@@ -29,22 +29,19 @@
 ## Test ve yayın durumu
 
 - Yerel ortamda Godot CLI/editor yok; doğrulama Godot 4.4.1 GitHub Actions üzerinden yapılıyor.
-- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, save/dialogue/comic testleri, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 sözleşmesi ve Web export adımlarının tümünü geçti.
-- B01 `--v9-test` (V9 chapter suite), B02 `--v10-test` (V10 river suite), B03 `--v13-test` (V12 garden suite) gerçek sahne ve fizik üstünde otomatik hareket/etkileşim rotalarını yürüttü; üç suite başarı mesajı verdi, CI adımı exit code 0 ile tamamlandı. Bu, otomatikleştirilmiş headless rotalara kanıttır; cihazda elle oynanış ya da görsel QA değildir.
-- B04 `root_transition.gd` ve `root_main_quest.gd` geçiş/ana görev kontrolleri geçti; B04 parkurunun tüm alternatif oyuncu rotaları ve fiziksel cihaz testi ayrı doğrulanmadı.
+- CI run 39383518955 (https://github.com/rizaaltun/catpat-godot/actions/runs/39383518955) Godot import/parse, kayıt/diyalog/çizgi roman regresyonları, B01-B03 tam sahne oyun akışı regresyonları, B04 geçiş/ana görev regresyonları, B05 sözleşmesi ve Web export adımlarının tümünü geçti.
+- B01 `--v9-test` (V9 chapter suite), B02 `--v10-test` (V10 river suite), B03 `--v13-test` (V12 garden suite) gerçek sahne ve fizik üstünde otomatik hareket/etkileşim rotalarını yürüttü; her suite başarı mesajı verdi ve CI adımı exit code 0 ile tamamlandı. Bu, otomatik headless rotalara kanıttır; cihazda elle oynanış ya da görsel QA değildir.
+- B04 `root_transition.gd` ve `root_main_quest.gd` geçiş/ana görev kontrolleri geçti; B04 parkurunun bütün alternatif oyuncu rotaları ve fiziksel cihaz testi ayrı doğrulanmadı.
 - `tests/save_test.gd` ayrıca B01-B04 giriş/orta/çıkış veya banka kayıt noktalarını, ankrajları ve geçersiz kayıt noktalarını doğruluyor (run 39277080713).
-- B05 genişletilmiş oyun-içi sözleşme testi ilk run 39277643051'te 61 kontrolle geçti ve eksik Porsuk yürüyüş karesini yakaladı; görsel 4547a4158a14e9331a2b174a18a76c7d59809133 ile eklendi. Daha yeni run 39383518955 testleri ve Web export'u yeniden geçti; logda eksik kaynak hatası veya başarısız kontrol yok.
-- Final sonrası b05.stage kayıt noktası gerçek final platformuna taşındı; bu konum için yeniden açılış kontrolü 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 commit'inde eklendi. Asset ve ankrajı kapsayan son Asset ve ankraj düzeltmelerinden sonraki CI run 39278911359 geçti; daha geniş yeni run 39383518955 de bütün adımları geçti.
-- Kullanıcının 19 Ekim 2026 tarihli izniyle oyunun kullandığı 56 yayımlanabilir WebP görsel public dala eklendi (25.45 MB; 90.13 MB kaynak PNG toplamına göre yaklaşık %72 daha küçük). Orijinal kitap PDF/PSD'leri ve preproduction/references/ sayfa taramaları depoya alınmadı; son dal ağacı denetiminde PDF/PSD/XCF ve kitap sayfası referansı bulunmadı.
-- GitHub Actions Godot Web export'u run 39383518955 içinde başarılı oldu. GitHub Pages kapalı; kullanıcı yayın ayarını şimdilik erteledi. Canlı tarayıcı URL'si henüz yok.
+- B05'in 61 kontrolü üç katkıyı, alternatif görev sırasını, katkı checkpoint'lerini, arkadaşların final alanına varmasını, final kilidini, ortak finali ve kanonik kayıt/yeniden açılışı sınar. İlk koşudaki eksik Porsuk yürüyüş görseli 4547a4158a14e9331a2b174a18a76c7d59809133 commit'inde eklendi; yeni run 39383518955 bütün kontrolleri ve Web export'u geçti.
+- Final sonrası b05.stage kayıt noktası gerçek final platformuna taşındı ve yeniden açılış testi 22f6cda81eda9554c6fdc22197ed53cdaddbdbf0 commit'inde eklendi.
+- Kullanıcının 19 Ekim 2026 tarihli izniyle oyunun kullandığı 56 yayımlanabilir WebP görsel public dala eklendi (25.45 MB; 90.13 MB kaynak PNG toplamına göre yaklaşık %72 daha küçük). PDF/PSD kitap orijinalleri ve `preproduction/references/` sayfa taramaları public depoya alınmadı.
+- GitHub Actions Godot Web export'u başarılı oldu. GitHub Pages kapalı; kullanıcı yayın ayarını şimdilik erteledi. Canlı tarayıcı URL'si henüz yok.
 - Görsel viewport/cihaz QA, B04'ün tam elle oynanış rotaları, B05 gerçek hareketle tam rota/düşme-kurtarma ve farklı ekran oranı/dokunmatik kontrolleri hâlâ açık. Headless testler gerçek cihaz testi yerine geçmez.
 
 ## Sıradaki işler
 
-1. CI run 39278911359 sonucunu kontrol et; son baştaki asset importu, B05 61+ regresyonu, B01–B04 kayıt noktaları ve Web export temiz geçsin.
-2. B01–B04 tam bölüm rotalarını gerçek Godot oyuncu akışında sürdür; B04→B05 mevcut geçiş regresyonu ve kayıt şema10 korunumu dışındaki gerçek oynanış/cihaz kanıtlarını ayrıca kaydet.
-3. B05’in platformlara gerçek zıplama, düşme/checkpoint dönüşü, final alanına erişim ve tekrar dolaşma rotasını editör/oyuncu testinde doğrula.
-4. Geniş/dar ekran, dokunmatik basılı tutma, pause/devam ve sahne/animasyon görüntüsünü gerçek viewport/device QA ile incele.
-5. Epsilon rehberindeki öğrenme/ebeveyn raporu kapsamını ilerletmeden önce ortak beceri kataloğu ve gözlem şeması eksikliğini belirt; görev bayraklarını gelişim kanıtı gibi sunma.
-6. Pages yayını ve canlı tarayıcı URL'sini kullanıcı yayın ayarını yeniden açtığında sürdür; başarılı Web export'u tarayıcıda ayrıca oyna.
-
+1. B04 parkurunun kalan elle/cihaz rotalarını ve B05'in gerçek hareketle tam rotasını, düşme/kurtarma ve ekran oranlarını Godot viewport'unda doğrula.
+2. Festival final alanı, arkadaş animasyonları, dokunmatik basılı tutma ve pause/devam için viewport/video QA'sı üret.
+3. Epsilon rehberine göre ortak oyun kataloğu, beceri sözlüğü ve gözlem şeması eksiklerini kapat; görev bayraklarını beceri gelişimi kanıtı gibi sunma.
+4. Pages yayını ve canlı URL'yi kullanıcı yayın ayarını yeniden açtığında tamamla.
