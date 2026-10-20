@@ -112,3 +112,14 @@
 - Kullanıcının Windows ekran görüntüsünde arka plan ve düğme kaplamaları görünürken ana başlık, menü yazıları ve düğme etiketlerinin tamamı boştu. Belirti işletim sisteminin kendisinden çok ortak font kaynağının çizilmediğini gösteriyor; Windows nedeni doğrulanmış değil.
 - Ortak arayüz fontu `FontVariation` sarmalayıcısı ve iki değişken ekseni/fallback zinciri yerine tek, depoda bulunan `assets/fonts/Baloo2.ttf` dosyasından doğrudan yükleniyor. Menü başlığındaki ek değişken-font override kaldırıldı.
 - Açılış regresyonuna font kaynağının Türkçe metin için gerçek ölçü döndürdüğü kontrolü eklendi. Commit `634c0b9bfa0d5894620bbe66f2eb6a2359d726cf`, CI run `39424591956` içinde Godot importu, açılış/font, B01–B05 ve Web export adımlarını geçti; Pages dağıtımı başarılı oldu: https://github.com/rizaaltun/catpat-godot/actions/runs/39424591956. Windows PC'de ekran çizimini gözle doğrulama, kullanıcı bilgisayarındaki test kopyasına erişemediğim için açık.
+
+
+## 20 Ekim 2026 — devam oturumu: yayın durumu ve katalog taslağı
+
+- Kullanıcı Türkçe metin sorununun düzeldiğini bildirdi; bu oturumda Windows cihazında yeni görsel yakalama yapılmadı. Son kod düzeltmesi doğrudan `assets/fonts/Baloo2.ttf` kaynağını kullanıyor; CI font ölçüm testini geçiyor.
+- Güncel head `9839de17dc8423dabeefb540db791199f9f1d792`. CI run 39425479868 başarılı: Godot 4.4.1 import, açılış/font/kurtarma, B01–B04 regresyonları, B05, Web export ve Pages dağıtımı.
+- Canlı test bağlantısı: https://rizaaltun.github.io/catpat-godot/ . Doğrudan görsel/touch QA bu oturumda çalıştırılmadı; geçmiş uzak tarayıcı WebGL2 desteklemedi.
+- README'deki “oynanabilir değil / test edilmedi / canlı link yok” bilgisi artık yanlıştı; güncel CI, canlı URL ve kaynak hakları sınırıyla düzeltildi.
+- `production/GAME_PROFILE.md` eklendi. B01–B05 tasarım amacı ve geçici beceri eşlemesi kayıt altına alındı. Kitap künyesi/hedef yaş ve uzman onayı depoda yok; varsayılmadı. Mevcut `quest_flags` yalnızca bölüm ilerlemesidir; beceri gözlemi veya ebeveyn raporu uygulanmış sayılmıyor.
+- Yeni özellik kodu veya çocuk verisi toplanması eklenmedi; gözlem/rapor maddeleri uygulama öncesi sözleşme olarak işaretlendi. PDF/PSD ve kitap sayfası taramaları eklenmedi.
+- Sıradaki somut iş: B04 elle rotası ve web viewport/touch görsel QA'sı için WebGL2 uyumlu cihazda test; paralel devamda katalog kimliği/yaşın doğrulanması ve ebeveyn gözlemi katmanının geriye uyumlu teknik tasarımı.

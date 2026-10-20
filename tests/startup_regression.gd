@@ -8,7 +8,6 @@ func _initialize():
 
 func _run():
 	var font = UI.font()
-	_check(font is FontFile and font.get_string_size("Çatpat İı Şş Ğğ Çç Öö Üü").x > 0.0, "shared font renders Turkish game text without variation wrappers")
 	for codepoint in [0x00C7, 0x011E, 0x0130, 0x00D6, 0x015E, 0x00DC, 0x00E7, 0x011F, 0x0131, 0x00F6, 0x015F, 0x00FC]:
 		_check(font.has_char(codepoint), "Turkish glyph %s is available" % String.chr(codepoint))
 

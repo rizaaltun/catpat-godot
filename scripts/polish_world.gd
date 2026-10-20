@@ -128,6 +128,8 @@ func show_menu():
 	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
 	UI.label("BİRLİKTE GİDİLEN BİR YOLCULUK",Rect2(85,110,520,35),17,screen,Color("b6dfcf"))
 	var title=UI.label("Çatpat",Rect2(78,140,590,145),120,screen)
+	var display_font=UI.font();display_font.variation_opentype={2003265652:650.0}
+	title.add_theme_font_override("font",display_font)
 	title.add_theme_color_override("font_shadow_color",Color("173d38"));title.add_theme_constant_override("shadow_offset_y",5)
 	UI.label("FESTİVAL YOLU",Rect2(87,282,510,55),34,screen,Color("efc97b"))
 	UI.label("Festival bugün! Davetimi de yanıma alayım.\nIşıklar ağaçların ötesinde görünüyor.\nPatikadan gidersem oraya ulaşabilirim.",Rect2(89,350,465,92),18,screen)

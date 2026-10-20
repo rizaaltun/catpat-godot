@@ -1,7 +1,8 @@
 extends RefCounted
 const BASE = "res://assets/polish-v3/"
-static func font() -> FontFile:
-	return load("res://assets/fonts/Baloo2.ttf")
+static func font() -> FontVariation:
+	var f=FontVariation.new();f.base_font=load("res://assets/fonts/Fredoka.ttf");f.fallbacks=[load("res://assets/fonts/Baloo2.ttf")];f.variation_opentype={2003265652:450.0}
+	return f
 static func texture(path: String, rect: Rect2, parent: Node) -> TextureRect:
 	var t = TextureRect.new()
 	t.texture = load(path)

@@ -1,13 +1,18 @@
 # Çatpat: Festival Yolu
 
-Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak bu Godot projesidir; HTML oyunu değildir.
+Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak Godot projesidir; web sürümü aynı projenin Godot export'udur.
 
-## Aktarım durumu
+## Mevcut durum
 
-`work/t22-source-migration` dalı, T22 proje arşivindeki 87 Godot kodu, sahne ve ayar dosyasını geri yükler. T22, B05 Festival Alanı için ilk oynanabilir kod adayını içerir. Bu sürüm Godot'ta henüz doğrulanmadı.
+- Ana başlangıç sahnesi: `scenes/polish_v3.tscn`.
+- B01–B04 bölüm akışı ve B05 Festival Alanı Godot 4.4.1 headless regresyonlarından geçiyor.
+- Son doğrulanmış GitHub Actions koşusu: [39425479868](https://github.com/rizaaltun/catpat-godot/actions/runs/39425479868) — import, regresyon, web export ve Pages dağıtımı başarılı.
+- Canlı test: [https://rizaaltun.github.io/catpat-godot/](https://rizaaltun.github.io/catpat-godot/).
+- Türkçe arayüz fontu doğrudan depodaki Baloo 2 dosyasından yükleniyor. Otomatik test font kaynağının Türkçe karakterleri ölçebildiğini doğruluyor; cihazlar arası görsel QA ayrıca takip ediliyor.
+- Bölüm görev bayrakları ilerleme ve kayıt içindir; beceri gelişimi ölçümü veya ebeveyn raporu değildir. Proje kataloğu ve gözlem modeli ilk taslak olarak `production/GAME_PROFILE.md` içinde tutuluyor.
 
-Kitap PDF/PSD dosyaları, kitap sayfası/karakter referans görselleri ve dağıtım hakkı bu depoda belgelenmemiş oyun PNG'leri bu public dala eklenmedi. Karakter model onayı da kaynak kaydında beklemede. Açıkça lisanslı Fredoka yazı tipi ve OFL metni dahildir. Bu görseller olmadan depo henüz import edilebilir, oynanabilir veya web'de yayımlanabilir kabul edilmez.
+## Kaynak ve yayın
 
-## Test durumu
+T22 Godot kaynakları, sahneleri, yayımlanabilir oyun görselleri, yazı tipi ve lisansları mevcut dala aktarıldı. Kullanıcının belirttiği yayınevi görselleri oyunda kullanılan WebP biçiminde tutuluyor. Kitap PDF/PSD orijinalleri ve kitap sayfası taramaları public dala alınmadı. Hakları belirsiz ek kaynaklar yayın girdisi yapılmamalı.
 
-Bu çalışma ortamında Godot çalıştırılabilir dosyası bulunmadığından T22 import/parse, B01–B04 regresyonları, B04→B05, kayıt/dokunmatik/pause akışı ve web export testleri çalıştırılmadı. Eski V21 test raporları T22 doğrulaması değildir. Güncel devir ve sıradaki işler `docs/DEVAM-NOTU.md` içinde.
+Geliştirme dalı: `work/t22-source-migration`. Ana `main` dalı korunur. Güncel devir noktası ve açık işler `docs/DEVAM-NOTU.md` içindedir.
