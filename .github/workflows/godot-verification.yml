@@ -66,17 +66,17 @@ jobs:
           test -s build/web/index.html
 
       - name: Configure GitHub Pages for a confirmed publish
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/work/t22-source-migration') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration') }}
         uses: actions/configure-pages@v5
 
       - name: Upload verified browser build to Pages
-        if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+        if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/work/t22-source-migration') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration') }}
         uses: actions/upload-pages-artifact@v3
         with:
           path: build/web
 
   deploy:
-    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration' }}
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/work/t22-source-migration') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration') }}
     needs: verify
     runs-on: ubuntu-latest
     permissions:
