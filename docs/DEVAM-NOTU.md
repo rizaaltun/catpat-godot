@@ -57,10 +57,12 @@
 - PDF/PSD kitap orijinalleri ve kitap sayfası taramaları public dala alınmadı.
 
 
-## 20 Ekim 2026 — GitHub Pages dağıtım akışı hazır
+## 20 Ekim 2026 — GitHub Pages dağıtım akışı ve engel
 
-- Commit `68e1444df4fa1c6330c5f732ee83500d1c4f8e52` Godot doğrulama akışına isteğe bağlı Pages yayını ekledi. `workflow_dispatch` girdisindeki `publish` varsayılan olarak kapalıdır; yalnızca `work/t22-source-migration` dalında açıkça seçilirse doğrulama başarılı olduktan sonra Web derlemesini Pages'e yollar. Normal CI koşusu dağıtım yapmaz.
-- CI run 39390231629 tüm regresyonları ve Web export'u geçti; Pages yayın adımları kasıtlı olarak atlandı. Henüz canlı oyun URL'si yok.
-- GitHub Actions iş akışının ilk dağıtımı için repo Settings > Pages altında Build and deployment kaynağı `GitHub Actions` yapılmalı ve Actions sekmesinde bu dal seçilip `publish` işaretlenerek akış elle başlatılmalı. GitHub proje bağlantısı kod/Actions yazma yetkisi veriyor; Pages hesap ayarını değiştirecek bir bağlı araç mevcut değil.
-- Bir kez Pages kurulup yayınlandıktan sonra beklenen proje adresi `https://rizaaltun.github.io/catpat-godot/` olur; gerçek dağıtım tamamlanmadan bu adres canlı kabul edilmemeli.
+- Commit `68e1444df4fa1c6330c5f732ee83500d1c4f8e52` Pages dağıtım adımlarını, `349f3d0cefac826f2d043ff76cdb14c8e7047374` ise `work/t22-source-migration` dalına başarılı push sonrasında otomatik dağıtımı ekledi. Build ve regresyonlar başarılı olmadan Web çıktısı Pages'e gönderilmez.
+- Kullanıcı repo Settings > Pages içinde kaynak olarak `GitHub Actions` seçti.
+- CI run 39397426637 (https://github.com/rizaaltun/catpat-godot/actions/runs/39397426637) Godot 4.4.1 import/parse, kayıt/diyalog/çizgi roman testleri, B01–B04 regresyonları, B05'in 87 kontrolü ve Web export'un tamamını geçti. Pages artifact'i 69.1 MB olarak yüklendi.
+- `deploy` işi GitHub Pages ortam korumasında durduruldu: `work/t22-source-migration` dalı `github-pages` ortamında dağıtıma izinli değil. Dolayısıyla canlı URL henüz doğrulanmadı ve dağıtım gerçekleşmedi.
+- Gerekli repo ayarı: Settings > Environments > `github-pages` > Deployment branches and tags bölümünde yalnızca `work/t22-source-migration` dalına izin ver. Bu değişiklikten sonra başarısız `deploy` işini yeniden çalıştırıp sayfayı doğrula: `https://rizaaltun.github.io/catpat-godot/`.
+- GitHub bağlantısı kaynak ve Actions iş akışına yazabiliyor; ortam dağıtım dalı korumasını değiştiren bir bağlı GitHub aracı bulunmuyor. Bu tek repo ayarı kullanıcı tarafından yapılmalı; kimlik bilgisi istenmemeli.
 - PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar yayımlanmadı.
