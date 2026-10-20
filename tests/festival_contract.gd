@@ -141,12 +141,14 @@ func run():
  var actor_before_pause:Vector2=playable.actor.position
  playable.toggle_pause()
  check(playable.paused,"pause control pauses the active festival journey")
+ check(playable.pause_panel.visible,"pause opens a visible resume overlay")
  for frame in 24:await physics_frame
  check(moving_partner.position.distance_to(partner_before_pause)<0.01,"partner stage-walk tween stays frozen while paused")
  check(contributing_partner.position.distance_to(contribution_before_pause)<0.01,"task contribution animation stays frozen while paused")
  check(playable.actor.position.distance_to(actor_before_pause)<0.01,"Catpat physics stays frozen while paused")
  playable.toggle_pause()
  check(not playable.paused,"pause control resumes the festival journey")
+ check(not playable.pause_panel.visible,"resume closes the pause overlay")
  await create_timer(5.0).timeout
  await physics_frame
  check(playable.all_on_stage and not playable.gathering_partners,"all three friends reach the stage")
@@ -163,6 +165,7 @@ func run():
  var ending_save=service.load_progress(PATH)
  check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
  check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")
+ check(not playable.pause_panel.visible,"festival finale replaces the pause overlay")
  var ending_copy=""
  for label in playable.final_panel.find_children("*","Label",true,false):
   if label.text.contains("Yolumu göremediğimde"):ending_copy=label.text

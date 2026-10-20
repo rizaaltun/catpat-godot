@@ -157,4 +157,5 @@
 - B05 fizik/etkileşim sözleşmesi 96 kontrol ve 0 hata verdi. Yeni üç pause kontrolü geçti; devamdan sonra arkadaşların sahneye ulaşması da doğrulandı.
 - Canlı test adresi: https://rizaaltun.github.io/catpat-godot/. Bu ortamda görsel WebGL2 tarayıcı QA'sı ve gerçek cihaz dokunmatik ergonomisi ayrıca denenmeli.
 
-- Takip commit'i `fix: pause festival contribution animations` ile görev sırasında oynayan kısa arkadaş katkı animasyonlarını da pause kapsamına aldı; test, katkı animasyonunun konumunu duraklama boyunca doğruluyor. CI sonucu eklenecek.
+- Takip commit'i `b4e8f907ecec64eafeffbaa81c7a3977791d28d3` görev katkı animasyonlarını da pause kapsamına aldı. CI run `39436712367` doğrulama işi başarılı: B01–B04 regresyonları, B05 (97 kontrol, 0 hata) ve Web export geçti. İlk Pages deploy denemesi GitHub `updating_pages` durumunda zaman aşımına uğradı; yalnızca deploy işi yeniden çalıştırıldı ve ikinci denemede başarılı oldu. Canlı URL güncel: https://rizaaltun.github.io/catpat-godot/.
+- Devam commit'i `feat: add B05 pause overlay` ile duraklatıldığında karartmalı bir panel ve `Devam et` düğmesi gösterir. Test, panelin açılıp kapanmasını ve final ekranıyla çakışmamasını denetler. CI sonucu bekleniyor.

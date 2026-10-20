@@ -31,6 +31,7 @@ var jump_pressed=false
 var action_pressed=false
 var near_task=-1
 var status=""
+var pause_panel:Control
 var final_panel:Control
 var partner_sprites:Array=[]
 var partner_tweens:Array[Tween]=[]
@@ -159,6 +160,11 @@ func build_ui():
  for control in [left_control,right_control,jump_control,action_button]:
   control.mouse_filter=Control.MOUSE_FILTER_IGNORE
  UI.button("Duraklat",Rect2(1008,24,230,73),layer,toggle_pause)
+ pause_panel=Control.new();pause_panel.name="PausePanel";pause_panel.visible=false;layer.add_child(pause_panel)
+ var pause_shade=ColorRect.new();pause_shade.color=Color(0.03,0.1,0.08,0.82);pause_shade.size=Vector2(1280,720);pause_panel.add_child(pause_shade)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,340),pause_panel)
+ UI.label("Oyun duraklatıldı",Rect2(390,265,500,70),42,pause_panel)
+ UI.button("Devam et",Rect2(440,385,400,82),pause_panel,toggle_pause,true)
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
@@ -168,7 +174,7 @@ func build_ui():
   var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
   portrait.scale=Vector2.ONE*84.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],415);final_panel.add_child(portrait)
   UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],453,140,34),20,final_panel)
- UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false;set_partner_tweens_paused(false),true)
+ UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false;set_partner_tweens_paused(false);pause_panel.hide(),true)
  UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()
 func _process(delta):
@@ -222,6 +228,7 @@ func toggle_pause():
  clear_gameplay_inputs()
  paused=not paused
  set_partner_tweens_paused(paused)
+ if is_instance_valid(pause_panel):pause_panel.visible=paused
  status="Duraklatıldı. Tekrar basarak devam et." if paused else ""
  update_hud()
 func update_hud():
@@ -306,6 +313,7 @@ func pause_tween_list(tweens:Array[Tween],should_pause:bool):
 func show_final():
  paused=true
  set_partner_tweens_paused(true)
+ if is_instance_valid(pause_panel):pause_panel.hide()
  if is_instance_valid(final_panel):final_panel.show()
 func go_menu():
  get_tree().set_meta("journey_save_path",save_path)
