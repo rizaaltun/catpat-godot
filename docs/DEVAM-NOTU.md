@@ -111,4 +111,4 @@
 
 - Kullanıcının Windows ekran görüntüsünde arka plan ve düğme kaplamaları görünürken ana başlık, menü yazıları ve düğme etiketlerinin tamamı boştu. Belirti işletim sisteminin kendisinden çok ortak font kaynağının çizilmediğini gösteriyor; Windows nedeni doğrulanmış değil.
 - Ortak arayüz fontu `FontVariation` sarmalayıcısı ve iki değişken ekseni/fallback zinciri yerine tek, depoda bulunan `assets/fonts/Baloo2.ttf` dosyasından doğrudan yükleniyor. Menü başlığındaki ek değişken-font override kaldırıldı.
-- Açılış regresyonuna font kaynağının Türkçe metin için gerçek ölçü döndürdüğü kontrolü eklendi. Windows cihazda görsel doğrulama hâlâ yapılmalı; bu çalışma alanında kullanıcı bilgisayarındaki dosyalar okunamıyor.
+- Açılış regresyonuna font kaynağının Türkçe metin için gerçek ölçü döndürdüğü kontrolü eklendi. Commit `634c0b9bfa0d5894620bbe66f2eb6a2359d726cf`, CI run `39424591956` içinde Godot importu, açılış/font, B01–B05 ve Web export adımlarını geçti; Pages dağıtımı başarılı oldu: https://github.com/rizaaltun/catpat-godot/actions/runs/39424591956. Windows PC'de ekran çizimini gözle doğrulama, kullanıcı bilgisayarındaki test kopyasına erişemediğim için açık.
