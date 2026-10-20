@@ -123,3 +123,6 @@
 - `production/GAME_PROFILE.md` eklendi. B01–B05 tasarım amacı ve geçici beceri eşlemesi kayıt altına alındı. Kitap künyesi/hedef yaş ve uzman onayı depoda yok; varsayılmadı. Mevcut `quest_flags` yalnızca bölüm ilerlemesidir; beceri gözlemi veya ebeveyn raporu uygulanmış sayılmıyor.
 - Yeni özellik kodu veya çocuk verisi toplanması eklenmedi; gözlem/rapor maddeleri uygulama öncesi sözleşme olarak işaretlendi. PDF/PSD ve kitap sayfası taramaları eklenmedi.
 - Sıradaki somut iş: B04 elle rotası ve web viewport/touch görsel QA'sı için WebGL2 uyumlu cihazda test; paralel devamda katalog kimliği/yaşın doğrulanması ve ebeveyn gözlemi katmanının geriye uyumlu teknik tasarımı.
+
+
+- Düzeltme kaydı: doküman commit'i oluşturulurken ağaç tabanı `517f60d` sürümünden alındığı için son Baloo 2 font fix'ini ve buna bağlı açılış regresyonunu geri almıştı. Bu commit `9839de1` ile doğrulanan `scripts/polish_ui.gd`, `scripts/polish_world.gd` ve `tests/startup_regression.gd` sürümlerini geri yükleyip CI ile yeniden doğruluyor. Bundan sonraki ağaç tabanları her zaman güncel branch head'inden alınmalı.
