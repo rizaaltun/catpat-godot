@@ -159,3 +159,10 @@
 
 - Takip commit'i `b4e8f907ecec64eafeffbaa81c7a3977791d28d3` görev katkı animasyonlarını da pause kapsamına aldı. CI run `39436712367` doğrulama işi başarılı: B01–B04 regresyonları, B05 (97 kontrol, 0 hata) ve Web export geçti. İlk Pages deploy denemesi GitHub `updating_pages` durumunda zaman aşımına uğradı; yalnızca deploy işi yeniden çalıştırıldı ve ikinci denemede başarılı oldu. Canlı URL güncel: https://rizaaltun.github.io/catpat-godot/.
 - Commit `3d0db050c17ed092eb47fd294cd2f5233960abeb` B05'e karartmalı duraklatma paneli ve `Devam et` düğmesi ekledi. CI run `39440972900` Godot importu, kayıt/diyalog/çizgi roman, açılış/font/kurtarma, B01–B04 regresyonları, B05, Web export ve Pages dağıtımını başarıyla tamamladı. B05: 100 kontrol, 0 hata; panelin açılıp kapanması ve final paneliyle çakışmaması doğrulandı. Canlı oyun: https://rizaaltun.github.io/catpat-godot/. Görsel viewport ve gerçek cihaz dokunmatik ergonomisi ayrıca QA bekliyor.
+
+
+## 21 Ekim 2026 — B05 duraklatma menüsünden çıkış
+
+- Commit `68a7639b960b524b264aeeb6710ddbc56351ea65` pause paneline `Ana menü` çıkışını ekledi. Menüye dönmeden önce kanonik ilerleme tekrar yazılıyor ve aynı kayıt yolu ana menüye aktarılıyor.
+- CI run `39577223887` başarılı: B01–B04 regresyonları, B05, web export ve Pages dağıtımı geçti. B05 sözleşmesi 105 kontrol ve 0 hata verdi; çıkış düğmesi bağlantısı, görev bayrakları/checkpoint ve menüye kayıt yolu aktarımı doğrulandı.
+- Canlı oyun güncel: https://rizaaltun.github.io/catpat-godot/. Görsel viewport ve gerçek dokunmatik cihaz QA'sı ayrıca açık.
