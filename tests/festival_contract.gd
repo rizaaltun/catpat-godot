@@ -142,6 +142,15 @@ func run():
  playable.toggle_pause()
  check(playable.paused,"pause control pauses the active festival journey")
  check(playable.pause_panel.visible,"pause opens a visible resume overlay")
+ var pause_menu_exit:Button
+ for button in playable.pause_panel.find_children("*","Button",true,false):
+  if button.text=="Ana menü":pause_menu_exit=button
+ check(is_instance_valid(pause_menu_exit),"pause overlay offers a main menu exit")
+ if is_instance_valid(pause_menu_exit):check(pause_menu_exit.pressed.is_connected(playable.go_menu),"main menu exit is wired to the save-preserving route")
+ check(playable.prepare_menu_return(),"pause exit writes the current canonical progress before leaving")
+ var menu_save=service.load_progress(PATH)
+ check(menu_save.ok and menu_save.data.checkpoint_id=="b05.flowers" and Quest.FESTIVAL_FLOWERS in menu_save.data.quest_flags,"returning from pause preserves the latest checkpoint and completed tasks")
+ check(get_meta("journey_save_path")==PATH,"pause exit hands the same journey save to the main menu")
  for frame in 24:await physics_frame
  check(moving_partner.position.distance_to(partner_before_pause)<0.01,"partner stage-walk tween stays frozen while paused")
  check(contributing_partner.position.distance_to(contribution_before_pause)<0.01,"task contribution animation stays frozen while paused")

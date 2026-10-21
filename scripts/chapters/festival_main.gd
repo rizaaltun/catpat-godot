@@ -165,6 +165,7 @@ func build_ui():
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,340),pause_panel)
  UI.label("Oyun duraklatıldı",Rect2(390,265,500,70),42,pause_panel)
  UI.button("Devam et",Rect2(440,385,400,82),pause_panel,toggle_pause,true)
+ UI.button("Ana menü",Rect2(440,472,400,58),pause_panel,go_menu,true)
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
@@ -315,7 +316,12 @@ func show_final():
  set_partner_tweens_paused(true)
  if is_instance_valid(pause_panel):pause_panel.hide()
  if is_instance_valid(final_panel):final_panel.show()
-func go_menu():
+func prepare_menu_return()->bool:
+ if not Store.new().save(save_path,save_data):
+  status="Kayıt yapılamadı; ilerlemen korunuyor.";update_hud();return false
  get_tree().set_meta("journey_save_path",save_path)
+ return true
+func go_menu():
+ if not prepare_menu_return():return
  var err=get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
  if err!=OK:status="Ana menü açılamadı; kayıt korunuyor.";update_hud()
