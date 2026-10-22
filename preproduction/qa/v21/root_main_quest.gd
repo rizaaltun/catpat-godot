@@ -28,13 +28,16 @@ func dialogue_to_end():
 	for i in 4:
 		await ticks(30)
 		if route.dialogue_active:route.advance_dialogue()
+func at_target(position:Vector2, grounded:bool, point:Vector2) -> bool:
+	return grounded and absf(position.y-point.y)<6 and absf(position.x-point.x)<15
+
 func jump_to(point:Vector2) -> bool:
 	route.player.jump_request=true;route.player.jump_held=true
 	for f in 150:
 		route.steer_to(point.x);await ticks(1)
-		if f>10 and route.player.is_on_floor() and absf(route.player.position.y-point.y)<6 and absf(route.player.position.x-point.x)<15:break
+		if f>10 and at_target(route.player.position,route.player.is_on_floor(),point):break
 	route.player.jump_held=false;route.player.input_axis=0;await ticks(12)
-	return route.player.is_on_floor() and absf(route.player.position.y-point.y)<6
+	return at_target(route.player.position,route.player.is_on_floor(),point)
 func descend_to_lantern():
 	await route.walk_to(650)
 	for i in 1200:
@@ -51,6 +54,7 @@ func run():
 		finish("restore");return
 	for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)
 	create_route();await ticks(45);print("V21 VIDEO READY")
+	check(not at_target(Vector2(120,620),true,Vector2(150,620)),"landing_at_wrong_x_is_not_arrival")
 	var locked=route.carriers[1].position;await ticks(45)
 	check(route.rope_stage=="loose" and route.carriers[1].position==locked,"new_second_carrier_stopped")
 	await route.walk_to(600);route.interact();await ticks(25)
