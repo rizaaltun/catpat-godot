@@ -1,6 +1,6 @@
 # Çatpat oyun profili ve öğrenme/gözlem taslağı
 
-Durum: proje içi ilk taslak; ortak şirket kataloğu veya uzman onayı yerine geçmez. Son gözden geçirme: 20 Ekim 2026.
+Durum: proje içi ilk taslak; ortak şirket kataloğu veya uzman onayı yerine geçmez. Son gözden geçirme: 22 Ekim 2026.
 
 ## Kimlik ve kaynak
 
@@ -34,7 +34,7 @@ Bunlar tasarım niyetidir; çocukta beceri kazanımı veya gerçek yaşam geliş
 
 ## Gözlem sınırı ve rapor durumu
 
-Şu anki kayıtlar `quest_flags`, checkpoint ve bölüm durumu taşır. Bunlar yalnızca belirli oyun içi görevlerin tamamlanmasını gösterir. Deneme sayısı, ipucu kullanımı, strateji, bağlamlar arası aktarım ve ebeveyn görünümü mevcut uygulamada doğrulanmış değildir. Bu yüzden ebeveyn raporu **uygulanmış sayılmaz** ve mevcut bayraklardan gelişim iddiası çıkarılmamalıdır.
+Kayıtlar `quest_flags`, checkpoint ve bölüm durumu taşır; bunlar yalnızca belirli oyun içi görevleri gösterir. Ana menüdeki **Ebeveyn özeti** bu mevcut kayıttan B01–B05 tamamlanma durumlarını ve görev sayaçlarını salt okunur biçimde sunar. Yeni gözlem verisi, kişisel bilgi veya telemetri eklemez. Ekran bunun beceri gelişimi ya da gerçek yaşam davranışı ölçümü olmadığını belirtir. Deneme sayısı, ipucu kullanımı, strateji ve bağlamlar arası aktarım kaydedilmediğinden bunlar hakkında çıkarım yapılmaz. Ortak beceri kimliklerine dayalı kapsamlı ebeveyn raporu henüz uygulanmış değildir.
 
 Önerilen gözlem kaydı uygulama öncesi sözleşmesi:
 

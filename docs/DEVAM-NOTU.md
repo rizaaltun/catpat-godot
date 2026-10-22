@@ -166,3 +166,15 @@
 - Commit `68a7639b960b524b264aeeb6710ddbc56351ea65` pause paneline `Ana menü` çıkışını ekledi. Menüye dönmeden önce kanonik ilerleme tekrar yazılıyor ve aynı kayıt yolu ana menüye aktarılıyor.
 - CI run `39577223887` başarılı: B01–B04 regresyonları, B05, web export ve Pages dağıtımı geçti. B05 sözleşmesi 105 kontrol ve 0 hata verdi; çıkış düğmesi bağlantısı, görev bayrakları/checkpoint ve menüye kayıt yolu aktarımı doğrulandı.
 - Canlı oyun güncel: https://rizaaltun.github.io/catpat-godot/. Görsel viewport ve gerçek dokunmatik cihaz QA'sı ayrıca açık.
+
+
+## 22 Ekim 2026 — B04 denetim düzeltmesi ve ebeveyn ilerleme özeti
+
+- B04 jump_to regresyon yardımcısı artık başarıyı hem hedef x/y konumu hem de zeminde olma koşuluna bağlıyor. Farklı x koordinatında yere inmenin başarı sayılmadığını doğrulayan bir kontrol eklendi.
+- B04 denetim düzeltmesi: commit ac361985d534f8b62ec0c4138af62c735a540e47; CI run [39777841840](https://github.com/rizaaltun/catpat-godot/actions/runs/39777841840) başarılı. B01–B05 regresyonları, Godot importu, Web export ve Pages dağıtımı geçti.
+- Ana menüye, mevcut yerel kayıt şemasından B01–B05 tamamlanma durumlarını ve görev sayaçlarını gösteren salt okunur “Ebeveyn özeti” eklendi. Yeni kişisel veri veya telemetri toplamıyor. Ekran, bunu beceri gelişimi/gerçek yaşam davranışı ölçümü saymadığını açıkça belirtiyor.
+- İlk rapor test koşusu eksik Quest preload’u nedeniyle açılış regresyonunda durdu. Test preload’u eklendi: commit 2ac0ee6d2fb53541ee65289a643ac82b62e993e3.
+- Nihai doğrulama CI run [39779275202](https://github.com/rizaaltun/catpat-godot/actions/runs/39779275202) ile başarılı: import, kayıt/diyalog/çizgi roman, menü/font/kurtarma ve ebeveyn özeti regresyonları, B01–B05, Web export, GitHub Pages deploy.
+- Canlı test: https://rizaaltun.github.io/catpat-godot/.
+- Gerçek piksel/yerleşim incelemesi ve dokunmatik cihaz ergonomisi hâlâ yapılmadı. Bu çalışma tarayıcısında WebGL2 olmadığından canlı oyunun görsel oynanışı doğrulanmış sayılmıyor. B05’te Polygon2D ile çizilen zemin/sahne parçalarının sanat QA’sı ayrıca açık.
+- Sonraki somut iş: web ekran görüntülerinde giriş, pause, görev ve final yerleşimlerini incelemek; ardından WebGL2 masaüstü tarayıcı ve dokunmatik cihazda deneyimi doğrulamak. Kitap künyesi, hedef yaş, ortak oyun kimliği/beceri ID’leri ve karakter onayı katalog sahibi tarafından doğrulanmamış; beceri çıkarımı eklenmedi.
