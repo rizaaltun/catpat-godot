@@ -1,5 +1,6 @@
 extends SceneTree
 
+const Quest = preload("res://scripts/core/quest_state.gd")
 const UI = preload("res://scripts/polish_ui.gd")
 var failures = 0
 
