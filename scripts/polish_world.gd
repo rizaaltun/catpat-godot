@@ -132,11 +132,11 @@ func show_menu():
 	UI.label("FESTİVAL YOLU",Rect2(87,282,510,55),34,screen,Color("efc97b"))
 	UI.label("Festival bugün! Davetimi de yanıma alayım.\nIşıklar ağaçların ötesinde görünüyor.\nPatikadan gidersem oraya ulaşabilirim.",Rect2(89,350,465,92),18,screen)
 	UI.button("Yolculuğa dön" if (FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak")) else "Yola çık",Rect2(84,452,338,72),screen,begin_game,true).grab_focus()
-	UI.button("Nasıl oynanır?",Rect2(76,535,355,76),screen,show_help)
+	UI.button("Nasıl oynanır?",Rect2(76,535,355,58),screen,show_help)
+	UI.button("Ebeveyn özeti",Rect2(76,602,355,50),screen,show_parent_summary)
 	UI.texture("res://assets/review-v2/catpat-idle-r2.webp",Rect2(834,337,300,322),screen)
-	UI.label("PATİKA  ·  DERE  ·  BAHÇE  ·  YAMAÇ",Rect2(88,652,600,30),16,screen,Color("a9d3c4"))
+	UI.label("PATİKA  ·  DERE  ·  BAHÇE  ·  YAMAÇ",Rect2(88,668,600,24),15,screen,Color("a9d3c4"))
 	if (FileAccess.file_exists(save_path) or FileAccess.file_exists(save_path+".bak")):
-		UI.label("Yolculuğun kaldığı yerden devam eder.",Rect2(89,617,490,30),16,screen,Color("c0d7cb"))
 		UI.button("Yeni yolculuk",Rect2(892,640,308,52),screen,confirm_restart)
 
 func show_help():
@@ -146,6 +146,57 @@ func show_help():
 	UI.label("Küçük bir yardım, büyük bir yolculuk",Rect2(610,205,530,90),28,screen)
 	UI.label("A / D veya oklar: yürü\nBoşluk: zıpla · Basılı tut: daha yükseğe\nE: konuş veya görev nesnesini kullan\nEsc: mola\n\nDokunmatik ekranda alttaki düğmeleri kullan.",Rect2(610,302,520,225),22,screen)
 	UI.button("Anladım",Rect2(742,562,255,57),screen,show_menu,true)
+
+func summary_count(state, events:Array) -> int:
+	var total=0
+	for event in events:
+		if state.has(event):total+=1
+	return total
+
+func summary_status(state, complete_event:String, started_events:Array, current_chapter:String, chapter:String) -> String:
+	if state.has(complete_event):return "Tamamlandı"
+	if current_chapter==chapter or summary_count(state,started_events)>0:return "Devam ediyor"
+	return "Henüz başlanmadı"
+
+func show_parent_summary():
+	mode="parent_summary"
+	clear_screen()
+	UI.texture("res://assets/chapter-v5/menu.webp",Rect2(0,0,1280,720),screen)
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(150,46,980,626),screen)
+	UI.label("Ebeveyn özeti",Rect2(245,87,790,55),39,screen,Color("efc97b"))
+	UI.label("Bu cihazdaki kaydedilmiş oyun ilerlemesi",Rect2(248,143,780,32),20,screen,Color("b6dfcf"))
+	var loaded=saves.load_progress(save_path)
+	if not loaded.ok:
+		UI.label("Kayıt okunamadı. Dosyanı değiştirmedim; ana menüden yeniden deneyebilirsin.",Rect2(245,245,790,100),23,screen)
+		UI.button("Ana menüye dön",Rect2(460,560,360,62),screen,show_menu,true)
+		return
+	var data=loaded.data
+	var state=QuestState.new()
+	state.read(data)
+	var lights=summary_count(state,QuestState.LIGHTS)
+	var river=summary_count(state,[QuestState.PLANK,QuestState.ROPE,QuestState.SUPPLIED,QuestState.READY,QuestState.MONKEY])
+	var garden=summary_count(state,[QuestState.TIE,QuestState.RELEASED,QuestState.LOWERED,QuestState.BASKET,QuestState.GARDEN_SUPPLIED,QuestState.PROTECTED,QuestState.RABBIT])
+	var festival=summary_count(state,[QuestState.FESTIVAL_LIGHT,QuestState.FESTIVAL_FLAGS,QuestState.FESTIVAL_FLOWERS])
+	var b01=summary_status(state,QuestState.COMPLETE,[QuestState.ACCEPTED]+QuestState.LIGHTS,data.chapter_id,"B01")
+	var b02=summary_status(state,QuestState.RIVER_COMPLETE,QuestState.RIVER_EVENTS,data.chapter_id,"B02")
+	var b03=summary_status(state,QuestState.GARDEN_COMPLETE,QuestState.GARDEN_EVENTS,data.chapter_id,"B03")
+	var b04=summary_status(state,QuestState.SUMMIT_COMPLETE,[],data.chapter_id,"B04")
+	var b05=summary_status(state,QuestState.FESTIVAL_COMPLETE,QuestState.FESTIVAL_EVENTS,data.chapter_id,"B05")
+	var rows=[
+		"B01 Fenerli Patika — %s · %d/3 fener · %d/5 ışık izi"%[b01,lights,data.collectibles.size()],
+		"B02 Dostluk Deresi — %s · %d/5 köprü ve ekip adımı"%[b02,river],
+		"B03 Papatya Bahçesi — %s · %d/7 bahçe adımı"%[b03,garden],
+		"B04 Rüzgârlı Yamaç — %s · fener, halat ve yön işareti rotası"%[b04],
+		"B05 Festival Alanı — %s · %d/3 hazırlık görevi"%[b05,festival]
+	]
+	var rows_y=220
+	if loaded.get("new",false):
+		UI.label("Henüz kaydedilmiş bir yolculuk yok.",Rect2(248,190,780,34),21,screen)
+		rows_y=232
+	UI.label("\n".join(rows),Rect2(245,rows_y,790,260),20,screen)
+	UI.label("Bu, görev ilerlemesi özetidir; beceri gelişimini veya gerçek yaşam davranışını ölçmez.",Rect2(245,496,790,48),18,screen,Color("b6dfcf"))
+	UI.label("Deneme sayısı, ipucu kullanımı ve beceri değişimi kaydedilmediğinden bunlarla ilgili çıkarım yapılmaz.",Rect2(245,540,790,48),17,screen,Color("b6dfcf"))
+	UI.button("Ana menüye dön",Rect2(460,602,360,54),screen,show_menu,true)
 
 func confirm_restart():
 	clear_screen()
