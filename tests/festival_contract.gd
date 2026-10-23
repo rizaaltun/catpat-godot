@@ -182,15 +182,15 @@ func run():
  check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
  check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")
  check(not playable.pause_panel.visible,"festival finale replaces the pause overlay")
+ var story_lines=[]
+ for i in 5:story_lines.append(playable.final_panel.get_node("FinalStoryLine%d"%i))
  var ending_copy=""
- for label in playable.final_panel.find_children("*","Label",true,false):
-  if label.text.contains("Yolumu göremediğimde"):ending_copy=label.text
+ for line in story_lines:ending_copy+=line.text+"\n"
  check(ending_copy.contains("Köprüyü birlikte tamamladık.") and ending_copy.contains("Çünkü hepimiz buradayız."), "festival finale displays the full restored story ending")
- var final_story:Label=playable.final_panel.get_node("FinalStory")
+ var last_story:Label=story_lines[4]
  var first_portrait:Sprite2D=playable.final_panel.get_node("FinalPortrait0")
- var story_bottom=final_story.position.y+final_story.size.y
+ var story_bottom=last_story.position.y+last_story.size.y
  var portrait_top=first_portrait.position.y-36.0
- print("FINAL_LAYOUT story_bottom=",story_bottom," portrait_top=",portrait_top," sprite_scale=",first_portrait.scale," texture_height=",first_portrait.texture.get_height())
  check(story_bottom<=portrait_top,"festival finale story text ends above the companion portraits")
  var final_flags=playable.save_data.quest_flags.duplicate()
  playable.interact()

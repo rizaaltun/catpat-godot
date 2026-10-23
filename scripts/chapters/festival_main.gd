@@ -176,8 +176,11 @@ func build_ui():
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
  UI.label("Hep birlikte geldik!",Rect2(330,182,665,60),40,final_panel)
- var story=UI.label("Yolumu göremediğimde yanımdaydın.\nKöprüyü birlikte tamamladık.\nHazırladığım süsleri de kurtardık.\nFestival şimdi daha güzel.\nÇünkü hepimiz buradayız.",Rect2(275,247,730,128),17,final_panel)
- story.name="FinalStory"
+ var story_lines=["Yolumu göremediğimde yanımdaydın.","Köprüyü birlikte tamamladık.","Hazırladığım süsleri de kurtardık.","Festival şimdi daha güzel.","Çünkü hepimiz buradayız."]
+ for i in story_lines.size():
+  var story_line=UI.label(story_lines[i],Rect2(275,238+i*26,730,28),17,final_panel)
+  story_line.name="FinalStoryLine%d"%i
+  story_line.autowrap_mode=TextServer.AUTOWRAP_OFF
  for i in TASKS.size():
   var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
   portrait.scale=Vector2.ONE*72.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],416);portrait.name="FinalPortrait%d"%i;final_panel.add_child(portrait)
