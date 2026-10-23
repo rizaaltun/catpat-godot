@@ -83,13 +83,13 @@ func run():
 	game.interact()
 	check(Quest.FESTIVAL_LIGHT in game.save_data.quest_flags, "Porsuk contribution completes through the normal interaction")
 	await capture("task-complete")
-	get_root().size = Vector2i(666, 375)
+	get_root().size = Vector2i(666, 374)
 	game.control_display.touch_mode = true
 	game.control_display.refresh()
 	game.update_controls_hint()
 	await process_frame
 	check(game.control_display.buttons.all(func(button): return button.visible), "small viewport touch controls become visible")
-	await capture("small-touch", Vector2i(666, 375))
+	await capture("small-touch", Vector2i(666, 374))
 	get_root().size = Vector2i(1280, 720)
 	game.control_display.touch_mode = false
 	game.control_display.refresh()
@@ -101,8 +101,8 @@ func run():
 	add_final_flags()
 	check(game.paused and game.final_panel.visible, "festival finale is active for capture")
 	await capture("final")
-	get_root().size = Vector2i(666, 375)
-	await capture("small-final", Vector2i(666, 375))
+	get_root().size = Vector2i(666, 374)
+	await capture("small-final", Vector2i(666, 374))
 	print("B05 VISUAL CAPTURE: %d frames, %d failures" % [captures, failures])
 	clean()
 	quit(1 if failures or captures != 6 else 0)
