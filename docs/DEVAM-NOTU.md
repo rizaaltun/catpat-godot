@@ -186,3 +186,13 @@
 - tests/festival_contract.gd masaüstü ve dokunmatik ipucu metinlerini denetliyor. CI run [39950109447](https://github.com/rizaaltun/catpat-godot/actions/runs/39950109447) başarılı: Godot import, başlangıç/kayıt/diyalog testleri, B01–B04 regresyonları, B05 tam fizik/etkileşim rotası (107 kontrol, 0 hata), Web export ve GitHub Pages dağıtımı geçti.
 - Canlı test: https://rizaaltun.github.io/catpat-godot/ . Bu çalışma tarayıcısında WebGL2 bulunmadığı için oyunun piksel görüntüsü/etkileşimi burada doğrulanamadı; bu kısıt Windows cihazındaki tarayıcının çalışmadığını göstermez.
 - Sonraki görsel QA: WebGL2 destekli tarayıcıda giriş, B05 görevleri, pause ve final ekranlarını 1280×720 ve 666×375 ölçülerinde incele; geometri ve sanat düzenlemesini bu karelere göre yap.
+
+
+## 23 Ekim 2026 — B05 gerçek kare QA ve düzen düzeltmesi
+
+- Önceki bölümlerde kullanılan Godot kare yakalama düzeni B05’e taşındı. Xvfb/llvmpipe ile CI’da giriş, görev tamamlanma, pause ve final ekranı 1280×720 boyutunda çiziliyor; WebP kareler geçici olarak Actions logunda tutuluyor. Görsel dosyaları Git’e eklenmedi, proje ZIP’i oluşturulmadı.
+- Kare incelemesi iki gerçek UI kusurunu yakaladı: Porsuk portresi final hikâyesinin son satırına giriyordu; pause paneli `Ana menü` düğmesinin altında erken bitiyordu. Final senaryosu tek satırlık etiketlere bölünüp portre satırı aşağı alındı; pause kartı uzatıldı. Platform alt dolgusu da ekran karesindeki toprak dokusuna yaklaştırıldı.
+- Commit `f8e306497fd75b6ea820c2c943ab09b4ca60611f` sahne düzenini düzeltti; `d30a00e1db27d03fc381499c85c016a7f8501c1e` sığma regresyonunu ve ekrandan kare yakalamayı doğruladı. CI run [39959692803](https://github.com/rizaaltun/catpat-godot/actions/runs/39959692803) başarılı: Godot import, B01–B04 regresyonları, B05 tam fizik/etkileşim rotası (**109 kontrol, 0 hata**), dört görsel kare, Web export ve Pages dağıtımı geçti.
+- Görsel inceleme sonucu: giriş ekranında HUD/hedef ve kontrol ipucu okunuyor; görev tamamlanma metni görünüyor; pause kartı iki eylemi de içeriyor; final hikâyesi ve üç arkadaş portresi çakışmıyor. B05 platform taban rengi koyu toprak tonuna çekildi.
+- Canlı oyun güncel: https://rizaaltun.github.io/catpat-godot/ . Görsel kareler WebGL2 gerektirmeyen Godot native CI penceresinde alındı. Bu uzak web tarayıcısı WebGL2 sağlamadığından canlı web canvas etkileşimi ayrıca doğrulanamadı.
+- Sonraki adım: aynı kare yakalama QA’sını 666×375 küçük pencerede çalıştırıp HUD, kontrol düğmeleri ve final kartının dar görünümünü doğrula; gerçek dokunmatik ergonomi için cihaz QA’sını ayrıca sürdür.
