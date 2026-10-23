@@ -69,6 +69,11 @@ func run():
  await process_frame
  await physics_frame
  check(not playable.blocked and playable.actor!=null,"B05 builds a playable world from the canonical save")
+ playable.control_display.touch_mode=false;playable.control_display.refresh();playable.update_controls_hint()
+ check(playable.controls_hint.text.contains("Boşluk") and playable.controls_hint.text.contains("Etkileşim: E"),"B05 shows keyboard movement, jump, and interaction hints")
+ playable.control_display.touch_mode=true;playable.control_display.refresh();playable.update_controls_hint()
+ check(playable.controls_hint.text.contains("Dokunmatik") and playable.controls_hint.text.contains("Zıpla düğmesi"),"B05 switches to touch control hints when touch mode is active")
+ playable.control_display.touch_mode=false;playable.control_display.refresh();playable.update_controls_hint()
  var left_touch=InputEventScreenTouch.new();left_touch.index=41;left_touch.position=Vector2(80,640);left_touch.pressed=true
  var start_x=playable.actor.position.x
  playable._input(left_touch)

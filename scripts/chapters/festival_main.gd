@@ -20,6 +20,7 @@ var save_data:Dictionary={}
 var actor:CharacterBody2D
 var camera:Camera2D
 var hud:Label
+var controls_hint:Label
 var action_button:Button
 var control_display=preload("res://scripts/core/control_display.gd").new()
 var input_router=preload("res://scripts/core/input_router.gd").new()
@@ -150,6 +151,9 @@ func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(18,15,935,133),layer)
  hud=UI.label("",Rect2(62,31,850,112),24,layer)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(310,651,660,45),layer)
+ controls_hint=UI.label("",Rect2(326,655,628,34),18,layer)
+ update_controls_hint()
  action_button=UI.button("Etkileşim",Rect2(1025,532,218,80),layer,interact,true)
  var left_control=UI.button("◀",Rect2(40,594,120,92),layer,func():left_pressed=true)
  var right_control=UI.button("▶",Rect2(175,594,120,92),layer,func():right_pressed=true)
@@ -187,6 +191,9 @@ func _process(delta):
  for i in partner_sprites.size():
   var art:Sprite2D=partner_sprites[i]
   art.texture=load(TASKS[i].walk[companion_walk_frame])
+func update_controls_hint():
+ if not is_instance_valid(controls_hint):return
+ controls_hint.text="Hareket: A/D veya ←/→ · Zıpla: Boşluk · Etkileşim: E" if not control_display.touch_mode else "Dokunmatik: oklarla yürü · Zıpla düğmesi · Etkileşim düğmesi"
 func _physics_process(delta):
  if blocked or paused:return
  actor.velocity.y=minf(actor.velocity.y+1350*delta,950)
@@ -204,7 +211,9 @@ func _physics_process(delta):
  if nearest!=near_task:near_task=nearest;update_hud()
 func _input(event):
  if blocked or paused:return
- if control_display.observe(event):clear_gameplay_inputs()
+ if control_display.observe(event):
+  clear_gameplay_inputs()
+  update_controls_hint()
  # A touch emits an emulated mouse event too; route the real finger only.
  if control_display.touch_mode and event is InputEventMouseButton:return
  if control_display.accepts(event) and input_router.consume(event):
