@@ -178,3 +178,11 @@
 - Canlı test: https://rizaaltun.github.io/catpat-godot/.
 - Gerçek piksel/yerleşim incelemesi ve dokunmatik cihaz ergonomisi hâlâ yapılmadı. Bu çalışma tarayıcısında WebGL2 olmadığından canlı oyunun görsel oynanışı doğrulanmış sayılmıyor. B05’te Polygon2D ile çizilen zemin/sahne parçalarının sanat QA’sı ayrıca açık.
 - Sonraki somut iş: web ekran görüntülerinde giriş, pause, görev ve final yerleşimlerini incelemek; ardından WebGL2 masaüstü tarayıcı ve dokunmatik cihazda deneyimi doğrulamak. Kitap künyesi, hedef yaş, ortak oyun kimliği/beceri ID’leri ve karakter onayı katalog sahibi tarafından doğrulanmamış; beceri çıkarımı eklenmedi.
+
+
+## 23 Ekim 2026 — B05 kontrol ipuçları ve doğrulama
+
+- Commit [d71b482](https://github.com/rizaaltun/catpat-godot/commit/d71b4829406c4de85986909193a1fcb0e27e99e6) B05 ekranının altına masaüstü hareket/zıplama/E etkileşimi ipucu ekledi. Dokunmatik girdi algılanınca açıklama ekrandaki yön, zıplama ve etkileşim düğmelerine göre değişiyor.
+- tests/festival_contract.gd masaüstü ve dokunmatik ipucu metinlerini denetliyor. CI run [39950109447](https://github.com/rizaaltun/catpat-godot/actions/runs/39950109447) başarılı: Godot import, başlangıç/kayıt/diyalog testleri, B01–B04 regresyonları, B05 tam fizik/etkileşim rotası (107 kontrol, 0 hata), Web export ve GitHub Pages dağıtımı geçti.
+- Canlı test: https://rizaaltun.github.io/catpat-godot/ . Bu çalışma tarayıcısında WebGL2 bulunmadığı için oyunun piksel görüntüsü/etkileşimi burada doğrulanamadı; bu kısıt Windows cihazındaki tarayıcının çalışmadığını göstermez.
+- Sonraki görsel QA: WebGL2 destekli tarayıcıda giriş, B05 görevleri, pause ve final ekranlarını 1280×720 ve 666×375 ölçülerinde incele; geometri ve sanat düzenlemesini bu karelere göre yap.
