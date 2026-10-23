@@ -59,11 +59,11 @@ jobs:
           timeout -k 10s 180s godot --headless --path . --script res://preproduction/qa/v21/root_transition.gd
           timeout -k 10s 180s godot --headless --path . --script res://preproduction/qa/v21/root_main_quest.gd
 
-      - name: Run B05 save and scene contract
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/festival_contract.gd
-
       - name: Capture B05 rendered viewport for visual review
         run: timeout -k 10s 120s xvfb-run -a godot --path . --rendering-method gl_compatibility --script res://preproduction/qa/v22/festival_capture.gd
+
+      - name: Run B05 save and scene contract
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/festival_contract.gd
 
       - name: Export browser build
         run: |
