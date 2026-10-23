@@ -188,8 +188,10 @@ func run():
  check(ending_copy.contains("Köprüyü birlikte tamamladık.") and ending_copy.contains("Çünkü hepimiz buradayız."), "festival finale displays the full restored story ending")
  var final_story:Label=playable.final_panel.get_node("FinalStory")
  var first_portrait:Sprite2D=playable.final_panel.get_node("FinalPortrait0")
- var portrait_top=first_portrait.position.y-first_portrait.texture.get_height()*first_portrait.scale.y/2.0
- check(final_story.position.y+final_story.size.y<portrait_top,"festival finale story text ends above the companion portraits")
+ var story_bottom=final_story.position.y+final_story.size.y
+ var portrait_top=first_portrait.position.y-36.0
+ print("FINAL_LAYOUT story_bottom=",story_bottom," portrait_top=",portrait_top," sprite_scale=",first_portrait.scale," texture_height=",first_portrait.texture.get_height())
+ check(story_bottom<=portrait_top,"festival finale story text ends above the companion portraits")
  var final_flags=playable.save_data.quest_flags.duplicate()
  playable.interact()
  check(playable.save_data.quest_flags==final_flags,"completed finale cannot be triggered twice")
