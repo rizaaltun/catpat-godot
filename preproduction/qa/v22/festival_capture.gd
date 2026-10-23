@@ -45,7 +45,8 @@ func capture(tag: String, expected_size := Vector2i(1280, 720)):
 	await process_frame
 	await RenderingServer.frame_post_draw
 	var shot = root.get_texture().get_image()
-	check(not shot.is_empty() and shot.get_width() == expected_size.x and shot.get_height() == expected_size.y, tag + " viewport is " + str(expected_size.x) + "x" + str(expected_size.y))
+	print("CAPTURE_DIMENSIONS:" + tag + ":image=" + str(shot.get_size()) + ":window=" + str(DisplayServer.window_get_size()) + ":root=" + str(root.size))
+	check(not shot.is_empty() and root.size == expected_size, tag + " window size is " + str(expected_size.x) + "x" + str(expected_size.y))
 	if shot.is_empty():
 		return
 	var encoded = Marshalls.raw_to_base64(shot.save_webp_to_buffer(true, 0.82))
