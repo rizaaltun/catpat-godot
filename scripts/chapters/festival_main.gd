@@ -167,7 +167,7 @@ func build_ui():
  UI.button("Duraklat",Rect2(1008,24,230,73),layer,toggle_pause)
  pause_panel=Control.new();pause_panel.name="PausePanel";pause_panel.visible=false;layer.add_child(pause_panel)
  var pause_shade=ColorRect.new();pause_shade.color=Color(0.03,0.1,0.08,0.82);pause_shade.size=Vector2(1280,720);pause_panel.add_child(pause_shade)
- pause_card=UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,400),pause_panel)
+ pause_card=UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,430),pause_panel)
  pause_card.name="PauseCard"
  UI.label("Oyun duraklatıldı",Rect2(390,265,500,70),42,pause_panel)
  UI.button("Devam et",Rect2(440,385,400,82),pause_panel,toggle_pause,true)
@@ -175,16 +175,16 @@ func build_ui():
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
- UI.label("Hep birlikte geldik!",Rect2(330,182,665,60),40,final_panel)
+ UI.label("Hep birlikte geldik!",Rect2(330,200,665,60),40,final_panel)
  var story_lines=["Yolumu göremediğimde yanımdaydın.","Köprüyü birlikte tamamladık.","Hazırladığım süsleri de kurtardık.","Festival şimdi daha güzel.","Çünkü hepimiz buradayız."]
  for i in story_lines.size():
-  var story_line=UI.label(story_lines[i],Rect2(275,238+i*26,730,28),17,final_panel)
+  var story_line=UI.label(story_lines[i],Rect2(275,253+i*26,730,28),17,final_panel)
   story_line.name="FinalStoryLine%d"%i
   story_line.autowrap_mode=TextServer.AUTOWRAP_OFF
  for i in TASKS.size():
   var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
-  portrait.scale=Vector2.ONE*72.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],416);portrait.name="FinalPortrait%d"%i;final_panel.add_child(portrait)
-  UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],456,140,32),20,final_panel)
+  portrait.scale=Vector2.ONE*72.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],436);portrait.name="FinalPortrait%d"%i;final_panel.add_child(portrait)
+  UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],476,140,32),20,final_panel)
  UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false;set_partner_tweens_paused(false);pause_panel.hide(),true)
  UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()

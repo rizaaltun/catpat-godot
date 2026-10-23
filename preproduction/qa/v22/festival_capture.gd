@@ -54,7 +54,9 @@ func capture(tag: String):
 	print("VISUAL_CAPTURE:" + tag + ":" + encoded)
 func clean():
 	for suffix in ["", ".bak", ".pending", ".bak.pending", ".legacy"]:
-		DirAccess.remove_absolute(Path + suffix)
+		var absolute = ProjectSettings.globalize_path(Path + suffix)
+		if FileAccess.file_exists(absolute):
+			DirAccess.remove_absolute(absolute)
 func run():
 	clean()
 	var service = Store.new()
