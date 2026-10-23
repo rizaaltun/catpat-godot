@@ -41,11 +41,11 @@ func add_final_flags():
 		game.partner_sprites[i].position = game.STAGE_ANCHORS[i]
 	game.build_station_state()
 	game.show_final()
-func capture(tag: String):
+func capture(tag: String, expected_size := Vector2i(1280, 720)):
 	await process_frame
 	await RenderingServer.frame_post_draw
 	var shot = root.get_texture().get_image()
-	check(not shot.is_empty() and shot.get_width() == 1280 and shot.get_height() == 720, tag + " viewport is 1280x720")
+	check(not shot.is_empty() and shot.get_width() == expected_size.x and shot.get_height() == expected_size.y, tag + " viewport is " + str(expected_size.x) + "x" + str(expected_size.y))
 	if shot.is_empty():
 		return
 	var encoded = Marshalls.raw_to_base64(shot.save_webp_to_buffer(true, 0.82))
@@ -83,6 +83,17 @@ func run():
 	game.interact()
 	check(Quest.FESTIVAL_LIGHT in game.save_data.quest_flags, "Porsuk contribution completes through the normal interaction")
 	await capture("task-complete")
+	get_root().size = Vector2i(666, 375)
+	game.control_display.touch_mode = true
+	game.control_display.refresh()
+	game.update_controls_hint()
+	await process_frame
+	check(game.control_display.buttons.all(func(button): return button.visible), "small viewport touch controls become visible")
+	await capture("small-touch", Vector2i(666, 375))
+	get_root().size = Vector2i(1280, 720)
+	game.control_display.touch_mode = false
+	game.control_display.refresh()
+	game.update_controls_hint()
 	game.toggle_pause()
 	check(game.paused and game.pause_panel.visible, "pause overlay is active for capture")
 	await capture("pause")
@@ -90,6 +101,8 @@ func run():
 	add_final_flags()
 	check(game.paused and game.final_panel.visible, "festival finale is active for capture")
 	await capture("final")
+	get_root().size = Vector2i(666, 375)
+	await capture("small-final", Vector2i(666, 375))
 	print("B05 VISUAL CAPTURE: %d frames, %d failures" % [captures, failures])
 	clean()
-	quit(1 if failures or captures != 4 else 0)
+	quit(1 if failures or captures != 6 else 0)
