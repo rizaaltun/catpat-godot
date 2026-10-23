@@ -33,6 +33,7 @@ var action_pressed=false
 var near_task=-1
 var status=""
 var pause_panel:Control
+var pause_card:TextureRect
 var final_panel:Control
 var partner_sprites:Array=[]
 var partner_tweens:Array[Tween]=[]
@@ -65,7 +66,7 @@ func make_block_screen():
 func make_ground(x:float,width:float,top:float):
  var body=StaticBody2D.new();body.position=Vector2(x+width/2.0,top+36);add_child(body)
  var collision=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(width,72);collision.shape=shape;body.add_child(collision)
- var visual=Polygon2D.new();visual.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,36),Vector2(-width/2,36)]);visual.color=Color("71885b");body.add_child(visual)
+ var visual=Polygon2D.new();visual.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,36),Vector2(-width/2,36)]);visual.color=Color("65533e");body.add_child(visual)
  var trim=Polygon2D.new();trim.polygon=PackedVector2Array([Vector2(-width/2,-36),Vector2(width/2,-36),Vector2(width/2,-23),Vector2(-width/2,-23)]);trim.color=Color("b8bf73");body.add_child(trim)
  var art=Sprite2D.new();art.texture=load(PLATFORM_ART);art.name="MossyPlatformArt"
  var scale_factor=width/maxf(1.0,art.texture.get_width());art.scale=Vector2.ONE*scale_factor
@@ -166,19 +167,21 @@ func build_ui():
  UI.button("Duraklat",Rect2(1008,24,230,73),layer,toggle_pause)
  pause_panel=Control.new();pause_panel.name="PausePanel";pause_panel.visible=false;layer.add_child(pause_panel)
  var pause_shade=ColorRect.new();pause_shade.color=Color(0.03,0.1,0.08,0.82);pause_shade.size=Vector2(1280,720);pause_panel.add_child(pause_shade)
- UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,340),pause_panel)
+ pause_card=UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,190,680,400),pause_panel)
+ pause_card.name="PauseCard"
  UI.label("Oyun duraklatıldı",Rect2(390,265,500,70),42,pause_panel)
  UI.button("Devam et",Rect2(440,385,400,82),pause_panel,toggle_pause,true)
  UI.button("Ana menü",Rect2(440,472,400,58),pause_panel,go_menu,true)
  final_panel=Control.new();final_panel.visible=false;layer.add_child(final_panel)
  var shade=ColorRect.new();shade.color=Color(0.03,0.1,0.08,0.82);shade.size=Vector2(1280,720);final_panel.add_child(shade)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(185,126,910,490),final_panel)
- UI.label("Hep birlikte geldik!",Rect2(330,205,665,66),43,final_panel)
- UI.label("Yolumu göremediğimde yanımdaydın.\nKöprüyü birlikte tamamladık.\nHazırladığım süsleri de kurtardık.\nFestival şimdi daha güzel.\nÇünkü hepimiz buradayız.",Rect2(275,270,730,145),19,final_panel)
+ UI.label("Hep birlikte geldik!",Rect2(330,182,665,60),40,final_panel)
+ var story=UI.label("Yolumu göremediğimde yanımdaydın.\nKöprüyü birlikte tamamladık.\nHazırladığım süsleri de kurtardık.\nFestival şimdi daha güzel.\nÇünkü hepimiz buradayız.",Rect2(275,247,730,128),17,final_panel)
+ story.name="FinalStory"
  for i in TASKS.size():
   var portrait=Sprite2D.new();portrait.texture=load(TASKS[i].idle)
-  portrait.scale=Vector2.ONE*84.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],415);final_panel.add_child(portrait)
-  UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],453,140,34),20,final_panel)
+  portrait.scale=Vector2.ONE*72.0/maxf(1.0,portrait.texture.get_height());portrait.position=Vector2([390.0,640.0,890.0][i],416);portrait.name="FinalPortrait%d"%i;final_panel.add_child(portrait)
+  UI.label(TASKS[i].character,Rect2([320.0,570.0,820.0][i],456,140,32),20,final_panel)
  UI.button("Festivalde dolaş",Rect2(270,526,340,72),final_panel,func():final_panel.hide();paused=false;set_partner_tweens_paused(false);pause_panel.hide(),true)
  UI.button("Kaydet ve ana menü",Rect2(646,526,370,72),final_panel,go_menu)
  if Quest.FESTIVAL_COMPLETE in save_data.quest_flags:show_final()

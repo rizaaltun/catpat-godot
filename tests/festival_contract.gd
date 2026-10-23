@@ -151,7 +151,9 @@ func run():
  for button in playable.pause_panel.find_children("*","Button",true,false):
   if button.text=="Ana menü":pause_menu_exit=button
  check(is_instance_valid(pause_menu_exit),"pause overlay offers a main menu exit")
- if is_instance_valid(pause_menu_exit):check(pause_menu_exit.pressed.is_connected(playable.go_menu),"main menu exit is wired to the save-preserving route")
+ if is_instance_valid(pause_menu_exit):
+  check(pause_menu_exit.pressed.is_connected(playable.go_menu),"main menu exit is wired to the save-preserving route")
+  check(playable.pause_card.get_rect().encloses(pause_menu_exit.get_rect()),"pause card contains the main menu button")
  check(playable.prepare_menu_return(),"pause exit writes the current canonical progress before leaving")
  var menu_save=service.load_progress(PATH)
  check(menu_save.ok and menu_save.data.checkpoint_id=="b05.flowers" and Quest.FESTIVAL_FLOWERS in menu_save.data.quest_flags,"returning from pause preserves the latest checkpoint and completed tasks")
@@ -184,6 +186,10 @@ func run():
  for label in playable.final_panel.find_children("*","Label",true,false):
   if label.text.contains("Yolumu göremediğimde"):ending_copy=label.text
  check(ending_copy.contains("Köprüyü birlikte tamamladık.") and ending_copy.contains("Çünkü hepimiz buradayız."), "festival finale displays the full restored story ending")
+ var final_story:Label=playable.final_panel.get_node("FinalStory")
+ var first_portrait:Sprite2D=playable.final_panel.get_node("FinalPortrait0")
+ var portrait_top=first_portrait.position.y-first_portrait.texture.get_height()*first_portrait.scale.y/2.0
+ check(final_story.position.y+final_story.size.y<portrait_top,"festival finale story text ends above the companion portraits")
  var final_flags=playable.save_data.quest_flags.duplicate()
  playable.interact()
  check(playable.save_data.quest_flags==final_flags,"completed finale cannot be triggered twice")

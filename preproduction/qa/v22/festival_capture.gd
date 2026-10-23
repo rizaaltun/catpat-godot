@@ -72,8 +72,12 @@ func run():
 		return
 	await capture("entry")
 	game.actor.position = Vector2(1150.0, 414.0)
-	await physics_frame
-	check(game.near_task == 0 and game.can_interact(), "Porsuk task is active for task-complete frame")
+	game.actor.velocity = Vector2.ZERO
+	for frame in 60:
+		await physics_frame
+		if game.near_task == 0 and game.can_interact():
+			break
+	check(game.actor.is_on_floor() and game.near_task == 0 and game.can_interact(), "Porsuk task is active from its grounded station for task-complete frame")
 	game.interact()
 	check(Quest.FESTIVAL_LIGHT in game.save_data.quest_flags, "Porsuk contribution completes through the normal interaction")
 	await capture("task-complete")
