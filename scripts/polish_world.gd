@@ -1140,8 +1140,10 @@ func capture_v8_sequence():
 
 func v9_capture(name: String):
 	if "--v9-capture" not in OS.get_cmdline_user_args():return
+	if name not in ["upper-lantern","exit-comic","complete"]:return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v9/"+name+".webp")
+	var frame=get_viewport().get_texture().get_image()
+	print("VISUAL_CAPTURE:B01-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
 
 func capture_v9_sequence():
 	run_v9_test()

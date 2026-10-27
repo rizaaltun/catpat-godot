@@ -328,8 +328,10 @@ func use_action():
 	for i in 5:await get_tree().physics_frame
 func capture(name: String):
 	if "--v10-capture" not in OS.get_cmdline_user_args():return
+	if name not in ["meet-comic","bridge-ready","complete"]:return
 	await RenderingServer.frame_post_draw
-	get_viewport().get_texture().get_image().save_png("res://preproduction/qa/v11/"+name+".webp")
+	var frame=get_viewport().get_texture().get_image()
+	print("VISUAL_CAPTURE:B02-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
 func run_test():
 	for i in 40:await get_tree().physics_frame
 	check(state.has(Quest.COMPLETE) and not state.has(Quest.RIVER_ACCEPTED),"B01 preserved on river entry")

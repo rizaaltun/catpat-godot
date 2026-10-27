@@ -45,11 +45,11 @@ jobs:
       - name: Run menu, font, and recovery regression check
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/startup_regression.gd
 
-      - name: Run B01 full gameplay regression
-        run: timeout -k 10s 180s godot --headless --path . res://scenes/polish_v3.tscn -- --v9-test
+      - name: Run B01 full gameplay regression and capture rendered states
+        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-test --v9-capture
 
-      - name: Run B02 full gameplay regression
-        run: timeout -k 10s 180s godot --headless --path . res://scenes/river.tscn -- --v10-test
+      - name: Run B02 full gameplay regression and capture rendered states
+        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/river.tscn -- --v10-test --v10-capture
 
       - name: Run B03 full gameplay regression
         run: timeout -k 10s 180s godot --headless --path . res://scenes/garden.tscn -- --v13-test
