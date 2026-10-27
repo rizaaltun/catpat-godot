@@ -222,3 +222,19 @@
 1. B05 dokunmatik düğme ergonomisini gerçek telefonda/tablette doğrula; B01–B04 dokunmatik ve dar ekran karelerini genişlet.
 2. WebGL2 destekli masaüstü tarayıcıda canlı Pages oyununu açıp menü, görev tamamlanması, kayıt/devam ve B05 final geçişini elle dene.
 3. Epsilon rehberindeki ortak beceri sözlüğü/katalog kimlikleri kaynak sahibi tarafından doğrulandığında, uygun kayıt ve ebeveyn özeti kapsamını yeniden değerlendir; doğrulanmamış beceri gelişimi iddiası ekleme.
+
+
+## 27 Ekim 2026 — B01–B02 dar ekran ve dokunmatik QA
+
+- B01 ve B02’nin gerçek Godot oyun rotaları, seçilmiş sahne durumlarında 666×374 viewport karesi alacak şekilde genişletildi. Test, dört dokunmatik hareket/etkileşim düğmesinin görünür olduğunu ve 1280×720 mantıksal oyun alanının içinde kaldığını doğruluyor; CI kareleri ölçeklenmiş gerçek pikselleri gösteriyor.
+- B01/B02 alt görev ipucu 669’dan 624 mantıksal Y koordinatına alındı. Küçük ekran karelerinde yazının alt kenara sıkışması görüldü; regresyon, ipucunun 670 çizgisinden önce bittiğini denetliyor.
+- Kod commit’leri: [60e9b7e](https://github.com/rizaaltun/catpat-godot/commit/60e9b7eb1971fefa154d81b228a62af6fe766619) render ve dokunmatik kontrol yakalamalarını ekledi; [3638505](https://github.com/rizaaltun/catpat-godot/commit/363850531ff04b2b1ae48b999d867b7e2a06ea76) alt ipucu yerleşimini düzeltti.
+- CI run [40489262928](https://github.com/rizaaltun/catpat-godot/actions/runs/40489262928) başarılı: B01, B02, B03, B04 ve B05 regresyonları; B01/B02 dar ekran render ve güvenli boşluk kontrolleri; Web export ve Pages dağıtımı geçti. Canlı test adresi güncel: https://rizaaltun.github.io/catpat-godot/.
+- B01 ve B02 küçük ekran kareleri Godot CI render’ında incelendi; dokunmatik düğmeler çerçeve içinde, alt görev ipucu taşınmış durumda. Bu, gerçek telefon/tablet dokunma ergonomisi testi değildir. WebGL2 destekli masaüstü tarayıcı ve fiziksel dokunmatik cihaz QA’sı hâlâ açık.
+- Bu aşamada yeni varlık eklenmedi; PDF/PSD kitap orijinalleri ve hakları doğrulanmamış kaynaklar depoya aktarılmadı.
+
+## Sıradaki işler
+
+1. WebGL2 destekli masaüstü tarayıcıda canlı oyunda menü, görev tamamlanması, kayıt/devam ve B05 final geçişini elle doğrula.
+2. Gerçek telefonda/tablette B01–B05 dokunmatik düğme ergonomisini dene.
+3. Epsilon rehberindeki ortak beceri sözlüğü/katalog kimliklerini kaynak sahibi doğrulayınca ebeveyn özeti ve kayıt kapsamını yeniden değerlendir; doğrulanmamış beceri gelişimi iddiası ekleme.
