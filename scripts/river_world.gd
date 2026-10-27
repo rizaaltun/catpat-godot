@@ -326,6 +326,21 @@ func use_action():
 	# Rendering can batch physics ticks; interaction is consumed by _process.
 	for i in 3:await get_tree().process_frame
 	for i in 5:await get_tree().physics_frame
+func touch_control_fits_view(button: Control, viewport_size: Vector2i) -> bool:
+	var transform = button.get_global_transform_with_canvas()
+	var size = button.size
+	var points = [transform * Vector2.ZERO, transform * Vector2(size.x, 0), transform * size, transform * Vector2(0, size.y)]
+	var left = points[0].x
+	var right = points[0].x
+	var top = points[0].y
+	var bottom = points[0].y
+	for point in points:
+		left = minf(left, point.x)
+		right = maxf(right, point.x)
+		top = minf(top, point.y)
+		bottom = maxf(bottom, point.y)
+	return Rect2(Vector2.ZERO, Vector2(viewport_size)).encloses(Rect2(Vector2(left, top), Vector2(right - left, bottom - top)))
+
 func capture(name: String):
 	if "--v10-capture" not in OS.get_cmdline_user_args():return
 	if name not in ["meet-comic","bridge-ready","complete"]:return
@@ -342,7 +357,7 @@ func capture(name: String):
 		await RenderingServer.frame_post_draw
 		var mobile_frame = get_viewport().get_texture().get_image()
 		var safe_area = Rect2(Vector2.ZERO, Vector2(get_tree().root.size))
-		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
+		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and touch_control_fits_view(button, get_tree().root.size))
 		check(not mobile_frame.is_empty(), "B02 touch viewport rendered at 666x374")
 		check(controls_fit, "B02 touch controls fit fully inside 666x374")
 		print("VISUAL_CAPTURE:B02-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
