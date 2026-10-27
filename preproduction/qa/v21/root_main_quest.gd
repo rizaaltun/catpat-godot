@@ -135,7 +135,7 @@ func run():
 	route.cancel_dialogue();await ticks(30)
 	check(route.waymark_stage=="placed","cancel_does_not_fix_sign")
 	route.interact();await dialogue_to_end();await ticks(30)
-	check(route.waymark_stage=="ready" and route.mounted_arrow.rotation==0 and route.lookout_hint.visible,"sign_points_to_real_right_path")
+	check(route.waymark_stage=="ready" and route.mounted_arrow.rotation==0 and route.lookout_hint.text=="Seyir düzlüğü ↓","sign_points_to_real_right_path")
 	await capture("12-repaired-fork")
 	await route.walk_to(3020);await route.wait_for_team(2);await ticks(30)
 	check(route.party_at_lookout() and route.available_action()=="Birlikte manzaraya bak","all_four_unlock_lookout")
