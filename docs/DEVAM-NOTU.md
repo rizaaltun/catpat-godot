@@ -206,3 +206,19 @@
 - B04 bitiş karesinde sol ekran kenarında tek karakter kırpılması görüldü. Görsel QA bulgusu olarak açık; B04 world hint/viewport sınır yerleşimi incelenecek. B01–B02 için de aynı render incelemesi henüz yapılmadı; gerçek dokunmatik cihazda ergonomi doğrulaması ayrıca gerekli.
 - Canlı oyun: https://rizaaltun.github.io/catpat-godot/ . Bu koşuda Pages deploy başarılı; mevcut uzak tarayıcı WebGL2 sağlamadığı için canlı canvas etkileşimi doğrulanamadı.
 - PDF/PSD kitap orijinalleri veya hakları doğrulanmamış kaynaklar eklenmedi.
+
+## 27 Ekim 2026 — B01–B04 gerçek render QA
+
+- B01 ve B02 tam fizik/etkileşim regresyonlarına seçilmiş gerçek viewport kareleri eklendi; B03→B04 geçişi ve B04 görev akışı kareleri aynı Godot renderer’ında yakalanıyor. Kareler geçici olarak GitHub Actions günlüklerinde WebP base64 olarak duruyor; Git’e görsel veya ZIP eklenmiyor.
+- B01’in mevcut test ve capture bayrakları aynı doğal oyun rotasını iki kez başlatıyordu. Düzeltme commit’i [cd0317f](https://github.com/rizaaltun/catpat-godot/commit/cd0317f67fb708e37b8c0e4db0bd4445965bfdd6) ile tek koşuya indirildi; B01/B02 render komutları ve tüm bölüm regresyonları geçti.
+- B04 ekran karesindeki kısmi dünya yazısı kırpılmasını düzeltmek için dünya etiketleri yalnızca viewport kenarından kısmen kesildikleri sırada saydamlaşıyor; hedef ekran dışındaysa görev etiketi etkin kalıyor ve görünür alana girince tekrar çiziliyor. B04 yön işareti metni ve 41 doğal rota kontrolü geçti.
+- Son yeşil CI run [40477480587](https://github.com/rizaaltun/catpat-godot/actions/runs/40477480587): import, kayıt/diyalog/çizgi roman/açılış kontrolleri; B01–B04 tam oynanış/geçiş regresyonları; B05 sözleşmesi ve gerçek viewport yakalama; Web export ve GitHub Pages deploy başarılı. B01 ve B02 suite'leri başarıyla tamamlandı; B04 doğal rota 41 kontrol, 0 hata.
+- B01 giriş/orta/çıkış ekranları, B02 çizgi roman/köprü/tamamlanma, B03 bahçe→yamaç geçişi ve B04 görev/pause/bitiş kareleri incelendi. Türkçe yazılar, görev işaretleri ve butonlar görünür. B04 bitişindeki sol kenar dünya yazısı kayboldu; visible_world_hints_not_clipped kontrolü geçti.
+- Canlı oyun: https://rizaaltun.github.io/catpat-godot/ . Son Pages deploy başarılı. Bu uzak tarayıcı oturumu WebGL2 desteklemediği için canlı canvas etkileşimi burada sınanamadı; gerçek WebGL2 tarayıcı ve dokunmatik cihaz QA'sı hâlâ açık.
+- CI ALSA ERR_CANT_OPEN satırları, GitHub sunucusunda fiziksel ses çıkışı bulunmamasından kaynaklanıyor; Godot sessiz sürücüyle çalıştı ve testler geçti. PDF/PSD kitap orijinalleri veya hakları doğrulanmamış kaynaklar eklenmedi.
+
+## Sıradaki işler
+
+1. B05 dokunmatik düğme ergonomisini gerçek telefonda/tablette doğrula; B01–B04 dokunmatik ve dar ekran karelerini genişlet.
+2. WebGL2 destekli masaüstü tarayıcıda canlı Pages oyununu açıp menü, görev tamamlanması, kayıt/devam ve B05 final geçişini elle dene.
+3. Epsilon rehberindeki ortak beceri sözlüğü/katalog kimlikleri kaynak sahibi tarafından doğrulandığında, uygun kayıt ve ebeveyn özeti kapsamını yeniden değerlendir; doğrulanmamış beceri gelişimi iddiası ekleme.
