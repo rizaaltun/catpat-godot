@@ -95,9 +95,14 @@ func hint_clipped_by_viewport(label:Label) -> bool:
 	var fully_inside=rect.position.x>=20 and rect.position.y>=20 and rect.end.x<=bounds.x-20 and rect.end.y<=bounds.y-20
 	return overlaps and not fully_inside
 func visible_hints_fit_viewport() -> bool:
-	for label in [arrow_hint,fork_hint,lookout_hint]:
-		if is_instance_valid(label) and label.visible and hint_clipped_by_viewport(label):return false
+	for node in arena.find_children("*","Label",true,false):
+		var label=node as Label
+		if label.visible and label.modulate.a>0.01 and hint_clipped_by_viewport(label):return false
 	return true
+func update_world_label_safe_area():
+	for node in arena.find_children("*","Label",true,false):
+		var label=node as Label
+		label.modulate.a=0.0 if hint_clipped_by_viewport(label) else 1.0
 func _physics_process(delta):
 	super._physics_process(delta)
 	if not is_instance_valid(fallen_arrow):return
@@ -111,3 +116,4 @@ func _physics_process(delta):
 		if waymark_stage=="ready" and near_ground_point(LOOKOUT_POINT,85) and not party_at_lookout():quest_label.text="Seyir düzlüğündesin · Arkadaşlarının kıyıya ulaşmasını bekle."
 		for child in ui_layer.get_children():
 			if child is Label and child.text.begins_with("RÜZGÂRLI YAMAÇ"):child.text="RÜZGÂRLI YAMAÇ · FESTİVAL YÖNÜ"
+	update_world_label_safe_area()
