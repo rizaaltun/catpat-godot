@@ -197,3 +197,12 @@
 - Canlı oyun güncel: https://rizaaltun.github.io/catpat-godot/ . Görsel kareler WebGL2 gerektirmeyen Godot native CI penceresinde alındı. Bu uzak web tarayıcısı WebGL2 sağlamadığından canlı web canvas etkileşimi ayrıca doğrulanamadı.
 - Dar görünüm de CI’da doğrulandı. Godot penceresi 666×374, alınan viewport karesi 664×374 olarak raporlandı; dokunmatik kontroller ve final kartı karede görünür ve okunur. Commit `86acb603700aa776d57e10c72d66363554a2d431` küçük pencere karelerini ekledi; `0855ea5d6f1021933d282da45bf5b0e1497354b6` pencere/görüntü boyutlarını raporluyor. CI run [39962944323](https://github.com/rizaaltun/catpat-godot/actions/runs/39962944323) başarılı: B01–B05 regresyonları, B05 109/109 kontrol, altı render karesi, Web export ve Pages deploy geçti.
 - Sıradaki görsel kalite işi: B01–B04 için aynı gerçek render karesi incelemesini sürdür; gerçek dokunmatik cihazda düğme ergonomisini ayrıca doğrula.
+
+## 27 Ekim 2026 — B03–B04 gerçek render QA
+
+- Commit [b8fa581](https://github.com/rizaaltun/catpat-godot/commit/b8fa581cf728005125f653e3833ee8fcc0009cc3), B03→B04 geçiş ve B04 görev akışından seçilmiş gerçek Godot viewport karelerini Actions günlüklerinde WebP olarak yakalıyor; oyun dosyalarına kare/ZIP eklenmiyor.
+- CI run [40472359103](https://github.com/rizaaltun/catpat-godot/actions/runs/40472359103) başarılı: B01–B04 regresyonları, B04 doğal görev rotası (**40 kontrol, 0 hata**), B05 kontrolleri, Web export ve Pages deploy geçti.
+- Karelerde B03 bahçe tamamlama paneli ve yamaç geçişi; B04 Pıtpıt çizgi romanı, oyun içi görev yazıları, pause/devam ve Festival Yolu son hedefi görsel olarak kontrol edildi. Türkçe yazılar okunur; tamamlanma ve devam düğmeleri görünür. Sunucu CI'daki ALSA uyarısı ses çıkış aygıtı bulunmamasından kaynaklandı; Godot sessiz sürücüyle devam edip testleri tamamladı.
+- B04 bitiş karesinde sol ekran kenarında tek karakter kırpılması görüldü. Görsel QA bulgusu olarak açık; B04 world hint/viewport sınır yerleşimi incelenecek. B01–B02 için de aynı render incelemesi henüz yapılmadı; gerçek dokunmatik cihazda ergonomi doğrulaması ayrıca gerekli.
+- Canlı oyun: https://rizaaltun.github.io/catpat-godot/ . Bu koşuda Pages deploy başarılı; mevcut uzak tarayıcı WebGL2 sağlamadığı için canlı canvas etkileşimi doğrulanamadı.
+- PDF/PSD kitap orijinalleri veya hakları doğrulanmamış kaynaklar eklenmedi.
