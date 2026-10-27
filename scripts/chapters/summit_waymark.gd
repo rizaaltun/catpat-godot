@@ -87,22 +87,24 @@ func refresh_waymark():
 	fork_hint.text="← Dönüş basamakları\nSeyir düzlüğü →" if waymark_stage in ["ready","seen"] else "Yol ayrımı · Ok eksik" if waymark_stage=="loose" else "Dikme burada ↓" if waymark_stage=="carried" else "Pıtpıt ile sabitle"
 	lookout_hint.text="Festival yoluna hazırız!" if waymark_stage=="seen" else "Seyir düzlüğü ↓"
 	lookout_hint.visible=waymark_stage in ["ready","seen"]
-func hint_inside_viewport(label:Label) -> bool:
+func hint_clipped_by_viewport(label:Label) -> bool:
 	var transform=get_viewport().get_canvas_transform()*label.get_global_transform()
 	var rect=Rect2(transform.origin,transform.basis_xform(label.size))
 	var bounds=get_viewport_rect().size
-	return rect.position.x>=20 and rect.position.y>=20 and rect.end.x<=bounds.x-20 and rect.end.y<=bounds.y-20
+	var overlaps=rect.end.x>0 and rect.position.x<bounds.x and rect.end.y>0 and rect.position.y<bounds.y
+	var fully_inside=rect.position.x>=20 and rect.position.y>=20 and rect.end.x<=bounds.x-20 and rect.end.y<=bounds.y-20
+	return overlaps and not fully_inside
 func visible_hints_fit_viewport() -> bool:
 	for label in [arrow_hint,fork_hint,lookout_hint]:
-		if is_instance_valid(label) and label.visible and not hint_inside_viewport(label):return false
+		if is_instance_valid(label) and label.visible and hint_clipped_by_viewport(label):return false
 	return true
 func _physics_process(delta):
 	super._physics_process(delta)
 	if not is_instance_valid(fallen_arrow):return
 	if not paused:carried_arrow.position.x=43 if player.anim.flip_h else -43
-	fork_hint.visible=player.position.y<580 and hint_inside_viewport(fork_hint)
-	arrow_hint.visible=rope_stage=="ready" and waymark_stage=="loose" and hint_inside_viewport(arrow_hint)
-	lookout_hint.visible=waymark_stage in ["ready","seen"] and hint_inside_viewport(lookout_hint)
+	fork_hint.visible=player.position.y<580 and not hint_clipped_by_viewport(fork_hint)
+	arrow_hint.visible=rope_stage=="ready" and waymark_stage=="loose" and not hint_clipped_by_viewport(arrow_hint)
+	lookout_hint.visible=waymark_stage in ["ready","seen"] and not hint_clipped_by_viewport(lookout_hint)
 	if rope_stage=="ready" and quest_error.is_empty():
 		var goals={"loose":"İleri kıyının alt basamağında düşen oku bul · E ile al.","carried":"Basamaklarla yukarı dön · Oku yol ayrımındaki dikmeye yerleştir.","placed":"Ok dikmede · İleri kıyıda Pıtpıt'ın yanına git.","ready":"Ok sağa bakıyor · Arkadaşlarınla seyir düzlüğüne ilerle.","seen":"Üç yardım tamam · Hep birlikte festival yoluna hazırız!"}
 		quest_label.text=goals[waymark_stage]
