@@ -143,6 +143,7 @@ func run():
 	route.advance_dialogue();await ticks(30)
 	check(route.waymark_stage=="seen" and route.save_service.load_progress(PATH).data.waymark=="seen","lookout_completion_durable")
 	await capture("14-shared-route-finish")
+	check(route.visible_hints_fit_viewport(),"visible_world_hints_not_clipped")
 	check(not route.commit_waymark("seen") and route.waymark_events.count("seen")==1,"lookout_completion_idempotent")
 	var main=Main.new().load_progress(PATH)
 	check(main.ok and main.data.chapter_id=="B04" and Main.Quest.SUMMIT_COMPLETE in main.data.quest_flags and main.data.summit.waymark=="seen","main_B04_complete_durable")
