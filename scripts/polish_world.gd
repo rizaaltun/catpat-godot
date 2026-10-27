@@ -1144,6 +1144,24 @@ func v9_capture(name: String):
 	await RenderingServer.frame_post_draw
 	var frame=get_viewport().get_texture().get_image()
 	print("VISUAL_CAPTURE:B01-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
+	if name == "upper-lantern":
+		var old_size = get_root().size
+		var old_touch = control_display.touch_mode
+		get_root().size = Vector2i(666, 374)
+		control_display.touch_mode = true
+		control_display.refresh()
+		await process_frame
+		await RenderingServer.frame_post_draw
+		var mobile_frame = get_viewport().get_texture().get_image()
+		var safe_area = Rect2(Vector2.ZERO, Vector2(get_root().size))
+		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
+		check_v4(not mobile_frame.is_empty(), "B01 touch viewport rendered at 666x374")
+		check_v4(controls_fit, "B01 touch controls fit fully inside 666x374")
+		print("VISUAL_CAPTURE:B01-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
+		get_root().size = old_size
+		control_display.touch_mode = old_touch
+		control_display.refresh()
+		await process_frame
 
 func capture_v9_sequence():
 	run_v9_test()
