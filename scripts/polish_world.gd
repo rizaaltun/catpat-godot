@@ -264,7 +264,7 @@ func build_hud():
 	count_label=UI.label("",Rect2(955,50,190,35),23,hud)
 	mote_label=UI.label("",Rect2(955,85,220,30),17,hud,Color("e4c578"))
 	UI.button("Ⅱ",Rect2(1158,28,96,96),hud,pause_game)
-	hint=UI.label("",Rect2(252,669,776,42),20,hud);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	hint=UI.label("",Rect2(252,624,776,42),20,hud);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_theme_color_override("font_shadow_color",Color("102925"));hint.add_theme_constant_override("shadow_outline_size",5)
 	chapter_note=UI.label("",Rect2(420,30,470,65),20,hud,Color("ffdc8c"));chapter_note.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	var left_control=UI.button("‹",Rect2(28,593,96,96),hud,func(): pass)
@@ -1157,6 +1157,7 @@ func v9_capture(name: String):
 		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
 		check_v4(not mobile_frame.is_empty(), "B01 touch viewport rendered at 666x374")
 		check_v4(controls_fit, "B01 touch controls fit inside the scaled 1280x720 game area")
+		check_v4(hint.get_global_rect().end.y <= 670, "B01 objective hint clears bottom safe area")
 		print("VISUAL_CAPTURE:B01-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
 		get_tree().root.size = old_size
 		control_display.touch_mode = old_touch

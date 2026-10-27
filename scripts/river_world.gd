@@ -92,7 +92,7 @@ func build_hud():
 	UI.texture("res://assets/polish-v3/panel.webp",Rect2(911,24,239,104),screen)
 	counter=UI.label("",Rect2(945,48,185,60),20,screen)
 	UI.button("Ⅱ",Rect2(1158,28,96,96),screen,pause_game)
-	hint=UI.label("",Rect2(252,669,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	hint=UI.label("",Rect2(252,624,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_theme_color_override("font_shadow_color",Color("102925"));hint.add_theme_constant_override("shadow_outline_size",5)
 	var left=UI.button("‹",Rect2(28,593,96,96),screen,func():pass)
 	var right=UI.button("›",Rect2(140,593,96,96),screen,func():pass)
@@ -345,6 +345,7 @@ func capture(name: String):
 		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
 		check(not mobile_frame.is_empty(), "B02 touch viewport rendered at 666x374")
 		check(controls_fit, "B02 touch controls fit inside the scaled 1280x720 game area")
+		check(hint.get_global_rect().end.y <= 670, "B02 objective hint clears bottom safe area")
 		print("VISUAL_CAPTURE:B02-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
 		get_tree().root.size = old_size
 		control_display.touch_mode = old_touch
