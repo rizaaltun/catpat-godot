@@ -333,23 +333,23 @@ func capture(name: String):
 	var frame=get_viewport().get_texture().get_image()
 	print("VISUAL_CAPTURE:B02-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
 	if name == "bridge-ready":
-		var old_size = get_root().size
+		var old_size = get_tree().root.size
 		var old_touch = control_display.touch_mode
-		get_root().size = Vector2i(666, 374)
+		get_tree().root.size = Vector2i(666, 374)
 		control_display.touch_mode = true
 		control_display.refresh()
-		await process_frame
+		await get_tree().process_frame
 		await RenderingServer.frame_post_draw
 		var mobile_frame = get_viewport().get_texture().get_image()
-		var safe_area = Rect2(Vector2.ZERO, Vector2(get_root().size))
+		var safe_area = Rect2(Vector2.ZERO, Vector2(get_tree().root.size))
 		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
 		check(not mobile_frame.is_empty(), "B02 touch viewport rendered at 666x374")
 		check(controls_fit, "B02 touch controls fit fully inside 666x374")
 		print("VISUAL_CAPTURE:B02-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
-		get_root().size = old_size
+		get_tree().root.size = old_size
 		control_display.touch_mode = old_touch
 		control_display.refresh()
-		await process_frame
+		await get_tree().process_frame
 func run_test():
 	for i in 40:await get_tree().physics_frame
 	check(state.has(Quest.COMPLETE) and not state.has(Quest.RIVER_ACCEPTED),"B01 preserved on river entry")
