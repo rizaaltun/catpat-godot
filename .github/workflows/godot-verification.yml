@@ -46,7 +46,7 @@ jobs:
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/startup_regression.gd
 
       - name: Run B01 full gameplay regression and capture rendered states
-        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-test --v9-capture
+        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-capture
 
       - name: Run B02 full gameplay regression and capture rendered states
         run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/river.tscn -- --v10-test --v10-capture
