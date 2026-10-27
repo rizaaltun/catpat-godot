@@ -13,8 +13,10 @@ func check(ok,id):
 	if not ok:failures.append(id)
 func capture(name):
 	if "--v21-capture" not in OS.get_cmdline_user_args():return
+	if name not in ["01-garden-next-chapter","04-summit-main-entry","05-summit-pause-menu","07-resumed-summit"]:return
 	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("res://preproduction/qa/v21/"+("final-" if "--v21-final" in OS.get_cmdline_user_args() else "")+("small-" if root.size.x<1000 else "")+name+".webp")
+	var frame=root.get_texture().get_image()
+	print("VISUAL_CAPTURE:B03-B04-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
 func run():
 	set_meta("journey_save_path",PATH)
 	for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)

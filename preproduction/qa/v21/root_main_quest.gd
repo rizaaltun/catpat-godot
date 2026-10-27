@@ -13,8 +13,10 @@ func check(ok,id,detail={}):
 	if not ok:failed.append(id)
 func capture(label):
 	if "--v21-capture" not in OS.get_cmdline_user_args():return
+	if label not in ["04-monkey-comic-first","06-winch-ready","14-shared-route-finish"]:return
 	await RenderingServer.frame_post_draw
-	root.get_texture().get_image().save_png("res://preproduction/qa/v21/"+label+".png")
+	var frame=root.get_texture().get_image()
+	print("VISUAL_CAPTURE:B04-"+label+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
 func create_route():
 	get_tree_dummy()
 	if not FileAccess.file_exists(PATH):
