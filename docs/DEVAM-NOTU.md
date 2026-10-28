@@ -238,3 +238,12 @@
 1. WebGL2 destekli masaüstü tarayıcıda canlı oyunda menü, görev tamamlanması, kayıt/devam ve B05 final geçişini elle doğrula.
 2. Gerçek telefonda/tablette B01–B05 dokunmatik düğme ergonomisini dene.
 3. Epsilon rehberindeki ortak beceri sözlüğü/katalog kimliklerini kaynak sahibi doğrulayınca ebeveyn özeti ve kayıt kapsamını yeniden değerlendir; doğrulanmamış beceri gelişimi iddiası ekleme.
+
+
+## 28 Ekim 2026 — yeni GPT hesabına proje devri
+
+- Hesap değişikliğinde oyun kaybolmasın diye [yeni GPT hesabı devir yönergesi](YENI_GPT_HESABI_DEVRALMA.md) eklendi. Bu dosya, GitHub dalını, canlı test URL’sini, son yeşil Actions koşusunu, açık cihaz QA’sını ve kopyalanabilir başlangıç metnini içeriyor.
+- 27 Ekim’deki son kod doğrulaması [run 40490221402](https://github.com/rizaaltun/catpat-godot/actions/runs/40490221402) başarılı; B01–B05, Web export ve Pages deploy geçti. Canlı oyun: https://rizaaltun.github.io/catpat-godot/.
+- Yeni GPT hesabında GitHub bağlantısına `rizaaltun/catpat-godot` için yazma yetkisi verilmesi gerekir. Epsilon rehberi bu konuşmaya ekli ayrı dosyadır; Public depoya kopyalanmadı ve yeni GPT konuşmasına ayrıca yüklenmelidir.
+- ChatGPT hesap geçmişi/ayarları GitHub projesinden ayrı kalır. Eski konuşma geçmişi gerekiyorsa OpenAI veri dışa aktarma sürecini izleyip ilgili JSON dosyasını yeni konuşmaya referans olarak ekle; bu, eski sohbetleri/ayarları veya aboneliği yeni hesaba taşımaz.
+- PDF/PSD kitap orijinalleri veya hakları doğrulanmamış kaynaklar Public depoya eklenmedi.
