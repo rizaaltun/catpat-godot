@@ -271,3 +271,7 @@
 ### İkinci görsel denetim düzeltmesi
 
 Bağımsız denetçi B04 giriş/pause karelerinde değişen kontrolleri ve menüyü uygun buldu; ancak eski iki satırlık klavye yönergesinin dar görünümde küçük kaldığını ve dokunmatik moda uygun olmadığını bildirdi. B04 artık gerçek dokunma algılandığında tek satırlık26 punto dokunmatik yönerge gösteriyor; klavyeye dönülünce önceki klavye açıklaması geri geliyor. Alt kart içinde ek boşluk bırakıldı. Dar yakalama dokunmatik sunumu gerçekten etkinleştiriyor ve metin/puntoyu denetliyor. B03'te boş olmayan çıkış yönergesi de aynı koşuda kontrol edilecek.
+
+### B03 metin kontrastı — gerçek kare bulgusu
+
+İkinci koşuda gerçek çıkış yönergesi görünür olarak yakalandı; zemin üstündeki küçük yazının kontrastı yeterince güçlü değildi. B03 görev yönergesi26 puntoya çıkarıldı ve mevcut `panel.webp` sanatıyla arka plan eklendi. Panel yalnız dolu yönerge olan oynanış durumunda görünür; boş süs paneli bırakılmadı. Yeni dar ekran kontrolü panel görünürlüğü, metin alanını kapsaması ve puntoyu denetliyor. Son CI sonucu aşağıya eklenecek.

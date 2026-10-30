@@ -34,6 +34,7 @@ func capture(name):
 	check(controls.all(func(b):return b.visible and safe.encloses(b.get_global_rect())),name+"_touch_controls_fit")
 	if garden:
 		check(not scene.hint.text.is_empty(),"B03_capture_shows_actual_objective_text")
+		check(scene.hint_panel.visible and scene.hint_panel.get_rect().encloses(scene.hint.get_rect()) and scene.hint.get_theme_font_size("font_size")>=26,"B03_objective_has_readable_image_backdrop")
 		check(scene.hint.get_global_rect().end.y<=670,"B03_hint_clears_bottom_safe_area")
 	else:
 		check(scene.subtitle.text.contains("Oklarla") and scene.subtitle.get_theme_font_size("font_size")>=26,name+"_readable_touch_instructions")

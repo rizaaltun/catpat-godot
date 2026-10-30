@@ -30,6 +30,7 @@ var backdrop: Sprite2D
 var screen: Control
 var quest: Label
 var hint: Label
+var hint_panel: TextureRect
 var counter: Label
 var comic
 var active_line: Label
@@ -107,7 +108,9 @@ func build_hud():
 	UI.texture("res://assets/polish-v3/panel.webp",Rect2(911,24,239,104),screen)
 	counter=UI.label("",Rect2(945,48,185,60),20,screen)
 	UI.button("Ⅱ",Rect2(1158,28,96,96),screen,pause_game)
-	hint=UI.label("",Rect2(252,624,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(244,608,794,78),screen)
+	hint_panel.visible=false
+	hint=UI.label("",Rect2(264,624,754,42),26,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_theme_color_override("font_shadow_color",Color("102925"));hint.add_theme_constant_override("shadow_outline_size",5)
 	var left=UI.button("‹",Rect2(28,593,96,96),screen,func():pass)
 	var right=UI.button("›",Rect2(140,593,96,96),screen,func():pass)
@@ -253,6 +256,7 @@ func transition_error(body:String):
 	UI.button("Ana menü",Rect2(650,455,275,88),screen,to_menu)
 func _process(delta):
 	if not is_instance_valid(player):return
+	if is_instance_valid(hint_panel):hint_panel.visible=is_instance_valid(hint) and not hint.text.is_empty() and mode in ["play","gathering","building","lowering"]
 	backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	delivered_basket.position.x=-42 if rabbit.anim.flip_h else 42
 	var rope_length=maxf(10,basket.position.y-62)
