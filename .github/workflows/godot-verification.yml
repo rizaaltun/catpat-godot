@@ -66,6 +66,9 @@ jobs:
       - name: Run B00 tutorial, migration, and rendered viewport contract
         run: timeout -k 10s 180s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/home_contract.gd -- --home-capture
 
+      - name: Render legacy chapter framing and real jump bounds
+        run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/legacy_framing_test.gd -- --legacy-framing-capture
+
       - name: Run B01 full gameplay regression and capture rendered states
         run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-capture
 
@@ -74,6 +77,9 @@ jobs:
 
       - name: Run B03 full gameplay regression
         run: timeout -k 10s 180s python3 tools/run_godot_check.py --headless --path . res://scenes/garden.tscn -- --v13-test
+
+      - name: Render B03 active tasks and companion gathering
+        run: timeout -k 10s 120s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://preproduction/qa/v23/garden_capture.gd
 
       - name: Run B04 transition regression checks
         run: |
@@ -92,6 +98,9 @@ jobs:
         run: |
           timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_movement_test.gd
           timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_art_test.gd
+
+      - name: Render B05 actor framing across text and control profiles
+        run: timeout -k 10s 180s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/festival_framing_test.gd -- --framing-capture
 
       - name: Run B05 save and scene contract
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_contract.gd

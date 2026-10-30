@@ -1,10 +1,15 @@
 extends RefCounted
 const BASE = "res://assets/polish-v3/"
+const PANEL_PAINTED_RECT=Rect2(91,118,1980,482)
 static func font() -> FontFile:
 	return load("res://assets/fonts/Baloo2.ttf")
 static func texture(path: String, rect: Rect2, parent: Node) -> TextureRect:
 	var t = TextureRect.new()
-	t.texture = load(path)
+	var art=load(path)
+	if path==BASE+"panel.webp":
+		var crop=AtlasTexture.new();crop.atlas=art;crop.region=PANEL_PAINTED_RECT;t.texture=crop
+	else:t.texture=art
+	t.set_meta("image_source",path)
 	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	t.stretch_mode = TextureRect.STRETCH_SCALE
 	t.position = rect.position
@@ -29,7 +34,7 @@ static func skin(amber: bool) -> StyleBoxTexture:
 	var s = StyleBoxTexture.new()
 	s.texture = load(BASE+ ("button.webp" if amber else "panel.webp"))
 	# Art-only transparent padding excluded at runtime; original file remains intact.
-	s.region_rect = Rect2(40,125,1970,490) if amber else Rect2(Vector2.ZERO,s.texture.get_size())
+	s.region_rect = Rect2(40,125,1970,490) if amber else PANEL_PAINTED_RECT
 	for side in [SIDE_LEFT,SIDE_RIGHT]:
 		s.set_texture_margin(side,0)
 		s.set_content_margin(side,12)

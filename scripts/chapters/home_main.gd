@@ -7,6 +7,8 @@ const UI=preload("res://scripts/polish_ui.gd")
 const Router=preload("res://scripts/core/input_router.gd")
 const Display=preload("res://scripts/core/control_display.gd")
 const WIDTH=2260.0
+# Scenic camera room keeps the exit actor clear of the touch action controls.
+const CAMERA_SCENIC_MARGIN=600.0
 const EXIT_POINT=Vector2(2100,620)
 const RIBBON_POINT=Vector2(1740,500)
 var saves=Save.new()
@@ -30,6 +32,7 @@ var error_message=""
 var hud:Label
 var hud_panel:TextureRect
 var hint:Label
+var hint_panel:TextureRect
 var action_button:Button
 var modal:Control
 var ribbon:Sprite2D
@@ -69,7 +72,7 @@ func build_world():
  # Original game-adaptation art; this cottage is not asserted to be a book scene.
  var home_art=Sprite2D.new();home_art.name="HomeExteriorArt";home_art.texture=load("res://assets/runtime/environments/catpat_b00_home_v001.webp")
  home_art.centered=false;home_art.scale=Vector2.ONE*0.42;home_art.position=Vector2(-180,200);add_child(home_art)
- add_surface(0,1040,620);add_surface(1160,1100,620)
+ add_surface(0,1040,620);add_surface(1160,1100+CAMERA_SCENIC_MARGIN,620)
  # The little hollow is recoverable by the two low steps; there is no death pit.
  add_surface(1010,70,665);add_surface(1070,110,710);add_surface(1170,90,665)
  add_surface(600,120,580)
@@ -80,13 +83,13 @@ func build_world():
  ribbon.texture=crop;ribbon.scale=Vector2.ONE*0.28;ribbon.position=Vector2(1740,424);ribbon.visible="b00.ribbon" not in data.collectibles;add_child(ribbon)
  var sign=Sprite2D.new();sign.texture=load("res://assets/chapter-v20/festival-arrow.webp");sign.scale=Vector2.ONE*0.08;sign.position=Vector2(2145,530);add_child(sign)
  player=Actor.new();player.controlled=true;player.position=saves.director.anchor(data.checkpoint_id)-Vector2(0,1);player.checkpoint=player.position;add_child(player)
- camera=preload("res://scripts/core/camera_rig.gd").new();camera.configure(WIDTH);player.add_child(camera);camera.make_current()
+ camera=preload("res://scripts/core/camera_rig.gd").new();camera.configure(WIDTH+CAMERA_SCENIC_MARGIN);camera.position=Vector2(0,-140);camera.limit_top=-144;camera.limit_bottom=940;player.add_child(camera);camera.make_current()
 func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
  hud_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(20,18,925,122),layer)
  hud=UI.label("DAVET VE EV ÖNÜ",Rect2(60,38,840,82),27,layer)
  UI.button("Mola",Rect2(1010,25,230,82),layer,pause_game)
- UI.texture("res://assets/polish-v3/panel.webp",Rect2(275,150,730,78),layer)
+ hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(275,150,730,78),layer)
  hint=UI.label("",Rect2(300,164,680,48),26,layer);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  var left=UI.button("‹",Rect2(24,570,112,112),layer,func():pass,true)
  var right=UI.button("›",Rect2(152,570,112,112),layer,func():pass,true)

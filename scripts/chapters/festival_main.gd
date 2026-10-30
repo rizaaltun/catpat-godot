@@ -130,7 +130,7 @@ func build_world():
  actor=preload("res://scripts/chapters/festival_actor.gd").new();actor.name="Catpat"
  actor.controlled=true;actor.position=Store.new().director.anchor(save_data.checkpoint_id)
  actor.checkpoint=actor.position;actor.z_index=5;add_child(actor)
- camera=Camera2D.new();camera.position_smoothing_enabled=true;camera.position_smoothing_speed=6;camera.limit_left=0;camera.limit_right=int(WORLD_WIDTH);camera.limit_top=0;camera.limit_bottom=720;actor.add_child(camera);camera.make_current()
+ camera=Camera2D.new();camera.position_smoothing_enabled=true;camera.position_smoothing_speed=12;camera.limit_left=-80;camera.limit_right=int(WORLD_WIDTH)+80;camera.position=Vector2(0,-40);camera.limit_top=-144;camera.limit_bottom=940;camera.process_callback=Camera2D.CAMERA2D_PROCESS_PHYSICS;actor.add_child(camera);camera.make_current()
  for i in TASKS.size():
   var point=TASKS[i]
   var marker=Node2D.new();marker.position=Vector2(point.x,point.platform_y);marker.name="Station%d"%i;add_child(marker)
@@ -138,8 +138,8 @@ func build_world():
   var flag=Sprite2D.new();flag.texture=load(MARKER_ART);flag.centered=false
   flag.name="CompletionFlag";flag.scale=Vector2.ONE*0.10;flag.position=Vector2(-34,-147);flag.z_index=2
   marker.add_child(flag);station_markers.append(flag)
-  UI.texture("res://assets/polish-v3/panel.webp",Rect2(-93,-200,218,46),marker)
-  var text=UI.label(point.character,Rect2(-80,-193,190,34),23,marker)
+  UI.texture("res://assets/polish-v3/panel.webp",Rect2(-218,-170,218,46),marker)
+  var text=UI.label(point.character,Rect2(-205,-163,190,38),23,marker)
   text.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  for x in [3180.0,3285.0,3390.0]:
   var flowers=Sprite2D.new();flowers.texture=load(DAISY_ART);flowers.scale=Vector2.ONE*0.055
@@ -152,7 +152,7 @@ func add_world_sprite(path:String,point:Vector2,target_height:float,layer:int):
 func add_partner(index:int):
  var art=Sprite2D.new();art.texture=load(TASKS[index].idle)
  art.scale=Vector2.ONE*108.0/maxf(1.0,art.texture.get_height())
- art.position=Vector2(TASKS[index].x,TASKS[index].platform_y-58.0)
+ art.position=Vector2(TASKS[index].x-115.0,TASKS[index].platform_y-58.0)
  art.z_index=4;art.name="FestivalPartner%d"%index;add_child(art);partner_sprites.append(art)
 func restore_partner(index:int):
  if index<partner_sprites.size():
@@ -171,10 +171,10 @@ func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(18,15,935,133),layer)
  hud=UI.label("",Rect2(62,31,850,112),24,layer)
- UI.texture("res://assets/polish-v3/panel.webp",Rect2(310,624,660,76),layer)
- controls_hint=UI.label("",Rect2(332,641,616,44),23,layer)
+ UI.texture("res://assets/polish-v3/panel.webp",Rect2(310,624,460,82),layer)
+ controls_hint=UI.label("",Rect2(332,641,416,48),23,layer)
  update_controls_hint()
- action_button=UI.button("Etkileşim",Rect2(1025,532,218,80),layer,interact,true)
+ action_button=UI.button("Etkileşim",Rect2(790,626,218,80),layer,interact,true)
  var left_control=UI.button("◀",Rect2(40,594,120,92),layer,func():left_pressed=true)
  var right_control=UI.button("▶",Rect2(175,594,120,92),layer,func():right_pressed=true)
  var jump_control=UI.button("Zıpla",Rect2(1030,626,200,74),layer,func():jump_pressed=true,true)
@@ -229,7 +229,7 @@ func _process(delta):
   art.texture=load(TASKS[i].walk[companion_walk_frame])
 func update_controls_hint():
  if not is_instance_valid(controls_hint):return
- controls_hint.text="A/D: yürü · Boşluk: zıpla · Etkileşim: E" if not control_display.touch_mode else "Dokunmatik: oklarla yürü · Zıpla düğmesi · Yardım et"
+ controls_hint.text="Yürü: A/D · Zıpla: Boşluk · Yardım: E" if not control_display.touch_mode else "Oklarla yürü · Zıpla"
  if is_instance_valid(action_button):update_hud()
 func _physics_process(_delta):
  if blocked:return
@@ -253,6 +253,9 @@ func _physics_process(_delta):
   var task=TASKS[i];var standing_y=task.platform_y-32.0
   if absf(actor.position.x-task.x)<100 and absf(actor.position.y-standing_y)<74 and actor.is_on_floor():nearest=i
  if nearest!=near_task:near_task=nearest;update_hud()
+ # The final stage is a separate proximity target: entering it does not change
+ # near_task (-1), so its touch action must follow availability independently.
+ if action_button.visible!=(control_display.touch_mode and can_interact()):update_hud()
 func _input(event):
  if blocked or paused:return
  if control_display.observe(event):
@@ -309,12 +312,12 @@ func update_hud():
  if completed:next="Festival tamamlandı. Sahneye gelerek finali tekrar izleyebilirsin."
  elif not remaining.is_empty():
   var index=near_task if near_task in remaining else remaining[0]
-  next=TASKS[index].name+" · Arkadaşının yanındaki platforma ulaş."
-  if near_task==index:next="Birlikte hazırlamak için "+("Yardım et'e dokun." if control_display.touch_mode else "E'ye bas.")
+  next=TASKS[index].character+" seni bekliyor. Platformuna çık."
+  if near_task==index:next="Yardım et'e dokun." if control_display.touch_mode else "Birlikte hazırlamak için E'ye bas."
  elif not all_on_stage:next="Arkadaşların sahneye geliyor. Son platforma ilerle."
  if status_seconds>0 or status.contains("yapılamadı") or status.contains("açılamadı"):next=status
- hud.text="FESTİVAL ALANI  ·  Hazırlık %d / 3\n%s"%[3-remaining.size(),next]
- action_button.text="Finali tekrar izle" if completed else "Yardım et" if near_task>=0 else "Işığı aç"
+ hud.text="FESTİVAL  ·  %d / 3\n%s"%[3-remaining.size(),next]
+ action_button.text="Finali izle" if completed else "Yardım et" if near_task>=0 else "Işığı aç"
  action_button.disabled=not can_interact()
  action_button.visible=control_display.touch_mode and not action_button.disabled
 func at_final_stage()->bool:

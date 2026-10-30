@@ -71,17 +71,17 @@ func run():
  await physics_frame
  check(not playable.blocked and playable.actor!=null,"B05 builds a playable world from the canonical save")
  playable.control_display.touch_mode=false;playable.control_display.refresh();playable.update_controls_hint()
- check(playable.controls_hint.text.contains("Boşluk") and playable.controls_hint.text.contains("Etkileşim: E"),"B05 shows keyboard movement, jump, and interaction hints")
+ check(playable.controls_hint.text.contains("A/D") and playable.controls_hint.text.contains("Boşluk") and playable.controls_hint.text.contains("Yardım: E"),"B05 shows keyboard movement, jump, and interaction hints")
  playable.control_display.touch_mode=true;playable.control_display.refresh();playable.update_controls_hint()
- check(playable.controls_hint.text.contains("Dokunmatik") and playable.controls_hint.text.contains("Zıpla düğmesi"),"B05 switches to touch control hints when touch mode is active")
+ check(playable.controls_hint.text.contains("Oklarla yürü") and playable.controls_hint.text.contains("Zıpla"),"B05 switches to touch control hints when touch mode is active")
  playable.control_display.touch_mode=false;playable.control_display.refresh();playable.update_controls_hint()
- var left_touch=InputEventScreenTouch.new();left_touch.index=41;left_touch.position=Vector2(80,640);left_touch.pressed=true
+ var left_touch=InputEventScreenTouch.new();left_touch.index=41;left_touch.position=playable.input_router.regions.left.get_center();left_touch.pressed=true
  var start_x=playable.actor.position.x
  playable._input(left_touch)
  check(playable.left_pressed and playable.control_display.touch_mode,"touching the left control engages continuous movement")
  for frame in 12:await physics_frame
  check(playable.actor.position.x<start_x,"holding touch moves the player before release")
- var jump_touch=InputEventScreenTouch.new();jump_touch.index=42;jump_touch.position=Vector2(1120,650);jump_touch.pressed=true
+ var jump_touch=InputEventScreenTouch.new();jump_touch.index=42;jump_touch.position=playable.input_router.regions.jump.get_center();jump_touch.pressed=true
  playable._input(jump_touch);await physics_frame
  check(playable.left_pressed and playable.actor.velocity.y<0.0,"two touch pointers hold direction and jump together")
  left_touch.pressed=false;playable._input(left_touch)
@@ -118,7 +118,7 @@ func run():
  check(await jump_and_land(playable,20),"B05 jumps the gap toward the Maymun station")
  check(await walk_to(playable,2250.0),"B05 reaches the Maymun station under player control")
  check(playable.near_task==1 and playable.can_interact(),"Maymun station is physically reachable")
- var monkey_touch=InputEventScreenTouch.new();monkey_touch.index=43;monkey_touch.position=Vector2(1120,570);monkey_touch.pressed=true
+ var monkey_touch=InputEventScreenTouch.new();monkey_touch.index=43;monkey_touch.position=playable.action_button.get_rect().get_center();monkey_touch.pressed=true
  playable._input(monkey_touch)
  check(Quest.FESTIVAL_FLAGS in playable.save_data.quest_flags,"touching the action area completes and saves the Maymun station interaction")
  monkey_touch.pressed=false;playable._input(monkey_touch)
@@ -132,7 +132,7 @@ func run():
  check(await jump_and_land(playable,15),"B05 steps across the final upper gap")
  check(await walk_to(playable,3310.0),"B05 reaches the Pıtpıt station under player control")
  check(playable.near_task==2 and playable.can_interact(),"Pıtpıt station is physically reachable")
- var rabbit_touch=InputEventScreenTouch.new();rabbit_touch.index=44;rabbit_touch.position=Vector2(1120,570);rabbit_touch.pressed=true
+ var rabbit_touch=InputEventScreenTouch.new();rabbit_touch.index=44;rabbit_touch.position=playable.action_button.get_rect().get_center();rabbit_touch.pressed=true
  playable._input(rabbit_touch)
  check(Quest.FESTIVAL_FLOWERS in playable.save_data.quest_flags and playable.flower_sprites.all(func(flower):return flower.visible),"touching the action area completes the Pıtpıt task and shows the flowers")
  rabbit_touch.pressed=false;playable._input(rabbit_touch)
@@ -175,7 +175,7 @@ func run():
  check(await jump_and_land(playable,25),"B05 climbs onto the final stage platform")
  check(await walk_to(playable,Festival.FINAL_ANCHOR_X),"B05 reaches the final switch under player control")
  check(playable.can_interact(),"final switch opens after every friend arrives and Catpat reaches it")
- var final_touch=InputEventScreenTouch.new();final_touch.index=45;final_touch.position=Vector2(1120,570);final_touch.pressed=true
+ var final_touch=InputEventScreenTouch.new();final_touch.index=45;final_touch.position=playable.action_button.get_rect().get_center();final_touch.pressed=true
  playable._input(final_touch)
  check(Quest.FESTIVAL_COMPLETE in playable.save_data.quest_flags and playable.save_data.ending_seen,"touching the action area completes the final interaction and records the ending")
  final_touch.pressed=false;playable._input(final_touch)

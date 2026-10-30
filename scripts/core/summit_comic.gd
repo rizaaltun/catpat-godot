@@ -13,7 +13,7 @@ func setup(on_advance:Callable,on_cancel:Callable):
 	speaker_text.hide()
 	cancel_button=UI.button("Yola dön",Rect2(985,20,255,88),self,on_cancel)
 	cancel_button.add_theme_font_size_override("font_size",28)
-	for style in ["normal","hover","pressed","focus"]:cancel_button.get_theme_stylebox(style).region_rect=Rect2(80,105,2010,520)
+	for style in ["normal","hover","pressed","focus"]:cancel_button.get_theme_stylebox(style).region_rect=Rect2(91,118,1980,482)
 	# Heading must not share the close button's horizontal area.
 	for child in get_children():
 		if child is Label and child.text.begins_with("RÜZGÂRLI"):

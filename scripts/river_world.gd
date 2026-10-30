@@ -22,6 +22,7 @@ var backdrop: Sprite2D
 var screen: Control
 var quest: Label
 var hint: Label
+var hint_panel: TextureRect
 var counter: Label
 var comic
 var active_line: Label
@@ -92,7 +93,11 @@ func build_hud():
 	UI.texture("res://assets/polish-v3/panel.webp",Rect2(911,24,239,104),screen)
 	counter=UI.label("",Rect2(945,48,185,60),20,screen)
 	UI.button("Ⅱ",Rect2(1158,28,96,96),screen,pause_game)
-	hint=UI.label("",Rect2(252,624,776,42),20,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(244,568,794,110),screen)
+	hint_panel.visible=false
+	hint=UI.label("",Rect2(264,584,754,78),26,screen);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+	# Existing short objective strings fit this width; avoid stale two-line minimums.
+	hint.autowrap_mode=TextServer.AUTOWRAP_OFF
 	hint.add_theme_color_override("font_shadow_color",Color("102925"));hint.add_theme_constant_override("shadow_outline_size",5)
 	var left=UI.button("‹",Rect2(28,593,96,96),screen,func():pass)
 	var right=UI.button("›",Rect2(140,593,96,96),screen,func():pass)
@@ -223,6 +228,7 @@ func go_garden():
 	else:director.finish_transition(true,"B03")
 func _process(delta):
 	if not is_instance_valid(player):return
+	if is_instance_valid(hint_panel):hint_panel.visible=is_instance_valid(hint) and not hint.text.is_empty() and mode in ["play","building"]
 	backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	runner.tick(delta)
 	if mode=="dialogue":
@@ -345,6 +351,7 @@ func capture(name: String):
 		var controls_fit = control_display.buttons.all(func(button): return is_instance_valid(button) and button.visible and safe_area.encloses(button.get_global_rect()))
 		check(not mobile_frame.is_empty(), "B02 touch viewport rendered at 666x374")
 		check(controls_fit, "B02 touch controls fit inside the scaled 1280x720 game area")
+		check(hint_panel.visible and hint_panel.get_rect().encloses(hint.get_rect()) and hint.get_theme_font_size("font_size")>=26, "B02 objective has a readable image backdrop")
 		check(hint.get_global_rect().end.y <= 670, "B02 objective hint clears bottom safe area")
 		print("VISUAL_CAPTURE:B02-touch-small:" + Marshalls.raw_to_base64(mobile_frame.save_webp_to_buffer(true, 0.82)))
 		get_tree().root.size = old_size
@@ -353,6 +360,9 @@ func capture(name: String):
 		await get_tree().process_frame
 func run_test():
 	for i in 40:await get_tree().physics_frame
+	var hint_samples=["Köprü başındaki Maymun’a ilerle","Üst dallarda halat · Alt kıyıda tahta","İki parça hazır · Köprü başına dön","Maymun tahtaları halatla bağlıyor…","Arkadaşlarınla birlikte çıkışa yaklaş","E · Birlikte yolculuğa devam et","Köprü hazır! Maymun’u yanına çağır."]
+	check(hint_panel.visible and hint_panel.get_rect().encloses(hint.get_rect()) and hint.get_theme_font_size("font_size")==26,"river objectives use the visible image card and26pt text")
+	check(hint_samples.all(func(text):return hint.get_theme_font("font").get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,26).x<=hint.size.x),"long river objective states fit the readable hint area")
 	check(state.has(Quest.COMPLETE) and not state.has(Quest.RIVER_ACCEPTED),"B01 preserved on river entry")
 	check(not level.ready_bridge and not level.deck.visible and level.bridge_body.collision_layer==0,"bridge starts visibly and physically closed")
 	check(await walk_to(800),"walk from entry to Maymun")

@@ -222,8 +222,8 @@ func restart():
 func save_menu():persist(snapshot(),to_menu)
 func to_menu():get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
 func chapter_panel():
-	var backdrop=UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,120,680,520),screen)
-	var framed=AtlasTexture.new();framed.atlas=backdrop.texture;framed.region=Rect2(80,105,2010,520);backdrop.texture=framed
+	UI.texture("res://assets/polish-v3/panel.webp",Rect2(300,120,680,520),screen)
+	# UI.texture already maps the painted panel bounds, without a nested atlas crop.
 func complete():
 	mode="complete";freeze(true);reset_input();clear_screen()
 	chapter_panel()

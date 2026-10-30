@@ -41,6 +41,13 @@ func run():
   service.apply_to_scene(scene,prefs)
   await process_frame;service._refresh_expanded_hud(scene);await process_frame
   check(is_instance_valid(service.hud_layer) and service.hud_layer.visible,chapter+" expanded HUD is active during play")
+  var hidden_sources=service.hidden_hud_nodes.values().duplicate()
+  check(not hidden_sources.is_empty() and hidden_sources.all(func(item):return not is_instance_valid(item.node.get_ref()) or not item.node.get_ref().visible),chapter+" original HUD plates and anonymous headings are suppressed")
+  if chapter=="B00":check(not service.hud_cards.bottom.visible and service.control_footer_shift==0,chapter+" top hint creates no footer reserve or control shift")
+  if chapter=="B05":
+   var footer=service.hud_copies.controls_hint
+   var line_height=footer.label.get_theme_font("font").get_height(footer.label.get_theme_font_size("font_size"))
+   check(service.hud_cards.bottom.size.y<=line_height+24,chapter+" footer reserves one actual font line plus padding")
   var text_fits=true
   var full_scale=true
   for property in service.hud_copies:
@@ -76,6 +83,7 @@ func run():
   for item in service.hud_copies.values():
    if is_instance_valid(item.source):restored=restored and item.source.modulate.a==float(item.source.get_meta("experience_text_alpha",1.0))
   check(restored,chapter+" normal text setting restores the original chapter HUD")
+  check(hidden_sources.all(func(item):return not is_instance_valid(item.node.get_ref()) or item.node.get_ref().visible==item.visible),chapter+" normal text setting restores original image plates and headings")
   scene.queue_free();await process_frame
  service.queue_free();await process_frame
  for suffix in ["", ".bak", ".pending", ".bak.pending", ".legacy"]:DirAccess.remove_absolute(PATH+suffix)

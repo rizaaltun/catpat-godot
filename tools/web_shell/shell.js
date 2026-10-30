@@ -75,7 +75,7 @@
             : 'Yatay olduğunda yolculuğun açılacak.';
         fitCanvas();
         showPanels();
-        if (!rotationBlocked && phase !== 'error' && phase !== 'exited') {
+        if (!rotationBlocked && !document.hidden && phase !== 'error' && phase !== 'exited') {
             if (!starting && !started) startGame();
             else if (started) canvas.focus();
         }
@@ -99,7 +99,7 @@
                 onProgress: onProgress,
                 onPrintError: function () {
                     const message = Array.from(arguments).join(' ');
-                    if (/SCRIPT ERROR:|Parse Error:|No loader found for resource:|Failed to load script/.test(message)) {
+                    if (/SCRIPT ERROR:|Parse Error:|No loader found for resource:|Failed loading resource:|Failed to load script/.test(message)) {
                         failure(message, 'Oyun ekranı hazırlanırken bir sorun oluştu. Yeniden deneyebilirsin.', 'Bir sorunla karşılaştık');
                     } else {
                         console.error(message);
@@ -123,7 +123,7 @@
                 if (phase !== 'error' && phase !== 'exited') phase = 'playing';
                 // Startup can finish while a device is being rotated. It must
                 // still receive focus-out and remain behind the rotation card.
-                if (needsLandscape() || phase === 'error' || phase === 'exited') releaseAndPause();
+                if (document.hidden || needsLandscape() || phase === 'error' || phase === 'exited') releaseAndPause();
                 updateOrientation();
             }, function (err) {
                 starting = false;
@@ -141,6 +141,7 @@
     if (coarsePointer.addEventListener) coarsePointer.addEventListener('change', updateOrientation);
     document.addEventListener('visibilitychange', function () {
         if (document.hidden && started) releaseAndPause();
+        updateOrientation();
     });
     canvas.addEventListener('webglcontextlost', function () {
         failure('WebGL context lost', 'Görüntü bağlantısı kesildi. Oyunu yeniden açabilirsin.');

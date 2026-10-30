@@ -42,7 +42,7 @@ func build_ui():
 	resume_button.position.y=325;load_button.position.y=425
 	menu_button=UI.button("Kaydet ve ana menü",Rect2(352,525,576,88),pause_root,save_menu)
 	menu_button.add_theme_font_size_override("font_size",28)
-	for style in ["normal","hover","pressed","focus"]:menu_button.get_theme_stylebox(style).region_rect=Rect2(80,105,2010,520)
+	for style in ["normal","hover","pressed","focus"]:menu_button.get_theme_stylebox(style).region_rect=Rect2(91,118,1980,482)
 func go_menu():
 	get_tree().set_meta("journey_save_path",save_path)
 	var err=menu_change.call() if menu_change.is_valid() else get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")

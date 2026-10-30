@@ -203,7 +203,21 @@
       "accessibility reading cards",
       "web shell"
     ],
-    "states": "normal/hover/focus/pressed/disabled reuse image skins with documented color/alpha transforms; no default disabled style"
+    "states": "normal/hover/focus/pressed/disabled reuse image skins with documented color/alpha transforms; no default disabled style",
+    "panel_painted_region": {
+      "source_rect": [
+        91,
+        118,
+        1980,
+        482
+      ],
+      "source_size": [
+        2164,
+        727
+      ],
+      "godot": "UI.texture AtlasTexture and dark StyleBoxTexture region; original art preserved",
+      "web": "CSS background109.3%150.8%, position49.5%48.2% maps same painted region"
+    }
   },
   "scope_note": "This manifest records actual new assets and known use sites, not a claim of full original-book approval or full Epsilon-v2.1 provenance closure."
 }

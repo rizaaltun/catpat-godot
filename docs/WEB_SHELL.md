@@ -20,7 +20,7 @@ Bir bağlantı/başlatma hatası için “Yeniden dene” yalnız sayfayı yenid
 ## Kanıt
 
 - `tests/web_export_test.py`:8 export sözleşme testi; config/hash dosyası korunması, eksik/uyuşmayan kaynakta durma, idempotent hazırlama, gerçek asset kopyası, safe-area/no-cache ve metin güvenliği.
-- `tests/web_shell_test.cjs`:19 browserless JS sözleşme kontrolü; coarse/desktop yön ayrımı, başlangıcın bekletilmesi, gerçek hata önceliği, runtime script/parse hatası, input/focus bırakma, yüzde ve güvenli alan boyut hesabı. Sahte Engine/DOM ile çalışır; gerçek WebGL testi sayılmaz.
+- `tests/web_shell_test.cjs`:23 browserless JS sözleşme kontrolü; coarse/desktop yön ayrımı, başlangıcın bekletilmesi, gerçek hata önceliği, runtime script/parse/failed-resource hatası, gizli sekmede tamamlanan açılış, input/focus bırakma, yüzde ve güvenli alan boyut hesabı. Sahte Engine/DOM ile çalışır; gerçek WebGL testi sayılmaz.
 - Önceden doğrulanmış gerçek CI Web artifact'i12972433175 (kod `db65748`) üzerinde helper çalıştırıldı; HTML/config ve gerçek dosya boyutları doğrulandı. JS/WASM/PCK ve worklet SHA256 değerleri hazırlama öncesi/sonrası aynı kaldı.
 - Son kaynakların gerçek Godot export'u, tarayıcı ekranı ve fiziksel cihaz doğrulaması ana üreticinin son CI/QA turunda ayrıca kaydedilir.
 
@@ -29,3 +29,7 @@ Bir bağlantı/başlatma hatası için “Yeniden dene” yalnız sayfayı yenid
 - [Godot4.4 custom HTML shell](https://docs.godotengine.org/en/4.4/tutorials/platform/web/customizing_html5_shell.html): export config, async startGame ve yükleme bildirimi.
 - [Godot4.4 HTML shell API](https://docs.godotengine.org/en/4.4/tutorials/platform/web/html5_shell_classref.html): canvasResizePolicy0, onProgress ve onExit. Belge kendisini kısmen güncellenmemiş olarak işaretlediğinden, kullanılan akış gerçek4.4.1 export HTML'i ve kaynak koduyla da karşılaştırıldı.
 - [Godot4.4.1 web display bridge](https://github.com/godotengine/godot/blob/4.4.1-stable/platform/web/js/libs/library_godot_display.js): canvas/window blur ve policy0 davranışı.
+
+## 30 Ekim gerçek web girişi
+
+`2db8f3a` koşusu41062108276 Web export ve Pages deploy adımlarını geçti. Canlı sayfa bu oturumun Chrome tarayıcısında açıldı; mevcut WebGL2 eksikliğini Türkçe başlık, ayrıntı ve yeniden dene düğmesiyle gösterdi. Orman/font/buton kaynakları görünür. Bu ortamda canvas oynanışı açılamadı; tarayıcı oynanış kabulü olarak kaydedilmedi. Panel alfa payı gerçek ekranda başlık ve düğmenin boyalı alan dışında kalmasına yol açtığı için CSS aynı `(91,118,1980,482)` boyalı kaynak bölgesine eşlendi; bu yeni crop sonraki yayında tekrar görülecek.

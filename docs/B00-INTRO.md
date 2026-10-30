@@ -46,3 +46,11 @@ Yerel headless kanıtı fiziksel telefon ergonomisi, görüntü/animasyon onayı
 B00 süsü B01 ışık izi sayacına katılmaz. Ebeveyn özeti B00 ilerlemesini ayrı gösterir; legacy bypass için “öğretici oynanmadı”, kullanıcının açık geçişi için “oyuncunun seçimiyle geçildi” der. Uyumluluk olaylarını gerçek öğrenme ya da beceri kanıtı saymaz.
 
 Ders ipucu üstte, HUD'ın altında yer alır; açıklığın alt güvenli dönüş basamaklarını veya karakteri örten alt orta panel bırakılmadı.
+
+## Dar ekran çakışma denetimi
+
+İlk gerçek666×374 çıkış karesi karakterin `Patikaya ilerle` ve `Zıpla` altında kaldığını gösterdi. Yalnız butonların ekrana sığması bu hatayı yakalamadığı için sözleşme artık karakterin muhafazakâr130×150 beden alanını dünya→canvas dönüşümüyle görünür denetimlerle karşılaştırır: giriş, çıkış ve çıkış etkileşiminin sağ kenarı;1280×720/666×374; normal,1.3×metin+sağ denetim,1.3×metin+sol denetim. Native capture bu büyütülmüş durumları ayrıca üretir. Üst daldan gerçek held-jump her iki boyut ve üç profilde tüm hareket boyunca bedenin kadraj içinde ve görünür HUD kartlarından ayrı kaldığını denetler; iniş yeniden aynı platformda olmalıdır. Native apex kareleri ayrıca alınır.
+
+B00 kamera karaktere göre(0,-140) konumunda, düşey sınırları-144–940 olan hareketli kadraj kullanır; üst daldan sıçramada karakteri HUD arkasına sürükleyen sabit112–832 kadrajı kullanılmaz. Çıkışın sağında600 birim mevcut zemin sanatıyla dekoratif kamera payı bırakılır; oynanabilir sınır2260, çıkış2100, bütün checkpoint/çarpışma görevleri aynıdır. Bu ek pay büyütülmüş sağ eylem düğmesinden çıkış aralığının sağ kenarına kadar karakteri uzak tutar. Başlangıçtaki ev sanatının dünya konumu/ölçeği değişmez.
+
+Bu değişikliklerin son yerel motor koşusu:83/83 headless sözleşme, `run_godot_check.py` ile temiz motor günlüğü ve sıfır çıkış kodu. Normal/max sağ/max sol × iki boyutta giriş/çıkış/sağ etkileşim kenarı ve üst dal jump HUD/kadraj kontrolleri geçti. Bu matematiksel/dinamik doğrulama native karelerin görsel kabulünün yerine geçmez; CI'nin `--home-capture` yolu107 kontrol ve ek max/apex kareleri üretmelidir.

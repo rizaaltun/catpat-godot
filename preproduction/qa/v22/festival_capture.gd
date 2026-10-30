@@ -45,6 +45,9 @@ func add_final_flags():
 	for i in game.partner_sprites.size():
 		game.partner_sprites[i].position = game.STAGE_ANCHORS[i]
 	game.build_station_state()
+	game.update_hud()
+	game.camera.reset_smoothing()
+	game.camera.force_update_scroll()
 	game.show_final()
 func capture(tag: String, expected_size := Vector2i(1280, 720)):
 	await process_frame
@@ -117,6 +120,12 @@ func run():
 	await capture("small-final", Vector2i(666, 374))
 	get_root().size = Vector2i(1280, 720)
 	game.leave_final()
+	for frame in 60:await physics_frame
+	var actor_bounds=game.actor.get_global_transform_with_canvas()*Rect2(-65,-118,130,150)
+	check(Rect2(0,0,1280,720).encloses(actor_bounds), "saved-final world frame includes the whole player")
+	for companion in game.partner_sprites:
+		var foot=companion.get_global_transform_with_canvas()*Vector2(0,58)
+		check(Rect2(60,120,1160,540).has_point(foot), "saved-final world frame includes stage companion "+str(companion.name))
 	await capture("stage-world")
 
 	print("B05 VISUAL CAPTURE: %d frames, %d failures" % [captures, failures])

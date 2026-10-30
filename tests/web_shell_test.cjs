@@ -30,12 +30,12 @@ async function boot(options = {}) {
     let blurCount=0;window.addEventListener('blur',()=>blurCount++);
     const insets=options.insets||[0,0,0,0];
     elements['game-viewport'].getBoundingClientRect=()=>({width:window.innerWidth-insets[1]-insets[3],height:window.innerHeight-insets[0]-insets[2]});
-    const document=Object.assign(target(),{hidden:false,getElementById(id){return elements[id];}});
+    const document=Object.assign(target(),{hidden:!!options.hidden,getElementById(id){return elements[id];}});
     const calls=[];
     class Engine {
         static getMissingFeatures(request){calls.featureRequest=request;return options.missing||[];}
         constructor(config){calls.push({config});this.call=calls[calls.length-1];}
-        startGame(callbacks){this.call.callbacks=callbacks;if(options.reject)return Promise.reject(new Error(options.reject));if(options.pending)return new Promise(()=>{});return Promise.resolve();}
+        startGame(callbacks){this.call.callbacks=callbacks;if(options.reject)return Promise.reject(new Error(options.reject));if(options.deferred)return new Promise(resolve=>{this.call.resolveStart=resolve;});if(options.pending)return new Promise(()=>{});return Promise.resolve();}
     }
     const context=vm.createContext({window,document,console:{error(){}},Event:class {constructor(type){this.type=type;}},Engine:options.noEngine?undefined:Engine});
     vm.runInContext(configScript,context);vm.runInContext(shell,context);await flush();
@@ -67,6 +67,12 @@ async function boot(options = {}) {
     app.calls[0].callbacks.onExit(7);check(!app.elements['error-panel'].hidden && app.elements['error-technical'].textContent.includes('7'),'nonzero engine exit is visible');
     app=await boot({pending:true});app.calls[0].callbacks.onPrintError('SCRIPT ERROR: runtime scene failure');
     check(!app.elements['error-panel'].hidden && app.elements['error-technical'].textContent==='SCRIPT ERROR: runtime scene failure','runtime script failures remain visible even when Godot has not rejected startup');
+    app=await boot({pending:true});app.calls[0].callbacks.onPrintError('ERROR: Failed loading resource: res://assets/runtime/missing.webp');
+    check(!app.elements['error-panel'].hidden && app.elements['error-technical'].textContent.includes('Failed loading resource:'),'actual Godot failed-resource diagnostics cannot remain console-only');
+    app=await boot({deferred:true});app.document.hidden=true;app.document.fire('visibilitychange');const focusBefore=app.canvas.focusCount;app.calls[0].resolveStart();await flush();
+    check(app.canvas.blurCount>0 && app.blurCount>0 && app.canvas.focusCount===focusBefore,'startup finishing in a hidden tab sends focus-out without focusing the hidden canvas');
+    app=await boot({hidden:true});check(app.calls.length===0,'initially hidden document defers its first engine launch');
+    app.document.hidden=false;app.document.fire('visibilitychange');await flush();check(app.calls.length===1,'returning to an initially hidden document starts the journey once');
     app=await boot({width:844,height:390,dpr:3,insets:[0,44,21,44]});
     check(app.canvas.width===1312 && app.canvas.height===738 && app.canvas.style.width==='656px','canvas fits simulated safe-area insets with capped physical resolution');
     const blurBefore=app.blurCount;await app.resize(844,390);check(app.blurCount===blurBefore,'unchanged size does not introduce a pause');

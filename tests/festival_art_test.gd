@@ -42,6 +42,10 @@ func run():
   game.actor.position=Vector2(point.x,point.platform_y-32);game.actor.velocity=Vector2.ZERO
   await ticks(5)
   check(game.near_task==index and game.can_interact(),"station reached for state projection "+str(index))
+  var partner=game.partner_sprites[index]
+  check(game.actor.position.x-partner.position.x>=110.0,"station "+str(index)+" keeps helper silhouette beside the interaction anchor")
+  var ground_query=PhysicsRayQueryParameters2D.create(partner.position+Vector2(0,50),partner.position+Vector2(0,68),1)
+  check(not game.get_world_2d().direct_space_state.intersect_ray(ground_query).is_empty(),"station "+str(index)+" helper remains on an existing unchanged platform")
   game.interact()
   check(game.station_markers[index].modulate==Color.WHITE,"completed station changes its real image state "+str(index))
  check(game.lantern_glows.all(func(g):return g.visible),"Porsuk lights illuminate the world")
@@ -55,7 +59,7 @@ func run():
  check(game.final_panel.visible and game.stage_glow.visible and game.paused,"final activation illuminates stage and opens finale")
  var before=FileAccess.get_file_as_bytes(PATH);var flags=game.save_data.quest_flags.duplicate()
  game.leave_final();await ticks(5)
- check(game.can_interact() and game.action_button.text=="Finali tekrar izle","completed stage advertises a reachable read-only replay")
+ check(game.can_interact() and game.action_button.text=="Finali izle","completed stage advertises a reachable read-only replay")
  game.interact()
  check(game.final_replay and game.final_panel.visible and game.paused,"final replay can be opened from the physical stage")
  check(FileAccess.get_file_as_bytes(PATH)==before and game.save_data.quest_flags==flags,"replaying finale preserves exact save bytes and flags")

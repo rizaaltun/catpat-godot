@@ -300,3 +300,9 @@ Altı yeni image kaynağı ve runtime çıktıları `production/ART_MANIFEST_V21
 Asıl kitap/PSD için erişilebilir dosya araması yalnız mevcut aktarımZIP'ini döndürdü; buradan tüm hesaplarda kaynak yoktur sonucu çıkarılmadı. Kitap sayfaları veya PSD asılları publicrepo'ya eklenmedi, karakter kimliği yeniden çizilmedi. Kaynakla nihai kitap/karakter eşleşmesi hâlâ dışbağımlılık.
 
 Gerçek cihaz/WebGL2 oynanış, cihazda sesdinleme/perfölçümü, Mac/Xcode/iOS imzalama/kurulum yapılmış sayılmıyor. Uygulanabilir bağımsız üretim/denetim devam ediyor; yalnız gerçek erişim/kitapreferansı gerektiren kapılar engelli kalır.
+
+### İlk üretim koşusu ve gerçek karelerin yakaladığı kusurlar
+
+Kod `2db8f3a1985c5a450d1fe9d8ca10cab64247a127`, Actions41062108276: tüm test/export ve Pages deploy başarılı.41 native kare çıkarıldı; bağımsız görsel denetim `docs/NATIVE-VISUAL-AUDIT-2026-10-30.md` içinde. Otomatik başarıya rağmen panel alfa payları, büyük kontrollerin oyuncuyu örtmesi, B02 metin kontrastı, B05 karakter örtüşmesi ve final çekiminin yerleşim eksikleri görüldü. Üretim bu bulgular kapanmadan bitmiş sayılmadı.
+
+Sonraki aday ortak panel crop, doğru expandedHUD/üst-ipucu yerleşimi, B00 ve B05 dinamik güvenli kamera, B02 okunaklı yardım kartı, B05 ayrı NPC duruşu, sahnede otomatik görünür dokunmatik final eylemi ve daha sıkı gerçek sıçrama/kare assertionları içerir. B03 aktif görev/konuşma/ekip için6 ek native kare de hazırlanmıştır. Yeni tek aday CI sonucu ve gerçek görüntüler ayrıca kaydedilecektir.

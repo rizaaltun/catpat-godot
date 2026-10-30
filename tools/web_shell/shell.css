@@ -7,7 +7,7 @@ body{font-family:Catpat,system-ui,sans-serif;color:#fff5dd;background-color:#102
 .screen-panel{z-index:10;padding:16px;overflow:auto;touch-action:pan-y}
 .screen-panel[hidden]{display:none}
 #error-panel{z-index:30}
-.image-card{width:min(92vw,760px);max-height:100%;padding:clamp(28px,5vw,62px);background-image:url("panel.webp");background-size:100% 100%;background-repeat:no-repeat;text-align:center;overflow:auto}
+.image-card{width:min(92vw,760px);max-height:100%;padding:clamp(28px,5vw,62px);background-image:url("panel.webp");background-size:109.3% 150.8%;background-position:49.5% 48.2%;background-repeat:no-repeat;text-align:center;overflow:auto}
 h1{font-size:clamp(26px,4vw,40px);line-height:1.15;margin:0 0 16px;font-weight:700}
 p{font-size:clamp(18px,2.6vw,23px);line-height:1.35;margin:12px 0}
 .mascot{height:132px;max-width:40%;object-fit:contain;margin-bottom:12px}

@@ -51,14 +51,14 @@ func build_ui():
 	pause_root=Control.new();pause_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);ui_layer.add_child(pause_root)
 	var shade=ColorRect.new();shade.color=Color(0.02,0.07,0.06,0.75);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);pause_root.add_child(shade)
 	var backdrop=panel.texture("res://assets/polish-v3/panel.webp",Rect2(300,160,680,446),pause_root)
-	var framed=AtlasTexture.new();framed.atlas=load("res://assets/polish-v3/panel.webp");framed.region=Rect2(80,105,2010,520);backdrop.texture=framed
+	var framed=AtlasTexture.new();framed.atlas=load("res://assets/polish-v3/panel.webp");framed.region=Rect2(91,118,1980,482);backdrop.texture=framed
 	panel.label("Biraz soluklanalım",Rect2(350,210,580,48),32,pause_root)
 	pause_detail=panel.label("",Rect2(350,274,580,78),28,pause_root)
 	resume_button=panel.button("Yolculuğa devam et",Rect2(352,363,576,88),pause_root,func():set_pause(false),true)
 	load_button=panel.button("Kaydedilen kıyıdan başla",Rect2(352,475,576,88),pause_root,func():call_deferred("reload_checkpoint"))
 	for button in [pause_button,resume_button,load_button]:button.add_theme_font_size_override("font_size",28)
 	for button in [pause_button,load_button]:
-		for style in ["normal","hover","pressed","focus"]:button.get_theme_stylebox(style).region_rect=Rect2(80,105,2010,520)
+		for style in ["normal","hover","pressed","focus"]:button.get_theme_stylebox(style).region_rect=Rect2(91,118,1980,482)
 	pause_root.hide()
 func bank_name(b:int) -> String:
 	return ["Başlangıç kıyısı","Orta kıyı","İleri kıyı"][clampi(b,0,2)]

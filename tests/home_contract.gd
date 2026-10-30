@@ -5,6 +5,7 @@ const PATH="user://home-contract-test.json"
 var checks=0
 var failures=0
 var home
+var experience
 func _initialize():call_deferred("run")
 func check(ok:bool,label:String):
  checks+=1
@@ -31,6 +32,72 @@ func jump_right(held_frames:int,move_frames:int):
   await physics_frame
   if home.player.is_on_floor():break
  await ticks(3)
+func verify_actor_controls(tag:String):
+ var previous=home.data.settings.duplicate(true)
+ var old_touch=home.control_display.touch_mode
+ var old_size=root.size
+ home.control_display.touch_mode=true
+ for viewport in [Vector2i(1280,720),Vector2i(666,374)]:
+  root.size=viewport
+  for profile in [{"name":"normal"},{"name":"max-right","text_scale":1.3,"control_scale":1.3},{"name":"max-left","text_scale":1.3,"control_scale":1.3,"left_handed":true}]:
+   experience.apply_to_scene(home,profile)
+   home.control_display.refresh();home.update_hud()
+   await ticks(40)
+   # A conservative body envelope, projected to the same viewport canvas as UI.
+   var actor_bounds=home.player.get_global_transform_with_canvas()*Rect2(-65,-150,130,150)
+   var clear=true
+   var overlapping=[]
+   for button in home.control_display.buttons+[home.action_button]:
+    if button.is_visible_in_tree() and actor_bounds.intersects(button.get_global_transform_with_canvas()*Rect2(Vector2.ZERO,button.size)):
+     clear=false;overlapping.append(button.text)
+   check(clear,"B00 "+tag+" "+profile.name+" "+str(viewport)+" actor clears visible touch controls "+str(overlapping)+" actor="+str(actor_bounds))
+   if viewport.x==666 and profile.name!="normal" and "--home-capture" in OS.get_cmdline_user_args():
+    await process_frame
+    await RenderingServer.frame_post_draw
+    var image=root.get_texture().get_image()
+    check(not image.is_empty(),"B00 "+tag+" "+profile.name+" narrow real frame renders")
+    print("VISUAL_CAPTURE:B00-small-"+tag+"-"+profile.name+":"+Marshalls.raw_to_base64(image.save_webp_to_buffer(true,0.82)))
+ root.size=old_size
+ experience.apply_to_scene(home,previous)
+ home.control_display.touch_mode=old_touch;home.control_display.refresh();home.update_hud()
+ await ticks(20)
+func verify_upper_jump_frame():
+ var previous=home.data.settings.duplicate(true)
+ var old_size=root.size
+ var old_touch=home.control_display.touch_mode
+ home.control_display.touch_mode=true;home.control_display.refresh()
+ for viewport in [Vector2i(1280,720),Vector2i(666,374)]:
+  root.size=viewport
+  for profile in [{"name":"normal"},{"name":"max-right","text_scale":1.3,"control_scale":1.3},{"name":"max-left","text_scale":1.3,"control_scale":1.3,"left_handed":true}]:
+   experience.apply_to_scene(home,profile);home.update_hud();await ticks(40)
+   var contained=true
+   var highest=720.0
+   var hud_clear=true
+   home.keys[KEY_SPACE]=true
+   for frame in 85:
+    if frame==35:home.keys[KEY_SPACE]=false
+    await physics_frame
+    experience._refresh_expanded_hud(home)
+    var body=home.player.get_global_transform_with_canvas()*Rect2(-65,-150,130,150)
+    contained=contained and Rect2(0,0,1280,720).encloses(body)
+    highest=minf(highest,body.position.y)
+    var cards=[home.hud_panel,home.hint_panel]
+    for card in experience.hud_cards.values():cards.append(card)
+    for card in cards:
+     if is_instance_valid(card) and card.is_visible_in_tree() and body.intersects(card.get_global_transform_with_canvas()*Rect2(Vector2.ZERO,card.size)):
+      if hud_clear:print("B00 UPPER OVERLAP ",profile.name," frame=",frame," card=",card.name," cardrect=",card.get_rect()," body=",body)
+      hud_clear=false
+    if frame==27 and "--home-capture" in OS.get_cmdline_user_args():
+     await process_frame
+     await RenderingServer.frame_post_draw
+     var image=root.get_texture().get_image()
+     check(not image.is_empty(),"B00 upper jump "+profile.name+" real apex frame renders")
+     print("VISUAL_CAPTURE:B00-upper-jump-"+str(viewport.x)+"-"+profile.name+":"+Marshalls.raw_to_base64(image.save_webp_to_buffer(true,0.82)))
+   check(contained and hud_clear,"B00 upper jump "+profile.name+" "+str(viewport)+" stays in viewport and clears visible HUD; bodytop="+str(highest))
+   check(home.player.is_on_floor() and absf(home.player.position.y-500)<3,"B00 upper branch "+profile.name+" jump lands back on unchanged platform")
+ root.size=old_size
+ home.control_display.touch_mode=old_touch;home.control_display.refresh()
+ experience.apply_to_scene(home,previous);home.update_hud();await ticks(40)
 func capture(tag:String):
  if "--home-capture" not in OS.get_cmdline_user_args():return
  await process_frame
@@ -49,6 +116,9 @@ func capture(tag:String):
  print("VISUAL_CAPTURE:B00-small-"+tag+":"+Marshalls.raw_to_base64(small.save_webp_to_buffer(true,0.82)))
  root.size=old_size;home.control_display.touch_mode=old_touch;home.control_display.refresh();home.update_hud();await process_frame
 func run():
+ var host_experience=root.get_node_or_null("CatpatExperience")
+ if host_experience:host_experience.auto_observe=false
+ experience=preload("res://scripts/core/experience_service.gd").new();experience.auto_observe=false;root.add_child(experience)
  clean()
  var service=Save.new()
  var data=service.fresh_journey()
@@ -106,6 +176,7 @@ func run():
  home.saves.fault=""
  home.accept_invitation();await ticks(20)
  check(home.state.has(Quest.INVITATION) and not home.paused,"invitation completion begins real movement practice")
+ await verify_actor_controls("entry")
  await ticks(30)
  check(not home.state.has(Quest.WALK),"waiting still cannot complete walking practice")
  check(await walk_to(550),"walk to the first low root with the production controller")
@@ -136,7 +207,13 @@ func run():
  home.interact()
  check("b00.ribbon" in service.load_progress(PATH).data.collectibles and not home.ribbon.visible,"optional festival decoration is saved exactly once")
  home.interact();check(home.data.collectibles.count("b00.ribbon")==1,"repeating the decoration interaction is idempotent")
+ await verify_upper_jump_frame()
  check(await walk_to(2100),"return from the optional branch to the exit")
+ await verify_actor_controls("exit")
+ var exit_position=home.player.position
+ home.player.position.x=2190;await ticks(10)
+ await verify_actor_controls("exit-far-edge")
+ home.player.position=exit_position;await ticks(40)
  await capture("exit")
  var before=FileAccess.get_file_as_string(PATH)
  home.saves.fault="write";home.enter_patika()
