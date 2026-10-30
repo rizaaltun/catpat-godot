@@ -39,6 +39,14 @@ jobs:
       - name: Run touch pointer ownership regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/input_router_test.gd
 
+      - name: Verify local profile isolation, observations, and chapter restart
+        run: |
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/profile_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/observation_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/chapter_support_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/chapter_support_ui_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/parent_panel_test.gd
+
       - name: Run dialogue regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
 

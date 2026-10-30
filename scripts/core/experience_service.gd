@@ -5,6 +5,8 @@ const SettingsPanel=preload("res://scripts/ui/settings_panel.gd")
 const ChapterSelect=preload("res://scripts/ui/chapter_select_panel.gd")
 const Replay=preload("res://scripts/core/replay_service.gd")
 const UI=preload("res://scripts/polish_ui.gd")
+const ChapterSupport=preload("res://scripts/core/chapter_support.gd")
+const SupportPanel=preload("res://scripts/ui/chapter_support_panel.gd")
 var auto_observe=true
 var preferences=Preferences.new()
 var settings={}
@@ -13,6 +15,10 @@ var applied_signature=""
 var entry_layer:CanvasLayer
 var settings_entry:Button
 var chapters_entry:Button
+var help_entry:Button
+var restart_entry:Button
+var chapter_support=ChapterSupport.new()
+var support_navigation:Callable
 var modal_layer:CanvasLayer
 var active_modal:Control
 var modal_host:Node
@@ -92,6 +98,7 @@ func _process(delta):
   limitations.clear()
   if application_focus_lost:scene.notification(NOTIFICATION_APPLICATION_FOCUS_OUT)
  _update_entries(scene)
+ _observe_native_help(scene)
  var signature=_ui_signature(scene)+str(settings.hash())
  if signature!=applied_signature:
   apply_to_scene(scene,settings);applied_signature=signature
@@ -119,10 +126,20 @@ func _update_entries(scene):
   settings_entry.name="ExperienceSettings"
   chapters_entry=UI.button("Bölümler",Rect2(760,24,230,86),entry_layer,open_chapters.bind(scene),true)
   chapters_entry.name="ExperienceChapters"
+  help_entry=UI.button("Görev yardımı",Rect2(24,368,210,100),entry_layer,open_help.bind(scene),true)
+  help_entry.name="ExperienceHelp"
+  restart_entry=UI.button("Bölümü baştan oyna",Rect2(24,486,210,100),entry_layer,open_restart.bind(scene))
+  restart_entry.name="ExperienceRestart"
+  restart_entry.add_theme_font_size_override("font_size",18)
  var menu=actual_main_menu(scene)
  var pause=actual_pause_menu(scene)
  settings_entry.visible=(menu or pause) and not is_instance_valid(active_modal)
  chapters_entry.visible=menu and not is_instance_valid(active_modal)
+ help_entry.visible=pause and not has_property(scene,"help_panel") and not is_instance_valid(active_modal)
+ restart_entry.visible=pause and not is_instance_valid(active_modal)
+ if pause:
+  for button in buttons_under(scene):
+   if button.text in ["Dereyi baştan oyna","Bahçeyi baştan oyna"]:button.hide()
  settings_entry.position=Vector2(1010,24) if menu else Vector2(24,250)
  settings_entry.size=Vector2(230,86) if menu else Vector2(210,100)
 func _begin_modal(scene)->bool:
@@ -148,6 +165,35 @@ func open_chapters(candidate=null):
  if not actual_main_menu(scene) or not _begin_modal(scene):return
  active_modal=ChapterSelect.new();modal_layer.add_child(active_modal)
  active_modal.setup(path_for(scene),func():_close_modal())
+ _update_entries(scene)
+func open_help(candidate=null):
+ var scene=current_scene(candidate)
+ var context=chapter_support.help_context(scene)
+ if not context.ok:return
+ if has_property(scene,"help_panel") and scene.has_method("show_help"):
+  scene.show_help();_observe_native_help(scene);_update_entries(scene);return
+ if not _begin_modal(scene):return
+ active_modal=SupportPanel.new();modal_layer.add_child(active_modal)
+ active_modal.setup_help(context,func():_close_modal(false))
+ chapter_support.record_help(scene,"help_"+Crypto.new().generate_random_bytes(16).hex_encode())
+ _update_entries(scene)
+func _observe_native_help(scene):
+ var panel=value(scene,"help_panel")
+ if not is_instance_valid(panel):return
+ var shown=panel.visible
+ var previous=bool(scene.get_meta("experience_help_shown",false))
+ if shown and not previous:
+  chapter_support.record_help(scene,"help_"+Crypto.new().generate_random_bytes(16).hex_encode())
+ scene.set_meta("experience_help_shown",shown)
+func open_restart(candidate=null):
+ var scene=current_scene(candidate)
+ var context=chapter_support.context(scene)
+ if not context.ok or not _begin_modal(scene):return
+ active_modal=SupportPanel.new();modal_layer.add_child(active_modal)
+ active_modal.setup_restart(context,func():
+  var result=chapter_support.restart(scene,support_navigation)
+  if result.ok:_close_modal(false)
+  elif is_instance_valid(active_modal):active_modal.show_error(result.get("rollback_ok",true)),func():_close_modal(false))
  _update_entries(scene)
 func _close_modal(resume_host=true):
  var host=modal_host

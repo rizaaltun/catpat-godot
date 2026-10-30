@@ -46,7 +46,7 @@ func _build_frames():
 
 func _physics_process(delta):
 	if frozen:
-		input_axis=0;jump_request=false;jump_buffer=0;anim.play("idle");return
+		input_axis=0;jump_request=false;jump_buffer=0;super._physics_process(delta);return
 	# Route-driven companion uses the shared physical controller, never parent teleport AI.
 	if recruited and not controlled:
 		controlled=true
@@ -80,4 +80,4 @@ func _physics_process(delta):
 	impact = maxf(0,impact-delta*7)
 	# Gentle physical landing compression; limb motion remains separate image frames.
 	var breath = sin(motion_time*2.5)*0.003 if anim.animation=="idle" else 0.0
-	anim.scale = Vector2(0.125*(1+impact*0.035),0.125*(1-impact*0.045+breath))
+	anim.scale = Vector2.ONE*0.125 if performance_reduced_motion() else Vector2(0.125*(1+impact*0.035),0.125*(1-impact*0.045+breath))

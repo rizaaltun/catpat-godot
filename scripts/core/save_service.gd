@@ -118,11 +118,17 @@ func save(path: String, data: Dictionary) -> bool:
 	last_error=""
 	if not valid(data):last_error="invalid_state";return false
 	var text=encode(data)
-	if FileAccess.file_exists(path) and FileAccess.get_file_as_string(path)==text:return true
+	if FileAccess.file_exists(path) and FileAccess.get_file_as_string(path)==text:
+		_notify_observations(path,data,data)
+		return true
 	var pending=path+".pending"
 	if fault=="write" or not write_text(pending,text):last_error="write_failed";return false
 	if not read_file(pending).ok:last_error="verify_failed";return false
 	var old=read_file(path)
+	var observation_previous=old.data if old.ok else {}
+	if not old.ok:
+		var prior_backup=read_file(path+".bak")
+		if prior_backup.ok:observation_previous=prior_backup.data
 	if old.ok:
 		if old.get("migrated",false) and not FileAccess.file_exists(path+".legacy"):
 			if DirAccess.copy_absolute(path,path+".legacy")!=OK:last_error="migration_backup_failed";return false
@@ -130,7 +136,15 @@ func save(path: String, data: Dictionary) -> bool:
 			last_error="backup_write_failed";return false
 		if DirAccess.rename_absolute(path+".bak.pending",path+".bak")!=OK:last_error="backup_commit_failed";return false
 	if fault=="rename" or DirAccess.rename_absolute(pending,path)!=OK:last_error="commit_failed";return false
+	_notify_observations(path,observation_previous,data)
 	return true
+func _notify_observations(path:String,previous:Dictionary,current:Dictionary):
+	# Observation durability is separate: a journal failure never rejects a committed journey.
+	var loop=Engine.get_main_loop()
+	if not loop is SceneTree:return
+	var observer=loop.root.get_node_or_null("CatpatObservations")
+	if is_instance_valid(observer) and observer.has_method("observe_snapshot"):
+		observer.observe_snapshot(path,previous,current)
 func preserve_damaged(path: String) -> bool:
 	var suffix=".damaged-"+str(Time.get_unix_time_from_system()).replace(".","-")
 	for source in [path,path+".bak"]:

@@ -306,3 +306,13 @@ Gerçek cihaz/WebGL2 oynanış, cihazda sesdinleme/perfölçümü, Mac/Xcode/iOS
 Kod `2db8f3a1985c5a450d1fe9d8ca10cab64247a127`, Actions41062108276: tüm test/export ve Pages deploy başarılı.41 native kare çıkarıldı; bağımsız görsel denetim `docs/NATIVE-VISUAL-AUDIT-2026-10-30.md` içinde. Otomatik başarıya rağmen panel alfa payları, büyük kontrollerin oyuncuyu örtmesi, B02 metin kontrastı, B05 karakter örtüşmesi ve final çekiminin yerleşim eksikleri görüldü. Üretim bu bulgular kapanmadan bitmiş sayılmadı.
 
 Sonraki aday ortak panel crop, doğru expandedHUD/üst-ipucu yerleşimi, B00 ve B05 dinamik güvenli kamera, B02 okunaklı yardım kartı, B05 ayrı NPC duruşu, sahnede otomatik görünür dokunmatik final eylemi ve daha sıkı gerçek sıçrama/kare assertionları içerir. B03 aktif görev/konuşma/ekip için6 ek native kare de hazırlanmıştır. Yeni tek aday CI sonucu ve gerçek görüntüler ayrıca kaydedilecektir.
+
+## 31 Ekim 2026 — Kullanıcı geri bildirimi ve güvenli çalışma durağı
+
+**Öncelikli güncel kararlar:** `docs/USER-DECISIONS-2026-10-31.md`. Kullanıcı mevcut görevleri zor ve tekrarlı buldu: sürekli karaktere gidip E basma/geri dönme azaltılacak; gereksiz havadaki sarı ışıklar kaldırılacak, salıncak üstündeki sokak fenerleri düzeltilecek. Gerçek bölüm haritası, kolaylaştırma ve hızlı geçiş, daha heyecan verici image arayüzleri ve ElevenLabs seslendirmesi kesin iş listesine eklendi. Eski otomatik rota başarısı bu ürün sorunlarını kapatmaz.
+
+Kalan krediyle yarım ebeveyn/profil/yardım entegrasyonu hedefli olarak doğrulandı. Aktarımın etkin yolcuyu sessizce değiştirmesi, büyük yazı onay yerleşimi, B04 mola/denetim çakışması ve devralınan actor sabitinin native sınıf adıyla çakışması giderildi. **374 hedefli kontrol ve açılış regresyonu geçti**; kapsam, gerçek kare incelemesi ve sınırları `docs/QA-2026-10-31.md` içinde. `docs/MODULE_HOST_CONTEXT.md` servis sahipliği ve veri sözleşmesini açıklar. Mevcut karakter performans çalışması korunmuştur; nihai hareket kabulü değildir.
+
+Kaynaklar, testler ve kararlar geliştirme durağı olarak kaydedilecek; bu tur canlı Pages yayını yapılmadı. Önceki yeşil CI son paketin tüm kabulü diye kullanılmaz. Gerçek cihaz, kitap/PSD kimlik karşılaştırması ve tüm bölüm rotalarının yeni sürümde toplu kabulü açık.
+
+**Sonraki somut iş:** B01'de sarı toplama izlerini ve buna bağlı sayaç/yardım/rapor/test beklentilerini kaldır; eski kayıt okunabilirliğini koru. Hareketli platform üstündeki feneri ve gereksiz Porsuk'a dönüşü yeni kolay akışta çöz. Ardından harita/hızlı geçişi kur; tasarım kaydındaki sırayı izle. Kullanıcıya projeyi yeniden anlattırma.

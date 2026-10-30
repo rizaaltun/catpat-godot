@@ -43,6 +43,9 @@ func build_ui():
 	menu_button=UI.button("Kaydet ve ana menü",Rect2(352,525,576,88),pause_root,save_menu)
 	menu_button.add_theme_font_size_override("font_size",28)
 	for style in ["normal","hover","pressed","focus"]:menu_button.get_theme_stylebox(style).region_rect=Rect2(91,118,1980,482)
+func set_pause(value:bool):
+	super.set_pause(value)
+	for button in touch_buttons:button.visible=mode=="solo" and not paused
 func go_menu():
 	get_tree().set_meta("journey_save_path",save_path)
 	var err=menu_change.call() if menu_change.is_valid() else get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
