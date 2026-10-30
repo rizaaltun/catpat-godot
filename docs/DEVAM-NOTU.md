@@ -261,3 +261,13 @@
 - Canlı Pages sayfası açıldı; bu oturumun tarayıcısı açıkça WebGL2 eksikliği bildirdi. Canlı canvas oynanışı test edilemedi. Bu, kullanıcının cihazındaki oyunun açılmadığı anlamına gelmez.
 - Gerçek telefon/tablet ergonomisi, sesin cihazda dinlenmesi ve gerçek WebGL2 tarayıcıda elle yolculuk hâlâ açık. Ortak katalog/beceri kimlikleri ve kitap referansları doğrulanmadan beceri gelişimi iddiası eklenmedi.
 - Sıradaki iş: yeni CI/render sonuçlarını incele, bulunan yerleşim kusurlarını kapat; ardından v2.1 UI kaynak/kullanım envanteri ve mevcut sanat eksiklerini tamamla. Fiziksel cihaz doğrulamasını ayrı tut.
+
+### İlk sunucu doğrulaması ve yakalama iyileştirmesi
+
+- Kod commit'i `821c6b84de421d06cf854e6bcc079bd388cd7f1b`, run [41044387281](https://github.com/rizaaltun/catpat-godot/actions/runs/41044387281): tüm doğrulama adımları başarılı. B01/B02/B03 doğal oynanış, B04 doğal rota/geçiş, B05 sözleşmesi111/111, InputRouter10/10 ve Web export geçti. Genişletilmiş yaşam döngüsü34/34; B05 altı gerçek kare,0 hata.
+- B04 gerçek666×374 giriş ve pause kareleri incelendi: hareket/zıplama düğmeleri image dokusunu kullanıyor; eylem düğmesi ve alt açıklamayla çakışmıyor; pause panelinin üç eylemi okunur ve görünür. Bu, fiziksel ergonomi onayı değildir.
+- B03 ilk küçük karede tamamlanmış kayıt hub'da olduğundan görev ipucu boştu. Yalnız konum kontrolüyle yetinilmedi: yakalama gerçek yürüyüşle ulaşılan çıkışa taşındı ve `hint.text` boş olmamalı kontrolü eklendi. Bu ek testin sonucu bir sonraki koşuda kaydedilecek.
+
+### İkinci görsel denetim düzeltmesi
+
+Bağımsız denetçi B04 giriş/pause karelerinde değişen kontrolleri ve menüyü uygun buldu; ancak eski iki satırlık klavye yönergesinin dar görünümde küçük kaldığını ve dokunmatik moda uygun olmadığını bildirdi. B04 artık gerçek dokunma algılandığında tek satırlık26 punto dokunmatik yönerge gösteriyor; klavyeye dönülünce önceki klavye açıklaması geri geliyor. Alt kart içinde ek boşluk bırakıldı. Dar yakalama dokunmatik sunumu gerçekten etkinleştiriyor ve metin/puntoyu denetliyor. B03'te boş olmayan çıkış yönergesi de aynı koşuda kontrol edilecek.

@@ -4,6 +4,8 @@ const MainRoute=preload("res://scripts/core/main_route_save.gd")
 var load_blocked=false
 var menu_button:Button
 var menu_change:Callable
+var control_display=preload("res://scripts/core/control_display.gd").new()
+var keyboard_controls_hint=""
 func _ready():
 	save_path=str(get_tree().get_meta("journey_save_path","user://festival_v3.json"))
 	var initial=MainStore.new().load_progress(save_path)
@@ -18,6 +20,7 @@ func _ready():
 		return
 	save_service=MainRoute.new();save_service.main_data=initial.data.duplicate(true)
 	super._ready()
+	update_controls_hint()
 func build_ui():
 	super.build_ui()
 	# Reuse the shipped image controls, with comfortable targets at narrow sizes.
@@ -49,9 +52,22 @@ func save_menu():
 	if not commit_checkpoint():pause_detail.text="Kaydedemedik. Son kayıt korunuyor; yeniden deneyebilirsin.";return
 	go_menu()
 func _input(e):
-	if not load_blocked:super._input(e)
+	if not load_blocked:
+		if control_display.observe(e):update_controls_hint()
+		super._input(e)
 func _physics_process(delta):
-	if not load_blocked:super._physics_process(delta)
+	if not load_blocked:
+		super._physics_process(delta)
+		update_controls_hint()
+func update_controls_hint():
+	if not is_instance_valid(subtitle):return
+	if keyboard_controls_hint.is_empty():keyboard_controls_hint=subtitle.text
+	var desired="Oklarla yürü · Zıpla ile atla · Görev düğmesine dokun" if control_display.touch_mode else keyboard_controls_hint
+	if subtitle.text==desired:return
+	subtitle.text=desired
+	subtitle.add_theme_font_size_override("font_size",26 if control_display.touch_mode else 19)
+	subtitle.position.y=642 if control_display.touch_mode else 639
+	subtitle.size.y=54 if control_display.touch_mode else 64
 
 # Main journey hand-off: write the validated B05 entry before opening its scene.
 func available_action() -> String:
