@@ -11,6 +11,9 @@ func bind_controls(left: Rect2,right: Rect2,jump: Rect2,action: Rect2):
 func reset():
 	owners.clear();axis=0.0;jump_held=false;interact_pressed=false
 func consume(event: InputEvent) -> bool:
+	interact_pressed=false
+	# Godot emits this mouse event for a finger already represented by ScreenTouch.
+	if event is InputEventMouseButton and event.device==InputEvent.DEVICE_ID_EMULATION:return false
 	var id=-999
 	var pressed=false
 	var pos=Vector2.ZERO
@@ -19,7 +22,6 @@ func consume(event: InputEvent) -> bool:
 	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
 		id=-1;pressed=event.pressed;pos=event.position
 	else:return false
-	interact_pressed=false
 	if not pressed:owners.erase(id)
 	else:
 		for role in regions:

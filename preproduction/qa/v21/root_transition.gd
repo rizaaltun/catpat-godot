@@ -13,10 +13,36 @@ func check(ok,id):
 	if not ok:failures.append(id)
 func capture(name):
 	if "--v21-capture" not in OS.get_cmdline_user_args():return
-	if name not in ["01-garden-next-chapter","04-summit-main-entry","05-summit-pause-menu","07-resumed-summit"]:return
+	if name not in ["00-garden-touch","01-garden-next-chapter","04-summit-main-entry","05-summit-pause-menu","07-resumed-summit"]:return
 	await RenderingServer.frame_post_draw
 	var frame=root.get_texture().get_image()
 	print("VISUAL_CAPTURE:B03-B04-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
+	if name not in ["00-garden-touch","04-summit-main-entry","05-summit-pause-menu"]:return
+	var old_size=root.size
+	var scene=current_scene
+	var garden=name=="00-garden-touch"
+	var old_touch=false
+	if garden:
+		old_touch=scene.control_display.touch_mode
+		scene.control_display.touch_mode=true;scene.control_display.refresh()
+	root.size=Vector2i(666,374)
+	await process_frame
+	await RenderingServer.frame_post_draw
+	var small=root.get_texture().get_image()
+	check(not small.is_empty() and root.size==Vector2i(666,374),name+"_narrow_render")
+	var controls=scene.control_display.buttons if garden else scene.touch_buttons
+	var safe=Rect2(0,0,1280,720)
+	check(controls.all(func(b):return b.visible and safe.encloses(b.get_global_rect())),name+"_touch_controls_fit")
+	if garden:check(scene.hint.get_global_rect().end.y<=670,"B03_hint_clears_bottom_safe_area")
+	else:
+		check(controls.all(func(b):return b.size.x*374.0/720.0>=56 and b.size.y*374.0/720.0>=56),name+"_touch_targets_at_least_56_viewport_pixels")
+		check(controls.all(func(b):return not b.get_rect().intersects(scene.action_button.get_rect()) and not b.get_rect().intersects(scene.subtitle.get_rect())),name+"_movement_controls_clear_action_and_subtitle")
+		for i in controls.size():
+			check(scene.router.regions[["left","right","jump"][i]]==controls[i].get_rect(),name+"_pointer_region_matches_control_"+str(i))
+	print("VISUAL_CAPTURE:B03-B04-small-"+name+":"+Marshalls.raw_to_base64(small.save_webp_to_buffer(true,0.82)))
+	root.size=old_size
+	if garden:scene.control_display.touch_mode=old_touch;scene.control_display.refresh()
+	await process_frame
 func run():
 	set_meta("journey_save_path",PATH)
 	for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)
@@ -28,6 +54,7 @@ func run():
 	var original=svc.encode(d);var f=FileAccess.open(PATH,FileAccess.WRITE);f.store_string(original);f.close()
 	var g=load("res://scenes/garden.tscn").instantiate();root.add_child(g);current_scene=g;await ticks(45)
 	check(g.data.schema_version==10 and g.state.has(Quest.GARDEN_COMPLETE),"old_completed_garden_migrates")
+	await capture("00-garden-touch")
 	print("V21 VIDEO READY")
 	check(await g.walk_to(3760,1800),"walk_completed_garden_to_exit")
 	await ticks(150);check(g.party_at_exit(),"three_friends_physically_reach_garden_exit")

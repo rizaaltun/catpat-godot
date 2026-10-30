@@ -181,6 +181,10 @@ func run():
  var ending_save=service.load_progress(PATH)
  check(ending_save.ok and ending_save.data.checkpoint_id=="b05.stage","final checkpoint persists in the canonical save")
  check(playable.final_panel.visible and playable.paused,"shared festival finale is displayed")
+ check(playable.input_router.owners.is_empty() and not playable.left_pressed and not playable.right_pressed and not playable.jump_pressed,"finale clears held pointer ownership")
+ var escape_key=InputEventKey.new();escape_key.keycode=KEY_ESCAPE;escape_key.pressed=true
+ playable._unhandled_input(escape_key)
+ check(playable.final_panel.visible and playable.paused and not playable.pause_panel.visible,"Escape keeps the finale paused without opening a second overlay")
  check(not playable.pause_panel.visible,"festival finale replaces the pause overlay")
  var story_lines=[]
  for i in 5:story_lines.append(playable.final_panel.get_node("FinalStoryLine%d"%i))

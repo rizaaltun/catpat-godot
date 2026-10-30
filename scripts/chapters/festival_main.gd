@@ -241,6 +241,7 @@ func clear_gameplay_inputs():
  left_pressed=false;right_pressed=false;jump_pressed=false;action_pressed=false
 func toggle_pause():
  if blocked:return
+ if is_instance_valid(final_panel) and final_panel.visible:return
  clear_gameplay_inputs()
  paused=not paused
  set_partner_tweens_paused(paused)
@@ -327,6 +328,7 @@ func pause_tween_list(tweens:Array[Tween],should_pause:bool):
   if should_pause:tween.pause()
   else:tween.play()
 func show_final():
+ clear_gameplay_inputs()
  paused=true
  set_partner_tweens_paused(true)
  if is_instance_valid(pause_panel):pause_panel.hide()

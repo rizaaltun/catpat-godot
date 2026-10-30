@@ -36,6 +36,9 @@ jobs:
       - name: Run save regression check
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/save_test.gd
 
+      - name: Run touch pointer ownership regression check
+        run: timeout -k 10s 120s godot --headless --path . --script res://tests/input_router_test.gd
+
       - name: Run dialogue regression check
         run: timeout -k 10s 120s godot --headless --path . --script res://tests/dialogue_test.gd
 

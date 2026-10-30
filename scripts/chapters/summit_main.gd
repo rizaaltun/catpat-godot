@@ -20,6 +20,18 @@ func _ready():
 	super._ready()
 func build_ui():
 	super.build_ui()
+	# Reuse the shipped image controls, with comfortable targets at narrow sizes.
+	var control_rects=[Rect2(24,500,112,112),Rect2(152,500,112,112),Rect2(1116,500,140,112)]
+	for i in touch_buttons.size():
+		var control:Button=touch_buttons[i]
+		control.position=control_rects[i].position;control.size=control_rects[i].size
+		control.add_theme_font_override("font",UI.font())
+		control.add_theme_color_override("font_color",Color("183d35"))
+		for state in ["normal","hover","pressed","focus"]:
+			var skin=StyleBoxTexture.new();skin.texture=load("res://assets/polish-v3/jump-button.webp");skin.region_rect=Rect2(130,130,1000,1000)
+			if state=="pressed":skin.modulate_color=Color(0.86,0.91,0.91)
+			control.add_theme_stylebox_override(state,skin)
+	router.bind_controls(touch_buttons[0].get_rect(),touch_buttons[1].get_rect(),touch_buttons[2].get_rect(),Rect2())
 	for child in pause_root.get_children():
 		if child is TextureRect:child.position=Vector2(300,120);child.size=Vector2(680,520)
 		elif child is Label and child!=pause_detail:child.position.y=170

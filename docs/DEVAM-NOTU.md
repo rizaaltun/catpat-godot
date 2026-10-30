@@ -3,7 +3,7 @@
 ## Proje ve standartlar
 
 - Oyun: Çatpat: Festival Yolu; Godot 4.4.1 / GDScript.
-- Ortak rehber: Epsilon Oyun Geliştirme Rehberi v1.0 (16 Ekim 2026).
+- Ortak rehber: Epsilon Oyun Geliştirme Rehberi v2.1 (28 Ekim 2026); önceki üretim geçmişi v1.0 ile yürütülmüştür. v2.1 sanat/izlenebilirlik kapıları henüz tamamlanmış değildir.
 - T22 proje arşivi: `Catpat-Godot-T22-Guncel-Proje (4).zip`; temel zincir V21, B05 Festival Alanı kod adayı.
 - Geliştirme dalı: `work/t22-source-migration`.
 
@@ -247,3 +247,17 @@
 - Yeni GPT hesabında GitHub bağlantısına `rizaaltun/catpat-godot` için yazma yetkisi verilmesi gerekir. Epsilon rehberi bu konuşmaya ekli ayrı dosyadır; Public depoya kopyalanmadı ve yeni GPT konuşmasına ayrıca yüklenmelidir.
 - ChatGPT hesap geçmişi/ayarları GitHub projesinden ayrı kalır. Eski konuşma geçmişi gerekiyorsa OpenAI veri dışa aktarma sürecini izleyip ilgili JSON dosyasını yeni konuşmaya referans olarak ekle; bu, eski sohbetleri/ayarları veya aboneliği yeni hesaba taşımaz.
 - PDF/PSD kitap orijinalleri veya hakları doğrulanmamış kaynaklar Public depoya eklenmedi.
+
+
+## 30 Ekim 2026 — devir sonrası dokunmatik ve dar ekran denetimi
+
+- `work/t22-source-migration` dalı `f4c99a0` commit'inden devralındı. GitHub üzerinden son koşu 40669118241 ve önceki oyun koşusu 40490221402 başarıyla doğrulandı. Yeni proje veya depo oluşturulmadı.
+- Ana standart artık çalışma alanındaki Epsilon v2.1. Kitap kimliği değiştirilmedi; mevcut yayımlanabilir image varlıkları yeniden kullanıldı. Tüm UI/sahne sanatının kaynak izlenebilirliği ve v2.1 kapsam denetimi henüz tamamlanmadı.
+- Bağımsız kod denetimi B03 alt görev ipucunu, B04 küçük dokunma hedeflerini ve dokunma + taklit fare çift sayımını buldu. `docs/QA-2026-10-30.md` bulgu kaydıdır.
+- B03 ipucu, B01/B02'deki düzeltmeyle aynı şekilde y624'e alındı. B04 üretim sahnesinde hareket/zıplama hedefleri en az112×112 mantıksal piksele büyütüldü; router bölgeleri gerçek düğme dikdörtgenlerine bağlandı. Varsayılan düğme görünümü mevcut `jump-button.webp` sanatıyla değiştirildi; yeni sanat çizilmedi.
+- Ortak InputRouter yalnız `InputEvent.DEVICE_ID_EMULATION` fare olaylarını reddediyor; gerçek fare desteği korunuyor. Yeni 10 kontrollü regresyon eski kodda5 hata verdi, düzeltmeden sonra10/10 geçti.
+- B05 finali açıkken Escape'in fiziği yeniden başlatması engellendi; final açılırken parmak sahipliği temizleniyor. Godot4.4.1 yerel B05 sözleşmesi111/111, B03→B04→menü→Devam yaşam döngüsü17/17 geçti.
+- B03 oynanış ve B04 giriş/duraklatma için666×374 gerçek render yakalamaları ve sınır/çakışma kontrolleri mevcut CI yakalayıcısına eklendi. Bu kaydın yazıldığı anda yeni render ve tüm CI sonucu bekleniyor; sonuç ayrıca kaydedilecek.
+- Canlı Pages sayfası açıldı; bu oturumun tarayıcısı açıkça WebGL2 eksikliği bildirdi. Canlı canvas oynanışı test edilemedi. Bu, kullanıcının cihazındaki oyunun açılmadığı anlamına gelmez.
+- Gerçek telefon/tablet ergonomisi, sesin cihazda dinlenmesi ve gerçek WebGL2 tarayıcıda elle yolculuk hâlâ açık. Ortak katalog/beceri kimlikleri ve kitap referansları doğrulanmadan beceri gelişimi iddiası eklenmedi.
+- Sıradaki iş: yeni CI/render sonuçlarını incele, bulunan yerleşim kusurlarını kapat; ardından v2.1 UI kaynak/kullanım envanteri ve mevcut sanat eksiklerini tamamla. Fiziksel cihaz doğrulamasını ayrı tut.
