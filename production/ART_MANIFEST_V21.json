@@ -1,0 +1,209 @@
+{
+  "version": 1,
+  "created_at": "2026-10-30",
+  "guide": "Epsilon v2.1",
+  "assets": [
+    {
+      "asset_id": "catpat_b05_stage_v001",
+      "family": "environments",
+      "source": "assets/source/generated/catpat_b05_stage_v001.png",
+      "runtime": "assets/runtime/environments/catpat_b05_stage_v001.webp",
+      "method": "built-in image_gen",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "alpha_bounds_12": [
+        49,
+        94,
+        1498,
+        910
+      ],
+      "source_sha256": "0d47eeed95b69284d464748a5f6b1d6377e15c5c598dad02e9559cea266bdbfb",
+      "runtime_sha256": "e3b9d2f8386f08e57837d45365f8df1150e65519a1905222e954aee2169bb839",
+      "status": "integrated_headless_checked_native_review_pending",
+      "style": "catpat woodland gouache v1",
+      "reference_paths": [
+        "assets/polish-v3/forest.webp",
+        "assets/world/forest.webp"
+      ],
+      "origin": "original game adaptation; no new book fact or character identity claim",
+      "usage": [
+        "B05/FestivalCampArt: stage art, alpha walkable deck bounds aligned to x3910..4300,y474"
+      ]
+    },
+    {
+      "asset_id": "catpat_b05_bunting_v001",
+      "family": "objects",
+      "source": "assets/source/generated/catpat_b05_bunting_v001.png",
+      "runtime": "assets/runtime/objects/catpat_b05_bunting_v001.webp",
+      "method": "built-in image_gen",
+      "size": [
+        2172,
+        724
+      ],
+      "alpha_extrema": [
+        0,
+        255
+      ],
+      "alpha_bounds_12": [
+        44,
+        133,
+        2128,
+        590
+      ],
+      "source_sha256": "7cf3dbaedc7f74af7cf9f6a487750c2af740d32a53e66b0f413edcfa55d5243b",
+      "runtime_sha256": "3e9f0e756d90720290b24a7822d803b48f1bc25d0a117826106ac76cb5a6703f",
+      "status": "integrated_headless_checked_native_review_pending",
+      "style": "catpat woodland gouache v1",
+      "reference_paths": [
+        "assets/polish-v3/forest.webp",
+        "assets/world/forest.webp"
+      ],
+      "origin": "original game adaptation; no new book fact or character identity claim",
+      "usage": [
+        "B05/FestivalBunting x4: visible only after b05.flags.ready"
+      ]
+    },
+    {
+      "asset_id": "catpat_b05_station_banner_v001",
+      "family": "objects",
+      "source": "assets/source/generated/catpat_b05_station_banner_v001.png",
+      "runtime": "assets/runtime/objects/catpat_b05_station_banner_v001.webp",
+      "method": "built-in image_gen",
+      "size": [
+        1024,
+        1536
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "alpha_bounds_12": [
+        88,
+        62,
+        984,
+        1472
+      ],
+      "source_sha256": "d2314624cbb81a08f87ff28b3da50b593c459db0e919cf8878f9eeab38036a96",
+      "runtime_sha256": "c7b3d01f00a92d4c11e9347f0e278a8131b0c182e1c601b4bbb000c4531b3880",
+      "status": "integrated_headless_checked_native_review_pending",
+      "style": "catpat woodland gouache v1",
+      "reference_paths": [
+        "assets/polish-v3/forest.webp",
+        "assets/world/forest.webp"
+      ],
+      "origin": "original game adaptation; no new book fact or character identity claim",
+      "usage": [
+        "B05/Station0..2/CompletionFlag: muted before own contribution, full image afterward"
+      ]
+    },
+    {
+      "asset_id": "catpat_b00_home_v001",
+      "family": "environments",
+      "source": "assets/source/generated/catpat_b00_home_v001.png",
+      "runtime": "assets/runtime/environments/catpat_b00_home_v001.webp",
+      "method": "built-in image_gen",
+      "size": [
+        1536,
+        1024
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "alpha_bounds_12": [
+        52,
+        25,
+        1496,
+        1002
+      ],
+      "source_sha256": "a6979753c97f46aa680029b1747cff2872febc59985dc51ec5b2776c4e34e02b",
+      "runtime_sha256": "7cee0885b86b5768f06c711f4ce60a4a2521f808dd9e3ebf9422c53910b99c19",
+      "status": "integrated_headless_checked_native_review_pending",
+      "style": "catpat woodland gouache v1",
+      "reference_paths": [
+        "assets/polish-v3/forest.webp",
+        "assets/world/forest.webp"
+      ],
+      "origin": "original game adaptation; no new book fact or character identity claim",
+      "usage": [
+        "B00/HomeExteriorArt: non-colliding starting home exterior"
+      ]
+    },
+    {
+      "asset_id": "catpat_b05_lantern_glow_v001",
+      "family": "effects",
+      "source": "assets/source/generated/catpat_b05_lantern_glow_v001.png",
+      "runtime": "assets/runtime/effects/catpat_b05_lantern_glow_v001.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "method": "built-in image_gen",
+      "reference_paths": [
+        "assets/polish-v3/forest.webp"
+      ],
+      "source_sha256": "1db7ca28b534930f6c45654d85e058a58ba8f3e6f98ed610728e56e29fc45e95",
+      "runtime_sha256": "1db7ca28b534930f6c45654d85e058a58ba8f3e6f98ed610728e56e29fc45e95",
+      "status": "integrated_headless_checked_native_review_pending",
+      "runtime_format": "PNG RGBA",
+      "usage": [
+        "B05 six lantern glows and shared final light",
+        "B01 five motes,55 fireflies,three taskglows and oneexitglow",
+        "B04 LanternImageGlow; image projection tests23/23"
+      ]
+    },
+    {
+      "asset_id": "catpat_shared_ground_shadow_v001",
+      "family": "effects",
+      "source": "assets/source/generated/catpat_shared_ground_shadow_v001.png",
+      "runtime": "assets/runtime/effects/catpat_shared_ground_shadow_v001.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "alpha_extrema": [
+        0,
+        254
+      ],
+      "method": "built-in image_gen",
+      "runtime_format": "PNG RGBA",
+      "source_sha256": "0d741c939fa3fdbccf21372f3c6d7e5e1c57f216ad74c66bb84cf0d2f817fbb6",
+      "runtime_sha256": "0d741c939fa3fdbccf21372f3c6d7e5e1c57f216ad74c66bb84cf0d2f817fbb6",
+      "status": "integrated_headless_checked_native_review_pending",
+      "origin": "original generated contact-shadow artwork; no external/book source claim",
+      "usage": [
+        "B01 two grounded actor foot shadows; frozen outsideplay, no collider changes"
+      ]
+    }
+  ],
+  "legacy_ui": {
+    "paths": [
+      "assets/polish-v3/panel.webp",
+      "assets/polish-v3/button.webp",
+      "assets/polish-v3/jump-button.webp"
+    ],
+    "source_history": "Existing image family retained from transferred project; original generation files are not in this checkout. Image method is documented in the project art pipeline, but not independently re-proven for every old item.",
+    "uses": [
+      "menu",
+      "pause",
+      "help",
+      "final",
+      "settings",
+      "chapter selector",
+      "accessibility reading cards",
+      "web shell"
+    ],
+    "states": "normal/hover/focus/pressed/disabled reuse image skins with documented color/alpha transforms; no default disabled style"
+  },
+  "scope_note": "This manifest records actual new assets and known use sites, not a claim of full original-book approval or full Epsilon-v2.1 provenance closure."
+}

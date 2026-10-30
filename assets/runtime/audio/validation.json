@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-30",
+  "checks": "Vorbis decoded peak and boundary step relative to within-loop sample steps; does not replace listening/device QA",
+  "assets": [
+    {
+      "id": "music.path",
+      "decoded_peak": 0.17476,
+      "loop_boundary_sample_step": 0.001541,
+      "within_stream_step_p999": 0.024226,
+      "status": "PASS"
+    },
+    {
+      "id": "music.friends",
+      "decoded_peak": 0.176631,
+      "loop_boundary_sample_step": 0.002857,
+      "within_stream_step_p999": 0.023592,
+      "status": "PASS"
+    },
+    {
+      "id": "music.festival",
+      "decoded_peak": 0.254128,
+      "loop_boundary_sample_step": 0.00142,
+      "within_stream_step_p999": 0.033263,
+      "status": "PASS"
+    },
+    {
+      "id": "music.finale",
+      "decoded_peak": 0.277898,
+      "loop_boundary_sample_step": 0.010673,
+      "within_stream_step_p999": 0.036897,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.home",
+      "decoded_peak": 0.094679,
+      "loop_boundary_sample_step": 0.003957,
+      "within_stream_step_p999": 0.014821,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.lantern",
+      "decoded_peak": 0.089306,
+      "loop_boundary_sample_step": 0.002606,
+      "within_stream_step_p999": 0.014332,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.river",
+      "decoded_peak": 0.262129,
+      "loop_boundary_sample_step": 0.051868,
+      "within_stream_step_p999": 0.110427,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.garden",
+      "decoded_peak": 0.09304,
+      "loop_boundary_sample_step": 0.00324,
+      "within_stream_step_p999": 0.015057,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.summit",
+      "decoded_peak": 0.225393,
+      "loop_boundary_sample_step": 0.003886,
+      "within_stream_step_p999": 0.015614,
+      "status": "PASS"
+    },
+    {
+      "id": "ambience.festival",
+      "decoded_peak": 0.116564,
+      "loop_boundary_sample_step": 0.007167,
+      "within_stream_step_p999": 0.015472,
+      "status": "PASS"
+    }
+  ]
+}
