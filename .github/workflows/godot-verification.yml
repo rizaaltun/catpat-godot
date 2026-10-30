@@ -31,55 +31,82 @@ jobs:
           include-templates: true
 
       - name: Import assets and parse project
-        run: godot --headless --path . --editor --import --quit
+        run: python3 tools/run_godot_check.py --headless --path . --editor --import --quit
 
       - name: Run save regression check
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/save_test.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/save_test.gd
 
       - name: Run touch pointer ownership regression check
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/input_router_test.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/input_router_test.gd
 
       - name: Run dialogue regression check
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/dialogue_test.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
 
       - name: Run comic regression check
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/comic_test.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/comic_test.gd
 
       - name: Run menu, font, and recovery regression check
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/startup_regression.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/startup_regression.gd
+
+      - name: Check engine error gate
+        run: python3 tests/test_godot_check.py
+
+      - name: Run audio and preference contracts
+        run: |
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/audio_service_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/preferences_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/experience_test.gd
+
+      - name: Render settings, completed chapter selector, and scaled HUD
+        run: |
+          timeout -k 10s 120s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/settings_panel_test.gd -- --settings-capture
+          timeout -k 10s 120s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/replay_test.gd -- --replay-capture
+          timeout -k 10s 120s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/experience_hud_test.gd -- --experience-capture
+
+      - name: Run B00 tutorial, migration, and rendered viewport contract
+        run: timeout -k 10s 180s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://tests/home_contract.gd -- --home-capture
 
       - name: Run B01 full gameplay regression and capture rendered states
-        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-capture
+        run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility res://scenes/polish_v3.tscn -- --v9-capture
 
       - name: Run B02 full gameplay regression and capture rendered states
-        run: timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility res://scenes/river.tscn -- --v10-test --v10-capture
+        run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility res://scenes/river.tscn -- --v10-test --v10-capture
 
       - name: Run B03 full gameplay regression
-        run: timeout -k 10s 180s godot --headless --path . res://scenes/garden.tscn -- --v13-test
+        run: timeout -k 10s 180s python3 tools/run_godot_check.py --headless --path . res://scenes/garden.tscn -- --v13-test
 
       - name: Run B04 transition regression checks
         run: |
-          timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility --script res://preproduction/qa/v21/root_transition.gd -- --v21-capture
-          timeout -k 10s 240s xvfb-run -a godot --path . --rendering-method gl_compatibility --script res://preproduction/qa/v21/root_main_quest.gd -- --v21-capture
+          timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://preproduction/qa/v21/root_transition.gd -- --v21-capture
+          timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://preproduction/qa/v21/root_main_quest.gd -- --v21-capture
 
       - name: Capture B05 rendered viewport for visual review
-        run: timeout -k 10s 120s xvfb-run -a godot --path . --rendering-method gl_compatibility --script res://preproduction/qa/v22/festival_capture.gd
+        run: timeout -k 10s 120s xvfb-run -a python3 tools/run_godot_check.py --path . --rendering-method gl_compatibility --script res://preproduction/qa/v22/festival_capture.gd
+
+      - name: Verify image-backed chapter art projections
+        run: |
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/summit_art_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/image_effects_test.gd
+
+      - name: Run B05 shared movement, image state and read-only finale checks
+        run: |
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_movement_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_art_test.gd
 
       - name: Run B05 save and scene contract
-        run: timeout -k 10s 120s godot --headless --path . --script res://tests/festival_contract.gd
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_contract.gd
+
+      - name: Run B05 rejected-load menu recovery
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/festival_recovery_test.gd
 
       - name: Export browser build
         run: |
           mkdir -p build/web
           build_name="catpat-${GITHUB_SHA}"
-          godot --headless --path . --export-debug "Web Preview" "build/web/${build_name}.html"
-          cp "build/web/${build_name}.html" build/web/index.html
-          python3 -c 'from pathlib import Path; p=Path("build/web/index.html"); s=p.read_text(); assert "<head>" in s; s=s.replace("<head>", "<head>\\n<meta http-equiv=\"Cache-Control\" content=\"no-cache, no-store, must-revalidate\">\\n<meta http-equiv=\"Pragma\" content=\"no-cache\">\\n<meta http-equiv=\"Expires\" content=\"0\">", 1); p.write_text(s)'
-          grep -q "${build_name}" build/web/index.html
-          test -s "build/web/${build_name}.js"
-          test -s "build/web/${build_name}.wasm"
-          test -s "build/web/${build_name}.pck"
-          test -s build/web/index.html
+          python3 tools/run_godot_check.py --headless --path . --export-debug "Web Preview" "build/web/${build_name}.html"
+          python3 tools/prepare_web_export.py --source "build/web/${build_name}.html" --output build/web/index.html
+          python3 tests/web_export_test.py --html build/web/index.html
+          node tests/web_shell_test.cjs build/web/index.html
 
       - name: Configure GitHub Pages for a confirmed publish
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/work/t22-source-migration') || (github.event_name == 'workflow_dispatch' && inputs.publish && github.ref == 'refs/heads/work/t22-source-migration') }}

@@ -69,11 +69,27 @@ func run():
 		g.saves.fault=fault;g.go_summit();await ticks(10)
 		check(current_scene==g and g.mode=="transition_error" and not g.director.transitioning and FileAccess.get_file_as_string(PATH)==previous,"transition_"+fault+"_keeps_garden")
 	await capture("02-transition-save-error")
-	g.saves.fault="";g.transition_change=func(_scene):return ERR_CANT_OPEN;g.go_summit();await ticks(10)
-	check(current_scene==g and svc.load_progress(PATH).data.chapter_id=="B03" and not g.director.transitioning,"scene_failure_rolls_back_source")
-	g.transition_change=func(_scene):g.saves.fault="write";return ERR_CANT_OPEN
-	g.go_summit();await ticks(10)
-	check(current_scene==g and svc.load_progress(PATH).data.chapter_id=="B04" and svc.load_progress(PATH).data.summit.bank==0,"failed_rollback_keeps_safe_target")
+	g.saves.fault=""
+	var scene_fail_calls=[0]
+	var rollback_source=g.snapshot().duplicate(true)
+	g.transition_change=func(_scene):
+		scene_fail_calls[0]+=1
+		return ERR_CANT_OPEN
+	g.go_summit()
+	await ticks(10)
+	check(scene_fail_calls[0]==1,"failed_scene_navigation_callback_was_reached")
+	var rolled_back=svc.load_progress(PATH)
+	check(current_scene==g and g.mode=="transition_error" and rolled_back.ok and rolled_back.data==rollback_source and not g.director.transitioning,"scene_failure_rolls_back_source")
+	var rollback_fail_calls=[0]
+	g.transition_change=func(_scene):
+		rollback_fail_calls[0]+=1
+		g.saves.fault="write"
+		return ERR_CANT_OPEN
+	g.go_summit()
+	await ticks(10)
+	check(rollback_fail_calls[0]==1,"failed_rollback_navigation_callback_was_reached")
+	var safe_target=svc.load_progress(PATH)
+	check(current_scene==g and g.mode=="transition_error" and not g.director.transitioning and safe_target.ok and safe_target.data.chapter_id=="B04" and safe_target.data.summit.bank==0,"failed_rollback_keeps_safe_target")
 	await capture("03-transition-scene-error")
 	g.saves.fault="";g.transition_change=Callable();g.go_summit();await ticks(55)
 	var r=current_scene

@@ -1,5 +1,6 @@
 extends RefCounted
-## Each pointer owns one control until release. UI rebuild/pause clears ownership.
+## A pointer owns its original control until release or a drag outside its tolerance.
+const DRAG_TOLERANCE = 24.0
 var regions={}
 var owners={}
 var axis=0.0
@@ -12,18 +13,30 @@ func reset():
 	owners.clear();axis=0.0;jump_held=false;interact_pressed=false
 func consume(event: InputEvent) -> bool:
 	interact_pressed=false
-	# Godot emits this mouse event for a finger already represented by ScreenTouch.
-	if event is InputEventMouseButton and event.device==InputEvent.DEVICE_ID_EMULATION:return false
+	# A finger already has a ScreenTouch owner; never add its synthesized mouse.
+	if (event is InputEventMouseButton or event is InputEventMouseMotion) and event.device==InputEvent.DEVICE_ID_EMULATION:return false
 	var id=-999
 	var pressed=false
+	var dragging=false
 	var pos=Vector2.ZERO
 	if event is InputEventScreenTouch:
 		id=event.index;pressed=event.pressed and not event.canceled;pos=event.position
+	elif event is InputEventScreenDrag:
+		id=event.index;dragging=true;pos=event.position
 	elif event is InputEventMouseButton and event.button_index==MOUSE_BUTTON_LEFT:
 		id=-1;pressed=event.pressed;pos=event.position
+	elif event is InputEventMouseMotion:
+		id=-1;dragging=true;pos=event.position
+		if not event.button_mask & MOUSE_BUTTON_MASK_LEFT:owners.erase(id)
 	else:return false
-	if not pressed:owners.erase(id)
+	if dragging:
+		# Once canceled, moving back or across another control cannot reacquire it.
+		if owners.has(id):
+			var original:Rect2=regions[owners[id]]
+			if pos.distance_to(pos.clamp(original.position,original.end))>DRAG_TOLERANCE:owners.erase(id)
+	elif not pressed:owners.erase(id)
 	else:
+		owners.erase(id)
 		for role in regions:
 			if regions[role].has_point(pos):
 				owners[id]=role

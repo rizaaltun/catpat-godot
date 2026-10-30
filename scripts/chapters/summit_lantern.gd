@@ -43,9 +43,8 @@ func build(next_mode:String):
 	# The fener is on an already measured return step. Do not pile new ledges on the shore.
 	lamp=Sprite2D.new();lamp.texture=load("res://assets/polish-v3/lantern.webp");lamp.centered=false
 	lamp.scale=Vector2.ONE*0.12;lamp.position=LANTERN_POINT-Vector2(590,1230)*0.12;lamp.z_index=-2;arena.add_child(lamp)
-	var gradient=Gradient.new();gradient.set_color(0,Color(1,0.78,0.3,0.42));gradient.set_color(1,Color(1,0.66,0.16,0))
-	var tex=GradientTexture2D.new();tex.gradient=gradient;tex.width=256;tex.height=256;tex.fill=GradientTexture2D.FILL_RADIAL;tex.fill_from=Vector2(0.5,0.5);tex.fill_to=Vector2(1,0.5)
-	halo=Sprite2D.new();halo.texture=tex;halo.position=LANTERN_POINT+Vector2(10,-55);halo.scale=Vector2(2.5,1.6);halo.z_index=3;arena.add_child(halo)
+	halo=Sprite2D.new();halo.name="LanternImageGlow";halo.texture=load("res://assets/runtime/effects/catpat_b05_lantern_glow_v001.png")
+	halo.position=LANTERN_POINT+Vector2(10,-55);halo.scale=Vector2.ONE*640.0/maxf(1.0,halo.texture.get_width());halo.modulate.a=0.42;halo.z_index=3;arena.add_child(halo)
 	# Small raised/slanted latch is an effect marker on the intact generated lamp asset.
 	lid=Sprite2D.new();lid.texture=load("res://assets/chapter-v10/plank.webp");lid.scale=Vector2(0.025,0.012);lid.position=LANTERN_POINT+Vector2(16,-76);lid.z_index=-1;arena.add_child(lid)
 	world_hint=UI.label("",Rect2(LANTERN_POINT+Vector2(-145,-177),Vector2(320,45)),22,arena)
@@ -110,6 +109,14 @@ func refresh_lantern():
 	halo.visible=lantern_stage=="lit";lid.rotation=-0.55 if lantern_stage in ["unseen","accepted"] else 0.0
 	lid.modulate=Color("b9ddce") if lantern_stage=="prepared" else Color("80796b")
 	world_hint.text="Yol feneri yanıyor" if lantern_stage=="lit" else "Kapak kapalı · Porsuk'a dön" if lantern_stage=="prepared" else "Yol feneri ↓"
+func halo_reduced_motion()->bool:
+	var fallback={}
+	for property in save_service.get_property_list():
+		if property.name=="main_data":
+			var data=save_service.get("main_data")
+			if data is Dictionary:fallback=data.get("settings",{})
+	var preferences=get_tree().root.get_meta("catpat_preferences",fallback)
+	return bool(preferences.get("reduced_motion",false)) if preferences is Dictionary else false
 func set_pause(value:bool):
 	super.set_pause(value or dialogue_active)
 	if not is_instance_valid(comic):return
@@ -130,7 +137,9 @@ func _physics_process(delta):
 	if not is_instance_valid(quest_label):return
 	if not pause_root.visible:action_cooldown=maxf(0,action_cooldown-delta)
 	if not paused:
-		glow_time+=delta;halo.modulate.a=0.92+sin(glow_time*2.0)*0.06
+		var reduced=halo_reduced_motion()
+		if not reduced:glow_time+=delta
+		halo.modulate.a=0.42 if reduced else 0.42*(0.92+sin(glow_time*2.0)*0.06)
 	var goals={"unseen":"Porsuk seni bekliyor · Başlangıç kıyısında onunla konuş.","accepted":"Basamaklardan yol fenerine in · Kapağını kapat.","prepared":"Kapak hazır · Başlangıç kıyısında Porsuk'un yanına dön.","lit":"Yol feneri yandı · Arkadaşlarınla geçitlere ilerle."}
 	quest_label.text=quest_error if not quest_error.is_empty() else goals[lantern_stage]
 	quest_label.visible=not paused

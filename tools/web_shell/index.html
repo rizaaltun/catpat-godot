@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<title>__CATPAT_TITLE__</title>
+<link rel="stylesheet" href="__CATPAT_ASSET_PREFIX__/shell.css">
+</head>
+<body>
+<main id="game-viewport" aria-label="Çatpat oyun alanı">
+<canvas id="canvas" width="1280" height="720" tabindex="0" aria-label="Çatpat: Festival Yolu"></canvas>
+</main>
+<section id="loading-panel" class="screen-panel" role="status" aria-live="polite">
+ <div class="image-card">
+  <img class="mascot" src="__CATPAT_ASSET_PREFIX__/catpat.webp" alt="">
+  <h1>Yolculuğun hazırlanıyor</h1>
+  <p>Çatpat ve arkadaşları birazdan burada.</p>
+  <p id="loading-progress">Oyun dosyaları yükleniyor…</p>
+ </div>
+</section>
+<section id="orientation-panel" class="screen-panel" role="status" aria-live="polite" hidden>
+ <div class="image-card">
+  <img class="mascot" src="__CATPAT_ASSET_PREFIX__/catpat.webp" alt="">
+  <h1>Cihazını yatay çevir</h1>
+  <p>Yolu ve düğmeleri rahatça görmek için cihazını iki yanından tut.</p>
+  <p id="orientation-detail">Yatay olduğunda yolculuğun açılacak.</p>
+ </div>
+</section>
+<section id="error-panel" class="screen-panel" role="alert" hidden>
+ <div class="image-card">
+  <h1 id="error-title">Oyunu açamadık</h1>
+  <p id="error-message">Bir sorunla karşılaştık. Yeniden deneyebilirsin.</p>
+  <details id="error-details"><summary>Hata ayrıntısı</summary><pre id="error-technical"></pre></details>
+  <button id="retry-button" type="button">Yeniden dene</button>
+ </div>
+</section>
+<noscript><section class="screen-panel"><div class="image-card"><h1>JavaScript gerekiyor</h1><p>Oyunu açmak için tarayıcında JavaScript desteğini etkinleştir.</p></div></section></noscript>
+<script src="__CATPAT_ENGINE_URL__"></script>
+<script id="catpat-export-config">
+const GODOT_CONFIG = __CATPAT_CONFIG__;
+const GODOT_THREADS_ENABLED = __CATPAT_THREADS__;
+</script>
+<script src="__CATPAT_ASSET_PREFIX__/shell.js"></script>
+</body>
+</html>

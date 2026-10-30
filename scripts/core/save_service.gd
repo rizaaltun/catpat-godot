@@ -11,11 +11,40 @@ var fault="" # Deterministic test seam; empty in shipping runtime.
 var last_error=""
 func fresh() -> Dictionary:
 	return {"schema_version":VERSION,"chapter_id":"B01","geometry":Director.GEOMETRY,"checkpoint_id":"b01.island.0","quest_flags":[],"party_ids":[],"collectibles":[],"settings":{},"ending_seen":false,"summit":{}}
+func fresh_journey() -> Dictionary:
+	var data=fresh()
+	data.chapter_id="B00";data.geometry="home-v1";data.checkpoint_id="b00.entry"
+	data.settings.onboarding_origin="new-journey-v1"
+	return data
+func migrate_onboarding(data:Dictionary) -> Dictionary:
+	# Older journeys begin at B01. Preserve their route and explicitly mark bypass,
+	# rather than reporting that the player performed the new tutorial.
+	if not valid(data):return {"ok":false,"reason":"invalid_state"}
+	var result=data.duplicate(true)
+	if result.chapter_id=="B00" or Quest.HOME_EXIT in result.quest_flags:return {"ok":true,"data":result,"migrated":false}
+	for event in Quest.HOME_EVENTS:
+		if event not in result.quest_flags:result.quest_flags.append(event)
+	result.settings.onboarding_origin="legacy-bypass-v1"
+	return {"ok":valid(result),"data":result,"migrated":true}
+func persist_onboarding_migration(path:String,data:Dictionary) -> bool:
+	var original=path+".onboarding-v1.original"
+	if FileAccess.file_exists(original):
+		if not read_file(original).ok:last_error="onboarding_backup_invalid";return false
+	else:
+		var source=path if read_file(path).ok else path+".bak"
+		var pending=original+".pending"
+		if not read_file(source).ok or DirAccess.copy_absolute(source,pending)!=OK or not read_file(pending).ok or DirAccess.rename_absolute(pending,original)!=OK:
+			last_error="onboarding_backup_failed";return false
+	return save(path,data)
 func valid(data) -> bool:
 	if not data is Dictionary or data.size()!=MAIN_FIELDS.size() or not data.has_all(MAIN_FIELDS):return false
 	if typeof(data.schema_version) not in [TYPE_INT,TYPE_FLOAT] or data.schema_version!=VERSION:return false
 	if not data.quest_flags is Array or not data.settings is Dictionary or not data.ending_seen is bool or not data.summit is Dictionary:return false
 	if not director.validate(data) or not Quest.valid(data):return false
+	if data.chapter_id=="B00":
+		var required={"b00.walk":Quest.WALK,"b00.short":Quest.SHORT_JUMP,"b00.long":Quest.TUTORIAL_JUMP,"b00.exit":Quest.HOME_EXIT}
+		if required.has(data.checkpoint_id) and required[data.checkpoint_id] not in data.quest_flags:return false
+		return data.summit.is_empty() and data.party_ids.is_empty() and not data.ending_seen and data.quest_flags.all(func(e):return e in Quest.HOME_EVENTS) and data.collectibles.all(func(e):return e=="b00.ribbon")
 	if data.chapter_id=="B05":
 		return data.summit.is_empty() and data.party_ids==["badger","monkey","rabbit"] and Quest.SUMMIT_COMPLETE in data.quest_flags and (Quest.FESTIVAL_COMPLETE not in data.quest_flags or data.ending_seen)
 	if data.chapter_id=="B04":

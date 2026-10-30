@@ -44,15 +44,17 @@ static func button(text: String, rect: Rect2, parent: Node, callback: Callable, 
 	b.position = rect.position
 	b.size = rect.size
 	b.add_theme_font_size_override("font_size",23)
-	for state in ["normal","hover","pressed","focus"]:
+	for state in ["normal","hover","pressed","focus","disabled"]:
 		var s=skin(amber)
 		if state=="hover" or state=="focus": s.modulate_color=Color(1.12,1.12,1.06)
 		if state=="pressed": s.modulate_color=Color(0.86,0.91,0.91)
+		if state=="disabled": s.modulate_color=Color(0.65,0.68,0.65,0.6)
 		b.add_theme_stylebox_override(state,s)
 	b.add_theme_color_override("font_color",Color("183d35") if amber else Color("fff5dd"))
 	b.add_theme_color_override("font_hover_color",Color("183d35") if amber else Color.WHITE)
 	b.add_theme_color_override("font_focus_color",Color("183d35") if amber else Color.WHITE)
 	b.add_theme_color_override("font_pressed_color",Color("183d35") if amber else Color.WHITE)
+	b.add_theme_color_override("font_disabled_color",Color("a8b2a2"))
 	b.pressed.connect(callback)
 	parent.add_child(b)
 	return b

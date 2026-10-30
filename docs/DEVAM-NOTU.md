@@ -283,3 +283,20 @@ Bağımsız denetçi B04 giriş/pause karelerinde değişen kontrolleri ve menü
 Bu teknik/dar ekran iyileştirme aşaması tamamlandı; tam ürün veya bütün sanat için kabul değildir. Açık işler: fiziksel telefon/tablet ergonomisi, gerçek WebGL2 masaüstü tarayıcıda elle yolculuk, cihaz ses/hareket incelemesi; v2.1 UI kaynak/kullanım envanteri ve kod çizimli B05 sanat eksikleri; kitap kimliği, kapsam ve ortak katalog/beceri kaynağı doğrulaması. Eski plan tarihlerinden yeni teslim takvimi çıkarılmadı.
 
 Sıradaki bağımsız üretim işi, mevcut manifest/kullanımları v2.1 ile eşleştirip eksik image sanatını gerçek ekranlar üzerinden tamamlamak. Kitap kimliğini değiştirecek yeni karakter üretimi için kaynak karşılaştırması eksik; mevcut kimlik korunuyor. Gerçek cihaz kapısı bu ortamda yapılmış sayılmıyor.
+
+
+## 30 Ekim 2026 — tam ürün kapsamını sürdürme,0.14.0 üretim adayı
+
+Kullanıcı kısa düzeltme turunda işi bırakmamayı ve mevcut kapsamın tamamı için çalışmayı açıkça istedi. Çalışma dalı/proje korunarak `docs/PRODUCTION-2026-10-30.md` kapsamı uygulandı. YeniB00 öğreticisi,6 bölüm art zinciri, B05 ortak hareket+görünür katkılar+yardım+saltokunur finaltekrarı, bölüm seçimi/izole replay, uygulanmış erişilebilirlik tercihleri,34 özgün sesvarlığı ve hash'li web kabuğu eklendi.
+
+Yerel kabul kanıtları: Home53/53, Save60/60, InputRouter23/23, B05 hareket19/19, B05 fizikrotası111/111, B05image/dünya/final29/29, B05reddedilenkayıt19/19; Replay93/93, Preferences21/21, Settings17/17, Experience42/42, en büyükHUD43/43, B04image23/23+eskisolorota14/14, B01/B04imageefekt23/23 ve B01tamrotasıPASS. Audio68/68;34 dosya/hash/decode ve döngüsınırı kontrolleri. Web8Python+19Node, gerçek öncekiCIpaketinde JS/WASM/PCKdeğişmeden.
+
+Bunlar tek sürümdeki native görsel/cihaz kabulü değildir. Yeni CI adayı tüm bölümleri, geniş/dar ayar/replay/HUD/ev/festival karelerini ve Web export'u birlikte doğrulayacak. Sonraki satırlarda gerçek koşu/commit/kare bulguları kaydedilecek; kaynak değiştiğinde eski sonuç nihai kabul diye taşınmayacak.
+
+Eski yaşam döngüsü testindeki aynı satır lambda hata enjeksiyonu gerçekten çalışmıyordu; multiline callback+erişimsayacıyla düzeltildi,19/19 temizlog geçti. Godot0 çıkışına rağmen motor hata satırı yazabildiği için CI artık `tools/run_godot_check.py` ile ERROR/SCRIPT ERROR/ParseError satırlarında başarısız olur; Dummy ses sürücüsü donanımgürültüsünü ayırır.
+
+Altı yeni image kaynağı ve runtime çıktıları `production/ART_MANIFEST_V21.json`, prompt seti `docs/ART-BRIEFS-V21.md` içindedir. KaynakPNGler `assets/source/.gdignore` ile runtimeimport/exporttan ayrılır. EskiUIimage ailesi yeniden kullanıldı; orijinal üretimdosyaları bucheckout'ta yoksa varmış gibi gösterilmedi.
+
+Asıl kitap/PSD için erişilebilir dosya araması yalnız mevcut aktarımZIP'ini döndürdü; buradan tüm hesaplarda kaynak yoktur sonucu çıkarılmadı. Kitap sayfaları veya PSD asılları publicrepo'ya eklenmedi, karakter kimliği yeniden çizilmedi. Kaynakla nihai kitap/karakter eşleşmesi hâlâ dışbağımlılık.
+
+Gerçek cihaz/WebGL2 oynanış, cihazda sesdinleme/perfölçümü, Mac/Xcode/iOS imzalama/kurulum yapılmış sayılmıyor. Uygulanabilir bağımsız üretim/denetim devam ediyor; yalnız gerçek erişim/kitapreferansı gerektiren kapılar engelli kalır.

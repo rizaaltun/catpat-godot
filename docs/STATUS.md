@@ -1,3 +1,5 @@
+> **30 Ekim 2026 güncel kaynak:** `docs/DEVAM-NOTU.md` ve `docs/PRODUCTION-2026-10-30.md`. Aşağıdaki kayıtlar üretim geçmişidir; eski "yapılmadı/yayın yok" ifadeleri yeni sonuçları geçersiz kılmaz.
+
 # V8 — 7 Ekim 2026
 
 Son kıyıda güvenli hareketli dal, Porsuk binme/bekleme/iniş/yer açma, üst keşif ışığı ve PartyController eklendi. V7 kayıt sistemi korundu. Ayrıntı production/CURRENT.md ve LEVEL_V8.md; kanıt preproduction/qa/v8. Yeni bölüm ve nihai karakter onayı henüz yok.

@@ -28,11 +28,23 @@ const FESTIVAL_FLAGS="b05.flags.ready"
 const FESTIVAL_FLOWERS="b05.flowers.ready"
 const FESTIVAL_COMPLETE="chapter.B05.complete"
 const FESTIVAL_EVENTS=[FESTIVAL_LIGHT,FESTIVAL_FLAGS,FESTIVAL_FLOWERS,FESTIVAL_COMPLETE]
+const INVITATION="invitation.read"
+const WALK="tutorial.walk"
+const SHORT_JUMP="tutorial.short_jump"
+const LONG_JUMP="tutorial.long_jump"
+const TUTORIAL_JUMP="tutorial.jump"
+const HOME_EXIT="home.exit"
+const HOME_EVENTS=[INVITATION,WALK,SHORT_JUMP,LONG_JUMP,TUTORIAL_JUMP,HOME_EXIT]
 const EVENTS=[ACCEPTED,"light.A","light.B","light.C",JOINED,COMPLETE,RIVER_ACCEPTED,PLANK,ROPE,SUPPLIED,READY,MONKEY,RIVER_COMPLETE,GARDEN_ACCEPTED,TIE,RELEASED,LOWERED,BASKET,GARDEN_SUPPLIED,PROTECTED,RABBIT,GARDEN_COMPLETE,SUMMIT_COMPLETE,FESTIVAL_LIGHT,FESTIVAL_FLAGS,FESTIVAL_FLOWERS,FESTIVAL_COMPLETE]
 func party_ids() -> Array:
 	return ["badger","monkey","rabbit"] if has(RABBIT) else ["badger","monkey"] if has(MONKEY) else ["badger"] if has(JOINED) else []
 func prerequisites(event_id: String) -> Array:
 	match event_id:
+		WALK:return [INVITATION]
+		SHORT_JUMP:return [WALK]
+		LONG_JUMP:return [SHORT_JUMP]
+		TUTORIAL_JUMP:return [SHORT_JUMP,LONG_JUMP]
+		HOME_EXIT:return [INVITATION,WALK,TUTORIAL_JUMP]
 		SUMMIT_COMPLETE:return [GARDEN_COMPLETE]
 		FESTIVAL_LIGHT,FESTIVAL_FLAGS,FESTIVAL_FLOWERS:return [SUMMIT_COMPLETE]
 		FESTIVAL_COMPLETE:return FESTIVAL_EVENTS.slice(0,3)
@@ -60,7 +72,7 @@ func all_lit() -> bool:
 	return true
 func apply(event_id: String) -> bool:
 	if has(event_id):return true
-	if event_id not in EVENTS:return false
+	if event_id not in EVENTS and event_id not in HOME_EVENTS:return false
 	if event_id in LIGHTS and not has(ACCEPTED):return false
 	if event_id==JOINED and not all_lit():return false
 	if event_id==COMPLETE and not has(JOINED):return false
@@ -80,7 +92,7 @@ static func valid(data: Dictionary) -> bool:
 	if not data.get("quest_flags") is Array or not data.get("collectibles") is Array:return false
 	var seen={}
 	for id in data.quest_flags:
-		if not id is String or id not in EVENTS or seen.has(id):return false
+		if not id is String or (id not in EVENTS and id not in HOME_EVENTS) or seen.has(id):return false
 		seen[id]=true
 	for id in LIGHTS:
 		if seen.has(id) and not seen.has(ACCEPTED):return false
@@ -89,12 +101,12 @@ static func valid(data: Dictionary) -> bool:
 			if not seen.has(id):return false
 	if seen.has(COMPLETE) and not seen.has(JOINED):return false
 	var state=load("res://scripts/core/quest_state.gd").new();state.flags=data.quest_flags
-	for id in RIVER_EVENTS+GARDEN_EVENTS+[SUMMIT_COMPLETE]+FESTIVAL_EVENTS:
+	for id in HOME_EVENTS+RIVER_EVENTS+GARDEN_EVENTS+[SUMMIT_COMPLETE]+FESTIVAL_EVENTS:
 		if state.has(id):
 			for requirement in state.prerequisites(id):
 				if not state.has(requirement):return false
 	seen.clear()
 	for id in data.collectibles:
-		if not id is String or id not in ["b01.mote.0","b01.mote.1","b01.mote.2","b01.mote.3","b01.mote.4"] or seen.has(id):return false
+		if not id is String or id not in ["b00.ribbon","b01.mote.0","b01.mote.1","b01.mote.2","b01.mote.3","b01.mote.4"] or seen.has(id):return false
 		seen[id]=true
 	return data.get("party_ids")==state.party_ids()

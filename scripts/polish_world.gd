@@ -55,6 +55,7 @@ var touch_points={}
 var input_router=preload("res://scripts/core/input_router.gd").new()
 var interact=false
 var particles: Array=[]
+var image_effects:Node2D
 var terrain: Texture2D
 var bank: Texture2D
 # Collision follows the same hand-measured moss surface used by the bank artwork.
@@ -101,6 +102,9 @@ func _ready():
 	automated=automated or "--v8-test" in OS.get_cmdline_user_args() or "--v8-capture" in OS.get_cmdline_user_args()
 	automated=automated or "--v9-test" in OS.get_cmdline_user_args() or "--v9-capture" in OS.get_cmdline_user_args()
 	show_menu()
+	if get_tree().get_meta("journey_autostart",false):
+		get_tree().remove_meta("journey_autostart")
+		call_deferred("begin_game")
 	if "--v9-capture" in OS.get_cmdline_user_args(): capture_v9_sequence()
 	elif "--v9-test" in OS.get_cmdline_user_args(): run_v9_test()
 	if "--v8-test" in OS.get_cmdline_user_args(): run_v8_test()
@@ -182,8 +186,12 @@ func show_parent_summary():
 	var b03=summary_status(state,QuestState.GARDEN_COMPLETE,QuestState.GARDEN_EVENTS,data.chapter_id,"B03")
 	var b04=summary_status(state,QuestState.SUMMIT_COMPLETE,[],data.chapter_id,"B04")
 	var b05=summary_status(state,QuestState.FESTIVAL_COMPLETE,QuestState.FESTIVAL_EVENTS,data.chapter_id,"B05")
+	var b01_keepsakes=data.collectibles.filter(func(id):return str(id).begins_with("b01.mote.")).size()
+	var onboarding_origin=str(data.settings.get("onboarding_origin",""))
+	var b00="Önceki sürümden devam; öğretici oynanmadı" if onboarding_origin=="legacy-bypass-v1" else "Oyuncunun seçimiyle geçildi" if onboarding_origin=="user-skipped-v1" else summary_status(state,QuestState.HOME_EXIT,QuestState.HOME_EVENTS,data.chapter_id,"B00")
 	var rows=[
-		"B01 Fenerli Patika — %s · %d/3 fener · %d/5 ışık izi"%[b01,lights,data.collectibles.size()],
+		"B00 Davet ve Ev Önü — %s"%b00,
+		"B01 Fenerli Patika — %s · %d/3 fener · %d/5 ışık izi"%[b01,lights,b01_keepsakes],
 		"B02 Dostluk Deresi — %s · %d/5 köprü ve ekip adımı"%[b02,river],
 		"B03 Papatya Bahçesi — %s · %d/7 bahçe adımı"%[b03,garden],
 		"B04 Rüzgârlı Yamaç — %s · fener, halat ve yön işareti rotası"%[b04],
@@ -208,6 +216,12 @@ func confirm_restart():
 	UI.button("Yeniden başla",Rect2(642,437,270,62),screen,restart_game)
 
 func restart_game():
+	if not automated:
+		var initial=saves.fresh_journey()
+		if not saves.save(save_path,initial):show_message("Yeni yolculuk kaydedilemedi","Önceki kaydın korunuyor. Yeniden deneyebilirsin.",confirm_restart);return
+		get_tree().set_meta("journey_save_path",save_path)
+		if get_tree().change_scene_to_file("res://scenes/home.tscn")!=OK:show_message("Davet yolu açılamadı","Yeni başlangıç kaydın korunuyor. Yeniden deneyebilirsin.",begin_game)
+		return
 	if not is_instance_valid(player):build_world()
 	commit_snapshot(saves.fresh(),func():
 		load_issue=false;load_notice="";reset_controls();rescue_count=0;friend_rescues=0
@@ -217,8 +231,18 @@ func restart_game():
 func begin_game():
 	if not automated:
 		var saved=saves.load_progress(save_path)
-		if saved.ok and saved.data.chapter_id in ["B02","B03","B04","B05"]:
-			var chapter_scene={"B02":"res://scenes/river.tscn","B03":"res://scenes/garden.tscn","B04":"res://scenes/summit.tscn","B05":"res://scenes/festival.tscn"}[saved.data.chapter_id]
+		if saved.ok and saved.get("new",false):
+			var initial=saves.fresh_journey()
+			if not saves.save(save_path,initial):show_message("Yolculuk kaydedilemedi","Davet yoluna başlamadan önce yeniden deneyelim.",begin_game);return
+			saved.data=initial
+		elif saved.ok:
+			var migrated=saves.migrate_onboarding(saved.data)
+			if not migrated.ok:show_message("Yolculuk açılamadı","Kaydın değiştirilmedi. Yeniden deneyebilirsin.",show_menu);return
+			if migrated.migrated:
+				if not saves.persist_onboarding_migration(save_path,migrated.data):show_message("Yolculuk kaydedilemedi","Eski ilerlemen korunuyor. Yeniden deneyebilirsin.",begin_game);return
+				saved.data=migrated.data
+		if saved.ok and saved.data.chapter_id in ["B00","B02","B03","B04","B05"]:
+			var chapter_scene={"B00":"res://scenes/home.tscn","B02":"res://scenes/river.tscn","B03":"res://scenes/garden.tscn","B04":"res://scenes/summit.tscn","B05":"res://scenes/festival.tscn"}[saved.data.chapter_id]
 			get_tree().set_meta("journey_save_path",save_path)
 			if get_tree().change_scene_to_file(chapter_scene)!=OK:show_message("Bölümü açamadık","Kaydın korunuyor. Yeniden deneyebilirsin.",begin_game)
 			return
@@ -251,6 +275,9 @@ func build_world():
 	exit_lantern.position=Vector2(3650,570)-Vector2(95,185);exit_lantern.scale=Vector2.ONE*0.15;exit_lantern.z_index=-1
 	exit_lantern.modulate=Color(0.30,0.39,0.47);add_child(exit_lantern)
 	for i in range(55): particles.append(Vector2(85+i*79,220+sin(i*2.13)*165))
+	image_effects=preload("res://scripts/core/lantern_image_effects.gd").new();image_effects.name="ImageWorldEffects";add_child(image_effects)
+	image_effects.configure(Level.MOTES,particles)
+	update_image_effects(0.0)
 	if not automated:load_saved_journey()
 	camera.reset_smoothing()
 	queue_redraw()
@@ -534,6 +561,7 @@ func _process(delta):
 		line_text.visible_characters=-1 if runner.revealed else int(type_chars)
 		if recording and fmod(elapsed,1.7)<delta:runner.revealed=true;runner.input_cooldown=0;advance_dialogue()
 	if not is_instance_valid(player):return
+	update_image_effects(delta)
 	bg.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	mood=move_toward(mood,float(lit.count(true))/3.0,delta*0.35)
 	for tree_layer in bg.get_children():tree_layer.modulate=Color(0.55,0.68,0.73).lerp(Color(0.88,0.97,0.89),mood)
@@ -609,25 +637,11 @@ func _input(event):
 func _notification(what):
 	if what==NOTIFICATION_APPLICATION_FOCUS_OUT and mode=="play":pause_game()
 
-func _draw():
-	if not is_instance_valid(player):return
-	for i in Level.MOTES.size():
-		if not gathered[i]:
-			var p=Level.MOTES[i]+Vector2(0,sin(elapsed*2.0+i)*5)
-			for radius in [20,13,7]:draw_circle(p,radius,Color(1,0.80,0.28,0.12 if radius>7 else 0.95))
-	for actor in [player,friend]:
-		if actor.is_on_floor():
-			draw_set_transform(actor.position+Vector2(0,3),0,Vector2(1,0.17))
-			draw_circle(Vector2.ZERO,29,Color(0.01,0.04,0.035,0.30))
-			draw_set_transform(Vector2.ZERO,0,Vector2.ONE)
-	for i in range(particles.size()):
-		var p=particles[i]+Vector2(sin(elapsed*0.45+i)*14,cos(elapsed*0.6+i)*10)
-		draw_circle(p,2.0,Color(1,0.81,0.36,0.25+0.23*sin(elapsed+i)))
-	if completed:
-		for radius in range(12,170,12):draw_circle(Vector2(3669,472),radius,Color(1,0.73,0.25,0.03))
-	for i in range(lanterns.size()):
-		if lit[i]:
-			for radius in range(12,160,12):draw_circle(lanterns[i].glow,radius,Color(1,0.73,0.25,0.025))
+func update_image_effects(delta:float):
+	if not is_instance_valid(image_effects):return
+	var preferences=get_tree().root.get_meta("catpat_preferences",settings)
+	var reduced_motion=bool(preferences.get("reduced_motion",settings.get("reduced_motion",false))) if preferences is Dictionary else false
+	image_effects.update_projection(lit,gathered,lanterns,completed,[player,friend],mode=="play",reduced_motion,delta)
 
 func capture_sequence():
 	await get_tree().create_timer(0.5).timeout

@@ -1,3 +1,5 @@
+> **30 Ekim 2026 güncel kaynak:** `docs/DEVAM-NOTU.md` ve `docs/PRODUCTION-2026-10-30.md`. Aşağıdaki kayıtlar üretim geçmişidir; eski "yapılmadı/yayın yok" ifadeleri yeni sonuçları geçersiz kılmaz.
+
 # T22 çalışma kopyası — B05 Festival Alanı ve bölüm regresyonları (20 Ekim 2026)
 
 Önceki doğrulanmış sürüm: V21 (12 Ekim 2026). Bu çalışma V21 kaynaklarının üzerine yapılmıştır; eski test sonuçları bu değişikliklere aktarılmaz.

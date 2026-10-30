@@ -30,6 +30,11 @@ func seed_journey():
 	data.summit = {}
 	return data
 func add_final_flags():
+	# This is an explicit saved-final visual fixture, not an in-flight contribution.
+	for tween in game.contribution_tweens + game.partner_tweens:
+		if is_instance_valid(tween) and tween.is_valid():tween.kill()
+	game.contribution_tweens.clear();game.partner_tweens.clear()
+	game.gathering_partners = false
 	for id in [Quest.FESTIVAL_LIGHT, Quest.FESTIVAL_FLAGS, Quest.FESTIVAL_FLOWERS, Quest.FESTIVAL_COMPLETE]:
 		if id not in game.save_data.quest_flags:
 			game.save_data.quest_flags.append(id)
@@ -89,8 +94,14 @@ func run():
 	game.control_display.refresh()
 	game.update_controls_hint()
 	await process_frame
-	check(game.control_display.buttons.all(func(button): return button.visible), "small viewport touch controls become visible")
+	check(game.control_display.buttons.slice(0,3).all(func(button): return button.visible), "small viewport movement controls become visible")
+	check(game.action_button.visible==game.can_interact(), "small viewport shows the action only for an available interaction")
 	await capture("small-touch", Vector2i(666, 374))
+	get_root().size = Vector2i(1280, 720)
+	game.show_help()
+	await capture("help")
+	game.close_help()
+	game.toggle_pause()
 	get_root().size = Vector2i(1280, 720)
 	game.control_display.touch_mode = false
 	game.control_display.refresh()
@@ -104,6 +115,10 @@ func run():
 	await capture("final")
 	get_root().size = Vector2i(666, 374)
 	await capture("small-final", Vector2i(666, 374))
+	get_root().size = Vector2i(1280, 720)
+	game.leave_final()
+	await capture("stage-world")
+
 	print("B05 VISUAL CAPTURE: %d frames, %d failures" % [captures, failures])
 	clean()
-	quit(1 if failures or captures != 6 else 0)
+	quit(1 if failures or captures != 8 else 0)

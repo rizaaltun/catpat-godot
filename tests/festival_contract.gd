@@ -25,10 +25,11 @@ func walk_to(world, target_x:float, limit:int=240) -> bool:
  return false
 func jump_and_land(world, move_frames:int) -> bool:
  if not world.actor.is_on_floor():return false
- world.jump_pressed=true;world.right_pressed=true
- await physics_frame
- world.jump_pressed=false
- for frame in range(move_frames-1):await physics_frame
+ # Drive a held real input edge, then release; shared variable-height physics stays live.
+ var jump=InputEventKey.new();jump.keycode=KEY_SPACE;jump.pressed=true
+ world._input(jump);world.right_pressed=true
+ for frame in move_frames:await physics_frame
+ jump.pressed=false;world._input(jump)
  world.right_pressed=false
  for frame in 60:
   await physics_frame

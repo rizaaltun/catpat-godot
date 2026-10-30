@@ -93,8 +93,19 @@ func ledge(x:float,width:float,y:float,bank_art:bool):
 	if bank_art:
 		var art=Sprite2D.new();art.texture=load("res://assets/chapter-v11/bank.webp");art.centered=false;art.scale=Vector2.ONE*width/2110.0;art.position=Vector2(x,y)-Vector2(30,160)*art.scale;art.z_index=-5;arena.add_child(art)
 	else:
-		var p=Polygon2D.new();p.polygon=PackedVector2Array([Vector2(x,y),Vector2(x+width,y),Vector2(x+width,y+20),Vector2(x,y+20)]);p.color=Color("526c60");p.z_index=-4;arena.add_child(p)
-		var line=Line2D.new();line.points=PackedVector2Array([Vector2(x,y),Vector2(x+width,y)]);line.width=4;line.default_color=Color("dcc898");line.z_index=-3;arena.add_child(line)
+		# The production summit inherits these recovery ledges. Reuse the measured
+		# branch art instead of exposing the old blockout polygons. Long lower
+		# paths tile uniform-scale pieces; collision remains the original rectangle.
+		var offset=0.0
+		var segment=0
+		while offset<width:
+			var span=minf(560.0,width-offset)
+			var art=Sprite2D.new();art.name="RecoveryBranchArt%d"%segment
+			art.texture=load("res://assets/chapter-v6/branch.webp");art.centered=false
+			art.scale=Vector2.ONE*span/1800.0
+			art.position=Vector2(x+offset,y)-Vector2(186,310)*art.scale
+			art.z_index=-4;body.add_child(art)
+			offset+=span;segment+=1
 func wall(x:float):
 	var body=StaticBody2D.new();arena.add_child(body);var c=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(30,1600);c.shape=shape;c.position=Vector2(x,400);body.add_child(c)
 func reset_input():

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Authoring-only contract; runtime V4 not changed. Prose aliases are never persisted. Every persistent proposal is validated by QuestState then SaveService commit.",
+  "note": "Authoring/runtime event contract: B00 invitation/walk/short/long/exit implemented 30 October 2026. Old journeys receive explicitly attributed legacy bypass flags, not observed tutorial claims. QuestState and SaveService validate all persistent proposals.",
   "events": [
     {
       "id": "invitation.read",
@@ -23,9 +23,38 @@
       "already_applied": "no_op"
     },
     {
-      "id": "tutorial.jump",
+      "id": "tutorial.short_jump",
       "requires_all": [
         "tutorial.walk"
+      ],
+      "requires_transient": [
+        "low_root_takeoff",
+        "rise_35",
+        "grounded_low_root_landing"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "tutorial.long_jump",
+      "requires_all": [
+        "tutorial.short_jump"
+      ],
+      "requires_transient": [
+        "hollow_takeoff",
+        "rise_100",
+        "grounded_far_shore_landing"
+      ],
+      "owner": "QuestState",
+      "kind": "persistent",
+      "already_applied": "no_op"
+    },
+    {
+      "id": "tutorial.jump",
+      "requires_all": [
+        "tutorial.short_jump",
+        "tutorial.long_jump"
       ],
       "requires_transient": [
         "jump_and_landing_seen"

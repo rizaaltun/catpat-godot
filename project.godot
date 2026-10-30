@@ -3,8 +3,12 @@ config_version=5
 
 [application]
 config/name="Çatpat: Festival Yolu"
-config/version="0.13.0-bahce-cevresi"
+config/version="0.14.0-production-alpha"
 run/main_scene="res://scenes/polish_v3.tscn"
+
+[autoload]
+CatpatAudio="*res://scripts/core/audio_service.gd"
+CatpatExperience="*res://scripts/core/experience_service.gd"
 
 [display]
 window/size/viewport_width=1280
