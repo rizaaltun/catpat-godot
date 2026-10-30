@@ -275,3 +275,11 @@ Bağımsız denetçi B04 giriş/pause karelerinde değişen kontrolleri ve menü
 ### B03 metin kontrastı — gerçek kare bulgusu
 
 İkinci koşuda gerçek çıkış yönergesi görünür olarak yakalandı; zemin üstündeki küçük yazının kontrastı yeterince güçlü değildi. B03 görev yönergesi26 puntoya çıkarıldı ve mevcut `panel.webp` sanatıyla arka plan eklendi. Panel yalnız dolu yönerge olan oynanış durumunda görünür; boş süs paneli bırakılmadı. Yeni dar ekran kontrolü panel görünürlüğü, metin alanını kapsaması ve puntoyu denetliyor. Son CI sonucu aşağıya eklenecek.
+
+## 30 Ekim kapanış — doğrulanmış kod `db65748`
+
+[Run41046315077](https://github.com/rizaaltun/catpat-godot/actions/runs/41046315077) doğrulama işi başarılı: Godot4.4.1 import/parse, kayıt60/60, InputRouter10/10, diyalog/çizgi roman/açılış, B01/B02/B03 doğal oynanış, B04 doğal rota41/41, genişletilmiş B03→B04→menü→Devam38/38, B05 sözleşmesi111/111, B05 altı gerçek kare ve Web export geçti. B03/B04 dar ekran kareleri ana üretici ve bağımsız denetçi tarafından kontrol edildi. Ebeveyn özeti bağımsız kaynak denetiminden geçti.
+
+Bu teknik/dar ekran iyileştirme aşaması tamamlandı; tam ürün veya bütün sanat için kabul değildir. Açık işler: fiziksel telefon/tablet ergonomisi, gerçek WebGL2 masaüstü tarayıcıda elle yolculuk, cihaz ses/hareket incelemesi; v2.1 UI kaynak/kullanım envanteri ve kod çizimli B05 sanat eksikleri; kitap kimliği, kapsam ve ortak katalog/beceri kaynağı doğrulaması. Eski plan tarihlerinden yeni teslim takvimi çıkarılmadı.
+
+Sıradaki bağımsız üretim işi, mevcut manifest/kullanımları v2.1 ile eşleştirip eksik image sanatını gerçek ekranlar üzerinden tamamlamak. Kitap kimliğini değiştirecek yeni karakter üretimi için kaynak karşılaştırması eksik; mevcut kimlik korunuyor. Gerçek cihaz kapısı bu ortamda yapılmış sayılmıyor.
