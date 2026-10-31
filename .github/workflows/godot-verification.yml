@@ -50,6 +50,17 @@ jobs:
       - name: Run dialogue regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
 
+      - name: Verify shipping chapter hand-offs, continuation, and recovery
+        run: |
+          timeout -k 10s 180s python3 tools/run_godot_check.py --require-output 'JOURNEY TRANSITIONS:' --headless --path . --script res://tests/journey_transition_test.gd
+          timeout -k 10s 180s python3 tools/run_godot_check.py --require-output 'JOURNEY TRANSITIONS:' --headless --path . --script res://tests/journey_transition_test.gd -- --audit-touch
+          timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'TRAVEL RECOVERY:' --headless --path . --script res://tests/travel_recovery_test.gd
+
+      - name: Run physical river and garden routes with actual persistence
+        run: |
+          timeout -k 10s 240s python3 tools/run_godot_check.py --require-output 'V10 RIVER SUITE PASSED' --headless --path . --script res://tests/shipping_route_test.gd
+          timeout -k 10s 240s python3 tools/run_godot_check.py --require-output 'V12 GARDEN SUITE PASSED' --headless --path . --script res://tests/shipping_route_test.gd -- --audit-garden
+
       - name: Run comic regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/comic_test.gd
 

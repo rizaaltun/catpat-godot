@@ -4,6 +4,8 @@ const MainRoute=preload("res://scripts/core/main_route_save.gd")
 var load_blocked=false
 var menu_button:Button
 var menu_change:Callable
+var festival_change:Callable
+var festival_store=MainStore.new()
 var control_display=preload("res://scripts/core/control_display.gd").new()
 var keyboard_controls_hint=""
 func _ready():
@@ -35,6 +37,7 @@ func build_ui():
 			if state=="pressed":skin.modulate_color=Color(0.86,0.91,0.91)
 			control.add_theme_stylebox_override(state,skin)
 	router.bind_controls(touch_buttons[0].get_rect(),touch_buttons[1].get_rect(),touch_buttons[2].get_rect(),Rect2())
+	control_display.bind(touch_buttons)
 	for child in pause_root.get_children():
 		if child is TextureRect:child.position=Vector2(300,120);child.size=Vector2(680,520)
 		elif child is Label and child!=pause_detail:child.position.y=170
@@ -45,13 +48,15 @@ func build_ui():
 	for style in ["normal","hover","pressed","focus"]:menu_button.get_theme_stylebox(style).region_rect=Rect2(91,118,1980,482)
 func set_pause(value:bool):
 	super.set_pause(value)
-	for button in touch_buttons:button.visible=mode=="solo" and not paused
+	refresh_control_visibility()
+func refresh_control_visibility():
+	for button in touch_buttons:button.visible=control_display.touch_mode and not paused and not dialogue_active
 func go_menu():
 	get_tree().set_meta("journey_save_path",save_path)
 	var err=menu_change.call() if menu_change.is_valid() else get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
 	if err!=OK and not load_blocked:pause_detail.text="Menü açılamadı. Kaydın korunuyor; tekrar deneyebilirsin."
 func save_menu():
-	if not paused or dialogue_active:return
+	if load_blocked or not paused or dialogue_active:return
 	if not commit_checkpoint():pause_detail.text="Kaydedemedik. Son kayıt korunuyor; yeniden deneyebilirsin.";return
 	go_menu()
 func _input(e):
@@ -63,6 +68,7 @@ func _physics_process(delta):
 		super._physics_process(delta)
 		update_controls_hint()
 func update_controls_hint():
+	refresh_control_visibility()
 	if not is_instance_valid(subtitle):return
 	if keyboard_controls_hint.is_empty():keyboard_controls_hint=subtitle.text
 	var desired="Oklarla yürü · Zıpla ile atla · Görev düğmesine dokun" if control_display.touch_mode else keyboard_controls_hint
@@ -83,7 +89,7 @@ func interact():
 	super.interact()
 func enter_festival():
 	if paused or dialogue_active or action_cooldown>0:return
-	var store=MainStore.new()
+	var store=festival_store
 	var before=store.load_progress(save_path)
 	if not before.ok or before.data.chapter_id!="B04" or not "chapter.B04.complete" in before.data.quest_flags:
 		quest_error="Önce yamaç yolculuğunu tamamla.";return
@@ -95,8 +101,14 @@ func enter_festival():
 		store.director.finish_transition(false,"B05")
 		quest_error="Festival girişi kaydedilemedi. Yolculuğun korunuyor.";return
 	get_tree().set_meta("journey_save_path",save_path)
-	var err=get_tree().change_scene_to_packed(prepared.scene)
+	var err=festival_change.call(prepared.scene) if festival_change.is_valid() else get_tree().change_scene_to_packed(prepared.scene)
+	if typeof(err)!=TYPE_INT:err=ERR_CANT_OPEN
 	store.director.finish_transition(err==OK,"B05")
 	if err!=OK:
-		if not store.save(save_path,before.data):quest_error="Sahne açılamadı. Güvenli festival giriş kaydı duruyor."
+		if not store.save(save_path,before.data):
+			# B05 is durable. Block this stale B04 world before checkpoint/menu writes.
+			load_blocked=true;set_pause(true);reset_input()
+			pause_detail.text="Festival kaydın korundu. Ana menüden devam et."
+			resume_button.hide();load_button.hide();menu_button.hide()
+			UI.button("Ana menüden devam et",Rect2(352,470,576,88),pause_root,go_menu,true)
 		else:quest_error="Festival açılamadı; yamaç kaydın korundu."

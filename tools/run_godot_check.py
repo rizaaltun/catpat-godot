@@ -11,9 +11,18 @@ ENGINE_ERROR = re.compile(r"(?:^|\s)(?:SCRIPT ERROR:|ERROR:|Parse Error:)")
 def main(argv: list[str]) -> int:
     binary = os.environ.get("GODOT_BINARY", "godot")
     args = list(argv)
+    required_output = None
+    if "--require-output" in args:
+        index = args.index("--require-output")
+        if index + 1 >= len(args) or not args[index + 1]:
+            print("--require-output needs a nonempty completion marker", file=sys.stderr)
+            return 2
+        required_output = args[index + 1]
+        del args[index:index + 2]
     if "--audio-driver" not in args:
         args = ["--audio-driver", "Dummy", *args]
     errors = 0
+    completed = required_output is None
     try:
         process = subprocess.Popen([binary, *args], stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
                                    text=True, encoding="utf-8", errors="replace", bufsize=1)
@@ -26,9 +35,14 @@ def main(argv: list[str]) -> int:
         sys.stdout.flush()
         if ENGINE_ERROR.search(line):
             errors += 1
+        if required_output is not None and required_output in line:
+            completed = True
     result = process.wait()
     if errors:
         print(f"GODOT CHECK FAILED: {errors} engine error line(s), process exit={result}", file=sys.stderr)
+        return result if result > 0 else 1
+    if not completed:
+        print(f"GODOT CHECK FAILED: missing completion marker {required_output!r}, process exit={result}", file=sys.stderr)
         return result if result > 0 else 1
     return result if result >= 0 else 128 - result
 

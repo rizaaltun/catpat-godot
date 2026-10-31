@@ -316,3 +316,17 @@ Kalan krediyle yarım ebeveyn/profil/yardım entegrasyonu hedefli olarak doğrul
 Kaynaklar, testler ve kararlar geliştirme durağı olarak kaydedilecek; bu tur canlı Pages yayını yapılmadı. Önceki yeşil CI son paketin tüm kabulü diye kullanılmaz. Gerçek cihaz, kitap/PSD kimlik karşılaştırması ve tüm bölüm rotalarının yeni sürümde toplu kabulü açık.
 
 **Sonraki somut iş:** B01'de sarı toplama izlerini ve buna bağlı sayaç/yardım/rapor/test beklentilerini kaldır; eski kayıt okunabilirliğini koru. Hareketli platform üstündeki feneri ve gereksiz Porsuk'a dönüşü yeni kolay akışta çöz. Ardından harita/hızlı geçişi kur; tasarım kaydındaki sırayı izle. Kullanıcıya projeyi yeniden anlattırma.
+
+## 1 Kasım 2026 — Hata düzeltmeleri yeni özelliklerin önünde
+
+Kullanıcı gerçek oyunda çok sayıda hata ve bazı bölüm geçişlerinde tıkanma bildirdi; önce baştan sona rapor ve düzeltme istedi. Yeni üretim işleri bu hata kapısının arkasına alındı. Ana kayıt `docs/BUG-AUDIT-2026-11-01.md`; önceki genel test sayıları kullanıcı deneyimini doğrulamak yerine kullanılmayacak.
+
+0.15.1-audit-alpha adayı B04 shared modda mola/konuşma sonrası kaybolan dokunmatik kontrolleri ve B04→B05 sahne/geri-alma çift hatasında eski dünyanın yeni kaydı ezmesini düzeltir. Son checkpoint CI'sının B04 pause assertion hatası da gerçek kontrol yaşam döngüsüne uygun düzeltildi. `--require-output` ile yarıda kapanan sıfır kodlu testin başarılı sayılması engellendi.
+
+Gerçek GUI fare/klavye geçiş zinciri 45, dokunmatik/taklit fare 46, B04 hata/dokunmatik sözleşmesi 12 kontrol geçti. B01 rotası, gerçek kayıt açık B02/B03 rotaları, B04 doğal 41 kontrol ve B03→B04 native yaşam döngüsü 40 kontrol geçti. Önceki 25 sözleşme dosyası bu oturumda çalıştırıldı; yeni kayda eski koşu sonucu taşınmadı. Son toplu CI/export/yayın sonucu ayrıca rapora yazılacak.
+
+Teknik düzeltmelerden sonra 31 Ekim kullanıcı kararları korunarak B01 sadeleştirmesine dönülecek. Gerçek cihaz ve özgün kitap referansı kabulü hâlâ ayrı; denenmiş sayılmıyor.
+
+Yayın engeli: aynı proje deposuna yükleme otomatik onay incelemesinde iki kez reddedildi; ikinci gerekçe public GitHub için doğrudan kullanıcı onayı eksikliği. Depo sahibi/yazma erişimi ve seçilen kaynak/test/rapor paketi doğrulandı. Alternatif yükleme yoluyla red aşılmadı. Kullanıcıdan mevcut public depoya kayıt + başarılı toplu doğrulamadan sonra Pages güncellemesi için somut onay istenecek. Bu sırada yerel PCK export'u ve paket içi kontroller sürdürüldü; canlı sürüm henüz değiştirilmedi.
+
+Yerel kaynak kaydı `8acd005`, dal `work/t24-bug-audit-local`. PCK kaynak klasörü dışında açılarak gerçek sahne geçişi/menü-devam 45/45 ve hata kurtarma 12/12 geçti. Uzak Chrome canlı kabukta WebGL2 eksikliğini gösterdi; tarayıcı oynanışı yapılmış sayılmadı. Onay sonrası bu yerel kaynağı mevcut depoya aktar, tam CI/export'u tamamla ve ancak başarılı olunca Pages'i güncelle. Sonraki tasarım işini bu kabul kapısından sonra sürdür.

@@ -31,7 +31,8 @@ func capture(name):
 	check(not small.is_empty() and root.size==Vector2i(666,374),name+"_narrow_render")
 	var controls=scene.control_display.buttons if garden else scene.touch_buttons
 	var safe=Rect2(0,0,1280,720)
-	check(controls.all(func(b):return b.visible and safe.encloses(b.get_global_rect())),name+"_touch_controls_fit")
+	var paused=not garden and scene.paused
+	check(controls.all(func(b):return b.visible==not paused and safe.encloses(b.get_global_rect())),name+"_touch_controls_fit")
 	if garden:
 		check(not scene.hint.text.is_empty(),"B03_capture_shows_actual_objective_text")
 		check(scene.hint_panel.visible and scene.hint_panel.get_rect().encloses(scene.hint.get_rect()) and scene.hint.get_theme_font_size("font_size")>=26,"B03_objective_has_readable_image_backdrop")
