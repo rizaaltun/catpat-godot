@@ -101,8 +101,8 @@ func help_context(scene)->Dictionary:
    if Quest.ACCEPTED not in flags:task="lanterns.meet";text="Porsuk başlangıçta seni bekliyor. Yanına yaklaş ve onunla konuşmak için görev düğmesini kullan."
    elif not Quest.LIGHTS.all(func(id):return id in flags):
     task="lanterns.find"
-    text="Üç fener farklı yüksekliklerde. İlkine alçak basamaklarla, ikincisine üst dalla, sonuncusuna hareketli daldan ulaşabilirsin."
-   elif Quest.JOINED not in flags:task="lanterns.return";text="Fenerler yolu aydınlattı. Açılan alt geçitlerden soldaki Porsuk'a dön ve onu yolculuğa çağır."
+    text="Sağa doğru ilerle; üç fener de sabit patika kıyılarında. Yanlarına yaklaş ve görev düğmesiyle yak. Son fener yanınca Porsuk açılan geçitlerden yanına gelir; geri dönmen gerekmez."
+   elif Quest.JOINED not in flags:task="lanterns.join";text="Fenerler yolu aydınlattı. Porsuk açılan geçitlerden yanına geliyor; sağdaki çıkışa ilerleyebilirsin."
    else:task="lanterns.exit";text="Porsuk'la sağdaki çıkışa ilerle. Çıkış fenerine birlikte yaklaşınca yolunuz dereye açılır."
   "B02":
    if Quest.RIVER_ACCEPTED not in flags:task="bridge.meet";text="Maymun dere kıyısında seni bekliyor. Yanına yaklaş ve köprü hazırlığını konuş."

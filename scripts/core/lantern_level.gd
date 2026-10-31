@@ -3,7 +3,7 @@ extends Node2D
 const WIDTH=4200.0
 const SURFACES=[Rect2(0,580,540,440),Rect2(630,540,330,480),Rect2(1050,490,340,530),Rect2(1480,540,300,480),Rect2(1870,480,260,540),Rect2(2220,530,330,490),Rect2(2640,470,340,550),Rect2(3070,530,300,490),Rect2(3460,570,740,450)]
 const PERCH=Rect2(1910,400,180,24)
-const LANTERNS=[Vector2(1190,490),Vector2(2000,400),Vector2(2720,380)]
+const LANTERNS=[Vector2(1190,490),Vector2(2000,480),Vector2(2800,470)]
 const MOTES=[Vector2(580,440),Vector2(1190,330),Vector2(1825,370),Vector2(2600,365),Vector2(3410,425)]
 var bridges_open=false
 var bridges: Array=[]
@@ -14,10 +14,6 @@ func _ready():
 	soil=load("res://assets/chapter-v5/platform.webp")
 	branch=load("res://assets/chapter-v6/branch.webp")
 	for surface in SURFACES:add_surface(surface,false)
-	add_surface(PERCH,true)
-	for x in [1940.0,2060.0]:
-		var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp")
-		vine.position=Vector2(x,180);vine.scale=Vector2(0.065,440.0/vine.texture.get_height());add_child(vine)
 	build_return_bridges()
 	queue_redraw()
 func add_surface(surface: Rect2, one_way: bool):
@@ -50,9 +46,6 @@ func _draw():
 	for s in SURFACES:
 		# One uninterrupted image region per island. The soil's bottom stays below the viewport.
 		draw_texture_rect_region(soil,Rect2(s.position.x,s.position.y-60,s.size.x,338.4),Rect2(160,160,s.size.x/scale_factor,564))
-	if branch:
-		# Anchors are measured from the full branch asset; no character cropping.
-		draw_texture_rect(branch,Rect2(PERCH.position-Vector2(18.6,31),branch.get_size()*0.1),false)
 
 func build_return_bridges():
 	for i in range(SURFACES.size()-1):

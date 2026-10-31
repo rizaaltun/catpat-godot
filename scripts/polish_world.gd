@@ -26,7 +26,6 @@ var test_failed=false
 var rescue_count=0
 var friend_rescues=0
 var rescue_note=0.0
-var mote_label: Label
 var player
 var friend
 var camera: Camera2D
@@ -245,6 +244,8 @@ func build_world():
 	backdrop.modulate=Color(0.55,0.68,0.73)
 	level=Level.new();add_child(level)
 	moving_platform=preload("res://scripts/core/moving_platform.gd").new();level.add_child(moving_platform)
+	# Retained as an inert party-controller adapter; no invisible collider or swing.
+	moving_platform.visible=false;moving_platform.collision_layer=0;moving_platform.enabled=false
 	player=Actor.new();player.controlled=true;player.position=Vector2(190,580);player.checkpoint=player.position;add_child(player)
 	friend=Actor.new();friend.debug_route=automated;friend.character_id="badger";friend.position=Vector2(430,580);friend.checkpoint=friend.position;friend.following_distance=155;add_child(friend);friend.anim.flip_h=false
 	party.configure(player,friend,level,moving_platform)
@@ -257,7 +258,7 @@ func build_world():
 	exit_lantern.modulate=Color(0.30,0.39,0.47);add_child(exit_lantern)
 	for i in range(55): particles.append(Vector2(85+i*79,220+sin(i*2.13)*165))
 	image_effects=preload("res://scripts/core/lantern_image_effects.gd").new();image_effects.name="ImageWorldEffects";add_child(image_effects)
-	image_effects.configure(Level.MOTES,particles)
+	image_effects.configure(particles)
 	update_image_effects(0.0)
 	if not automated:load_saved_journey()
 	camera.reset_smoothing()
@@ -270,7 +271,6 @@ func build_hud():
 	quest=UI.label("Üç feneri yak",Rect2(57,72,310,38),23,hud)
 	UI.texture("res://assets/polish-v3/panel.webp",Rect2(916,24,235,98),hud)
 	count_label=UI.label("",Rect2(955,50,190,35),23,hud)
-	mote_label=UI.label("",Rect2(955,85,220,30),17,hud,Color("e4c578"))
 	UI.button("Ⅱ",Rect2(1158,28,96,96),hud,pause_game)
 	hint=UI.label("",Rect2(252,624,776,42),20,hud);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	hint.add_theme_color_override("font_shadow_color",Color("102925"));hint.add_theme_constant_override("shadow_outline_size",5)
@@ -298,9 +298,8 @@ func build_hud():
 func update_hud():
 	if not is_instance_valid(quest):return
 	var total=lit.count(true)
-	mote_label.text="Işık izleri  %d / 5"%gathered.count(true)
 	count_label.text="Fenerler  %d / 3"%total
-	quest.text="Patika aydınlandı" if completed else "Porsuk’la çıkışı aydınlat" if joined else "Geçitlerden Porsuk’a dön" if total==3 else "İlk feneri yak" if not lit[0] else "Üst daldaki feneri yak" if not lit[1] else "Hareketli daldaki fener"
+	quest.text="Patika aydınlandı" if completed else "Porsuk’la çıkışı aydınlat" if joined else "Porsuk yanına geliyor" if total==3 else "İlk feneri yak" if not lit[0] else "İkinci fener patikada" if not lit[1] else "Son fener ileri kıyıda"
 
 func open_dialogue(id: String):
 	if mode!="play":return
@@ -355,6 +354,7 @@ func apply_quest(data: Dictionary):
 	friend.recruited=joined;friend.leader=player if joined else null
 	if joined and not was_recruited:
 		follow_trail.clear();follow_trail.append(friend.position);follow_trail.append(player.position)
+		party.reset()
 	if not joined:friend.route_moving=false;friend.route_air_direction=0
 	level.set_bridges(lit.count(true)==3)
 	exit_lantern.modulate=Color(1.3,1.13,0.85) if completed else Color(0.30,0.39,0.47)
@@ -478,7 +478,7 @@ func show_journal():
 	UI.label("01  /  FENERLİ PATİKA",Rect2(308,234,610,35),19,screen,Color("a9d3c4"))
 	var objective="Porsuk ile patikada keşfe devam et" if completed else "Porsuk ile çıkışa ilerle" if joined else "Porsuk’a geri dön" if lit.count(true)==3 else "Sönmüş üç feneri yak"
 	UI.label(objective,Rect2(308,286,670,62),28,screen)
-	UI.label("Yanan fenerler     %d / 3\nIşık izleri              %d / 5\nYol arkadaşın       %s"%[lit.count(true),gathered.count(true),"Porsuk" if joined else "Porsuk seni bekliyor"],Rect2(308,364,660,128),25,screen)
+	UI.label("Yanan fenerler     %d / 3\nYol arkadaşın       %s"%[lit.count(true),"Porsuk" if joined else "Porsuk seni bekliyor"],Rect2(308,364,660,128),25,screen)
 	save_status_label=UI.label(save_status,Rect2(308,511,660,32),18,screen,Color("a9d3c4"))
 	UI.button("Patikaya dön",Rect2(480,568,320,63),screen,func():mode="play";clear_screen();build_hud();reset_controls();player.frozen=false;friend.frozen=false,true).grab_focus()
 
@@ -508,10 +508,6 @@ func show_completion():
 	UI.button("Ana menü",Rect2(503,540,270,50),screen,show_menu)
 
 func _physics_process(delta):
-	if is_instance_valid(moving_platform):
-		moving_platform.enabled=mode=="play"
-		var p=moving_platform.position+Vector2(20,0)
-		lanterns[2].pos=p;lanterns[2].node.position=p-Vector2(95,185);lanterns[2].glow=p+Vector2(19,-98)
 	if mode!="play" or not is_instance_valid(player):return
 	if joined:party.update()
 	for actor in [player,friend]:
@@ -524,10 +520,6 @@ func _physics_process(delta):
 			else:friend_rescues+=1
 			if joined:party.reset()
 	rescue_note=maxf(0,rescue_note-delta)
-	for i in Level.MOTES.size():
-		if not gathered[i] and player.position.distance_to(Level.MOTES[i]+Vector2(0,65))<48:
-			var next=quest_state.copy();next.collect(i)
-			if not commit_snapshot(snapshot_for(next),update_hud):return
 	save_clock+=delta
 	if save_clock>2:save_clock=0;save_progress()
 
@@ -562,19 +554,19 @@ func _process(delta):
 	var action=Input.is_action_just_pressed("interact") or interact;interact=false
 	hint.text=""
 	if not joined:
-		if lit.count(true)==3:hint.text="Ahşap geçitler açıldı · Soldaki Porsuk’a dön"
+		if lit.count(true)==3:hint.text="Geçitler açıldı · Porsuk yanına geliyor"
 		elif player.position.x<960:hint.text="Boşluk · Açıklığın üzerinden zıpla"
-		elif player.position.x>1800 and player.position.x<2150 and not lit[1]:hint.text="Üst dala zıpla · İkinci fener orada"
-		elif player.position.x>2550 and player.position.x<3000 and not lit[2]:hint.text="Hareketli dala bin · Son fener geçitleri açar"
+		elif player.position.x>1800 and player.position.x<2150 and not lit[1]:hint.text="İkinci fener patikanın üzerinde"
+		elif player.position.x>2550 and player.position.x<3000 and not lit[2]:hint.text="Son fener ileri kıyıda · Yanına yürü"
 	if rescue_note>0:hint.text="Bir daha dene; fenerlerin güvende."
 	for i in range(3):
 		if not lit[i] and can_light(i):
 			hint.text="E · Feneri yak ve geçitleri aç" if lit.count(true)==2 else "E · Feneri yak"
 			if action:light_lantern(i)
 			if mode!="play":return
-	if lit.count(true)==3 and not joined and player.is_on_floor() and absf(player.position.x-friend.position.x)<150:
-		hint.text="E · Porsuk ile konuş"
-		if action:open_dialogue("badger_helped");return
+	if lit.count(true)==3 and not joined:
+		var next=quest_state.copy();next.apply(QuestState.JOINED)
+		if not commit_snapshot(snapshot_for(next),update_hud):return
 	if joined and not completed and player.position.x>3720:
 		hint.text="Porsuk’la çıkış fenerine yaklaş"
 		if player.position.distance_to(friend.position)<240 and absf(player.position.x-3860)<120 and player.is_on_floor() and friend.is_on_floor():
@@ -588,14 +580,15 @@ func _process(delta):
 func can_light(i: int) -> bool:
 	if not player.is_on_floor():return false
 	if absf(player.position.x-lanterns[i].pos.x)>95:return false
-	if i==1:return absf(player.position.y-Level.PERCH.position.y)<4
-	if i==2:return moving_platform.is_riding(player)
-	return absf(player.position.y-lanterns[i].pos.y)<8
+	# A child standing on a nearby optional branch can reach the fixed lamp too.
+	return absf(player.position.y-lanterns[i].pos.y)<=110
 
 func light_lantern(i: int):
 	if lit[i]:return
 	var next=quest_state.copy()
-	if next.apply(QuestState.LIGHTS[i]):commit_snapshot(snapshot_for(next),func():lantern_pulse=3.0;update_hud())
+	if next.apply(QuestState.LIGHTS[i]):
+		if next.all_lit():next.apply(QuestState.JOINED)
+		commit_snapshot(snapshot_for(next),func():lantern_pulse=3.0;update_hud())
 
 func _input(event):
 	if control_display.observe(event):input_router.reset();touch_axis=0;touch_jump=false;interact=false
@@ -622,7 +615,7 @@ func update_image_effects(delta:float):
 	if not is_instance_valid(image_effects):return
 	var preferences=get_tree().root.get_meta("catpat_preferences",settings)
 	var reduced_motion=bool(preferences.get("reduced_motion",settings.get("reduced_motion",false))) if preferences is Dictionary else false
-	image_effects.update_projection(lit,gathered,lanterns,completed,[player,friend],mode=="play",reduced_motion,delta)
+	image_effects.update_projection(lit,lanterns,completed,[player,friend],mode=="play",reduced_motion,delta)
 
 func capture_sequence():
 	await get_tree().create_timer(0.5).timeout
@@ -905,7 +898,7 @@ func run_v6_test():
 			touch_jump=false
 			for frame in range(60):await get_tree().physics_frame
 			check_v4(player.is_on_floor() and absf(player.position.y-Level.PERCH.position.y)<3,"V6 optional upper perch reached with jump")
-			check_v4(gathered[1],"V6 upper exploration light collected")
+			check_v4(not gathered[1],"V6 former pickup route adds no obsolete collectible")
 	check_v4(lit.count(true)==3,"V6 all lanterns reached through inputs")
 	touch_axis=0;touch_jump=false
 	for frame in range(120):
@@ -934,7 +927,7 @@ func run_v6_test():
 	var reread=saves.load_progress(save_path).data;DirAccess.remove_absolute(save_path);save_path=old_path
 	check_v4(reread is Dictionary and reread.schema_version==7,"V6 checkpoint written and reopened")
 	restore_progress(reread)
-	check_v4(completed and joined and gathered[1],"V6 restore preserves quest and exploration")
+	check_v4(completed and joined and not gathered[1],"V6 restore preserves quest without obsolete collection")
 	var old_data={"version":4,"met":true,"lit":[true,true,true],"joined":true,"completed":false,"x":1000};restore_progress(old_data)
 	check_v4(level.surface_index(player.position.x)>=0,"V6 old checkpoint in gap migrates to safe island")
 	check_v4(friend.position.distance_to(player.position)<260,"V6 restored party stays on nearby safe island")
@@ -1072,7 +1065,7 @@ func run_v8_test():
 	for frame in 40:await get_tree().physics_frame
 	touch_jump=false
 	for frame in 70:await get_tree().physics_frame
-	check_v4(gathered[4],"V8 optional high light collected from carrier jump")
+	check_v4(not gathered[4],"V8 carrier jump never adds removed collectible")
 	check_v4(moving_platform.is_riding(player) and moving_platform.is_riding(friend),"V8 companion waits while leader jumps for light")
 	var fixed_checkpoint=player.checkpoint
 	check_v4(fixed_checkpoint.y==570,"V8 riding never writes moving checkpoint")
@@ -1162,7 +1155,7 @@ func v9_capture(name: String):
 func capture_v9_sequence():
 	run_v9_test()
 
-func run_v9_test():
+func run_v9_test(restart_checks=true):
 	begin_game();test_dialogue_finish()
 	for frame in 30:await get_tree().physics_frame
 	check_v4(not level.bridges_open,"V9 bridges closed at start")
@@ -1170,45 +1163,30 @@ func run_v9_test():
 	touch_axis=0;touch_jump=false
 	for frame in 65:interact=true;await get_tree().physics_frame
 	check_v4(lit[0],"V9 first lantern activated on ground")
-	check_v4(await drive_v6(2000,false),"V9 input route to upper lantern clearing")
+	check_v4(await drive_v6(2000,false),"V9 forward route to stationary second lantern")
 	await v8_walk_to(2120)
 	for frame in 60:await get_tree().physics_frame
 	await v8_walk_to(2000)
 	touch_axis=0;touch_jump=false
 	for frame in 65:interact=true;await get_tree().physics_frame
-	check_v4(not lit[1] and not can_light(1),"V9 upper lantern cannot activate from ground")
-	touch_jump=true
-	for frame in 38:await get_tree().physics_frame
-	touch_jump=false
-	for frame in 60:interact=true;await get_tree().physics_frame
-	check_v4(lit[1] and absf(player.position.y-400)<4,"V9 upper lantern reached by jump")
+	check_v4(lit[1] and absf(player.position.y-480)<4,"V9 second lantern lights on the fixed ground without a perch jump")
 	await v9_capture("upper-lantern")
 	check_v4(not level.bridges_open,"V9 two lanterns do not open bridges")
-	check_v4(await drive_v6(2780,false),"V9 input route to moving lantern clearing")
-	await v8_walk_to(2960)
-	for frame in 180:await get_tree().physics_frame
-	await v8_walk_to(2780)
+	check_v4(await drive_v6(2800,false),"V9 forward route to stationary third lantern")
 	touch_axis=0;touch_jump=false
-	for frame in 60:interact=true;await get_tree().physics_frame
-	check_v4(absf(player.position.y-470)<4,"V9 moving lantern negative fixture on real ground")
-	check_v4(not lit[2] and not can_light(2),"V9 moving lantern cannot activate from ground")
-	check_v4(await v8_board(),"V9 board moving branch using jump inputs")
-	for frame in 30:interact=true;await get_tree().physics_frame
-	check_v4(lit.count(true)==3 and level.bridges_open,"V9 third lantern opens return bridges")
+	for frame in 65:interact=true;await get_tree().physics_frame
+	check_v4(lit.count(true)==3 and level.bridges_open and joined,"V9 third lantern opens bridges and calls Porsuk without a return errand")
+	check_v4(lanterns[2].pos==Level.LANTERNS[2],"V9 lamp never rides the moving branch")
 	await v9_capture("moving-lantern")
 	var bridge_collision=true
 	for bridge in level.bridges:bridge_collision=bridge_collision and bridge.visible and bridge.collision_layer==1
 	check_v4(bridge_collision,"V9 all eight bridges visible and collidable")
-	check_v4(await v8_walk_to(430,1600),"V9 return across all opened bridges without jumping")
-	await v9_capture("return")
-	for frame in 60:
-		interact=true;await get_tree().physics_frame
-		if mode=="dialogue":test_dialogue_finish()
-		if joined:break
-	check_v4(joined,"V9 return interaction recruits Porsuk")
-	check_v4(await v8_walk_to(3850,1800),"V9 party exit route without jump inputs")
-	for frame in 180:await get_tree().physics_frame
-	check_v4(friend.is_on_floor() and friend.position.distance_to(player.position)<240,"V9 companion reaches exit by walking")
+	check_v4(joined,"V9 Porsuk joins without returning to the starting area")
+	check_v4(await v8_walk_to(3850,1800),"V9 party follows one forward exit route")
+	for frame in 900:
+		await get_tree().physics_frame
+		if friend.is_on_floor() and friend.position.distance_to(player.position)<240:break
+	check_v4(friend.is_on_floor() and friend.position.distance_to(player.position)<240,"V9 Porsuk reaches exit by physically walking the opened bridges")
 	check_v4(not completed,"V9 exit proximity alone never completes chapter")
 	interact=true
 	for frame in 10:await get_tree().physics_frame
@@ -1222,6 +1200,11 @@ func run_v9_test():
 	check_v4(exit_lantern.modulate.r>0.9,"V9 Porsuk exit light is visibly lit")
 	await v9_capture("complete")
 	check_v4(rescue_count==0 and friend_rescues==0,"V9 full normal route needs no rescue teleport")
+	if not restart_checks:
+		check_v4(saves.load_progress(save_path).data.quest_flags==quest_state.flags,"V9 physical route durably saved each real task")
+		print("V9 CHAPTER SUITE FAILED" if test_failed else "V9 CHAPTER SUITE PASSED")
+		get_tree().quit(1 if test_failed else 0)
+		return
 	var snapshot=progress_data();restore_progress(snapshot)
 	for frame in 5:await get_tree().physics_frame
 	check_v4(completed and joined and level.bridges_open,"V9 completed reload restores party and bridges")

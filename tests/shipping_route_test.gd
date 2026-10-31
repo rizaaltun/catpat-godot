@@ -8,12 +8,14 @@ func _initialize():
  call_deferred("run")
 func run():
  var garden="--audit-garden" in OS.get_cmdline_user_args()
- var scene=load("res://scenes/garden.tscn" if garden else "res://scenes/river.tscn").instantiate()
- var d=scene.fixture();var q=Quest.new();q.read(d)
+ var patika="--audit-patika" in OS.get_cmdline_user_args()
+ var scene=load("res://scenes/polish_v3.tscn" if patika else "res://scenes/garden.tscn" if garden else "res://scenes/river.tscn").instantiate()
+ var d=Save.new().fresh() if patika else scene.fixture();var q=Quest.new();q.read(d)
  for event in Quest.HOME_EVENTS:q.apply(event)
  d.quest_flags=q.flags;d.settings.onboarding_origin="new-journey-v1"
  if not Save.new().save(path,d):push_error("Shipping route fixture failed");quit(1);return
  root.add_child(scene);current_scene=scene
  if scene.automated:push_error("Shipping route must retain real persistence");quit(1);return
  print("SHIPPING ROUTE: ",d.chapter_id," actual persistence enabled")
- scene.run_test()
+ if patika:scene.run_v9_test(false)
+ else:scene.run_test()

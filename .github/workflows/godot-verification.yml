@@ -58,6 +58,7 @@ jobs:
 
       - name: Run physical river and garden routes with actual persistence
         run: |
+          timeout -k 10s 240s python3 tools/run_godot_check.py --require-output 'V9 CHAPTER SUITE PASSED' --headless --path . --script res://tests/shipping_route_test.gd -- --audit-patika
           timeout -k 10s 240s python3 tools/run_godot_check.py --require-output 'V10 RIVER SUITE PASSED' --headless --path . --script res://tests/shipping_route_test.gd
           timeout -k 10s 240s python3 tools/run_godot_check.py --require-output 'V12 GARDEN SUITE PASSED' --headless --path . --script res://tests/shipping_route_test.gd -- --audit-garden
 

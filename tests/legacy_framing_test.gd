@@ -43,7 +43,7 @@ func run():
  check(store.save(PATH,data),"isolated completed source for framing fixtures")
  var fixtures={}
  for chapter in ["B01","B02","B03"]:fixtures[chapter]=Replay.new().prepare(chapter,PATH)
- var locations={"B01":{"entry":Vector2(190,579),"upper":Vector2(2000,399),"low":Vector2(3550,569),"edge":Vector2(4120,569)},"B02":{"entry":Vector2(260,519),"upper":Vector2(1800,309),"low":Vector2(1900,649),"edge":Vector2(3520,519)},"B03":{"entry":Vector2(560,539),"upper":Vector2(1740,319),"low":Vector2(1620,639),"edge":Vector2(3920,539)}}
+ var locations={"B01":{"entry":Vector2(190,579),"upper":Vector2(2000,479),"low":Vector2(3550,569),"edge":Vector2(4120,569)},"B02":{"entry":Vector2(260,519),"upper":Vector2(1800,309),"low":Vector2(1900,649),"edge":Vector2(3520,519)},"B03":{"entry":Vector2(560,539),"upper":Vector2(1740,319),"low":Vector2(1620,639),"edge":Vector2(3920,539)}}
  for chapter in fixtures:
   var fixture=fixtures[chapter];check(fixture.ok and store.save(PATH,fixture.data),chapter+" framing fixture stores unchanged geometry")
   set_meta("journey_save_path",PATH)

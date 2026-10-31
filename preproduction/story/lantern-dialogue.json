@@ -43,7 +43,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "explaining",
-      "text": "Üç fener söndü. Biri patikada, biri üst dalda, sonuncusu sallanan dalda.",
+      "text": "Patika boyunca üç fener söndü. Hepsi kıyılarda, yolun hemen yanında.",
       "next": "porsuk_04"
     },
     {
@@ -51,7 +51,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "thoughtful",
-      "text": "Üç fener yanınca ahşap geçitler de açılır. Dönüşte yanına kolayca gelirim.",
+      "text": "Sağa doğru gidip fenerleri yakarım. Geçitler açılınca sen de beni takip edebilirsin!",
       "next": null
     },
     {
