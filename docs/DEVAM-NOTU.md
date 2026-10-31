@@ -338,3 +338,11 @@ Kullanıcı “düzelt o zaman sonra kaldığın yerden devam et” diyerek somu
 Sonra B01 ileri görev akışına dönüldü: toplanan sarı ışıklar/sayaçlar kaldırıldı, eski kayıtlar korundu; fenerler sabit kıyılara alındı, iki salıncak oyun alanından çıkarıldı; üçüncü fenerle Porsuk aynı kalıcı snapshot'ta katılıp fiziksel olarak gelir, başlangıca dönüş gerekmez. Konuşma, yardım ve ebeveyn etiketleri güncellendi. `docs/B01-UX-2026-11-01.md` uygulama kapsamını açıklar. Yeni rota hem otomatik hem gerçek kayıt açık kontrolden geçti; son native görüntü/kadraj ve 0.15.2 toplu CI/yayın sonucu ayrıca kaydedilecek.
 
 0.15.2 yerel son kabul: salıncaksız fizik rotası ve gerçek kayıt açık rota PASS; image etkiler 25, kayıt 60, gözlem 53, yardım 102/UI57, açılış ve diyalog temiz; 205 kadraj yeniden geçti. Son native dar karede toplanan ışıklar/salıncaklar yok, fener zeminde ve kontroller içinde. Yeni paket toplu CI/yayın doğrulamasına hazırlanıyor. Kalan üretim: diğer bölümlerin teslim/geri dönüş döngüsü, gerçek bölüm haritası ve güvenli hızlı geçiş, image UI yenilemesi, ElevenLabs bağlantısı/seslendirme.
+
+### 0.15.2 yayın sonucu ve kesin devam noktası
+
+`a6d842cd901be97fba7ebcc77fafcc537fba28d5`, Actions **41248326738**: verify, tüm bölüm ve gerçek kayıt açık rota testleri, native kareler, Web export ve Pages deploy başarıyla tamamlandı. Canlı oyun artık 0.15.2 B01 sadeleştirmesini içeriyor. 0.15.1 hata kapısı da önceki **41247016804** koşusunda tamamen geçti ve yayımlandı.
+
+Son ek kanıt: yeni PCK'de dokunmatik B00→B05/menü-devam 46/46; eski üç-fenerli ve iki tarihsel toplama kaydında başarısız yazma byte'ları koruyor, yeniden deneme Porsuk'u bir kez katıyor, geçmiş toplama verisi değişmiyor. `USER-DECISIONS-2026-10-31.md` durumları güncellendi.
+
+**Sıradaki iş:** `JOURNEY-MAP-NEXT.md` içindeki harita/hızlı geçiş kabul sözleşmesini gerçek image referansı ve varlıklarıyla uygulamak. Mevcut genel bölüm kutusu gerçek harita diye sunulmayacak. Diğer bölümlerin teslim/geri dönüşleri, UI yenilemesi ve ElevenLabs hâlâ açık. Fiziksel telefon/tablet ve WebGL2 manuel oynanış yapılmış sayılmıyor. Bu oturumda yeni hata ve B01 paketi tamamlandı; oyun bütünü nihai kabul edilmiş değildir.
