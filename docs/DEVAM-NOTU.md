@@ -367,3 +367,10 @@ Yeni `repair_invitation_test.gd` iki bölümde 20/20; gerçek kalıcılık açı
 Yeni kritik bulgu: `SUPPLIED` / `GARDEN_SUPPLIED` kaydı başarılı fakat `READY` / `PROTECTED` henüz yazılmadan çıkıldığında onarım tekrar açılamıyordu. B02 açılışında yeniden başlatma yoktu; B03 yeniden başlatmayı deniyor fakat zaten tamamlanmış teslim olayını yeniden uyguladığı için callback reddediliyordu. Teslim edilmiş kayıtta onarım doğrudan başlar; teslim edilmemiş kayıtta önce mevcut atomik teslim yazımı yapılır. B02 açılışı da eksik onarımı sürdürür.
 
 `repair_invitation_test.gd` iki bölümün gerçek sahnesini teslim edilmiş kayıttan açarak yeniden başlamayı doğrular; toplam 20/20. Kaydetme reddi, byte korunumu, yeniden deneme, konuşmanın bir kez açılması, eski hazır kayıt ve katılma bayrakları da aynı testtedir. B02 ve B03 gerçek kayıt açık tam fizik rotaları bu oturumda PASS verdi; son devam düzeltmesinin toplu CI sonucu ayrıca eklenecek. Sürüm 0.15.3-recovery-alpha.
+
+
+### 0.15.3 doğrulama takibi / kesin devam noktası
+
+Kaynak `8b6d3412bd1cee25ddf6e349b4f9d00d039b93a1`, Actions **41432193571**. Bu kayıt yazılırken import, kayıt/girdi/profil/yeniden başlatma, diyalog, bölüm geçiş/kurtarma ve yeni20/20 onarım kontrolü başarılı; gerçek kalıcılık açık fizik rotaları devam ediyor. Tam doğrulama/export/deploy tamamlanmış sayılmıyor. İş akışı başarı sonrasında aynı Pages sürümünü otomatik günceller.
+
+İlk düzeltme `eba39c9` / Actions41430381146 verify+deploy başarılı ve canlıda. İkinci adayın sonucu doğrulanınca buraya ekle; başarısız adımı önce düzelt. Sonra WORK-PLAN-2026-11-02.md ve JOURNEY-MAP-NEXT.md kapsamıyla devam et. Henüz harita/hızlı geçiş, uzun malzeme geri dönüşleri veya ElevenLabs tamamlanmış değildir. Kullanıcının rutin uygulama/yayın yetkisi geçerlidir; projeyi yeniden anlattırma veya aynı onayı tekrar isteme.
