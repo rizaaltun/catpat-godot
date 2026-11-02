@@ -199,7 +199,7 @@ func start_build():
 	if not state.has(Quest.TIE) or not state.has(Quest.BASKET) or state.has(Quest.PROTECTED):return
 	# A supplied checkpoint has already committed the delivery. Reapplying that
 	# idempotent event would reject the callback and leave the repair stuck.
-	var begin=func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Pıtpıt sepetini alıyor · Arkadaşların bahçe yolunu hazırlıyor…"
+	var begin=func():mode="building";build_hud();build_elapsed=0;freeze(true);reset_input();hint.text="Pıtpıt sepetini alıyor · Arkadaşların bahçe yolunu hazırlıyor…"
 	if state.has(Quest.GARDEN_SUPPLIED):begin.call()
 	else:event(Quest.GARDEN_SUPPLIED,begin)
 func finish_build():
@@ -367,7 +367,7 @@ func _notification(what):
 func near(point: Vector2, radius=85.0) -> bool:
 	return player.is_on_floor() and player.position.distance_to(point)<radius
 func begin_lowering():
-	mode="lowering";lower_elapsed=0;basket.position.y=205;freeze(true);reset_input();hint.text="Sepet usulca aşağı iniyor…"
+	mode="lowering";build_hud();lower_elapsed=0;basket.position.y=205;freeze(true);reset_input();hint.text="Sepet usulca aşağı iniyor…"
 func resume_pending():
 	if state.has(Quest.RELEASED) and not state.has(Quest.LOWERED):begin_lowering()
 	elif state.has(Quest.GARDEN_SUPPLIED) and not state.has(Quest.PROTECTED):start_build()

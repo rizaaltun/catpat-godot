@@ -22,7 +22,7 @@ func _ready():
 		for x in [s.position.x+25,s.end.x-25]:
 			var vine=Sprite2D.new();vine.texture=load("res://assets/chapter-v8/vine.webp")
 			vine.position=Vector2(x,(s.position.y-40)/2);vine.scale=Vector2(0.055,(s.position.y+40)/vine.texture.get_height());add_child(vine)
-	bridge_body=add_surface(BRIDGE,false);bridge_body.collision_layer=0
+	bridge_body=add_surface(BRIDGE,true);bridge_body.collision_layer=0
 	deck=Node2D.new();add_child(deck)
 	bridge_art=Sprite2D.new();bridge_art.texture=load("res://assets/chapter-v11/bridge.webp");bridge_art.centered=false
 	bridge_art.scale=Vector2.ONE*BRIDGE.size.x/2110.0

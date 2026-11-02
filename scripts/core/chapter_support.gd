@@ -109,9 +109,9 @@ func help_context(scene)->Dictionary:
    else:task="lanterns.exit";text="Porsuk'la sağdaki çıkışa ilerle. Çıkış fenerine birlikte yaklaşınca yolunuz dereye açılır."
   "B02":
    if Quest.RIVER_ACCEPTED not in flags:task="bridge.meet";text="Maymun dere kıyısında seni bekliyor. Yanına yaklaş ve köprü hazırlığını konuş."
-   elif Quest.PLANK not in flags:task="bridge.plank";text="Tahta alt kıyıda. Güvenli basamaklardan aşağı in, tahtanın yanına yaklaş ve görev düğmesini kullan."
    elif Quest.ROPE not in flags:task="bridge.rope";text="Halat üst dallarda. Alçak daldan başlayıp basamaklarla yüksel. Tahtayı ve halatı birlikte taşıyabilirsin."
-   elif Quest.READY not in flags:task="bridge.build";text="İki parça hazır. Maymun'un yanına dön ve parçaları teslim et. Köprü kurulurken arkadaşınla kıyıda bekleyebilirsin."
+   elif Quest.PLANK not in flags:task="bridge.plank";text="Tahta alt kıyıda. Halatı aldıysan sağdaki dalın ucundan tahta kıyısına in. Tahtanın yanında görev düğmesini kullan."
+   elif Quest.READY not in flags:task="bridge.build";text="İki parça hazır. Tahtaları aldığın kıyıda görev düğmesiyle köprüyü onar; başlangıca dönmen gerekmez. Maymun ve Porsuk köprüyü birlikte hazırlayacak."
    elif Quest.MONKEY not in flags:task="bridge.join";text="Köprü hazır. Maymun'la yeniden konuş ve onu yolculuğa çağır."
    else:task="bridge.exit";text="Arkadaşlarınla köprüden sağ kıyıya geç. Çıkışta bir araya geldiğinizde bahçe yoluna devam edebilirsin."
   "B03":

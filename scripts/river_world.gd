@@ -116,7 +116,7 @@ func build_hud():
 func update_hud():
 	if not is_instance_valid(quest):return
 	quest.text="Maymun ile konuş" if not state.has(Quest.RIVER_ACCEPTED) else "Tahta ve halatı bul" if not state.has(Quest.SUPPLIED) else "Köprüyü birlikte onar" if not state.has(Quest.READY) else "Maymun’u yolculuğa çağır" if not state.has(Quest.MONKEY) else "Birlikte karşı kıyıya geç"
-	if state.has(Quest.PLANK) and state.has(Quest.ROPE) and not state.has(Quest.SUPPLIED):quest.text="Köprü başına dön"
+	if state.has(Quest.PLANK) and state.has(Quest.ROPE) and not state.has(Quest.SUPPLIED):quest.text="Bulunduğun kıyıdan köprüyü onar"
 	if state.has(Quest.RIVER_COMPLETE):quest.text="Birlikte karşı kıyıdayız"
 	counter.text="Tahta  %s\nHalat  %s"%["✓" if state.has(Quest.PLANK) else "—","✓" if state.has(Quest.ROPE) else "—"]
 func snapshot(q=null) -> Dictionary:
@@ -180,11 +180,14 @@ func dialogue_done(id: String,_first: bool):
 	event(id,func():
 		mode="play";build_hud();freeze(false);reset_input()
 		if id==Quest.RIVER_COMPLETE:complete())
+func can_build_here() -> bool:
+	# Keep the original hub usable for older saves and alternate collection orders.
+	return player.is_on_floor() and (player.position.distance_to(Vector2(2230,600))<120 or player.position.distance_to(Vector2(1250,520))<140)
 func start_build():
 	if not state.has(Quest.PLANK) or not state.has(Quest.ROPE) or state.has(Quest.READY):return
 	# A supplied checkpoint has already committed the delivery. Reapplying that
 	# idempotent event would reject the callback and leave the repair stuck.
-	var begin=func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Maymun tahtaları halatla bağlıyor…"
+	var begin=func():mode="building";build_hud();build_elapsed=0;freeze(true);reset_input();hint.text="Maymun tahtaları halatla bağlıyor…"
 	if state.has(Quest.SUPPLIED):begin.call()
 	else:event(Quest.SUPPLIED,begin)
 func finish_build():
@@ -262,15 +265,15 @@ func _process(delta):
 		hint.text="E · Maymun ile konuş" if absf(player.position.x-monkey.position.x)<145 else "Köprü başındaki Maymun’a ilerle"
 		if use and absf(player.position.x-monkey.position.x)<145 and player.is_on_floor():dialogue("river_meet");return
 	elif not state.has(Quest.READY):
-		hint.text="Üst dallarda halat · Alt kıyıda tahta"
+		hint.text=("Üst dallardaki halatı al" if state.has(Quest.PLANK) else "Önce üstteki halat · Sonra alt kıyıdaki tahta") if not state.has(Quest.ROPE) else "Sağdaki dalın ucundan tahta kıyısına in"
 		for item in [{"id":Quest.PLANK,"pos":Vector2(2230,600),"name":"Tahtaları al"},{"id":Quest.ROPE,"pos":Vector2(2110,360),"name":"Halatı al"}]:
 			if not state.has(item.id) and player.is_on_floor() and player.position.distance_to(item.pos)<85:
 				hint.text="E · "+item.name
 				if use:event(item.id);return
 		if state.has(Quest.PLANK) and state.has(Quest.ROPE):
-			hint.text="İki parça hazır · Köprü başına dön"
-			if absf(player.position.x-1250)<140 and absf(player.position.y-520)<4:
-				hint.text="E · Köprüyü birlikte onar"
+			hint.text="İki parça hazır · Tahtaların kıyısında köprüyü onar"
+			if can_build_here():
+				hint.text="E · Tahtaları köprüye yerleştir"
 				if use:start_build();return
 	elif not state.has(Quest.MONKEY):
 		hint.text="E · Maymun’u yolculuğa çağır" if absf(player.position.x-1250)<140 else "Maymun köprü başında seni bekliyor"
@@ -371,7 +374,7 @@ func capture(name: String):
 		await get_tree().process_frame
 func run_test():
 	for i in 40:await get_tree().physics_frame
-	var hint_samples=["Köprü başındaki Maymun’a ilerle","Üst dallarda halat · Alt kıyıda tahta","İki parça hazır · Köprü başına dön","Maymun tahtaları halatla bağlıyor…","Arkadaşlarınla birlikte çıkışa yaklaş","E · Birlikte yolculuğa devam et","Köprü hazır! Maymun’u yanına çağır."]
+	var hint_samples=["Köprü başındaki Maymun’a ilerle","Önce üstteki halat · Sonra alt kıyıdaki tahta","İki parça hazır · Tahtaların kıyısında köprüyü onar","Maymun tahtaları halatla bağlıyor…","Arkadaşlarınla birlikte çıkışa yaklaş","E · Birlikte yolculuğa devam et","Köprü hazır! Maymun’u yanına çağır."]
 	check(hint_panel.visible and hint_panel.get_rect().encloses(hint.get_rect()) and hint.get_theme_font_size("font_size")==26,"river objectives use the visible image card and26pt text")
 	check(hint_samples.all(func(text):return hint.get_theme_font("font").get_string_size(text,HORIZONTAL_ALIGNMENT_LEFT,-1,26).x<=hint.size.x),"long river objective states fit the readable hint area")
 	check(state.has(Quest.COMPLETE) and not state.has(Quest.RIVER_ACCEPTED),"B01 preserved on river entry")
@@ -390,31 +393,15 @@ func run_test():
 	check(await hop_to(Vector2(2100,360)),"upper jump three")
 	await use_action();check(state.has(Quest.ROPE) and not rope.visible,"rope collected by grounded E")
 	await capture("upper-rope")
-	# Walk back to each take-off point before returning; no teleport route fixtures.
-	await walk_to(2015)
-	check(await hop_to(Vector2(1830,310)),"return upper three")
-	await walk_to(1740)
-	check(await hop_to(Vector2(1560,350)),"return upper two")
-	await walk_to(1480)
-	check(await hop_to(Vector2(1320,430)),"return upper one")
-	await walk_to(1415)
-	for i in 65:await get_tree().physics_frame
-	check(absf(player.position.y-520)<4,"return to ground hub")
-	check(await hop_to(Vector2(1620,600)),"lower drop onto first bank")
-	await walk_to(1680)
-	check(await hop_to(Vector2(1900,650)),"lower jump to second bank")
-	await walk_to(1980)
-	check(await hop_to(Vector2(2230,600)),"lower jump to planks")
+	# Continue forward from the rope branch onto the plank bank; no return to hub.
+	check(await walk_to(2250),"walk off upper branch toward plank bank")
+	for i in 75:await get_tree().physics_frame
+	check(player.is_on_floor() and absf(player.position.y-600)<4,"safe forward descent lands on plank bank")
 	await use_action();check(state.has(Quest.PLANK) and not plank.visible,"planks collected by grounded E")
 	await capture("lower-planks")
-	await walk_to(2150)
-	check(await hop_to(Vector2(1950,650)),"return lower third bank")
-	await walk_to(1840)
-	check(await hop_to(Vector2(1660,600)),"return lower second bank")
-	await walk_to(1550)
-	check(await hop_to(Vector2(1380,520)),"return lower first bank")
-	check(rescue_count==0,"normal collection routes require no rescue")
-	await walk_to(1250);await use_action()
+	check(rescue_count==0,"forward collection route requires no rescue")
+	check(can_build_here() and player.position.x>2100,"repair is available on the collection bank without returning")
+	await use_action()
 	check(mode=="building" and state.has(Quest.SUPPLIED) and not state.has(Quest.READY),"build starts from durable supplied state")
 	await get_tree().create_timer(0.6).timeout
 	pause_game();var elapsed_before=build_elapsed
@@ -431,6 +418,7 @@ func run_test():
 	check(state.has(Quest.MONKEY) and data.party_ids==["badger","monkey"],"Maymun joins exactly once")
 	await capture("companion-ready")
 	print("V10 VIDEO READY")
+	check(await hop_to(Vector2(2440,520)),"jump from material bank onto repaired bridge")
 	check(await walk_to(3250,1600),"walk across repaired bridge")
 	for i in 180:await get_tree().physics_frame
 	check(party_at_exit(),"two physical followers reach exit")

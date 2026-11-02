@@ -39,7 +39,7 @@
       "id": "river_meet_2",
       "speaker": "monkey",
       "side": "right",
-      "text": "Alt kıyıda tahtalar, üst dallarda halat var. İkisini de buraya getirebilir misin?",
+      "text": "Önce üst dallardaki halatı al. Sonra sağdaki dalın ucundan tahtaların kıyısına in. Köprüyü oradan birlikte onarabiliriz!",
       "next": "river_meet_3"
     },
     {
