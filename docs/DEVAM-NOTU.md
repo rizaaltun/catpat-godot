@@ -374,3 +374,19 @@ Yeni kritik bulgu: `SUPPLIED` / `GARDEN_SUPPLIED` kaydı başarılı fakat `READ
 Kaynak `8b6d3412bd1cee25ddf6e349b4f9d00d039b93a1`, Actions **41432193571**. Bu kayıt yazılırken import, kayıt/girdi/profil/yeniden başlatma, diyalog, bölüm geçiş/kurtarma ve yeni20/20 onarım kontrolü başarılı; gerçek kalıcılık açık fizik rotaları devam ediyor. Tam doğrulama/export/deploy tamamlanmış sayılmıyor. İş akışı başarı sonrasında aynı Pages sürümünü otomatik günceller.
 
 İlk düzeltme `eba39c9` / Actions41430381146 verify+deploy başarılı ve canlıda. İkinci adayın sonucu doğrulanınca buraya ekle; başarısız adımı önce düzelt. Sonra WORK-PLAN-2026-11-02.md ve JOURNEY-MAP-NEXT.md kapsamıyla devam et. Henüz harita/hızlı geçiş, uzun malzeme geri dönüşleri veya ElevenLabs tamamlanmış değildir. Kullanıcının rutin uygulama/yayın yetkisi geçerlidir; projeyi yeniden anlattırma veya aynı onayı tekrar isteme.
+
+### 2 Kasım — 0.15.3 sunucu sonucu ve görüntü testi düzeltmesi
+
+Actions 41432193571 doğrulaması başarısız; deploy atlandı. Import, kayıt/yeniden başlatma/geçiş, 20/20 onarım kontrolü ve gerçek kalıcılık açık B02/B03 rotaları geçti. Başarısız adım B02 görüntülü tam rota: `bridge-ready` artık otomatik katılma konuşması sırasında çekildiğinden kaldırılmış HUD düğümleri ve hint_panel okunuyordu. Bu, geçersiz nesne erişimi ve dokunmatik kadraj assertion hatası üretti.
+
+Yerel dc734bc düzeltmesi konuşma karesini korur; küçük ekran dokunmatik/HUD denetimini katılma konuşması tamamlandıktan sonraki yeni `companion-ready` karesinde çalıştırır. Assertionlar kaldırılmadı. Yeni yerel Godot 4.4.1 çalıştırması `V10 RIVER SUITE PASSED`; repair_invitation_test.gd 20/20. Yerel Xvfb yok; görüntülü rota bu ortamda yeniden doğrulanamadı. Sunucuda tam görüntülü CI yeniden çalışmadan paket kabul/yayın sayılmaz.
+
+GitHub update_file gönderimi otomatik onay incelemesince hedef depoya açık yetki doğrulanamadığı gerekçesiyle reddedildi. Alternatif gönderim yolu denenmedi. Kullanıcı rutin çalışma/yayın yetkisini daha önce vermiş olsa da incelemenin istediği hedef-depo teyidi bu turda kabul edilmedi. Düzeltme yerel Git kaydında korunuyor; uzak dal veya canlı sürüm değişmiş sayılmıyor. Kesin sonraki iş: rizaaltun/catpat-godot work/t22-source-migration hedefi için engel çözülünce dc734bc değişikliğini gönder; görüntülü B02 ve tüm CI/export/deploy sonucunu doğrula, sonra çalışma programının görev kolaylaştırma aşamasına devam et.
+
+### 2 Kasım — Hedef depo onayı ve ek konuşma düzeltmesi
+
+Kullanıcı mevcut rizaaltun/catpat-godot deposuna gönderim ve başarılı doğrulama sonrası yayın için açık onay verdi. B02 görüntü düzeltmesi 302709d6e84143ac65012042f709e02c79e923d4 ile gönderildi; Actions 41445977957 başladı. Önceki gönderim engeli çözüldü.
+
+Ek denetim, önceki tekrarlı callback testinin yalnız ilk cümlede kaldığı için konuşmanın başa sarılmasını yakalamadığını gösterdi. Test artık bir sonraki cümleye ilerleyip bitiş callback'ini tekrar çağırıyor. Düzeltme öncesi iki bölümde de hata üretildi (22 kontrol / 2 hata). finish_build yalnız building durumunda ve hazır bayrağı yokken çalışacak şekilde korundu. Sonuç: 22 kontrol / 0 hata; B02 ve B03 gerçek kalıcılık açık fizik rotaları da bu yerel değişikliklerle PASS.
+
+Üç dosya atomik kaynak kaydı bf1fa56866f5eaa95b28e90ee8a0d837034b160d ile aynı geliştirme dalına gönderildi; Actions 41446380954 başladı. Bu not yazılırken sunucu doğrulama/export/yayın sonucu henüz kesinleşmedi; başarılı sayılmadı. İlk görüntü düzeltmesi ve ek konuşma koruması bu son adayda birlikte bulunur. Yeni rota veya harita arayüzü henüz eklenmedi.
