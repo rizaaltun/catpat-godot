@@ -343,11 +343,11 @@ func use_action():
 	for i in 5:await get_tree().physics_frame
 func capture(name: String):
 	if "--v10-capture" not in OS.get_cmdline_user_args():return
-	if name not in ["meet-comic","bridge-ready","complete"]:return
+	if name not in ["meet-comic","bridge-ready","companion-ready","complete"]:return
 	await RenderingServer.frame_post_draw
 	var frame=get_viewport().get_texture().get_image()
 	print("VISUAL_CAPTURE:B02-"+name+":"+Marshalls.raw_to_base64(frame.save_webp_to_buffer(true,0.82)))
-	if name == "bridge-ready":
+	if name == "companion-ready":
 		var old_size = get_tree().root.size
 		var old_touch = control_display.touch_mode
 		get_tree().root.size = Vector2i(666, 374)
@@ -427,6 +427,7 @@ func run_test():
 	await capture("bridge-ready")
 	test_finish_dialogue()
 	check(state.has(Quest.MONKEY) and data.party_ids==["badger","monkey"],"Maymun joins exactly once")
+	await capture("companion-ready")
 	print("V10 VIDEO READY")
 	check(await walk_to(3250,1600),"walk across repaired bridge")
 	for i in 180:await get_tree().physics_frame
