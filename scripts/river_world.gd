@@ -70,6 +70,7 @@ func _ready():
 	if not loaded.ok or loaded.data.chapter_id!="B02":
 		mode="error";freeze(true);message("Dere kaydı açılamadı","Patikaya dönüp yeniden deneyebilirsin.",to_menu);return
 	apply_data(loaded.data);spawn_saved();build_hud()
+	if state.has(Quest.SUPPLIED) and not state.has(Quest.READY):start_build()
 	if state.has(Quest.RIVER_COMPLETE):complete()
 	if automated:run_test()
 func fixture() -> Dictionary:
@@ -181,9 +182,17 @@ func dialogue_done(id: String,_first: bool):
 		if id==Quest.RIVER_COMPLETE:complete())
 func start_build():
 	if not state.has(Quest.PLANK) or not state.has(Quest.ROPE) or state.has(Quest.READY):return
-	event(Quest.SUPPLIED,func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Maymun tahtaları halatla bağlıyor…")
+	# A supplied checkpoint has already committed the delivery. Reapplying that
+	# idempotent event would reject the callback and leave the repair stuck.
+	var begin=func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Maymun tahtaları halatla bağlıyor…"
+	if state.has(Quest.SUPPLIED):begin.call()
+	else:event(Quest.SUPPLIED,begin)
 func finish_build():
-	event(Quest.READY,func():mode="play";build_hud();freeze(false);reset_input();notice=3)
+	event(Quest.READY,func():
+		mode="play";build_hud();freeze(false);reset_input();notice=3
+		# The successful repair already brings the player and Maymun together.
+		# Continue their story here instead of requiring another approach/E press.
+		dialogue("river_join"))
 func pause_game():
 	if mode not in ["play","building"]:return
 	prior_mode=mode;mode="pause";freeze(true);reset_input();clear_screen()
@@ -270,7 +279,7 @@ func _process(delta):
 			hint.text="E · Birlikte yolculuğa devam et"
 			if use:dialogue("river_exit");return
 	notice=maxf(0,notice-delta)
-	if notice>0:hint.text="Köprü hazır! Maymun’u yanına çağır."
+	if notice>0:hint.text="Köprü hazır! Birlikte sağ kıyıya geçebilirsiniz."
 	save_clock+=delta
 	if save_clock>2:save_clock=0;persist(snapshot())
 func party_at_exit() -> bool:
@@ -414,8 +423,9 @@ func run_test():
 		await get_tree().physics_frame
 		if state.has(Quest.READY):break
 	check(state.has(Quest.READY) and level.deck.visible and level.bridge_body.collision_layer==1,"ready commit enables visible and physical bridge")
+	check(mode=="dialogue" and runner.active and runner.current.id=="river_join_0","repair continues the invitation without another interaction")
 	await capture("bridge-ready")
-	await walk_to(1250);await use_action();test_finish_dialogue()
+	test_finish_dialogue()
 	check(state.has(Quest.MONKEY) and data.party_ids==["badger","monkey"],"Maymun joins exactly once")
 	print("V10 VIDEO READY")
 	check(await walk_to(3250,1600),"walk across repaired bridge")

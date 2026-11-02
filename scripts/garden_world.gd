@@ -197,9 +197,15 @@ func dialogue_done(id: String,_first: bool):
 		elif id==Quest.RABBIT:begin_gather())
 func start_build():
 	if not state.has(Quest.TIE) or not state.has(Quest.BASKET) or state.has(Quest.PROTECTED):return
-	event(Quest.GARDEN_SUPPLIED,func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Pıtpıt sepetini alıyor · Arkadaşların bahçe yolunu hazırlıyor…")
+	# A supplied checkpoint has already committed the delivery. Reapplying that
+	# idempotent event would reject the callback and leave the repair stuck.
+	var begin=func():mode="building";build_elapsed=0;freeze(true);reset_input();hint.text="Pıtpıt sepetini alıyor · Arkadaşların bahçe yolunu hazırlıyor…"
+	if state.has(Quest.GARDEN_SUPPLIED):begin.call()
+	else:event(Quest.GARDEN_SUPPLIED,begin)
 func finish_build():
-	event(Quest.PROTECTED,func():mode="play";build_hud();freeze(false);reset_input();notice=3)
+	event(Quest.PROTECTED,func():
+		mode="play";build_hud();freeze(false);reset_input();notice=3
+		dialogue("garden_join"))
 func pause_game():
 	if mode not in ["play","building","lowering","gathering"]:return
 	prior_mode=mode;mode="pause";freeze(true);reset_input();clear_screen()
@@ -453,8 +459,9 @@ func run_test():
 		if state.has(Quest.PROTECTED):break
 	check(state.has(Quest.PROTECTED) and level.ready_bridge and level.bridge_body.collision_layer==1,"secured windscreen enables safe walkway")
 	for i in 120:await get_tree().physics_frame
+	check(mode=="dialogue" and runner.active and runner.current.id=="garden_join_0","repair continues the invitation without another interaction")
 	await capture("garden-protected")
-	await use_action();test_finish_dialogue()
+	test_finish_dialogue()
 	check(state.has(Quest.RABBIT) and data.party_ids==["badger","monkey","rabbit"],"Pıtpıt joins three-companion party once")
 	for i in 150:await get_tree().physics_frame
 	print("V12 VIDEO READY")
