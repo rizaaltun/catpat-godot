@@ -203,6 +203,8 @@ func start_build():
 	if state.has(Quest.GARDEN_SUPPLIED):begin.call()
 	else:event(Quest.GARDEN_SUPPLIED,begin)
 func finish_build():
+	# A repeated completion must not rebuild the HUD or rewind an active conversation.
+	if mode!="building" or state.has(Quest.PROTECTED):return
 	event(Quest.PROTECTED,func():
 		mode="play";build_hud();freeze(false);reset_input();notice=3
 		dialogue("garden_join"))

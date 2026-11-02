@@ -188,6 +188,8 @@ func start_build():
 	if state.has(Quest.SUPPLIED):begin.call()
 	else:event(Quest.SUPPLIED,begin)
 func finish_build():
+	# A repeated completion must not rebuild the HUD or rewind an active conversation.
+	if mode!="building" or state.has(Quest.READY):return
 	event(Quest.READY,func():
 		mode="play";build_hud();freeze(false);reset_input();notice=3
 		# The successful repair already brings the player and Maymun together.

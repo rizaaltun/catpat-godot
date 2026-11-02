@@ -49,7 +49,9 @@ func check_chapter(chapter:String):
  world.saves.fault="";world.retry_save()
  check(world.mode=="dialogue" and world.runner.active and world.runner.current.id==dialogue+"_0","successful retry opens the invitation without another E press")
  check(store.load_progress(PATH).data.quest_flags.has(ready) and not store.load_progress(PATH).data.quest_flags.has(joined),"repair is durable before invitation and joining remains an actual story event")
+ world.runner.revealed=true;world.runner.input_cooldown=0;world.advance()
  var line=world.runner.current.id
+ check(line!=dialogue+"_0","invitation advances before repeated repair callback")
  world.finish_build()
  check(world.runner.current.id==line and world.mode=="dialogue","repeated repair callback cannot restart the active invitation")
  world.test_finish_dialogue()
