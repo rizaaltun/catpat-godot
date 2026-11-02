@@ -6,6 +6,9 @@ const Replay=preload("res://scripts/core/replay_service.gd")
 const SCRIPT_CHAPTERS={"home_main.gd":"B00","polish_world.gd":"B01","river_world.gd":"B02","garden_world.gd":"B03","summit_main.gd":"B04","festival_main.gd":"B05"}
 var store=Save.new()
 var observations_override:Node
+var restore_override:Callable
+func _restore(replay,path:String,snapshot:Dictionary)->bool:
+ return bool(restore_override.call(path,snapshot)) if restore_override.is_valid() else replay.restore_slot(path,snapshot)
 func tree()->SceneTree:return Engine.get_main_loop() as SceneTree
 func property(object,key:String,fallback=null):
  if not is_instance_valid(object):return fallback
@@ -63,8 +66,8 @@ func restart(scene,navigation:Callable=Callable())->Dictionary:
  var observer=_observer()
  _suspend(observer,prepared.path)
  if not store.save(prepared.path,prepared.data):
-  var restored=replay.restore_slot(prepared.path,previous_files)
-  _resume(observer,prepared.path)
+  var restored=_restore(replay,prepared.path,previous_files)
+  if restored:_resume(observer,prepared.path)
   return {"ok":false,"reason":"restart_save_failed","rollback_ok":restored}
  tree().set_meta("journey_save_path",prepared.path)
  if prepared.chapter=="B01":
@@ -76,9 +79,9 @@ func restart(scene,navigation:Callable=Callable())->Dictionary:
  var result=navigation.call(prepared.scene_path) if navigation.is_valid() else tree().change_scene_to_file(prepared.scene_path)
  var error=int(result) if typeof(result)==TYPE_INT else ERR_INVALID_DATA
  if error!=OK:
-  var restored=replay.restore_slot(prepared.path,previous_files)
+  var restored=_restore(replay,prepared.path,previous_files)
   replay.restore_metadata(previous_metadata)
-  _resume(observer,prepared.path)
+  if restored:_resume(observer,prepared.path)
   return {"ok":false,"reason":"restart_navigation_failed","error":error,"rollback_ok":restored}
  _resume(observer,prepared.path)
  var attempt={"ok":true,"recorded":0,"reason":"observations_unavailable"}

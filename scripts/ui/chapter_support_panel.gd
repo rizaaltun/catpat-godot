@@ -7,6 +7,7 @@ var title_label:Label
 var body_label:Label
 var message_label:Label
 var mode="help"
+var recovery_required=false
 func build(title:String,body:String):
  size=Vector2(1280,720);mouse_filter=Control.MOUSE_FILTER_STOP
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(0,0,1280,720),self).modulate=Color(0.12,0.19,0.17,0.95)
@@ -28,9 +29,19 @@ func setup_restart(context:Dictionary,confirm_callback:Callable,close_callback:C
  buttons[1].call_deferred("grab_focus")
 func show_error(restored=true):
  message_label.text="Kaydı değiştirmedik. Yeniden dene veya Molaya dön." if restored else "Kaydı geri yükleyemedik. Yeni deneme başlatmadan bir büyüğünden yardım iste."
+func lock_for_recovery(recovery:Callable):
+ recovery_required=true;on_close=recovery
+ buttons[0].disabled=true
+ buttons[1].text="Ana menüye dön"
+ buttons[1].grab_focus()
+ message_label.text="Kayıt geri yüklenemedi. İlerlemeyi korumak için ana menüden devam et."
 func confirm():
+ if recovery_required:return
  if on_confirm.is_valid():on_confirm.call()
 func close():
+ if recovery_required:
+  if on_close.is_valid():on_close.call()
+  return
  if on_close.is_valid():on_close.call()
  queue_free()
 func _input(event):

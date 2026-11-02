@@ -93,6 +93,19 @@ func run():
    service.open_restart(game);service.active_modal.confirm();await process_frame
    check(is_instance_valid(service.active_modal) and service.active_modal.message_label.text.contains("Kaydı değiştirmedik") and Replay.new().slot_snapshot(PATH)==original,chapter+" failed confirmed restart retains modal and restores source bytes")
    service.active_modal.close();await process_frame;service.chapter_support.store.fault=""
+  if chapter=="B01":
+   service.chapter_support.restore_override=func(_path,_snapshot):return false
+   service.support_navigation=func(_path):return ERR_CANT_OPEN
+   service.open_restart(game);service.active_modal.confirm();await process_frame
+   var recovery_panel=service.active_modal
+   check(game.process_mode==Node.PROCESS_MODE_DISABLED and recovery_panel.buttons[0].disabled,"double failure disables stale scene and further restart")
+   var preserved=Replay.new().slot_snapshot(PATH)
+   recovery_panel.confirm();recovery_panel.close();await process_frame
+   check(is_instance_valid(service.active_modal) and Replay.new().slot_snapshot(PATH)==preserved and game.process_mode==Node.PROCESS_MODE_DISABLED,"failed menu recovery cannot close modal or resume stale world")
+   service.support_navigation=func(_path):return OK
+   recovery_panel.close();await process_frame
+   check(not is_instance_valid(service.active_modal) and game.process_mode==Node.PROCESS_MODE_DISABLED,"accepted menu recovery releases modal without resuming stale scene")
+   service.support_navigation=Callable();service.chapter_support.restore_override=Callable()
   game.queue_free();await process_frame
  # One actual Godot scene replacement checks B01's new incomplete attempt/autostart.
  store.save(PATH,fixtures.B01.data)
@@ -105,6 +118,17 @@ func run():
  game=current_scene
  check(is_instance_valid(game) and game.get_instance_id()!=old_id and game.mode=="dialogue" and game.runner.active,"confirmed B01 restart navigates and autostarts the actual first dialogue")
  check(Quest.ACCEPTED not in store.load_progress(PATH).data.quest_flags,"actual restarted dialogue has not fabricated its completion")
+ game.test_dialogue_finish();game.pause_game()
+ service.chapter_support.restore_override=func(_path,_snapshot):return false
+ service.support_navigation=func(_path):return ERR_CANT_OPEN
+ service.open_restart(game);service.active_modal.confirm();await process_frame
+ var stale_id=game.get_instance_id()
+ var recovery_bytes=Replay.new().slot_snapshot(PATH)
+ service.support_navigation=Callable();service.chapter_support.restore_override=Callable()
+ service.active_modal.close();await ticks(15)
+ game=current_scene
+ check(is_instance_valid(game) and game.get_instance_id()!=stale_id and game.mode=="menu","double failure recovers through an actual SceneTree menu replacement")
+ check(Replay.new().slot_snapshot(PATH)==recovery_bytes and not is_instance_valid(service.active_modal),"actual menu recovery preserves save bytes and releases the modal")
  game.queue_free();service.queue_free();await process_frame
  if is_instance_valid(observer):observer.profile_resolver=old_resolver;observer.profile_id_resolver=old_id_resolver
  for path in [PATH,PRIMARY,JOURNAL]:clean(path)

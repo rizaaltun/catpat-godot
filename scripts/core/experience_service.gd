@@ -193,8 +193,19 @@ func open_restart(candidate=null):
  active_modal.setup_restart(context,func():
   var result=chapter_support.restart(scene,support_navigation)
   if result.ok:_close_modal(false)
-  elif is_instance_valid(active_modal):active_modal.show_error(result.get("rollback_ok",true)),func():_close_modal(false))
+  elif is_instance_valid(active_modal):
+   if not result.get("rollback_ok",true):
+    scene.process_mode=Node.PROCESS_MODE_DISABLED
+    active_modal.lock_for_recovery(func():_recover_restart(context.path))
+   else:active_modal.show_error(true),func():_close_modal(false))
  _update_entries(scene)
+func _recover_restart(path:String):
+ var result=support_navigation.call("res://scenes/polish_v3.tscn") if support_navigation.is_valid() else get_tree().change_scene_to_file("res://scenes/polish_v3.tscn")
+ if typeof(result)!=TYPE_INT or result!=OK:
+  if is_instance_valid(active_modal):active_modal.message_label.text="Ana menü açılamadı. Kaydı koruyoruz; yeniden deneyebilirsin."
+  return
+ chapter_support._resume(chapter_support._observer(),path)
+ _close_modal(false)
 func _close_modal(resume_host=true):
  var host=modal_host
  var snapshot=modal_snapshot.duplicate()

@@ -346,3 +346,10 @@ Sonra B01 ileri görev akışına dönüldü: toplanan sarı ışıklar/sayaçla
 Son ek kanıt: yeni PCK'de dokunmatik B00→B05/menü-devam 46/46; eski üç-fenerli ve iki tarihsel toplama kaydında başarısız yazma byte'ları koruyor, yeniden deneme Porsuk'u bir kez katıyor, geçmiş toplama verisi değişmiyor. `USER-DECISIONS-2026-10-31.md` durumları güncellendi.
 
 **Sıradaki iş:** `JOURNEY-MAP-NEXT.md` içindeki harita/hızlı geçiş kabul sözleşmesini gerçek image referansı ve varlıklarıyla uygulamak. Mevcut genel bölüm kutusu gerçek harita diye sunulmayacak. Diğer bölümlerin teslim/geri dönüşleri, UI yenilemesi ve ElevenLabs hâlâ açık. Fiziksel telefon/tablet ve WebGL2 manuel oynanış yapılmış sayılmıyor. Bu oturumda yeni hata ve B01 paketi tamamlandı; oyun bütünü nihai kabul edilmiş değildir.
+
+
+## 2 Kasım 2026 — Yetki ve hata öncelikli çalışma programı
+
+Kullanıcı rutin işler için yeniden onay istemeden hata düzeltmelerinden başlanıp çalışma programıyla devam edilmesini istedi. Program `WORK-PLAN-2026-11-02.md` içinde. Depodaki güncel devir doğrulandı: 0.15.1 geçiş ve 0.15.2 B01 sadeleştirmesi zaten yayımlanmıştı; bunlar yeniden yapılmış gibi raporlanmadı.
+
+Yeni bulgu: ortak bölüm yeniden başlatmasında sahne/yazma hatasıyla birlikte geri alma başarısızlığı, panelden eski dünyaya dönüşü açık bırakıyordu. Eski dünya artık işlenmez; tekrar başlatma kapalıdır; ana menü kurtarması başarısızsa modal kapanmaz. Başarısız geri almada gözlem yazımı askıda kalır. Yeni hata enjeksiyonu dahil bölüm destek UI testi 62/62 geçti; son iki kontrol gerçek SceneTree ana menü değişiminde eski sahnenin kapanmasını ve kayıt byte bütünlüğünü doğruladı. Godot 4.4.1 yerel ek regresyon: bölüm destek 102/102, deneyim 42/42, klavye bölüm zinciri 45/45, dokunmatik zincir 46/46, B04 geçiş kurtarma 12/12. Çalıştırıcı motor hata satırlarını reddederek geçti. Yeni toplu CI/yayın sonucu henüz bekleniyor. Fiziksel cihaz/WebGL2 oynanış bu kayıtla denenmiş sayılmaz.
