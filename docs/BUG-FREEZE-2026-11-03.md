@@ -16,7 +16,15 @@
 - repair_invitation_test.gd:38/38; kayıt hata yolları ve eski/yeni onarım noktaları.
 - web_shell_test.cjs:26/26; gerçek hazırlanan HTML/JS üstünde sözleşme. WebGL oynanışı değildir.
 - web_export_test.py:8/8; kaynak bütünlüğü ve HTML hazırlığı.
-- Son B02 tam fizik rotası PASS. Ortak yardım/mola UI62/62 geçti. B03 yeniden fizik kontrolünün sonucu devam notuna yazılacak.
+- Son B02 tam fizik rotası PASS. B03 gerçek kayıt açık tam fizik rotası ve ortak yardım/mola UI62/62 geçti.
 - Bağımsız kaynak denetimi: web jitter gerçek harness ile doğrulandı; yeni çıkış/toplanma değişikliklerinde engelleyici kusur bulunmadı. Normal modal yaşam döngüsünde ayrıca bir kalıcı kilit saptanmadı; bu bütün kullanıcı yollarını kapsayan cihaz testi değildir.
 
 Sunucuda B00–B05 geçişleri, klavye/dokunmatik sözleşmeleri, tam fizik rotaları, gerçek render kareleri, export ve deploy başarılı olmadan yeni aday canlı kabul edilmez. Fiziksel telefon/tablet ve kullanıcının tarayıcısındaki uzun oynanış/perf/bellek ölçümü hâlâ ayrı kabul kapılarıdır. Yeni hata bilgisi gelirse aynı rapora senaryo ve yeniden kontrol sonucu eklenir.
+
+## B04 ek kurtarma denetimi
+
+B04 ekip/taşıyıcı koşulları oyun mekaniğidir; sırf test geçsin diye kaldırılmadı. Güvenli bank2, lantern=lit, rope=ready, waymark=ready kaydıyla gerçek sahne açıldı; bir üye1700x konumuna alınıp reservations[1]=0 enjekte edildi. Mola → kayıtlı kıyıdan başlama işlemi, rezervasyonları[-1,-1] yapıp dört üyeyi yeniden aynı kıyıda topladı; kayıt byte'ları aynen korundu. Dört hedefli kontrol PASS. Bu, mevcut kurtarma yolunu doğrular; doğal oynanışta eski rezervasyon oluşumu ayrıca üretilmedi ve yeni canlı hata diye raporlanmaz. Yerel keyboard geçiş denemesi tamamlanma marker'ı vermediğinden kabul kanıtı sayılmadı; bu kapı sunucu sonucuyla kapatılacaktır.
+
+## Yayın sonucu
+
+fe6424d878f447e4d77887cb1e68c2a697911cb8 / Actions41602732821: tüm zorunlu doğrulama, yerel senaryoların sunucu koşuları, B00–B05 görüntülü/fiziksel kontroller, klavye/dokunmatik geçişler ve web export başarılı; Pages deploy başarılı.0.15.5-stability-alpha canlıya çıktı. Fiziksel cihaz/gerçekWebGL2 uzun kullanım ve bellek/FPS ölçümü bu sonuçla yapılmış sayılmaz.
