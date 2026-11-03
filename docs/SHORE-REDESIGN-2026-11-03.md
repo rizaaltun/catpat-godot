@@ -26,6 +26,6 @@ Eski kayıtta ilk fener yapılmadan ileriki kıyıya geçilmişse güvenli dön�
 - B04 tam görev41/41, yaşam döngüsü19/19 ve sanat26/26 önceki yapısal kontrol turunda geçti.
 - Son içerik/UI değişikliklerinden sonra diyalog, çizgi roman25/25, deneyim42/42, onarım38/38, kilitlenme12/12, destekUI62/62 ve başlangıç regresyonları başarılı.
 - Son varsayılan native diyalog/akış96/96, 16 gerçek native kare (1280×720 ve666×374); iptal dokunma, sentetik fare, odak kaybı, diyalog zamanlayıcısız bekleme, checkpoint yazma hatası/görünür uyarı/başarılı retry ve fener sonrası ayrı halat hedefi başarılı. Ses akışları test çıkışında kapatılıp temizlendi; engine-error kapısı açık tutuldu.
-- CI ve yayın sonucu aşağıya kaydedilecek.
+- İlk CI41654218308: oynanış96/96 geçti; hızlı rendererda8 karelik çıkış beklemesi Ogg ses iş parçacığının temizlenmesine yetmedi ve engine-error kapısı yayını durdurdu. Diğer mevcut native testlerle aynı elapsed-time temizleme deseni uygulanarak0.35 saniye beklendi; hata kapısı korunur. Son CI ve yayın sonucu aşağıya kaydedilecek.
 
 Testler Godot 4.4.1 gerçek scene/physics ve native render üstündedir. WebGL canlı cihazda uzun süre oynanış, gerçek mobil donanım ve çocuklarla kullanılabilirlik çalışması yapılmış sayılmaz. Bütün olası donmaların sıfırlandığı iddia edilmez.

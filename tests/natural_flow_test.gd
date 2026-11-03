@@ -259,6 +259,8 @@ func run():
  for suffix in Replay.SLOT_SUFFIXES:DirAccess.remove_absolute(PATH+suffix)
  var audio=root.get_node_or_null("CatpatAudio")
  if is_instance_valid(audio):audio.shutdown()
- for frame in 8:await process_frame
+ # The audio mixer releases stopped Ogg playback on its own thread.
+ # Use elapsed time, as eight rendered frames can be <70ms on CI.
+ await create_timer(0.35).timeout
  print("NATURAL FLOW: %d checks, %d failures"%[checks,failures])
  quit(1 if failures else 0)
