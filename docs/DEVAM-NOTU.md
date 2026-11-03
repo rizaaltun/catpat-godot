@@ -430,3 +430,9 @@ Uygulama: üretim hostunda NaturalFlow; kısa/tek balonlu otomatik konuşmalar, 
 Yeni varsayılan üretim akışı yerel native70/70 ve10 geniş/dar kare geçti. Son ek B03 ip/sepet hata matrisi dahil varsayılan headless64/64 geçti. Manuel/fault/physics testleri isteğe bağlı eski etkileşim yolunu açıkça opt-in ile sınar; yeni otomatik akışın görsel kabulü yalnız yeni zorunlu native suite ve karelerle değerlendirilir. Diğer yerel sonuçlar: B0083/83; repair38/38; softlock12/12; experience42/42; supportUI62/62; açılış PASS; B03 gerçek kayıt açık manuel tam fizik rotası PASS.
 
 Sonraki zorunlu kapı: bu adayın tümCI, varsayılan otomatik native suite, eski fizik/manuel hata yolları, Web export ve deploy. Başarısız adımı düzeltmeden canlı sayma. Son B03 donmasının tam kaydı olmadığı için aynı kullanıcı hatası birebir yeniden üretilmiş gibi raporlama. Yeni güvenlik/ilerleme senaryoları eklendi; gerçek cihaz ve uzun WebGL2/perf ölçümü ayrı kalır. CI başarı/yayın sonucu buraya eklenecek. Kullanıcıya aynı yetkiyi tekrar sordurma.
+
+### Tam yan karakter kapsamı / son aday takibi
+
+İlk akış kaydı e28c78aef0dbb06e697a80a7b1628ffc845c6c17, Actions41614707191 ile sunucuya gönderildi. Yeni varsayılan render suite sunucuda geçti; kalan eski regresyonlar sürerken B05'in fiziksel Actor yerine image Sprite kullanan bekleyen arkadaşlarına da aynı azaltılmış harekete duyarlı idle eklendi. B04 shared/solo giriş pozları da karşılama kapsamına alındı; konuşma rolü ezilmez. Bu küçük tamamlayıcı aday ayrıca doğrulanacak; ilk koşunun sonucu son kaydın kabulü yerine geçmez.
+
+Ek B05 yaşam hareketi dahil varsayılan headless65/65. Native başlangıç70/70 ve10 kare; ilk sunucu koşusunda ek ip/sepet matrisiyle varsayılan native74kontrolün tamamı geçti. Son test ayrıca festival girişinin geniş/dar karesini alır. Son kaynak ve CI kimliği yayın kontrolü sonrasında buraya eklenecek.

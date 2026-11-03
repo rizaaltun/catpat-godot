@@ -105,7 +105,7 @@ func _idle(scene,delta:float):
   var actor=actors[i];var anim=value(actor,"anim")
   if not is_instance_valid(anim):continue
   if value(actor,"recruited",false):actor.locomotion_scale=1.5 if actor.position.distance_to(value(scene,"player",actor).position)>500 else 1.0
-  if not value(actor,"recruited",false) and not actor.has_meta("natural_greeted") and str(value(scene,"mode","play"))=="play":
+  if not value(actor,"recruited",false) and not actor.has_meta("natural_greeted") and str(value(scene,"mode","play")) in ["play","shared","solo"] and not bool(value(scene,"dialogue_active",false)):
    actor.set_meta("natural_greeted",true)
    if actor.has_method("set_performance"):actor.set_performance("help",actor,0.8,"greeting")
   var prefs=scene.get_tree().root.get_meta("catpat_preferences",{})
@@ -115,6 +115,15 @@ func _idle(scene,delta:float):
    anim.offset=Vector2(0,-(sin(visual_seconds*2.5+i)+1)*1.6/maxf(absf(anim.scale.y),0.01));actor.set_meta("natural_idle_bob",true)
   elif reduced or actor.get_meta("natural_idle_bob",false):
    anim.offset=Vector2.ZERO;actor.set_meta("natural_idle_bob",false)
+ # Festival partners are image sprites rather than physical Actor instances.
+ var festival_prefs=scene.get_tree().root.get_meta("catpat_preferences",{})
+ var quiet=bool(festival_prefs.get("reduced_motion",false)) or bool(value(scene,"gathering_partners",false))
+ var partners=value(scene,"partner_sprites",[])
+ for i in partners.size():
+  var art=partners[i]
+  if not is_instance_valid(art):continue
+  art.rotation=0.0 if quiet else sin(visual_seconds*1.7+i)*0.01
+  art.offset=Vector2.ZERO if quiet else Vector2(0,-(sin(visual_seconds*2.2+i)+1)*1.2/maxf(absf(art.scale.y),0.01))
 func _short_ui(scene):
  # One short objective plus one action hint; optional detailed help stays in Mola.
  for key in ["subtitle","controls_hint","chapter_note"]:

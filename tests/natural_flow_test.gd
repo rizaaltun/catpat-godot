@@ -180,6 +180,12 @@ func run():
  check(await wait_for(func():return is_instance_valid(current_scene) and current_scene.scene_file_path==Replay.ENTRIES.B05[2],300),"B04 completed lookout enters festival without E")
  check(Save.new().load_progress(PATH).data.chapter_id=="B05","automatic chapter chain keeps canonical save at the destination")
  var first_festival=current_scene
+ await after_presentation()
+ var partner_offset=first_festival.partner_sprites[0].offset
+ for frame in 15:await process_frame
+ await after_presentation()
+ check(first_festival.partner_sprites[0].offset!=partner_offset,"festival image partners stay visually alive while waiting")
+ await capture("B05-entry-life")
  first_festival.status="Kayıt yapılamadı. Görev tamamlanmadı, yeniden dene."
  first_festival.actor.position=Vector2(1150,445);first_festival.actor.velocity=Vector2.ZERO
  before=FileAccess.get_file_as_bytes(PATH)
