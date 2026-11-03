@@ -50,7 +50,7 @@ jobs:
       - name: Run dialogue regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
 
-      - name: Verify default no-input story flow and render shipping UI
+      - name: Verify tap dialogues and automatic chapter flow with shipping UI
         run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --require-output 'NATURAL FLOW:' --path . --rendering-method gl_compatibility --script res://tests/natural_flow_test.gd -- --natural-capture
 
       - name: Preserve default automatic-flow review frames
@@ -58,6 +58,16 @@ jobs:
         with:
           name: natural-flow-frames
           path: build/natural-flow
+          if-no-files-found: error
+
+      - name: Verify redesigned starting shore and preserve its review frames
+        run: timeout -k 10s 180s xvfb-run -a python3 tools/run_godot_check.py --require-output 'INTRO SHORE:' --path . --rendering-method gl_compatibility --script res://tests/intro_shore_test.gd -- --intro-capture
+
+      - name: Preserve starting shore review frames
+        uses: actions/upload-artifact@v4
+        with:
+          name: intro-shore-frames
+          path: build/intro-shore
           if-no-files-found: error
 
       - name: Verify shipping chapter hand-offs, continuation, and recovery

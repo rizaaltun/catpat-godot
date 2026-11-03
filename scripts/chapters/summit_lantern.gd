@@ -2,14 +2,11 @@ extends "res://tests/shared-route/shared.gd"
 ## First B04 help beat on the existing shared route. No main-story save changes.
 const Comic=preload("res://scripts/core/summit_comic.gd")
 const UI=preload("res://scripts/polish_ui.gd")
-const LANTERN_POINT=Vector2(680,705)
+const LANTERN_POINT=Vector2(560,540)
 const INTRO=[
-	{"side":"right","text":"Rüzgâr alt patikadaki feneri söndürmüş. Kapağı açık kalmış!"},
-	{"side":"left","text":"Basamaklardan fenerin yanına inerim. Kapağını kapatıp geri dönerim."},
-	{"side":"right","text":"Sonra yanıma dön. Feneri birlikte yakalım; yolumuz aydınlansın."}]
+	{"side":"right","text":"Fenerin kapağı açık. Birlikte kapatalım!"}]
 const FINISH=[
-	{"side":"left","text":"Kapağı kapattım, Porsuk. Artık rüzgâr içeri giremez."},
-	{"side":"right","text":"Ben de ışığını yakayım. Bak, alt patika artık aydınlık!","final":true}]
+	{"side":"right","text":"Kapak kapandı! İlk geçidi birlikte açalım.","final":true}]
 var comic
 var dialogue_active=false
 var dialogue_lines=[]
@@ -40,7 +37,7 @@ func build_ui():
 	ui_layer.move_child(pause_root,-1)
 func build(next_mode:String):
 	super.build(next_mode)
-	# The fener is on an already measured return step. Do not pile new ledges on the shore.
+	# The first meaningful action stays on the broad starting shore.
 	lamp=Sprite2D.new();lamp.texture=load("res://assets/polish-v3/lantern.webp");lamp.centered=false
 	lamp.scale=Vector2.ONE*0.12;lamp.position=LANTERN_POINT-Vector2(590,1230)*0.12;lamp.z_index=-2;arena.add_child(lamp)
 	halo=Sprite2D.new();halo.name="LanternImageGlow";halo.texture=load("res://assets/runtime/effects/catpat_b05_lantern_glow_v001.png")
@@ -50,7 +47,7 @@ func build(next_mode:String):
 	world_hint=UI.label("",Rect2(LANTERN_POINT+Vector2(-145,-177),Vector2(320,45)),22,arena)
 	world_hint.add_theme_color_override("font_shadow_color",Color("173d37"));world_hint.add_theme_constant_override("shadow_outline_size",5)
 	refresh_lantern()
-	subtitle.text="← → / A D: yürü · Boşluk: zıpla · E: yardım et · Esc: duraklat\nAlt patikadan basamaklarla geri çık · Arkadaşların kıyıda seni bekler"
+	subtitle.text="← → / A D: yürü · Boşluk: zıpla · E: yardım et · Esc: duraklat\nFenerin kapağını kapat · Açılan yoldan birlikte yürü"
 func load_checkpoint():
 	super.load_checkpoint();refresh_lantern()
 func reload_checkpoint():
@@ -65,7 +62,7 @@ func at_lantern() -> bool:
 func available_action() -> String:
 	if lantern_stage=="unseen" and close_to_badger():return "Porsuk ile konuş"
 	if lantern_stage=="accepted" and at_lantern():return "Fenerin kapağını kapat"
-	if lantern_stage=="prepared" and close_to_badger():return "Porsuk ile feneri yak"
+	if lantern_stage=="prepared" and at_lantern():return "Porsuk ile feneri yak"
 	return ""
 func interact():
 	if paused or dialogue_active or action_cooldown>0:return
@@ -73,7 +70,8 @@ func interact():
 	if action.is_empty():return
 	action_cooldown=0.25;quest_error=""
 	if lantern_stage=="unseen":begin_dialogue(INTRO,"accepted")
-	elif lantern_stage=="accepted":commit_quest("prepared")
+	elif lantern_stage=="accepted":
+		if commit_quest("prepared"):begin_dialogue(FINISH,"lit")
 	elif lantern_stage=="prepared":begin_dialogue(FINISH,"lit")
 func begin_dialogue(lines:Array,target:String):
 	if has_meta("natural_story_cancelled"):remove_meta("natural_story_cancelled")
@@ -110,7 +108,7 @@ func refresh_lantern():
 	lamp.modulate=Color.WHITE if lantern_stage=="lit" else Color(0.34,0.42,0.5)
 	halo.visible=lantern_stage=="lit";lid.rotation=-0.55 if lantern_stage in ["unseen","accepted"] else 0.0
 	lid.modulate=Color("b9ddce") if lantern_stage=="prepared" else Color("80796b")
-	world_hint.text="Yol feneri yanıyor" if lantern_stage=="lit" else "Kapak kapalı · Porsuk'a dön" if lantern_stage=="prepared" else "Yol feneri ↓"
+	world_hint.text="Yol feneri yanıyor" if lantern_stage=="lit" else "Kapak kapalı" if lantern_stage=="prepared" else "Yol feneri ↓"
 func halo_reduced_motion()->bool:
 	var fallback={}
 	for property in save_service.get_property_list():
@@ -142,7 +140,7 @@ func _physics_process(delta):
 		var reduced=halo_reduced_motion()
 		if not reduced:glow_time+=delta
 		halo.modulate.a=0.42 if reduced else 0.42*(0.92+sin(glow_time*2.0)*0.06)
-	var goals={"unseen":"Porsuk seni bekliyor · Başlangıç kıyısında onunla konuş.","accepted":"Basamaklardan yol fenerine in · Kapağını kapat.","prepared":"Kapak hazır · Başlangıç kıyısında Porsuk'un yanına dön.","lit":"Yol feneri yandı · Arkadaşlarınla geçitlere ilerle."}
+	var goals={"unseen":"Porsuk ile konuş.","accepted":"Fenerin kapağını kapat.","prepared":"Porsuk ile feneri yak.","lit":"Yol açıldı · Birlikte yürü."}
 	quest_label.text=quest_error if not quest_error.is_empty() else goals[lantern_stage]
 	quest_label.visible=not paused
 	var action=available_action() if not paused and not dialogue_active else ""

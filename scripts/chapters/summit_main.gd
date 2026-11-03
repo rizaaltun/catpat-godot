@@ -8,6 +8,32 @@ var festival_change:Callable
 var festival_store=MainStore.new()
 var control_display=preload("res://scripts/core/control_display.gd").new()
 var keyboard_controls_hint=""
+var intro_bridge:StaticBody2D
+var intro_bridge_art:Sprite2D
+var intro_return_access=false
+const INTRO_BRIDGE_RECT=Rect2(680,540,520,20)
+func build(next_mode:String):
+	super.build(next_mode)
+	intro_bridge=StaticBody2D.new();intro_bridge.name="IntroFootbridge";arena.add_child(intro_bridge)
+	var collider=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=INTRO_BRIDGE_RECT.size
+	collider.shape=shape;collider.position=INTRO_BRIDGE_RECT.get_center();collider.one_way_collision=true;collider.one_way_collision_margin=6;intro_bridge.add_child(collider)
+	intro_bridge_art=Sprite2D.new();intro_bridge_art.name="IntroBridgeArt"
+	intro_bridge_art.texture=load("res://assets/chapter-v11/bridge.webp");intro_bridge_art.centered=false
+	intro_bridge_art.scale=Vector2.ONE*INTRO_BRIDGE_RECT.size.x/2110.0
+	intro_bridge_art.position=INTRO_BRIDGE_RECT.position-Vector2(30,292)*intro_bridge_art.scale
+	intro_bridge_art.z_index=-3;intro_bridge.add_child(intro_bridge_art)
+	refresh_intro_bridge()
+func refresh_lantern():
+	super.refresh_lantern()
+	refresh_intro_bridge()
+func refresh_intro_bridge():
+	if not is_instance_valid(intro_bridge):return
+	var open=lantern_stage=="lit" or intro_return_access
+	intro_bridge.visible=open;intro_bridge.collision_layer=1 if open else 0
+	if is_instance_valid(party):party.walkable_first_gap=open
+	if carriers.size()>0:
+		carriers[0].enabled=false;carriers[0].visible=false;carriers[0].collision_layer=0
+
 func _ready():
 	save_path=str(get_tree().get_meta("journey_save_path","user://festival_v3.json"))
 	var initial=MainStore.new().load_progress(save_path)
@@ -23,6 +49,18 @@ func _ready():
 	save_service=MainRoute.new();save_service.main_data=initial.data.duplicate(true)
 	super._ready()
 	update_controls_hint()
+func place_at_checkpoint():
+	super.place_at_checkpoint()
+	# Older saves could ride to a later shore before helping with the lantern.
+	intro_return_access=safe_bank>0 and lantern_stage!="lit"
+	if safe_bank==0 and lantern_stage=="unseen":
+		# Meet Porsuk ahead, then take a small forward step to the safe lid action.
+		var intro_positions=[Vector2(430,539),Vector2(270,539),Vector2(590,539),Vector2(110,539)]
+		for i in team.size():
+			team[i].position=intro_positions[i];team[i].checkpoint=intro_positions[i]
+			team[i].velocity=Vector2.ZERO
+		update_camera(true)
+	refresh_intro_bridge()
 func build_ui():
 	super.build_ui()
 	# Reuse the shipped image controls, with comfortable targets at narrow sizes.

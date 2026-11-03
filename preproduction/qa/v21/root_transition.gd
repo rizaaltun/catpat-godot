@@ -101,7 +101,7 @@ func run():
 	check(r.save_path==PATH and r.save_service.main_data.settings=={"music":false} and r.save_service.main_data.collectibles==["b01.mote.3"],"main_adapter_preserves_path_history_settings")
 	check(FileAccess.get_file_as_string(PATH+".legacy")==original,"original_schema9_bytes_preserved")
 	r.driver=true;await capture("04-summit-main-entry")
-	await r.walk_to(360);await ticks(30);r.interact();await ticks(25)
+	await r.walk_to(r.team[2].position.x-165);await ticks(30);r.interact();await ticks(25)
 	for i in 4:
 		if r.dialogue_active:r.advance_dialogue();await ticks(25)
 	check(r.lantern_stage=="accepted" and svc.load_progress(PATH).data.summit.lantern=="accepted","actual_lantern_dialogue_writes_main_save")

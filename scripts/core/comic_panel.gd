@@ -8,8 +8,11 @@ var balloon_right: TextureRect
 var left_line: Label
 var right_line: Label
 var speaker_text: Label
+var tap_callback:Callable
+var continue_button:Button
 var names={"left":"Çatpat","right":"Porsuk"}
 func build(heading: String, on_advance: Callable, left_name="Çatpat", right_name="Porsuk", left_portrait="res://assets/review-v2/catpat-idle-r2.webp", right_portrait="res://assets/review-v2/badger-idle-r2.webp", background_path="res://assets/chapter-v5/forest.webp"):
+	tap_callback=on_advance
 	names={"left":left_name,"right":right_name}
 	UI.texture(background_path,Rect2(0,0,1280,720),self)
 	var shade=ColorRect.new();shade.color=Color(0.02,0.08,0.08,0.70);shade.size=Vector2(1280,720);add_child(shade)
@@ -25,7 +28,9 @@ func build(heading: String, on_advance: Callable, left_name="Çatpat", right_nam
 	UI.label(left_name,Rect2(154,626,180,35),23,self)
 	UI.texture("res://assets/polish-v3/panel.webp",Rect2(913,601,257,79),self)
 	UI.label(right_name,Rect2(962,626,180,35),23,self)
-	UI.button("Devam",Rect2(494,610,293,62),self,on_advance,true)
+	continue_button=UI.button("Dokun →",Rect2(494,610,293,62),self,on_advance,true)
+	continue_button.add_theme_color_override("font_disabled_color",Color("173d37"))
+	continue_button.disabled=true;continue_button.mouse_filter=Control.MOUSE_FILTER_IGNORE
 
 func present(line: Dictionary) -> Label:
 	left_line.visible_characters=-1;right_line.visible_characters=-1
@@ -36,3 +41,21 @@ func present(line: Dictionary) -> Label:
 	portrait_left.modulate=Color.WHITE if line.side=="left" else Color(0.67,0.75,0.73)
 	portrait_right.modulate=Color.WHITE if line.side=="right" else Color(0.67,0.75,0.73)
 	return active_label
+
+func _input(event):
+	if not is_visible_in_tree() or not tap_callback.is_valid():return
+	var host=get_tree().root.get_node_or_null("CatpatExperience")
+	if is_instance_valid(host) and (host.application_focus_lost or is_instance_valid(host.active_modal)):return
+	var point:Vector2
+	if event is InputEventScreenTouch:
+		if not event.pressed or event.canceled:return
+		point=event.position
+	elif event is InputEventMouseButton:
+		if not event.pressed or event.button_index!=MOUSE_BUTTON_LEFT or event.device==InputEvent.DEVICE_ID_EMULATION:return
+		point=event.position
+	else:return
+	# Explicit cancel/recovery controls keep their own action; a touch must not do both.
+	for button in find_children("*","Button",true,false):
+		if not button.disabled and button.is_visible_in_tree() and button.get_global_rect().has_point(point):return
+	get_viewport().set_input_as_handled()
+	tap_callback.call()

@@ -4,11 +4,11 @@ const ARROW_POINT=Vector2(2460,705)
 const POST_POINT=Vector2(2590,540)
 const LOOKOUT_POINT=Vector2(3020,540)
 const WAYMARK_DIALOGUE=[
-	{"side":"left","text":"Düşen oku getirdim, Pıtpıt. Birlikte dikmeye takalım mı?"},
-	{"side":"right","text":"Ben dikmeyi tutarım. Ok sağdaki seyir düzlüğünü göstersin!"}]
+	{"side":"left","text":"Oku getirdim. Birlikte takalım!"},
+	{"side":"right","text":"Ben dikmeyi tutarım. Ok sağa baksın!"}]
 const LOOKOUT_DIALOGUE=[
-	{"side":"left","text":"Fener yandı, halat sağlam, yol işareti de yerinde. Hepimiz buradayız!"},
-	{"side":"right","text":"Birbirimize yardım ederek geldik. Şimdi festival yoluna hazırız!"}]
+	{"side":"left","text":"Yolu birlikte açtık!"},
+	{"side":"right","text":"Hepimiz hazırız. Haydi festivale!"}]
 var fallen_arrow:Sprite2D
 var carried_arrow:Sprite2D
 var mounted_arrow:Sprite2D
@@ -111,9 +111,9 @@ func _physics_process(delta):
 	arrow_hint.visible=rope_stage=="ready" and waymark_stage=="loose" and not hint_clipped_by_viewport(arrow_hint)
 	lookout_hint.visible=waymark_stage in ["ready","seen"] and not hint_clipped_by_viewport(lookout_hint)
 	if rope_stage=="ready" and quest_error.is_empty():
-		var goals={"loose":"İleri kıyının alt basamağında düşen oku bul · E ile al.","carried":"Basamaklarla yukarı dön · Oku yol ayrımındaki dikmeye yerleştir.","placed":"Ok dikmede · İleri kıyıda Pıtpıt'ın yanına git.","ready":"Ok sağa bakıyor · Arkadaşlarınla seyir düzlüğüne ilerle.","seen":"Üç yardım tamam · Hep birlikte festival yoluna hazırız!"}
+		var goals={"loose":"Düşen oku bul","carried":"Oku dikmeye yerleştir","placed":"Pıtpıt’la oku sabitle","ready":"Seyir düzlüğüne ilerle","seen":"Festival yolu açıldı"}
 		quest_label.text=goals[waymark_stage]
-		if waymark_stage=="ready" and near_ground_point(LOOKOUT_POINT,85) and not party_at_lookout():quest_label.text="Seyir düzlüğündesin · Arkadaşlarının kıyıya ulaşmasını bekle."
+		if waymark_stage=="ready" and near_ground_point(LOOKOUT_POINT,85) and not party_at_lookout():quest_label.text="Arkadaşların yaklaşıyor"
 		for child in ui_layer.get_children():
 			if child is Label and child.text.begins_with("RÜZGÂRLI YAMAÇ"):child.text="RÜZGÂRLI YAMAÇ · FESTİVAL YÖNÜ"
 	update_world_label_safe_area()

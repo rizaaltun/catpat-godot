@@ -166,7 +166,7 @@ func _physics_process(_delta):
  update_hud()
 func update_hud():
  if not is_instance_valid(hud):return
- var objective="Davetini al" if not state.has(Quest.INVITATION) else "Yola çıkmak için biraz yürü" if not state.has(Quest.WALK) else "Küçük kökün üstüne zıpla" if not state.has(Quest.SHORT_JUMP) else "Açıklığı zıplayarak geç" if not state.has(Quest.LONG_JUMP) else "Patika girişine ilerle"
+ var objective="Davetini al" if not state.has(Quest.INVITATION) else "Sağa yürü" if not state.has(Quest.WALK) else "Kökü aş" if not state.has(Quest.SHORT_JUMP) else "Karşıya zıpla" if not state.has(Quest.LONG_JUMP) else "Patikaya ilerle"
  hud_panel.size.x=925 if not error_message.is_empty() else 550
  hud.size.x=840 if not error_message.is_empty() else 500
  hud_panel.size.y=216 if not error_message.is_empty() else 90

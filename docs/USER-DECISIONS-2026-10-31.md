@@ -27,3 +27,7 @@ Kullanıcı kalan krediyi (%17 olarak belirtti) sıradaki işe harcamayı, ardı
 ## 3 Kasım yeni kullanıcı kararları ve uygulama
 
 Ev/platform yerleşimi, yazı azaltma, otomatik diyalog/yerel hikâye eylemi/bölüm sonu, B02 arka plan titremesi ve başlangıç NPC hareketi0.15.6 ile uygulandı ve yayımlandı. Ayrıntı UX-FLOW-2026-11-03.md; kesin CI/yayın DEVAM-NOTU.md. Son B03 donma bildirimi otomatik akış, indirme/ip/sepet/kayıt hata matrisi ve yeniden girişte kaynak temizliğiyle ayrıca sınandı; aynı kullanıcı donma anının birebir tekrarı veya her cihazda bütün donmaların yokluğu iddia edilmez. B03 geri teslim zorunluluğu kaldırıldı. B04 kalan geri dönüşler, gerçek image harita/güvenli hızlı geçiş ve ElevenLabs hâlâ açık. Otomatik bölüm geçişi gerçek harita veya hızlı geçiş diye adlandırılmaz.
+
+## 3 Kasım 2026 — başlangıç kıyısı ve diyalog kontrolü
+
+Kullanıcının son açık kararı: Başlangıç kıyısı yapısal olarak kolaylaştırılacak, oyun içi yazı azaltılacak, diyaloglar otomatik ilerlemeyecek; dokunarak geçilecek. Bu karar önceki otomatik diyalog talimatını değiştirir. Bölüm sonlarının otomatik geçişi ve yakınlık etkileşimleri korunur. Kolaylaşma; bütün görevleri kaldırmak yerine güvenli ilk örnek, ardından halat/taşıyıcı ve yön işareti sırasıyla uygulanır.

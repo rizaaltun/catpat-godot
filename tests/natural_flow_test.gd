@@ -1,12 +1,13 @@
 extends SceneTree
-## Default shipping host: no E/Enter/click input is dispatched in this suite.
+## Default shipping host: dialogue advances with real taps; no E or chapter-button input.
 const Save=preload("res://scripts/core/save_service.gd")
 const Quest=preload("res://scripts/core/quest_state.gd")
 const Replay=preload("res://scripts/core/replay_service.gd")
-var PATH="user://natural-flow-render.json" if "--natural-capture" in OS.get_cmdline_user_args() else "user://natural-flow-audit-v9.json"
+var PATH="user://shore-flow-render.json" if "--natural-capture" in OS.get_cmdline_user_args() else "user://shore-flow-audit.json"
 var checks=0
 var failures=0
 var host
+var tap_ticks=0
 func check(ok:bool,label:String):
  checks+=1
  if not ok:failures+=1
@@ -16,7 +17,19 @@ func wait_for(test:Callable,frames=1200)->bool:
  for frame in frames:
   await physics_frame
   if test.call():return true
+  tap_ticks+=1
+  if tap_ticks>=20 and _story_visible():
+   _tap_story();tap_ticks=0
  return false
+func _story_visible()->bool:
+ var world=current_scene
+ if not is_instance_valid(world) or host.application_focus_lost:return false
+ var flow=host.natural_flow
+ return str(flow.value(world,"mode",""))=="dialogue" or bool(flow.value(world,"dialogue_active",false))
+func _tap_story():
+ var touch=InputEventScreenTouch.new();touch.index=4;touch.position=Vector2(400,500);touch.pressed=true
+ root.push_input(touch,true)
+ var release=touch.duplicate();release.pressed=false;root.push_input(release,true)
 func fixture(chapter:String,stop:String="")->Dictionary:
  var q=Quest.new()
  for event in Quest.HOME_EVENTS:q.apply(event)
@@ -109,15 +122,34 @@ func run():
  river.resume()
  await place(river,Vector2(800,520))
  check(river.mode=="dialogue","B02 approaching Maymun starts the story without E")
- await capture("B02-auto-dialogue")
+ await capture("B02-tap-dialogue")
  var line=river.runner.current.id
+ for frame in 180:await physics_frame
+ check(river.runner.current.id==line and not river.state.has(Quest.RIVER_ACCEPTED),"visible dialogue never advances on a timer")
+ var cancelled=InputEventScreenTouch.new();cancelled.position=Vector2(400,500);cancelled.index=7;cancelled.pressed=true;cancelled.canceled=true
+ var untouched=FileAccess.get_file_as_bytes(PATH)
+ root.push_input(cancelled,true);await physics_frame
+ check(river.runner.current.id==line and FileAccess.get_file_as_bytes(PATH)==untouched,"cancelled touch cannot advance story or mutate saved progress")
+ _tap_story()
+ await physics_frame
+ check(river.runner.current.id!=line,"a real screen touch advances dialogue")
+ line=river.runner.current.id
+ for frame in 20:await physics_frame
+ var mouse=InputEventMouseButton.new();mouse.position=Vector2(400,500);mouse.button_index=MOUSE_BUTTON_LEFT;mouse.pressed=true;mouse.device=InputEvent.DEVICE_ID_EMULATION
+ root.push_input(mouse,true);await physics_frame
+ check(river.runner.current.id==line,"emulated mouse cannot duplicate a touch advance")
+ mouse=mouse.duplicate();mouse.device=0;root.push_input(mouse,true)
+ mouse=mouse.duplicate();mouse.pressed=false;root.push_input(mouse,true);await physics_frame
+ check(river.runner.current.id!=line,"desktop click anywhere also advances once")
+ line=river.runner.current.id
  scenery=river.backdrop.position
  host._notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_OUT)
+ _tap_story() # A late touch from the covered canvas must also be ignored.
  for frame in 180:await physics_frame
- check(river.runner.current.id==line and not river.state.has(Quest.RIVER_ACCEPTED),"hidden window cannot advance automatic dialogue")
+ check(river.runner.current.id==line and not river.state.has(Quest.RIVER_ACCEPTED),"hidden window cannot advance tap dialogue")
  check(river.backdrop.position==scenery,"B02 focus loss preserves stable scenery")
  host._notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_IN)
- check(await wait_for(func():return river.state.has(Quest.RIVER_ACCEPTED),720),"B02 dialogue resumes and completes without a press")
+ check(await wait_for(func():return river.state.has(Quest.RIVER_ACCEPTED),720),"B02 dialogue resumes and completes with taps")
  await place(river,Vector2(1100,520))
  river.jump=true
  var stable=true
@@ -135,7 +167,7 @@ func run():
  var garden=current_scene
  var before:PackedByteArray
  await place(garden,Vector2(730,540))
- check(await wait_for(func():return garden.state.has(Quest.GARDEN_ACCEPTED),720),"B03 proximity introduction finishes automatically")
+ check(await wait_for(func():return garden.state.has(Quest.GARDEN_ACCEPTED),720),"B03 proximity introduction completes with taps")
  await place(garden,Vector2(1740,320))
  check(await wait_for(func():return garden.mode=="lowering",120),"B03 approaching the rope starts basket lowering")
  garden.saves.fault="rename"
@@ -162,11 +194,31 @@ func run():
  check(await wait_for(func():return is_instance_valid(current_scene) and current_scene.scene_file_path==Replay.ENTRIES.B04[2],600),"B03 automatically enters B04 after its story")
  d=fixture("B04")
  var beginning=await boot("B04",d)
+ check(await wait_for(func():return beginning.lantern_stage=="accepted",240),"B04 short welcome waits for genuine touch")
+ check(not beginning.save_notice.visible and not beginning.controls_hint_panel.visible and not beginning.status.visible,"B04 shipping HUD hides routine save and technical text")
+ beginning.safe_facing=-1 # Change a real checkpoint field; identical writes intentionally bypass disk.
+ beginning.save_service.fault="write";before=FileAccess.get_file_as_bytes(PATH)
+ check(not beginning.commit_checkpoint(),"B04 checkpoint write fault rejects the save")
+ await process_frame
+ await process_frame
+ check(beginning.save_notice.visible and beginning.save_notice_panel.visible and FileAccess.get_file_as_bytes(PATH)==before,"B04 compact HUD preserves checkpoint warning and last saved bytes")
+ beginning.save_service.fault=""
+ check(beginning.commit_checkpoint(),"B04 checkpoint can retry after storage recovers")
+ await process_frame
+ await process_frame
+ check(not beginning.save_notice.visible,"B04 routine checkpoint notice hides again after successful retry")
+ await capture("B04-safe-starting-shore")
+ await place(beginning,beginning.LANTERN_POINT)
+ check(await wait_for(func():return beginning.lantern_stage=="lit",300),"B04 lantern completes on the broad shore without returning")
+ for frame in 30:await physics_frame
+ check(beginning.rope_stage=="loose" and beginning.coil.visible,"B04 next object stays distinct and requires a forward step after lantern")
+ await capture("B04-first-bridge-open")
+ beginning=await boot("B04",fixture("B04"))
  await place(beginning,Vector2(beginning.team[2].position.x+30,540))
- check(await wait_for(func():return beginning.dialogue_active,180),"B04 approaching Porsuk starts timed dialogue")
+ check(await wait_for(func():return beginning.dialogue_active,180),"B04 approaching Porsuk starts tap dialogue")
  beginning.cancel_dialogue()
  for frame in 90:await physics_frame
- check(not beginning.dialogue_active and not beginning.paused,"cancelling automatic dialogue cannot trap the player in a reopen loop")
+ check(not beginning.dialogue_active and not beginning.paused,"cancelling tap dialogue cannot trap the player in a reopen loop")
  d=fixture("B04",Quest.SUMMIT_COMPLETE);d.checkpoint_id="b04.bank.2";d.summit={"bank":2,"facing":1,"lantern":"lit","rope":"ready","waymark":"seen"}
  var summit=await boot("B04",d)
  var rejected=[0]
@@ -205,5 +257,8 @@ func run():
  if is_instance_valid(current_scene):current_scene.queue_free();await process_frame
  Replay.new().restore_metadata(metadata)
  for suffix in Replay.SLOT_SUFFIXES:DirAccess.remove_absolute(PATH+suffix)
+ var audio=root.get_node_or_null("CatpatAudio")
+ if is_instance_valid(audio):audio.shutdown()
+ for frame in 8:await process_frame
  print("NATURAL FLOW: %d checks, %d failures"%[checks,failures])
  quit(1 if failures else 0)

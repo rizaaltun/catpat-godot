@@ -92,46 +92,46 @@ func help_context(scene)->Dictionary:
  if not source.ok:return source
  var flags:Array=source.data.quest_flags
  var task="chapter_overview"
- var text="Yavaşça ilerleyebilirsin. Yürümek için okları, atlamak için Zıpla düğmesini kullan. Bir arkadaşına yaklaşınca görev düğmesi açılır."
+ var text="Yavaşça ilerleyebilirsin. Yürümek için okları, atlamak için Zıpla düğmesini kullan. Arkadaşlarına yaklaş. Konuşmaları dokunarak ilerlet."
  match source.chapter:
   "B00":
-   if Quest.INVITATION not in flags:task="tutorial.invitation";text="Önce davetini yanına al. Davetimi al düğmesiyle başlayabilirsin."
+   if Quest.INVITATION not in flags:task="tutorial.invitation";text="Davetin birazdan hazır. Sonra sağa yürüyebilirsin."
    elif Quest.WALK not in flags:task="tutorial.walk";text="Sağ oka basılı tutarak evden uzaklaş. Güvenli yolda kendi hızında yürümeyi deneyebilirsin."
    elif Quest.SHORT_JUMP not in flags:task="tutorial.short_jump";text="Zıpla düğmesine kısaca dokun. Alçak kökün üzerinden küçük bir sıçrayışla geçebilirsin."
    elif Quest.LONG_JUMP not in flags:task="tutorial.long_jump";text="Daha yüksek atlamak için Zıpla düğmesini biraz basılı tut. Düşersen alttaki basamaklardan geri çıkabilirsin."
    else:task="tutorial.exit";text="Sağa, festival yolunu gösteren tabelaya ilerle. İstersen üst daldaki kurdeleyi de keşfedebilirsin."
   "B01":
-   if Quest.ACCEPTED not in flags:task="lanterns.meet";text="Porsuk başlangıçta seni bekliyor. Yanına yaklaş ve onunla konuşmak için görev düğmesini kullan."
+   if Quest.ACCEPTED not in flags:task="lanterns.meet";text="Porsuk başlangıçta seni bekliyor. Yanına yaklaş; konuşmayı dokunarak ilerlet."
    elif not Quest.LIGHTS.all(func(id):return id in flags):
     task="lanterns.find"
-    text="Sağa doğru ilerle; üç fener de sabit patika kıyılarında. Yanlarına yaklaş ve görev düğmesiyle yak. Son fener yanınca Porsuk açılan geçitlerden yanına gelir; geri dönmen gerekmez."
+    text="Sağa doğru ilerle; üç fener de sabit patika kıyılarında. Yanlarına yaklaşınca fenerler yanar. Son fener yanınca Porsuk açılan geçitlerden yanına gelir; geri dönmen gerekmez."
    elif Quest.JOINED not in flags:task="lanterns.join";text="Fenerler yolu aydınlattı. Porsuk açılan geçitlerden yanına geliyor; sağdaki çıkışa ilerleyebilirsin."
    else:task="lanterns.exit";text="Porsuk'la sağdaki çıkışa ilerle. Çıkış fenerine birlikte yaklaşınca yolunuz dereye açılır."
   "B02":
    if Quest.RIVER_ACCEPTED not in flags:task="bridge.meet";text="Maymun dere kıyısında seni bekliyor. Yanına yaklaş ve köprü hazırlığını konuş."
    elif Quest.ROPE not in flags:task="bridge.rope";text="Halat üst dallarda. Alçak daldan başlayıp basamaklarla yüksel. Tahtayı ve halatı birlikte taşıyabilirsin."
-   elif Quest.PLANK not in flags:task="bridge.plank";text="Tahta alt kıyıda. Halatı aldıysan sağdaki dalın ucundan tahta kıyısına in. Tahtanın yanında görev düğmesini kullan."
-   elif Quest.READY not in flags:task="bridge.build";text="İki parça hazır. Tahtaları aldığın kıyıda görev düğmesiyle köprüyü onar; başlangıca dönmen gerekmez. Maymun ve Porsuk köprüyü birlikte hazırlayacak."
-   elif Quest.MONKEY not in flags:task="bridge.join";text="Köprü hazır. Maymun'la yeniden konuş ve onu yolculuğa çağır."
+   elif Quest.PLANK not in flags:task="bridge.plank";text="Tahta alt kıyıda. Halatı aldıysan sağdaki dalın ucundan tahta kıyısına in. Tahtaya yaklaşınca yanına alırsın."
+   elif Quest.READY not in flags:task="bridge.build";text="İki parça hazır. Tahtanın kıyısına yaklaş; köprüyü birlikte onaracaksınız. Geri dönmen gerekmez."
+   elif Quest.MONKEY not in flags:task="bridge.join";text="Köprü hazır. Konuşmayı dokunarak bitir; Maymun ekibe katılır."
    else:task="bridge.exit";text="Arkadaşlarınla köprüden sağ kıyıya geç. Çıkışta bir araya geldiğinizde bahçe yoluna devam edebilirsin."
   "B03":
    if Quest.GARDEN_ACCEPTED not in flags:task="garden.meet";text="Pıtpıt bahçe girişinde seni bekliyor. Çiçeklere yardım etmek için önce onunla konuş."
-   elif Quest.RELEASED not in flags:task="garden.basket_lower";text="Sepet üstteki dala takılmış. Basamaklardan ipin yanına çıkıp görev düğmesini kullan; sepet aşağı iner."
-   elif Quest.BASKET not in flags:task="garden.basket";text="İnen sepeti alt patikadan alabilirsin. Görev düğmesi açılana kadar yanına yaklaş."
+   elif Quest.RELEASED not in flags:task="garden.basket_lower";text="Sepet üstteki dala takılmış. Basamaklardan ipin yanına çık; sepet aşağı iner."
+   elif Quest.BASKET not in flags:task="garden.basket";text="İnen sepeti alt patikadan alabilirsin. Yanına yaklaşınca sepeti alırsın."
    elif Quest.TIE not in flags:task="garden.tie";text="Siperin bağ ipi alttaki kayaların yanında. Güvenli basamaklarla ulaş ve ipi al."
    elif Quest.PROTECTED not in flags:task="garden.protect";text="Sepet ve bağ ipi hazır. Sepetin kıyısında bahçe yolunu birlikte hazırlayın; geri dönmen gerekmiyor."
-   elif Quest.RABBIT not in flags:task="garden.join";text="Çiçekler güvende. Pıtpıt'ı yolculuğa çağırmak için onunla yeniden konuş."
-   else:task="garden.exit";text="Hep birlikte sağdaki çıkışta buluşun. Arkadaşların yaklaştığında yamaç yoluna devam edebilirsin."
+   elif Quest.RABBIT not in flags:task="garden.join";text="Çiçekler güvende. Konuşmayı dokunarak bitir; Pıtpıt ekibe katılır."
+   else:task="garden.exit";text="Sağdaki çıkışa ilerle; arkadaşların seni takip eder."
   "B04":
    var summit:Dictionary=source.data.summit
-   if summit.lantern!="lit":task="summit.lantern";text="Porsuk'la başlangıç kıyısında konuş. Alt basamaklardaki fenerin kapağını kapat, sonra Porsuk'a dön."
-   elif summit.rope!="ready":task="summit.rope";text="Maymun'un halat hazırlığını konuş. Halatı işaretli yere götürüp bağlantıyı birlikte tamamlayın."
+   if summit.lantern!="lit":task="summit.lantern";text="Porsuk’la konuş. Önündeki fenerin kapağını kapat. Açılan köprüden yürü."
+   elif summit.rope!="ready":task="summit.rope";text="Halatı alıp köprüden geç. Sağdaki makaraya yerleştir; Maymun’la düğümü bağla."
    elif summit.waymark!="seen":task="summit.waymark";text="Pıtpıt'ın yön işaretini hazırlamasına yardım et. Sonra arkadaşlarınla sağdaki manzara durağında buluş."
    else:task="summit.exit";text="Üç yardım da tamam. Ekibin sağdaki festival kapısında bir araya gelmesini bekle ve birlikte ilerle."
   "B05":
-   if Quest.FESTIVAL_LIGHT not in flags:task="festival.lights";text="Porsuk'un yanına iki alçak basamaktan çık. Aynı platformda durunca görev düğmesine dokunup sahne ışıklarını hazırlayın."
+   if Quest.FESTIVAL_LIGHT not in flags:task="festival.lights";text="Porsuk'un yanına iki alçak basamaktan çık. Aynı platforma ulaşınca ışıkları birlikte hazırlarsınız."
    elif Quest.FESTIVAL_FLAGS not in flags:task="festival.flags";text="Maymun'un flama durağı sağda. Kısa platformlardan yanına çıkıp flamaları birlikte bağlayın."
-   elif Quest.FESTIVAL_FLOWERS not in flags:task="festival.flowers";text="Pıtpıt'ın durağına üst basamaklardan ulaş. Süsleri birlikte yerleştirmek için yanında görev düğmesini kullan."
+   elif Quest.FESTIVAL_FLOWERS not in flags:task="festival.flowers";text="Pıtpıt'ın durağına üst basamaklardan ulaş. Yanına yaklaşınca süsleri birlikte yerleştirirsiniz."
    elif Quest.FESTIVAL_COMPLETE not in flags:task="festival.finale";text="Arkadaşların sahneye varınca en sağdaki üst platforma çık. Son ışığı birlikte açabilirsiniz."
    else:task="festival.roam";text="Festival tamamlandı. Alanda dolaşabilir veya sahneye dönerek finali yeniden izleyebilirsin."
  return {"ok":true,"chapter":source.chapter,"path":source.path,"title":source.title,"task_id":task,"text":text}

@@ -1,10 +1,10 @@
 extends "res://scripts/chapters/summit_lantern.gd"
-## Z42: carry the rope across the first carrier; durable repair enables the second.
-const COIL_POINT=Vector2(600,540)
+## Z42: carry the rope across the first bridge; durable repair enables the second.
+const COIL_POINT=Vector2(660,540)
 const WINCH_POINT=Vector2(1820,540)
 const ROPE_DIALOGUE=[
-	{"side":"left","text":"Halatı getirdim, Maymun. Gevşek ucu birlikte sabitleyelim."},
-	{"side":"right","text":"Sen ucu tut, ben düğümü bağlayayım. Sonra hepimiz geçebiliriz."}]
+	{"side":"left","text":"Halatı getirdim!"},
+	{"side":"right","text":"Birlikte düğümü bağlayalım!"}]
 var coil:Sprite2D
 var winch:Sprite2D
 var carried_coil:Sprite2D
@@ -71,7 +71,7 @@ func commit_rope(target:String) -> bool:
 	quest_error="";update_save_ui();refresh_rope();return true
 func refresh_rope():
 	if not is_instance_valid(coil):return
-	coil.visible=rope_stage=="loose";coil.modulate=Color.WHITE if lantern_stage=="lit" else Color(0.65,0.7,0.7)
+	coil.visible=rope_stage=="loose" and lantern_stage=="lit";coil.modulate=Color.WHITE if lantern_stage=="lit" else Color(0.65,0.7,0.7)
 	carried_coil.visible=rope_stage=="carried";tied_coil.visible=rope_stage in ["requested","ready"]
 	tied_coil.modulate=Color.WHITE if rope_stage=="ready" else Color(0.72,0.77,0.75)
 	tow_line.visible=rope_stage=="ready"
@@ -92,9 +92,9 @@ func _physics_process(delta):
 		carried_coil.position.x=46 if player.anim.flip_h else -46
 		update_tow_line()
 	if lantern_stage=="lit" and quest_error.is_empty():
-		var goals={"loose":"Başlangıç kıyısındaki halatı al · İkinci taşıyıcı durmuş.","carried":"Halatı ilk taşıyıcıyla orta kıyıya götür · Sağdaki makaraya yerleştir.","requested":"Halat yerinde · Orta kıyıda Maymun'un yanına git.","ready":"Halat sağlam · Çalışan taşıyıcıyla birlikte karşıya geç."}
+		var goals={"loose":"Halatı al","carried":"Halatı makaraya taşı","requested":"Maymun’la düğümü bağla","ready":"Taşıyıcıyla karşıya geç"}
 		quest_label.text=goals[rope_stage]
-		if return_access and rope_stage!="ready":quest_label.text="Ekipçe orta kıyıya dön · Dönüş taşıyıcısı seni bekliyor."
+		if return_access and rope_stage!="ready":quest_label.text="Orta kıyıya dön"
 	for child in ui_layer.get_children():
 		if child is Label and child.text.begins_with("RÜZGÂRLI YAMAÇ"):
 			child.text="RÜZGÂRLI YAMAÇ · HALAT BAĞLANTISI" if lantern_stage=="lit" else "RÜZGÂRLI YAMAÇ · YOL FENERİ"

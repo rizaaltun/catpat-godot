@@ -24,6 +24,7 @@ var save_data:Dictionary={}
 var actor:CharacterBody2D
 var camera:Camera2D
 var hud:Label
+var controls_hint_panel:TextureRect
 var controls_hint:Label
 var action_button:Button
 var control_display=preload("res://scripts/core/control_display.gd").new()
@@ -171,7 +172,7 @@ func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
  UI.texture("res://assets/polish-v3/panel.webp",Rect2(18,15,935,133),layer)
  hud=UI.label("",Rect2(62,31,850,112),24,layer)
- UI.texture("res://assets/polish-v3/panel.webp",Rect2(310,624,460,82),layer)
+ controls_hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(310,624,460,82),layer)
  controls_hint=UI.label("",Rect2(332,641,416,48),23,layer)
  update_controls_hint()
  action_button=UI.button("Etkileşim",Rect2(790,626,218,80),layer,interact,true)

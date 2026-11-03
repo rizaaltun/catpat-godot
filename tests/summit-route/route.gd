@@ -25,6 +25,8 @@ var driver=false
 var keys={}
 var router=Router.new()
 var last_jump=false
+var status_panel: TextureRect
+var controls_hint_panel: TextureRect
 var status: Label
 var subtitle: Label
 var results=[]
@@ -50,10 +52,10 @@ func _ready():
 func build_ui():
 	ui_layer=CanvasLayer.new();add_child(ui_layer)
 	var panel=preload("res://scripts/polish_ui.gd")
-	panel.texture("res://assets/polish-v3/panel.webp",Rect2(24,16,900,122),ui_layer)
+	status_panel=panel.texture("res://assets/polish-v3/panel.webp",Rect2(24,16,900,122),ui_layer)
 	panel.label("RÜZGÂRLI YAMAÇ · İKİ GEÇİT",Rect2(58,36,830,38),24,ui_layer)
 	status=panel.label("",Rect2(58,76,830,40),21,ui_layer)
-	panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,626,1210,86),ui_layer)
+	controls_hint_panel=panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,626,1210,86),ui_layer)
 	subtitle=panel.label("",Rect2(80,639,1120,64),19,ui_layer)
 	for spec in [["←",Rect2(24,548,85,66)],["→",Rect2(121,548,85,66)],["Zıpla",Rect2(1143,548,113,66)]]:
 		var b=Button.new();b.text=spec[0];b.position=spec[1].position;b.size=spec[1].size;b.mouse_filter=Control.MOUSE_FILTER_IGNORE;b.add_theme_font_size_override("font_size",22);ui_layer.add_child(b);touch_buttons.append(b)

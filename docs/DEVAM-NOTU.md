@@ -444,3 +444,7 @@ Son üretim kaynağı **ad37d7fc5637bd5c85b248fb8df3e849c1b21ae7**, Actions **41
 Ek yerel B03 yeniden giriş probu: altı yükleme/boşaltma çevriminde sahne boşaltma sonrası düğüm sayısı16, kaynak33, doku belleği6.768.001 byte olarak sabit kaldı. Statik bellek32.704.899→32.709.611 byte değişti; sıfır bellek değişimi veya uzun dönem/cihaz sızıntı garantisi iddia edilmez. Bu kısa native çevrimde sahne/doku birikimi saptanmadı. Tam kullanıcı donma anının aynısı yeniden üretilmiş değildir; eski kayıt/cihaz WebGL2 uzun kullanım ayrı kabul kapısıdır.
 
 Yayınla kapananlar: ev/zemin/kök yerleşimi; kısa metin/tek balon; otomatik konuşma, yerel eylem ve beş bölüm sınırı; Porsuk'u bekleyen son çıkış ve zorunluE; B03 sepet-hub geri dönüşü; sabit kamera-arka plan sahipliği; NPC karşılama/idle, azaltılmış hareket; otomatik hata/final yeniden açılma döngülerine koruma. Sonraki kapsam: yeni kullanıcı hata verisi öncelikli; ardından B04 gereksiz geri dönüşleri, gerçek image yolculuk haritası ve güvenli hızlı geçiş, arayüz sanat yenilemesi, ElevenLabs. Bunlar bu sürümle bitmiş sayılmaz. Rutin yetki geçerlidir; yeniden onay isteme.
+
+## 3 Kasım 2026 — 0.15.7 başlangıç kıyısı ve dokunmalı diyalog
+
+Güncel karar ve uygulama: `docs/SHORE-REDESIGN-2026-11-03.md`. Son karar diyalog otomatiğini kaldırır; tek dokunma/tıklama ilerletir. B04 ilk kıyı geniş zeminde fener ve sabit köprüyle kolaylaştırıldı; halat, ikinci taşıyıcı, yön işareti ve final korunur. Rutin ekran metni azaltıldı, kayıt hataları ve mola ayrıntıları korunur. Yayın kaydı doğrulama tamamlandıktan sonra eklenecek.

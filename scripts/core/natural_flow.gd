@@ -35,18 +35,9 @@ func tick(scene,delta:float,focus_lost:bool,modal_open:bool):
  _short_ui(scene)
  var runner=value(scene,"runner")
  if mode=="dialogue" and runner!=null and runner.active:
-  var line=runner.current
   runner.revealed=true
-  if ready("line:"+str(line.id),delta,clampf(str(line.text).length()*0.025,1.0,2.4)):
-   beat="";seconds=0
-   if scene.has_method("advance_dialogue"):scene.advance_dialogue()
-   else:scene.advance()
   return
- if dialogue_active:
-  var index=int(value(scene,"dialogue_index",0))
-  if ready("summit:"+str(value(scene,"dialogue_target",""))+":"+str(index),delta,1.6):
-   beat="";seconds=0;scene.advance_dialogue()
-  return
+ if dialogue_active:return
  if mode=="complete":
   if attempted_transition==path:
    if is_instance_valid(screen):screen.show()
@@ -126,9 +117,20 @@ func _idle(scene,delta:float):
   art.offset=Vector2.ZERO if quiet else Vector2(0,-(sin(visual_seconds*2.2+i)+1)*1.2/maxf(absf(art.scale.y),0.01))
 func _short_ui(scene):
  # One short objective plus one action hint; optional detailed help stays in Mola.
- for key in ["subtitle","controls_hint","chapter_note"]:
+ for key in ["subtitle","controls_hint","controls_hint_panel","chapter_note"]:
   var extra=value(scene,key)
   if is_instance_valid(extra) and extra is CanvasItem:extra.hide()
+ var technical=value(scene,"status")
+ if is_instance_valid(technical) and technical is Label:technical.hide()
+ var title_panel=value(scene,"status_panel")
+ if is_instance_valid(title_panel):title_panel.size.y=86
+ var notice=value(scene,"save_notice")
+ var notice_panel=value(scene,"save_notice_panel")
+ var notice_needed=not bool(value(scene,"storage_writable",true)) or _has_error(str(value(scene,"save_message","")))
+ for item in [notice,notice_panel]:
+  if is_instance_valid(item):item.visible=notice_needed
+ var shore_goal=value(scene,"quest_label")
+ if is_instance_valid(shore_goal):shore_goal.position.y=188 if notice_needed else 116
  var display=value(scene,"control_display")
  for button in value(display,"buttons",[]):
   if is_instance_valid(button) and button is Button and button.text=="E":button.hide()
@@ -138,22 +140,27 @@ func _short_ui(scene):
   if scene.has_method("can_interact") or scene.has_method("enter_festival"):action_button.hide()
  var hud=value(scene,"hud")
  if is_instance_valid(hud) and hud is Label and str(hud.text).begins_with("DAVET VE EV ÖNÜ · "):hud.text=str(hud.text).replace("DAVET VE EV ÖNÜ · ","")
+ var objective=value(scene,"quest")
+ if is_instance_valid(objective) and objective is Label:
+  var short={"Tahta ve halatı bul":"Malzemeleri bul","Sepeti indir · Bağ ipini bul":"Sepeti kurtar","Dördünüz birlikte ilerleyin":"Çıkışa ilerle","Birlikte karşı kıyıya geç":"Karşıya geç","Porsuk’la çıkışı aydınlat":"Çıkışa ilerle"}
+  objective.text=short.get(objective.text,objective.text)
  var hint=value(scene,"hint")
  if is_instance_valid(hint) and hint is Label:hint.text=str(hint.text).replace("E · ","")
  var comic=value(scene,"comic",value(scene,"dialogue"))
+ if is_instance_valid(comic) and is_instance_valid(value(comic,"speaker_text")):comic.speaker_text.hide()
  var runner=value(scene,"runner")
  if is_instance_valid(comic) and bool(value(scene,"dialogue_active",false)):
   var active_line=scene.dialogue_lines[scene.dialogue_index]
   var left=str(active_line.side)=="left"
   comic.left_line.visible=left;comic.right_line.visible=not left;comic.balloon_left.visible=left;comic.balloon_right.visible=not left
-  comic.advance_button.hide()
+  comic.advance_button.show();comic.advance_button.text="Dokun →"
  if is_instance_valid(comic) and runner!=null and runner.active and is_instance_valid(value(comic,"left_line")):
   var left=str(runner.current.side)=="left"
   comic.left_line.visible=left;comic.right_line.visible=not left
   comic.balloon_left.visible=left;comic.balloon_right.visible=not left
-  for child in comic.get_children():
-   if child is Button and child.text=="Devam":child.hide()
+  if is_instance_valid(value(comic,"continue_button")):
+   comic.continue_button.show();comic.continue_button.text="Dokun →"
 
 func _has_error(status:String)->bool:
  var text=status.to_lower()
- return "yapılamadı" in text or "açılamadı" in text or "kaydedilemedi" in text
+ return "yapılamadı" in text or "açılamadı" in text or "kaydedilemedi" in text or "yazılamadı" in text or "kaydedemedik" in text

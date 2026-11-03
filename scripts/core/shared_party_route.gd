@@ -10,6 +10,7 @@ var reservations=[-1,-1]
 var destination_bank=0
 var travel_direction=1
 var paused=false
+var walkable_first_gap=false
 var time=0.0
 var events=[]
 var recovery_owners=[-1,-1,-1]
@@ -64,6 +65,18 @@ func update(delta:float):
 	for i in members.size():
 		var a=members[i];var st=states[i]
 		a.input_axis=0;a.jump_request=false;a.jump_held=false;st.cooldown=maxf(0,st.cooldown-delta)
+		# Production's introductory crossing is a continuous floor, not a timed ride.
+		if walkable_first_gap and st.surface==0:
+			release(i);st.phase="bank"
+		var b=bank_of(a)
+		if walkable_first_gap and b<0 and a.is_on_floor() and absf(a.position.y-540)<5 and a.position.x>=edges[0].x-20 and a.position.x<=edges[0].y+20:
+			# The broad bridge can catch a recovering friend before a bank landing.
+			release(i);release_recovery(i);st.phase="walk_bridge"
+		if walkable_first_gap and st.phase=="walk_bridge":
+			if (b==1 and destination_bank>=1) or (b==0 and destination_bank==0):st.phase="bank"
+			else:
+				steer(a,banks[1].x+220 if destination_bank>=1 else banks[0].x+banks[0].y-220)
+				continue
 		var aboard=-1
 		for k in carriers.size():
 			if carriers[k].is_riding(a):aboard=k;break
@@ -72,7 +85,7 @@ func update(delta:float):
 		if st.phase in ["board","ride","exit"]:
 			update_crossing(i,aboard)
 			continue
-		var b=bank_of(a)
+		b=bank_of(a)
 		if b>=0:
 			release_recovery(i)
 			st.phase="bank";st.bank=b
@@ -119,6 +132,10 @@ func park_on_bank(i:int,b:int):
 func approach_crossing(i:int,b:int):
 	var side=1 if destination_bank>b else -1
 	var k=b if side>0 else b-1
+	if k==0 and walkable_first_gap:
+		release(i);states[i].phase="walk_bridge"
+		steer(members[i],banks[1].x+220 if side>0 else banks[0].x+banks[0].y-220)
+		return
 	var indices=indices_on_bank(b)
 	if side>0:indices.reverse()
 	var slot=indices.find(i)

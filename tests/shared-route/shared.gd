@@ -17,6 +17,7 @@ var storage_writable=true
 var progress_ready=false
 var recovery_requires_progress=false
 var save_message=""
+var save_notice_panel: TextureRect
 var save_notice: Label
 var pause_root: Control
 var pause_detail: Label
@@ -46,7 +47,7 @@ func build_ui():
 	super.build_ui()
 	var panel=preload("res://scripts/polish_ui.gd")
 	pause_button=panel.button("Duraklat",Rect2(982,30,256,88),ui_layer,func():set_pause(true))
-	panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,127,890,54),ui_layer)
+	save_notice_panel=panel.texture("res://assets/polish-v3/panel.webp",Rect2(35,127,890,54),ui_layer)
 	save_notice=panel.label("",Rect2(82,138,794,40),28,ui_layer)
 	pause_root=Control.new();pause_root.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);ui_layer.add_child(pause_root)
 	var shade=ColorRect.new();shade.color=Color(0.02,0.07,0.06,0.75);shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT);pause_root.add_child(shade)
