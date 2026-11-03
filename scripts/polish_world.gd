@@ -487,7 +487,7 @@ func reveal_exit():
 	friend.anim.flip_h=false;player.anim.flip_h=false
 	quest.text="Porsuk çıkışı aydınlattı";hint.text="Şimdi birlikte dere yoluna!"
 	queue_redraw()
-	await get_tree().create_timer(1.8).timeout
+	await get_tree().create_timer(0.5).timeout
 	if mode=="exit_reveal":show_completion()
 
 func show_completion():
@@ -535,7 +535,8 @@ func _process(delta):
 		if recording and fmod(elapsed,1.7)<delta:runner.revealed=true;runner.input_cooldown=0;advance_dialogue()
 	if not is_instance_valid(player):return
 	update_image_effects(delta)
-	bg.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
+	if not bg.get_parent() is CanvasLayer:
+		bg.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	mood=move_toward(mood,float(lit.count(true))/3.0,delta*0.35)
 	for tree_layer in bg.get_children():tree_layer.modulate=Color(0.55,0.68,0.73).lerp(Color(0.88,0.97,0.89),mood)
 	lantern_pulse=maxf(0,lantern_pulse-delta)

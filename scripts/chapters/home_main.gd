@@ -60,10 +60,17 @@ func add_surface(x:float,width:float,top:float):
  collider.shape=shape;collider.position=Vector2(width/2,22.5);body.add_child(collider)
  var offset=0.0
  while offset<width:
-  var length=minf(width-offset,560.0)
+  var length=minf(width-offset,1100.0)
   var art=Sprite2D.new();var atlas=AtlasTexture.new();atlas.atlas=load("res://assets/chapter-v5/platform.webp")
-  atlas.region=Rect2(100,235,length/0.3,480);art.texture=atlas;art.centered=false;art.scale=Vector2.ONE*0.3
-  art.position=Vector2(offset,-3);body.add_child(art);offset+=length
+  atlas.region=Rect2(160,160,length/0.6,564);art.texture=atlas;art.centered=false;art.scale=Vector2.ONE*0.6
+  art.position=Vector2(offset,-60);body.add_child(art);offset+=length
+func add_root(x:float,width:float,top:float):
+ var body=StaticBody2D.new();body.position=Vector2(x,top);add_child(body)
+ var collider=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(width,45)
+ collider.shape=shape;collider.position=Vector2(width/2,22.5);body.add_child(collider)
+ var art=Sprite2D.new();var crop=AtlasTexture.new();crop.atlas=load("res://assets/chapter-v5/platform.webp")
+ crop.region=Rect2(160,160,width/0.6,170);art.texture=crop;art.centered=false;art.scale=Vector2.ONE*0.6
+ art.position=Vector2(0,-60);body.add_child(art)
 func build_world():
  var background=Parallax2D.new();background.scroll_scale=Vector2(0.14,0);background.repeat_size=Vector2(1280,720);background.repeat_times=5
  var image=Sprite2D.new();image.texture=load("res://assets/chapter-v6/panorama.webp");image.centered=false
@@ -71,11 +78,11 @@ func build_world():
  background.add_child(image);add_child(background)
  # Original game-adaptation art; this cottage is not asserted to be a book scene.
  var home_art=Sprite2D.new();home_art.name="HomeExteriorArt";home_art.texture=load("res://assets/runtime/environments/catpat_b00_home_v001.webp")
- home_art.centered=false;home_art.scale=Vector2.ONE*0.42;home_art.position=Vector2(-180,200);add_child(home_art)
+ home_art.centered=false;home_art.scale=Vector2.ONE*0.38;home_art.position=Vector2(-130,620-1024*0.38+16);add_child(home_art)
  add_surface(0,1040,620);add_surface(1160,1100+CAMERA_SCENIC_MARGIN,620)
  # The little hollow is recoverable by the two low steps; there is no death pit.
  add_surface(1010,70,665);add_surface(1070,110,710);add_surface(1170,90,665)
- add_surface(600,120,580)
+ add_root(600,120,580)
  var branch=StaticBody2D.new();add_child(branch)
  var col=CollisionShape2D.new();var shape=RectangleShape2D.new();shape.size=Vector2(280,18);col.shape=shape;col.position=Vector2(1740,509);col.one_way_collision=true;branch.add_child(col)
  var branch_art=Sprite2D.new();branch_art.texture=load("res://assets/chapter-v6/branch.webp");branch_art.scale=Vector2.ONE*0.145;branch_art.position=Vector2(1740,516.24);branch.add_child(branch_art)
@@ -86,11 +93,11 @@ func build_world():
  camera=preload("res://scripts/core/camera_rig.gd").new();camera.configure(WIDTH+CAMERA_SCENIC_MARGIN);camera.position=Vector2(0,-140);camera.limit_top=-144;camera.limit_bottom=940;player.add_child(camera);camera.make_current()
 func build_ui():
  var layer=CanvasLayer.new();add_child(layer)
- hud_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(20,18,925,122),layer)
- hud=UI.label("DAVET VE EV ÖNÜ",Rect2(60,38,840,82),27,layer)
+ hud_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(20,18,550,90),layer)
+ hud=UI.label("DAVET VE EV ÖNÜ",Rect2(48,40,500,54),27,layer)
  UI.button("Mola",Rect2(1010,25,230,82),layer,pause_game)
- hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(275,150,730,78),layer)
- hint=UI.label("",Rect2(300,164,680,48),26,layer);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
+ hint_panel=UI.texture("res://assets/polish-v3/panel.webp",Rect2(30,120,620,66),layer)
+ hint=UI.label("",Rect2(50,133,580,40),24,layer);hint.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
  var left=UI.button("‹",Rect2(24,570,112,112),layer,func():pass,true)
  var right=UI.button("›",Rect2(152,570,112,112),layer,func():pass,true)
  var jump=UI.button("Zıpla",Rect2(1130,570,126,112),layer,func():pass,true)
@@ -116,7 +123,7 @@ func modal_card(title:String,body:String):
  UI.label(body,Rect2(330,297,620,160),26,modal)
 func show_invitation(message:String=""):
  paused=true;player.frozen=true;camera.process_mode=Node.PROCESS_MODE_DISABLED;reset_input()
- modal_card("Festival bugün!" if message.is_empty() else "Davetini kaydedemedik","Davetimi de yanıma alayım.\nIşıklar ağaçların ötesinde görünüyor.\nPatikadan gidersem oraya ulaşabilirim." if message.is_empty() else message+"\nDavetini yeniden alabilirsin.")
+ modal_card("Festival bugün!" if message.is_empty() else "Davetini kaydedemedik","Davetimiz hazır. Festivale gidelim!" if message.is_empty() else message+"\nDavetini yeniden alabilirsin.")
  UI.button("Davetimi al" if message.is_empty() else "Yeniden dene",Rect2(430,485,420,76),modal,accept_invitation,true).grab_focus()
 func accept_invitation():
  if blocked or state.has(Quest.INVITATION):return
@@ -160,9 +167,11 @@ func _physics_process(_delta):
 func update_hud():
  if not is_instance_valid(hud):return
  var objective="Davetini al" if not state.has(Quest.INVITATION) else "Yola çıkmak için biraz yürü" if not state.has(Quest.WALK) else "Küçük kökün üstüne zıpla" if not state.has(Quest.SHORT_JUMP) else "Açıklığı zıplayarak geç" if not state.has(Quest.LONG_JUMP) else "Patika girişine ilerle"
- hud.text="DAVET VE EV ÖNÜ · "+objective+("\n"+error_message if not error_message.is_empty() else "")
- hud_panel.size.y=216 if not error_message.is_empty() else 122
- hud.size.y=176 if not error_message.is_empty() else 82
+ hud_panel.size.x=925 if not error_message.is_empty() else 550
+ hud.size.x=840 if not error_message.is_empty() else 500
+ hud_panel.size.y=216 if not error_message.is_empty() else 90
+ hud.size.y=176 if not error_message.is_empty() else 54
+ hud.text=""+objective+("\n"+error_message if not error_message.is_empty() else "")
  hint.text="Oklarla yürü" if control_display.touch_mode else "A / D veya ← / → ile yürü"
  if state.has(Quest.WALK) and not state.has(Quest.SHORT_JUMP):hint.text="Zıpla'ya kısaca dokun" if control_display.touch_mode else "Boşluğa kısaca basarak kökü aş"
  elif state.has(Quest.SHORT_JUMP) and not state.has(Quest.LONG_JUMP):hint.text="Açıklıkta Zıpla'yı biraz basılı tut" if control_display.touch_mode else "Açıklıkta Boşluğu biraz basılı tut"

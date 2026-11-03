@@ -15,7 +15,9 @@ func snapshot() -> Dictionary:
  for suffix in SUFFIXES:
   if FileAccess.file_exists(PATH + suffix): result[suffix] = FileAccess.get_file_as_bytes(PATH + suffix)
  return result
-func _initialize(): call_deferred("run")
+func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+ call_deferred("run")
 func run():
  for scenario in ["missing", "invalid", "wrong-chapter"]:
   clean()

@@ -12,6 +12,7 @@ var recruited = false
 var leader: Node2D
 var following_distance = 95.0
 var input_axis = 0.0
+var locomotion_scale=1.0
 var jump_request = false
 var jump_held = false
 var frozen = false
@@ -96,7 +97,7 @@ func _physics_process(delta):
 		# A companion cannot become permanently stranded off-screen.
 		if global_position.distance_to(leader.global_position)>850:
 			global_position = leader.global_position-Vector2(90,20)
-	velocity.x = move_toward(velocity.x, axis*SPEED, ACCEL*delta)
+	velocity.x = move_toward(velocity.x, axis*SPEED*locomotion_scale, ACCEL*delta)
 	if jump_buffer > 0 and coyote > 0:
 		velocity.y = JUMP
 		jump_buffer = 0

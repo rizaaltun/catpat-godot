@@ -5,7 +5,9 @@ const PATH="user://root-v21-main-quest.json"
 var route
 var results=[]
 var failed=[]
-func _initialize():call_deferred("run")
+func _initialize():
+	set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+	call_deferred("run")
 func ticks(n):
 	for i in n:await physics_frame
 func check(ok,id,detail={}):

@@ -243,7 +243,8 @@ func go_garden():
 func _process(delta):
 	if not is_instance_valid(player):return
 	if is_instance_valid(hint_panel):hint_panel.visible=is_instance_valid(hint) and not hint.text.is_empty() and mode in ["play","building"]
-	backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
+	if not backdrop.get_parent() is CanvasLayer:
+		backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	runner.tick(delta)
 	if mode=="dialogue":
 		chars+=delta*34

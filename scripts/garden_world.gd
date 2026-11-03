@@ -127,7 +127,7 @@ func build_hud():
 func update_hud():
 	if not is_instance_valid(quest):return
 	quest.text="Pıtpıt ile konuş" if not state.has(Quest.GARDEN_ACCEPTED) else "Sepeti indir · Bağ ipini bul" if not state.has(Quest.GARDEN_SUPPLIED) else "Rüzgâr siperini sabitle" if not state.has(Quest.PROTECTED) else "Pıtpıt’ı yolculuğa çağır" if not state.has(Quest.RABBIT) else "Dördünüz birlikte ilerleyin"
-	if state.has(Quest.TIE) and state.has(Quest.BASKET) and not state.has(Quest.GARDEN_SUPPLIED):quest.text="Sepeti Pıtpıt’a götür"
+	if state.has(Quest.TIE) and state.has(Quest.BASKET) and not state.has(Quest.GARDEN_SUPPLIED):quest.text="Bahçe yolunu bulunduğun kıyıdan aç"
 	if state.has(Quest.GARDEN_COMPLETE):quest.text="Bahçe artık güvende"
 	counter.text="Bağ ipi  %s\nSepet  %s"%["✓" if state.has(Quest.TIE) else "—","✓" if state.has(Quest.BASKET) else "—"]
 func snapshot(q=null) -> Dictionary:
@@ -195,6 +195,8 @@ func dialogue_done(id: String,_first: bool):
 		mode="play";build_hud();freeze(false);reset_input()
 		if id==Quest.GARDEN_COMPLETE:complete()
 		elif id==Quest.RABBIT:begin_gather())
+func can_build_here() -> bool:
+	return near(Vector2(1000,540),150) or near(Vector2(2310,600),120)
 func start_build():
 	if not state.has(Quest.TIE) or not state.has(Quest.BASKET) or state.has(Quest.PROTECTED):return
 	# A supplied checkpoint has already committed the delivery. Reapplying that
@@ -265,7 +267,8 @@ func transition_error(body:String):
 func _process(delta):
 	if not is_instance_valid(player):return
 	if is_instance_valid(hint_panel):hint_panel.visible=is_instance_valid(hint) and not hint.text.is_empty() and mode in ["play","gathering","building","lowering"]
-	backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
+	if not backdrop.get_parent() is CanvasLayer:
+		backdrop.position.x=camera.get_screen_center_position().x-640-clampf(camera.get_screen_center_position().x-640,0,Level.WIDTH-1280)*0.15
 	delivered_basket.position.x=-42 if rabbit.anim.flip_h else 42
 	var rope_length=maxf(10,basket.position.y-62)
 	basket_vine.position=Vector2(2310,rope_length/2);basket_vine.scale=Vector2(0.035,rope_length/basket_vine.texture.get_height());basket_vine.visible=not state.has(Quest.BASKET)
@@ -314,8 +317,8 @@ func _process(delta):
 			hint.text="E · İnen sepeti al"
 			if use:event(Quest.BASKET);return
 		if state.has(Quest.TIE) and state.has(Quest.BASKET):
-			hint.text="Sepet ve bağ ipi hazır · Pıtpıt’a dön"
-			if near(Vector2(1000,540),150):
+			hint.text="Sepet hazır · Bahçe yolunu açıyoruz"
+			if can_build_here():
 				hint.text="E · Sepeti ver ve siperi sabitle"
 				if use:start_build();return
 	elif not state.has(Quest.RABBIT):

@@ -25,63 +25,63 @@
       "id": "river_meet_0",
       "speaker": "monkey",
       "side": "right",
-      "text": "Sel deredeki köprüyü dağıtmış. Tek başıma karşıya geçemiyorum.",
+      "text": "Köprü bozulmuş. Birlikte onaralım!",
       "next": "river_meet_1"
     },
     {
       "id": "river_meet_1",
       "speaker": "catpat",
       "side": "left",
-      "text": "Birlikte onarabiliriz. Nereden başlayalım?",
+      "text": "Malzemeleri bulabilirim.",
       "next": "river_meet_2"
     },
     {
       "id": "river_meet_2",
       "speaker": "monkey",
       "side": "right",
-      "text": "Önce üst dallardaki halatı al. Sonra sağdaki dalın ucundan tahtaların kıyısına in. Köprüyü oradan birlikte onarabiliriz!",
+      "text": "Üstten halatı al, sağdaki tahtalara in.",
       "next": "river_meet_3"
     },
     {
       "id": "river_meet_3",
       "speaker": "catpat",
       "side": "left",
-      "text": "Olur! Porsuk burada köprü ayağını tutsun, sen de bağlantıları hazırla.",
+      "text": "Biz de köprüyü hazırlayalım!",
       "next": null
     },
     {
       "id": "river_join_0",
       "speaker": "monkey",
       "side": "right",
-      "text": "Tahtaları halatla bağladım. Porsuk da ayağı sabitledi. Köprümüz hazır!",
+      "text": "Köprü hazır!",
       "next": "river_join_1"
     },
     {
       "id": "river_join_1",
       "speaker": "catpat",
       "side": "left",
-      "text": "Bizimle festivale gelir misin?",
+      "text": "Festivale birlikte gidelim mi?",
       "next": "river_join_2"
     },
     {
       "id": "river_join_2",
       "speaker": "monkey",
       "side": "right",
-      "text": "Seve seve! Bundan sonra yolu birlikte geçeriz.",
+      "text": "Haydi gidelim!",
       "next": null
     },
     {
       "id": "river_exit_0",
       "speaker": "catpat",
       "side": "left",
-      "text": "Üçümüz de karşı kıyıdayız. Yardımlaşınca yol açıldı!",
+      "text": "Yolumuz açıldı!",
       "next": "river_exit_1"
     },
     {
       "id": "river_exit_1",
       "speaker": "monkey",
       "side": "right",
-      "text": "Şimdi festivalde anlatacak bir köprü hikâyemiz var!",
+      "text": "Sırada papatya bahçesi var.",
       "next": null
     }
   ]

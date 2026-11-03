@@ -42,7 +42,9 @@ func measure_jump(use_touch:bool,hold_frames:int)->float:
  else:key(false)
  check(launches==1,("touch" if use_touch else "keyboard")+" held jump produces one launch before a fresh edge")
  return start-highest
-func _initialize():call_deferred("run")
+func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+ call_deferred("run")
 func run():
  var quest=Quest.new()
  for id in Quest.EVENTS:

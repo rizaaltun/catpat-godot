@@ -7,6 +7,7 @@ const Replay=preload("res://scripts/core/replay_service.gd")
 const UI=preload("res://scripts/polish_ui.gd")
 const ChapterSupport=preload("res://scripts/core/chapter_support.gd")
 const SupportPanel=preload("res://scripts/ui/chapter_support_panel.gd")
+var natural_flow=preload("res://scripts/core/natural_flow.gd").new()
 var auto_observe=true
 var preferences=Preferences.new()
 var settings={}
@@ -105,6 +106,7 @@ func _process(delta):
  _refresh_expanded_hud(scene)
  _apply_dialogue(scene,delta)
  _apply_reduced_decorations(scene)
+ natural_flow.tick(scene,delta,application_focus_lost,is_instance_valid(active_modal))
 func guard_replay_return(scene)->bool:
  if not get_tree().has_meta("replay_primary_path"):return false
  var initial=bool(get_tree().get_meta("replay_autostart",false))
@@ -465,7 +467,7 @@ func _legacy_camera_framing(scene):
  if previous!=active:
   camera.set_meta("experience_camera_active",active);camera.reset_smoothing();camera.force_update_scroll()
  var background=value(scene,"bg",value(scene,"backdrop"))
- if is_instance_valid(background):
+ if is_instance_valid(background) and not background.get_parent() is CanvasLayer:
   if not background.has_meta("experience_background_y"):background.set_meta("experience_background_y",background.position.y)
   background.position.y=camera.get_screen_center_position().y-360 if active else float(background.get_meta("experience_background_y"))
 func _refresh_expanded_hud(scene):

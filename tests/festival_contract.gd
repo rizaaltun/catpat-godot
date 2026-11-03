@@ -11,7 +11,9 @@ func check(ok:bool,label:String):
  print("PASS " if ok else "FAIL ",label)
 func clean():
  for suffix in ["",".bak",".pending",".bak.pending",".legacy"]:DirAccess.remove_absolute(PATH+suffix)
-func _initialize():call_deferred("run")
+func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+ call_deferred("run")
 func walk_to(world, target_x:float, limit:int=240) -> bool:
  for frame in limit:
   var dx=target_x-world.actor.position.x

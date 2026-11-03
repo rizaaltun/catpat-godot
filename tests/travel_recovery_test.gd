@@ -7,6 +7,7 @@ var failures=0
 var world
 var store=Save.new()
 func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
  set_meta("journey_save_path",PATH)
  call_deferred("run")
 func check(ok:bool,label:String):

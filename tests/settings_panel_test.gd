@@ -10,7 +10,9 @@ func check(ok:bool,label:String):
  print("PASS " if ok else "FAIL ",label)
 func clean():
  for suffix in ["", ".bak", ".pending", ".bak.pending", ".legacy"]:DirAccess.remove_absolute(PATH+suffix)
-func _initialize():call_deferred("run")
+func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+ call_deferred("run")
 func run():
  clean()
  var store=Store.new();var data=store.fresh();data.settings={"music":0.5,"host_setting":"keep"}

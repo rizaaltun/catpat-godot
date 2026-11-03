@@ -25,63 +25,63 @@
       "id": "garden_meet_0",
       "speaker": "rabbit",
       "side": "right",
-      "text": "Bu papatyaları anneme götürecektim. Rüzgâr sepetimi yukarı savurdu!",
+      "text": "Rüzgâr sepetimi dala taktı!",
       "next": "garden_meet_1"
     },
     {
       "id": "garden_meet_1",
       "speaker": "catpat",
       "side": "left",
-      "text": "Çiçeklere basmadan taşlardan geçebilirim. Sana yardım edeyim mi?",
+      "text": "Sana yardım edeyim.",
       "next": "garden_meet_2"
     },
     {
       "id": "garden_meet_2",
       "speaker": "rabbit",
       "side": "right",
-      "text": "Lütfen! Üst daldan sepetin ipini çöz. Alt taşlarda siperin bağ ipi de kaldı.",
+      "text": "Üstteki ipi çöz, sepeti ve bağ ipini al.",
       "next": "garden_meet_3"
     },
     {
       "id": "garden_meet_3",
       "speaker": "catpat",
       "side": "left",
-      "text": "Porsuk ve Maymun burada hazırlık yapsın. Ben sepeti ve bağ ipini getireyim.",
+      "text": "Çiçeklere basmadan geliyorum!",
       "next": null
     },
     {
       "id": "garden_join_0",
       "speaker": "rabbit",
       "side": "right",
-      "text": "Teşekkür ederim! Sepetim hazır! Siperin arkasındaki papatyalar artık savrulmuyor.",
+      "text": "Sepetim hazır, çiçekler güvende!",
       "next": "garden_join_1"
     },
     {
       "id": "garden_join_1",
       "speaker": "catpat",
       "side": "left",
-      "text": "Arkadaşlarımız çiçeklere basmadan geçeceğimiz bahçe yolunu hazırladı. Bizimle festivale gelir misin?",
+      "text": "Bizimle festivale gel!",
       "next": "garden_join_2"
     },
     {
       "id": "garden_join_2",
       "speaker": "rabbit",
       "side": "right",
-      "text": "Elbette! Annem de festivalde olacak. Papatyaları ona orada veririm.",
+      "text": "Haydi! Papatyaları anneme götüreceğim.",
       "next": null
     },
     {
       "id": "garden_exit_0",
       "speaker": "catpat",
       "side": "left",
-      "text": "Dördümüz de buradayız. Üstelik papatyalar da güvende!",
+      "text": "Hepimiz hazırız!",
       "next": "garden_exit_1"
     },
     {
       "id": "garden_exit_1",
       "speaker": "rabbit",
       "side": "right",
-      "text": "Dikkatli adımların için teşekkür ederim. Birlikte yürümek çok güzel.",
+      "text": "Şimdi rüzgârlı yamaca!",
       "next": null
     }
   ]

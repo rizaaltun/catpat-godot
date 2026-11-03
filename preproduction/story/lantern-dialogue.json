@@ -27,7 +27,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "worried",
-      "text": "Çatpat? Yolun kıvrımını göremiyorum.",
+      "text": "Porsuk, buradayım!",
       "next": "porsuk_02"
     },
     {
@@ -35,7 +35,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "listening",
-      "text": "Buradayım. Sana nasıl yardım edebilirim?",
+      "text": "Birlikte yolu aydınlatalım.",
       "next": "porsuk_03"
     },
     {
@@ -43,7 +43,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "explaining",
-      "text": "Patika boyunca üç fener söndü. Hepsi kıyılarda, yolun hemen yanında.",
+      "text": "Patikadaki üç fener sönmüş.",
       "next": "porsuk_04"
     },
     {
@@ -51,7 +51,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "thoughtful",
-      "text": "Sağa doğru gidip fenerleri yakarım. Geçitler açılınca sen de beni takip edebilirsin!",
+      "text": "İlerleyip fenerleri yakacağım!",
       "next": null
     },
     {
@@ -59,7 +59,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "relieved",
-      "text": "Şimdi yolu görebiliyorum. Teşekkür ederim!",
+      "text": "Artık yolu görüyorum!",
       "next": "porsuk_done_02"
     },
     {
@@ -67,7 +67,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "happy",
-      "text": "Ben festivale gidiyorum. Birlikte yürüyelim mi?",
+      "text": "Festivale birlikte gidelim!",
       "next": "porsuk_done_03"
     },
     {
@@ -75,7 +75,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "happy",
-      "text": "Gelirim! Çıkıştaki feneri ben yakarım. O yolun işaretlerini bilirim.",
+      "text": "Çıkış fenerini ben yakarım.",
       "next": "porsuk_done_04"
     },
     {
@@ -83,7 +83,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "curious",
-      "text": "Öyleyse geçitlerden birlikte yürüyelim!",
+      "text": "Haydi yola!",
       "next": null
     },
     {
@@ -91,7 +91,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "curious",
-      "text": "Patika aydınlandı ama çıkıştaki fener hâlâ sönük.",
+      "text": "Çıkış feneri de sönük.",
       "next": "exit_02"
     },
     {
@@ -99,7 +99,7 @@
       "speaker": "badger",
       "side": "right",
       "expression": "happy",
-      "text": "Bu feneri ben yakayım. Işığında dere yolunu görebiliriz!",
+      "text": "Ben yakarım!",
       "next": "exit_03"
     },
     {
@@ -107,7 +107,7 @@
       "speaker": "catpat",
       "side": "left",
       "expression": "happy",
-      "text": "Senin yardımınla çıkışı da bulduk. Şimdi dereye gidelim!",
+      "text": "Dere yolu açıldı. Haydi!",
       "next": null
     }
   ]

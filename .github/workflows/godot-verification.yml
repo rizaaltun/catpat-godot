@@ -18,7 +18,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Check out project
         uses: actions/checkout@v4
@@ -49,6 +49,16 @@ jobs:
 
       - name: Run dialogue regression check
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
+
+      - name: Verify default no-input story flow and render shipping UI
+        run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --require-output 'NATURAL FLOW:' --path . --rendering-method gl_compatibility --script res://tests/natural_flow_test.gd -- --natural-capture
+
+      - name: Preserve default automatic-flow review frames
+        uses: actions/upload-artifact@v4
+        with:
+          name: natural-flow-frames
+          path: build/natural-flow
+          if-no-files-found: error
 
       - name: Verify shipping chapter hand-offs, continuation, and recovery
         run: |

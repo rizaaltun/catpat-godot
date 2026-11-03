@@ -12,6 +12,7 @@ var states=0
 var game:Node
 var check_only=false
 func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
  check_only="--garden-capture-check" in OS.get_cmdline_user_args()
  call_deferred("run")
 func check(ok:bool,label:String):

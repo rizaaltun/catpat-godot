@@ -119,7 +119,7 @@ func help_context(scene)->Dictionary:
    elif Quest.RELEASED not in flags:task="garden.basket_lower";text="Sepet üstteki dala takılmış. Basamaklardan ipin yanına çıkıp görev düğmesini kullan; sepet aşağı iner."
    elif Quest.BASKET not in flags:task="garden.basket";text="İnen sepeti alt patikadan alabilirsin. Görev düğmesi açılana kadar yanına yaklaş."
    elif Quest.TIE not in flags:task="garden.tie";text="Siperin bağ ipi alttaki kayaların yanında. Güvenli basamaklarla ulaş ve ipi al."
-   elif Quest.PROTECTED not in flags:task="garden.protect";text="Sepet ve bağ ipi hazır. Pıtpıt'ın yanına dönüp siperi birlikte sabitle."
+   elif Quest.PROTECTED not in flags:task="garden.protect";text="Sepet ve bağ ipi hazır. Sepetin kıyısında bahçe yolunu birlikte hazırlayın; geri dönmen gerekmiyor."
    elif Quest.RABBIT not in flags:task="garden.join";text="Çiçekler güvende. Pıtpıt'ı yolculuğa çağırmak için onunla yeniden konuş."
    else:task="garden.exit";text="Hep birlikte sağdaki çıkışta buluşun. Arkadaşların yaklaştığında yamaç yoluna devam edebilirsin."
   "B04":

@@ -5,6 +5,7 @@ const UI = preload("res://scripts/polish_ui.gd")
 var failures = 0
 
 func _initialize():
+	set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
 	call_deferred("_run")
 
 func _run():

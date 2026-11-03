@@ -4,6 +4,7 @@ const Save=preload("res://scripts/core/save_service.gd")
 const Quest=preload("res://scripts/core/quest_state.gd")
 var path="user://shipping-route-audit.json"
 func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
  set_meta("journey_save_path",path)
  call_deferred("run")
 func run():

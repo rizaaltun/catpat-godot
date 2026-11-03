@@ -9,6 +9,7 @@ var failures=0
 var store=Save.new()
 var touch_input=false
 func _initialize():
+ set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
  root.size=Vector2i(1280,720)
  set_meta("journey_save_path",PATH)
  touch_input="--audit-touch" in OS.get_cmdline_user_args()

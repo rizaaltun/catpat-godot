@@ -5,7 +5,9 @@ const PATH="user://root-v21-lifecycle.json"
 var svc=Save.new()
 var checks=[]
 var failures=[]
-func _initialize():call_deferred("run")
+func _initialize():
+	set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
+	call_deferred("run")
 func ticks(n):
 	for i in n:await physics_frame
 func check(ok,id):

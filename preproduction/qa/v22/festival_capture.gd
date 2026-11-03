@@ -7,6 +7,7 @@ var failures := 0
 var captures := 0
 var game: Node
 func _initialize():
+	set_meta("manual_story_flow",true) # Retained manual controls/recovery contract.
 	call_deferred("run")
 func check(ok: bool, label: String):
 	if not ok:

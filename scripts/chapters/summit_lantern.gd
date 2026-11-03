@@ -76,6 +76,7 @@ func interact():
 	elif lantern_stage=="accepted":commit_quest("prepared")
 	elif lantern_stage=="prepared":begin_dialogue(FINISH,"lit")
 func begin_dialogue(lines:Array,target:String):
+	if has_meta("natural_story_cancelled"):remove_meta("natural_story_cancelled")
 	dialogue_lines=lines;dialogue_index=0;dialogue_target=target;dialogue_active=true
 	comic.left_line.text="";comic.right_line.text="";comic.show_line(lines[0],false)
 	set_pause(false);action_cooldown=0.25
@@ -88,6 +89,7 @@ func advance_dialogue():
 		var target=dialogue_target;end_dialogue();commit_quest(target)
 func cancel_dialogue():
 	if not dialogue_active or pause_root.visible:return
+	set_meta("natural_story_cancelled",true)
 	end_dialogue()
 func end_dialogue():
 	dialogue_active=false;dialogue_target="";comic.hide();set_pause(false);action_cooldown=0.25
