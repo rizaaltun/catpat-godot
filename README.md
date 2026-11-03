@@ -5,8 +5,8 @@ Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak Godot projes
 ## Mevcut durum
 
 - Ana başlangıç sahnesi: `scenes/polish_v3.tscn`.
-- Güncel sürüm: **0.15.7-shore-alpha** kaynak adayı. Diyaloglar dokunma/tıklamayla ilerler; bölüm sonları ve yakınlık görevleri otomatik kalır. B04 başlangıç kıyısı geniş zeminde fener görevi ve sabit ilk köprüyle yeniden düzenlendi.
-- Son doğrulanmış GitHub Actions koşusu: [41615428806](https://github.com/rizaaltun/catpat-godot/actions/runs/41615428806) — varsayılan otomatik akış77/77 ve12 native kare, manuel/fiziksel/kayıt hata yolları, B00–B05 regresyonları, web export ve Pages dağıtımı başarılı.
+- Güncel sürüm: **0.15.7-shore-alpha**. Diyaloglar dokunma/tıklamayla ilerler; bölüm sonları ve yakınlık görevleri otomatik kalır. B04 başlangıç kıyısı geniş zeminde fener görevi ve sabit ilk köprüyle yeniden düzenlendi.
+- Son doğrulanmış GitHub Actions koşusu: [41654767114](https://github.com/rizaaltun/catpat-godot/actions/runs/41654767114) — dokunmalı diyalog/varsayılan akış, yeniden düzenlenmiş kıyı, B00–B05 regresyonları, kayıt hata yolları, Web export ve Pages dağıtımı başarılı.
 - Canlı test: [https://rizaaltun.github.io/catpat-godot/](https://rizaaltun.github.io/catpat-godot/).
 - Türkçe arayüz fontu doğrudan depodaki Baloo 2 dosyasından yükleniyor. Otomatik test font kaynağının Türkçe karakterleri ölçebildiğini doğruluyor; cihazlar arası görsel QA ayrıca takip ediliyor.
 - Ana menüdeki ebeveyn özeti B01–B05 görev ilerlemesini yerel kayıttan okur. Becerileri veya gerçek yaşam gelişimini ölçmez; ortak katalog ve gözlem modeli hâlâ taslak durumundadır (`production/GAME_PROFILE.md`).

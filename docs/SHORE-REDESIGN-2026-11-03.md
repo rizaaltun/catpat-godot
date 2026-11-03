@@ -26,6 +26,13 @@ Eski kayıtta ilk fener yapılmadan ileriki kıyıya geçilmişse güvenli dön�
 - B04 tam görev41/41, yaşam döngüsü19/19 ve sanat26/26 önceki yapısal kontrol turunda geçti.
 - Son içerik/UI değişikliklerinden sonra diyalog, çizgi roman25/25, deneyim42/42, onarım38/38, kilitlenme12/12, destekUI62/62 ve başlangıç regresyonları başarılı.
 - Son varsayılan native diyalog/akış96/96, 16 gerçek native kare (1280×720 ve666×374); iptal dokunma, sentetik fare, odak kaybı, diyalog zamanlayıcısız bekleme, checkpoint yazma hatası/görünür uyarı/başarılı retry ve fener sonrası ayrı halat hedefi başarılı. Ses akışları test çıkışında kapatılıp temizlendi; engine-error kapısı açık tutuldu.
-- İlk CI41654218308: oynanış96/96 geçti; hızlı rendererda8 karelik çıkış beklemesi Ogg ses iş parçacığının temizlenmesine yetmedi ve engine-error kapısı yayını durdurdu. Diğer mevcut native testlerle aynı elapsed-time temizleme deseni uygulanarak0.35 saniye beklendi; hata kapısı korunur. Son CI ve yayın sonucu aşağıya kaydedilecek.
+- İlk CI41654218308: oynanış96/96 geçti; hızlı rendererda8 karelik çıkış beklemesi Ogg ses iş parçacığının temizlenmesine yetmedi ve engine-error kapısı yayını durdurdu. Diğer mevcut native testlerle aynı elapsed-time temizleme deseni uygulanarak0.35 saniye beklendi; hata kapısı korunur. Son CI ve yayın sonucu aşağıdadır.
 
 Testler Godot 4.4.1 gerçek scene/physics ve native render üstündedir. WebGL canlı cihazda uzun süre oynanış, gerçek mobil donanım ve çocuklarla kullanılabilirlik çalışması yapılmış sayılmaz. Bütün olası donmaların sıfırlandığı iddia edilmez.
+
+## Doğrulanmış yayın
+
+- Kaynak: `33fc63f01abee10789e772c8452900cf0316343e`; geliştirme dalı `work/t22-source-migration`. Yerel karşılığı `16cf427` ile aynı ağaç: `8f4d720aa6134afca7d7edff3d4a1a382484f08f`.
+- [CI41654767114](https://github.com/rizaaltun/catpat-godot/actions/runs/41654767114): verify ve deploy başarılı; bütün zorunlu kapılar, yeni kıyı native testi, varsayılan dokunmalı diyalog testi, tam bölüm regresyonları, B04 ana görev/geçişleri ve Web export geçti.
+- Canlı GET: `https://rizaaltun.github.io/catpat-godot/?v=0.15.7`, HTTP200. HTML executable adı `catpat-33fc63f01abee10789e772c8452900cf0316343e`; önceki0.15.6 paketi olmadığı doğrulandı.
+- Canlı HTTP/bundle kontrolü yapılmıştır; canlı WebGL üzerinde cihazda uzun süre elle oynanış doğrulaması değildir.
