@@ -5,8 +5,8 @@ Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak Godot projes
 ## Mevcut durum
 
 - Ana başlangıç sahnesi: `scenes/polish_v3.tscn`.
-- B01–B04 bölüm akışı ve B05 Festival Alanı Godot 4.4.1 headless regresyonlarından geçiyor.
-- Son doğrulanmış GitHub Actions koşusu: [39779275202](https://github.com/rizaaltun/catpat-godot/actions/runs/39779275202) — import, menü/font/kurtarma, B01–B05 regresyonları, web export ve Pages dağıtımı başarılı.
+- Güncel sürüm: **0.15.6-flow-alpha**. B00–B05 normal hikâye/diyalog/nesne eylemleri ve bölüm sonları otomatik; hareket ve zıplama oyuncuda.
+- Son doğrulanmış GitHub Actions koşusu: [41615428806](https://github.com/rizaaltun/catpat-godot/actions/runs/41615428806) — varsayılan otomatik akış77/77 ve12 native kare, manuel/fiziksel/kayıt hata yolları, B00–B05 regresyonları, web export ve Pages dağıtımı başarılı.
 - Canlı test: [https://rizaaltun.github.io/catpat-godot/](https://rizaaltun.github.io/catpat-godot/).
 - Türkçe arayüz fontu doğrudan depodaki Baloo 2 dosyasından yükleniyor. Otomatik test font kaynağının Türkçe karakterleri ölçebildiğini doğruluyor; cihazlar arası görsel QA ayrıca takip ediliyor.
 - Ana menüdeki ebeveyn özeti B01–B05 görev ilerlemesini yerel kayıttan okur. Becerileri veya gerçek yaşam gelişimini ölçmez; ortak katalog ve gözlem modeli hâlâ taslak durumundadır (`production/GAME_PROFILE.md`).
