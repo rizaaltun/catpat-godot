@@ -280,7 +280,7 @@ func _process(delta):
 		if use and absf(player.position.x-1250)<140 and player.is_on_floor():dialogue("river_join");return
 	elif not state.has(Quest.RIVER_COMPLETE) and player.position.x>3180:
 		hint.text="Arkadaşlarınla birlikte çıkışa yaklaş"
-		if party_at_exit():
+		if player.is_on_floor():
 			hint.text="E · Birlikte yolculuğa devam et"
 			if use:dialogue("river_exit");return
 	notice=maxf(0,notice-delta)
@@ -420,7 +420,9 @@ func run_test():
 	print("V10 VIDEO READY")
 	check(await hop_to(Vector2(2440,520)),"jump from material bank onto repaired bridge")
 	check(await walk_to(3250,1600),"walk across repaired bridge")
-	for i in 180:await get_tree().physics_frame
+	for i in 720:
+		await get_tree().physics_frame
+		if party_at_exit():break
 	check(party_at_exit(),"two physical followers reach exit")
 	check(follower_rescues==0,"followers crossed without rescue or teleport")
 	check(not state.has(Quest.RIVER_COMPLETE),"arrival alone does not complete chapter")

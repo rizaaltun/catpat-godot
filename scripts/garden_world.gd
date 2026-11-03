@@ -323,7 +323,7 @@ func _process(delta):
 		if use and near(Vector2(1000,540),150):dialogue("garden_join");return
 	elif not state.has(Quest.GARDEN_COMPLETE) and player.position.x>3650:
 		hint.text="Arkadaşlarınla çıkışta buluş"
-		if party_at_exit():
+		if player.is_on_floor():
 			hint.text="E · Dördünüz birlikte yola devam edin"
 			if use:dialogue("garden_exit");return
 	elif state.has(Quest.GARDEN_COMPLETE) and player.position.x>3650:
@@ -487,4 +487,5 @@ func run_test():
 	get_tree().quit(1 if test_failed else 0)
 
 func begin_gather():
-	mode="gathering";reset_input();freeze(false);player.frozen=true
+	# Companions catch up while the player remains in control.
+	mode="play";reset_input();freeze(false);update_hud()

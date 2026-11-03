@@ -18,6 +18,8 @@
     let starting = false;
     let started = false;
     let rotationBlocked = false;
+    let fittedWidth = 0;
+    let fittedHeight = 0;
 
     function needsLandscape() {
         return coarsePointer.matches && window.innerHeight > window.innerWidth;
@@ -58,7 +60,15 @@
         const pixelsW = Math.max(1, Math.round(width * ratio));
         const pixelsH = Math.max(1, Math.round(height * ratio));
         const changed = canvas.width !== pixelsW || canvas.height !== pixelsH;
-        if (changed && started) releaseAndPause();
+        // Browser toolbar jitter and DPR updates do not change the task or input
+        // ownership. Only a material CSS layout change needs a safety pause.
+        const layoutChanged = fittedWidth > 0 && (
+            Math.abs(width - fittedWidth) > Math.max(32, fittedWidth * 0.08) ||
+            Math.abs(height - fittedHeight) > Math.max(24, fittedHeight * 0.08)
+        );
+        if (layoutChanged && started) releaseAndPause();
+        fittedWidth = width;
+        fittedHeight = height;
         canvas.style.width = width + 'px';
         canvas.style.height = height + 'px';
         if (changed) {

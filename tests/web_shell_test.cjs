@@ -76,6 +76,14 @@ async function boot(options = {}) {
     app=await boot({width:844,height:390,dpr:3,insets:[0,44,21,44]});
     check(app.canvas.width===1312 && app.canvas.height===738 && app.canvas.style.width==='656px','canvas fits simulated safe-area insets with capped physical resolution');
     const blurBefore=app.blurCount;await app.resize(844,390);check(app.blurCount===blurBefore,'unchanged size does not introduce a pause');
+    app=await boot({coarse:true,width:844,height:390});
+    const jitterBlur=app.blurCount;
+    await app.resize(844,389);await app.resize(844,388);await app.resize(844,390);
+    check(app.blurCount===jitterBlur && app.canvas.style.pointerEvents==='auto' && app.calls.length===1,'small browser toolbar resizes keep gameplay running without repeated pauses');
+    const pixelWidth=app.canvas.width;app.window.devicePixelRatio=2;await app.resize(844,390);
+    check(app.canvas.width>pixelWidth && app.blurCount===jitterBlur,'DPR-only buffer changes preserve gameplay and refresh resolution');
+    await app.resize(1100,600);
+    check(app.blurCount>jitterBlur,'material canvas layout changes still release input and pause safely');
     app.canvas.fire('webglcontextlost');check(!app.elements['error-panel'].hidden && app.elements['error-technical'].textContent==='WebGL context lost','runtime WebGL loss remains an actionable failure');
     app=await boot({noEngine:true});check(!app.elements['error-panel'].hidden && app.calls.length===0,'missing loader script reports a failure instead of a blank canvas');
     console.log(`WEB SHELL CONTRACT: ${checks} checks, 0 failures`);

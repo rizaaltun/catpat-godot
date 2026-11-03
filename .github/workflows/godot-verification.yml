@@ -56,6 +56,9 @@ jobs:
           timeout -k 10s 180s python3 tools/run_godot_check.py --require-output 'JOURNEY TRANSITIONS:' --headless --path . --script res://tests/journey_transition_test.gd -- --audit-touch
           timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'TRAVEL RECOVERY:' --headless --path . --script res://tests/travel_recovery_test.gd
 
+      - name: Verify stranded-companion softlock recovery
+        run: timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'SOFTLOCK AUDIT:' --headless --path . --script res://tests/softlock_test.gd
+
       - name: Verify repair invitations and save retry
         run: timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'REPAIR INVITATIONS:' --headless --path . --script res://tests/repair_invitation_test.gd
 
