@@ -147,6 +147,9 @@ func run():
  _tap_story() # A late touch from the covered canvas must also be ignored.
  for frame in 180:await physics_frame
  check(river.runner.current.id==line and not river.state.has(Quest.RIVER_ACCEPTED),"hidden window cannot advance tap dialogue")
+ var hidden_key=InputEventKey.new();hidden_key.keycode=KEY_ENTER;hidden_key.pressed=true
+ root.push_input(hidden_key,true);await physics_frame
+ check(river.runner.current.id==line and FileAccess.get_file_as_bytes(PATH)==untouched,"hidden window cannot advance dialogue through keyboard input")
  check(river.backdrop.position==scenery,"B02 focus loss preserves stable scenery")
  host._notification(Node.NOTIFICATION_WM_WINDOW_FOCUS_IN)
  check(await wait_for(func():return river.state.has(Quest.RIVER_ACCEPTED),720),"B02 dialogue resumes and completes with taps")

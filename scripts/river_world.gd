@@ -175,7 +175,9 @@ func dialogue(id: String):
 	line_id="";refresh_line()
 func refresh_line():
 	if runner.active and line_id!=runner.current.id:line_id=runner.current.id;chars=0;active_line=comic.present(runner.current)
-func advance():runner.advance();refresh_line()
+func advance():
+	if not is_instance_valid(comic) or not comic.can_advance_story():return
+	runner.advance();refresh_line()
 func dialogue_done(id: String,_first: bool):
 	event(id,func():
 		mode="play";build_hud();freeze(false);reset_input()

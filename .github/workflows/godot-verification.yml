@@ -48,7 +48,9 @@ jobs:
           timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/parent_panel_test.gd
 
       - name: Run dialogue regression check
-        run: timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
+        run: |
+          timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
+          timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'DIALOGUE FOCUS:' --headless --path . --script res://tests/dialogue_focus_test.gd
 
       - name: Verify tap dialogues and automatic chapter flow with shipping UI
         run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --require-output 'NATURAL FLOW:' --path . --rendering-method gl_compatibility --script res://tests/natural_flow_test.gd -- --natural-capture

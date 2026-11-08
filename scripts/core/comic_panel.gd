@@ -42,10 +42,13 @@ func present(line: Dictionary) -> Label:
 	portrait_right.modulate=Color.WHITE if line.side=="right" else Color(0.67,0.75,0.73)
 	return active_label
 
-func _input(event):
-	if not is_visible_in_tree() or not tap_callback.is_valid():return
+func can_advance_story() -> bool:
+	if not is_visible_in_tree() or is_queued_for_deletion():return false
 	var host=get_tree().root.get_node_or_null("CatpatExperience")
-	if is_instance_valid(host) and (host.application_focus_lost or is_instance_valid(host.active_modal)):return
+	return not is_instance_valid(host) or (not host.application_focus_lost and not is_instance_valid(host.active_modal))
+
+func _input(event):
+	if not can_advance_story() or not tap_callback.is_valid():return
 	var point:Vector2
 	if event is InputEventScreenTouch:
 		if not event.pressed or event.canceled:return

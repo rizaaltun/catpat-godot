@@ -448,3 +448,13 @@ Yayınla kapananlar: ev/zemin/kök yerleşimi; kısa metin/tek balon; otomatik k
 ## 3 Kasım 2026 — 0.15.7 başlangıç kıyısı ve dokunmalı diyalog
 
 Güncel karar ve uygulama: `docs/SHORE-REDESIGN-2026-11-03.md`. Son karar diyalog otomatiğini kaldırır; tek dokunma/tıklama ilerletir. B04 ilk kıyı geniş zeminde fener ve sabit köprüyle kolaylaştırıldı; halat, ikinci taşıyıcı, yön işareti ve final korunur. Rutin ekran metni azaltıldı, kayıt hataları ve mola ayrıntıları korunur. Yayın tamamlandı: kaynak `33fc63f01abee10789e772c8452900cf0316343e`, [CI41654767114](https://github.com/rizaaltun/catpat-godot/actions/runs/41654767114) verify+deploy başarılı. Yerel native varsayılan akış96/96 ve16 kare; yeni kıyı28/28. Canlı `https://rizaaltun.github.io/catpat-godot/?v=0.15.7` HTTP200 ve aynı SHA executable ile doğrulandı. Sonraki iş gerçek mobil/WebGL uzun oynanış ve çocuk kullanılabilirliği incelemesidir; her cihazda bütün donmalar giderildi iddiası yok.
+
+## 8 Kasım 2026 — Sohbet devamı ve diyalog odak koruması
+
+Mevcut depo ve `work/t22-source-migration` dalı devralındı; son 0.15.7 koşusu41654767114 verify+deploy başarılı olarak GitHub üzerinden yeniden doğrulandı. Önceki kıyı/dokunma çalışması yeniden yapılmış gibi sayılmadı.
+
+Yeni gerçek hata: B02 konuşmasında pencere odağı kaybolduktan sonra dokunma engellenirken Enter, bölümün doğrudan klavye callback'i üzerinden cümleyi ilerletiyordu. `natural_flow_test.gd` gerçek viewport girdi dağıtımıyla önce FAIL verdi. Ortak comic görünürlük/odak/modal kapısı B01–B04 bölüm callback'lerine uygulandı; gizlenen veya silinmeyi bekleyen konuşma da geç girdi kabul etmez. Diyalog zamanlayıcısı eklenmedi.
+
+0.15.8-focus-alpha adayı: yeni callback regresyonu16/16, Godot4.4.1'de geçti. Ortak konuşma25/25 ve saf diyalog testi aynı motorda geçti. Godot4.6.3'te varsayılan tam akış81/81; kayıt60/60, klavye bölüm zinciri45/45, softlock12/12 geçti. Bu yerel motor sürüm farkı 4.4.1 yayın kanıtı yerine kullanılmaz. Yeni test CI'ın zorunlu konuşma adımına eklendi. Tam4.4.1 akışı ve sunucu/görüntülüCI/Web export/deploy sonuçları ayrıca izlenecek; henüz bu aday canlı sayılmaz.
+
+Sıradaki ürün işleri: B04 kalan geri dönüşler, JOURNEY-MAP-NEXT sözleşmesiyle gerçek yolculuk haritası ve güvenli hızlı geçiş. Gerçek mobil/WebGL uzun oynanış ve çocuk kullanılabilirliği hâlâ açık. Rutin gönderim/yayın yetkisi geçerlidir; başka sohbet veya yeniden açıklama gerekmiyor.

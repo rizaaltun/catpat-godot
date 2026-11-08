@@ -80,6 +80,7 @@ func begin_dialogue(lines:Array,target:String):
 	set_pause(false);action_cooldown=0.25
 func advance_dialogue():
 	if not dialogue_active or pause_root.visible or action_cooldown>0:return
+	if not comic.can_advance_story():return
 	action_cooldown=0.25
 	if dialogue_index+1<dialogue_lines.size():
 		dialogue_index+=1;comic.show_line(dialogue_lines[dialogue_index],dialogue_index==dialogue_lines.size()-1)

@@ -318,6 +318,7 @@ func refresh_line():
 		line_text=dialogue.present(runner.current)
 
 func advance_dialogue():
+	if not is_instance_valid(dialogue) or not dialogue.can_advance_story():return
 	runner.advance();refresh_line()
 
 func _dialogue_done(event_id: String, _first: bool):
