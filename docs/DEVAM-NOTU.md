@@ -458,3 +458,9 @@ Yeni gerçek hata: B02 konuşmasında pencere odağı kaybolduktan sonra dokunma
 0.15.8-focus-alpha adayı: yeni callback regresyonu16/16, Godot4.4.1'de geçti. Ortak konuşma25/25 ve saf diyalog testi aynı motorda geçti. Godot4.6.3'te varsayılan tam akış81/81; kayıt60/60, klavye bölüm zinciri45/45, softlock12/12 geçti. Bu yerel motor sürüm farkı 4.4.1 yayın kanıtı yerine kullanılmaz. Yeni test CI'ın zorunlu konuşma adımına eklendi. Tam4.4.1 akışı ve sunucu/görüntülüCI/Web export/deploy sonuçları ayrıca izlenecek; henüz bu aday canlı sayılmaz.
 
 Sıradaki ürün işleri: B04 kalan geri dönüşler, JOURNEY-MAP-NEXT sözleşmesiyle gerçek yolculuk haritası ve güvenli hızlı geçiş. Gerçek mobil/WebGL uzun oynanış ve çocuk kullanılabilirliği hâlâ açık. Rutin gönderim/yayın yetkisi geçerlidir; başka sohbet veya yeniden açıklama gerekmiyor.
+
+### 0.15.8 kesin kabul ve yayın — 8 Kasım 2026
+
+Kaynak **cf6abcad57afae8e0c49538427c158b7486732c4**, [Actions42461341445](https://github.com/rizaaltun/catpat-godot/actions/runs/42461341445): verify ve deploy başarılı. Godot4.4.1 yeni16/16 odak denetimi, varsayılan görüntülü dokunma/otomatik akış, kıyı, kayıt/geçiş/kurtarma, eski tam fizik rotaları, B00–B05 görüntü/sözleşme kontrolleri ve Web export geçti. Yerel4.4.1 tam akış da81/81 tamamlandı.
+
+Canlı `https://rizaaltun.github.io/catpat-godot/?v=0.15.8` HTTP200; executable `catpat-cf6abcad57afae8e0c49538427c158b7486732c4` olarak doğrulandı. Bu bir canlı paket doğrulamasıdır; fiziksel mobil/WebGL uzun oynanış veya çocuk kullanılabilirliği testi değildir. Kaynakta artık0.15.8-focus-alpha yayımlanmıştır; önceki aday notunun yayın bekleme durumu geçersizdir. Sıradaki ürün kapsamı değişmedi.
