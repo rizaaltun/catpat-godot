@@ -5,7 +5,7 @@ Godot 4.4.1 / GDScript tabanlı yatay 2D platform oyunu. Ana kaynak Godot projes
 ## Mevcut durum
 
 - Ana başlangıç sahnesi: `scenes/polish_v3.tscn`.
-- Güncel kaynak adayı: **0.16.0-map-alpha**. Ana menüde ve molada **Yol haritası**: altı resimli bölge, gerçek kayıttan devam, tamamlanan bölümleri ayrı kayıtta yeniden oynama ve kilitli dünya önizlemeleri. Küçük ekranda dokunarak kaydırılır; büyük yazı ve klavye desteği vardır. Bölüm içi hızlı geçiş ve bölüm sonlarının harita akışına dönüşümü sonraki aşamadır. Yayın sonucu `docs/DEVAM-NOTU.md` içinde izlenir.
+- Güncel yayımlanmış sürüm: **0.16.0-map-alpha**. Ana menüde ve molada **Yol haritası**: altı resimli bölge, gerçek kayıttan devam, tamamlanan bölümleri ayrı kayıtta yeniden oynama ve kilitli dünya önizlemeleri. Küçük ekranda dokunarak kaydırılır; büyük yazı ve klavye desteği vardır. Bölüm içi hızlı geçiş ve bölüm sonlarının harita akışına dönüşümü sonraki aşamadır. Tüm CI ve Pages yayını başarılı; kabul kaydı `docs/DEVAM-NOTU.md` içinde.
 - Son doğrulanmış GitHub Actions koşusu: [41654767114](https://github.com/rizaaltun/catpat-godot/actions/runs/41654767114) — dokunmalı diyalog/varsayılan akış, yeniden düzenlenmiş kıyı, B00–B05 regresyonları, kayıt hata yolları, Web export ve Pages dağıtımı başarılı.
 - Canlı test: [https://rizaaltun.github.io/catpat-godot/](https://rizaaltun.github.io/catpat-godot/).
 - Türkçe arayüz fontu doğrudan depodaki Baloo 2 dosyasından yükleniyor. Otomatik test font kaynağının Türkçe karakterleri ölçebildiğini doğruluyor; cihazlar arası görsel QA ayrıca takip ediliyor.

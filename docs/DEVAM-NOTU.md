@@ -472,3 +472,11 @@ Canlı `https://rizaaltun.github.io/catpat-godot/?v=0.15.8` HTTP200; executable 
 Yerel Godot4.4.1 native105/105, iki gerçek kare açılıp incelendi; experience42/42 ve replay93/93. Test yeni bir eski-ekran durumundan yanlışlıkla replay başlatma yolunu, B04 farklı devam düğmesini ve B05'in donmuş oyun/pause panelini birlikte çözme gereğini yakaladı; düzeltildi. Ham dokunma, iptal, sürükleme ve türetilmiş fare testleri zorunlu. Yeni CI native harita adımı ve kare artifact'i eklendi. Son ek görünürlük koruması dahil sunucuCI/export/yayın ayrıca doğrulanacak; bu aday henüz canlı sayılmaz.
 
 Bu teslim JOURNEY-MAP-NEXT üretim sırasının1–3 aşamasıdır. Yeni durak geçmişi/hızlı geçiş ve bölüm sonlarını harita akışına dönüştürme hâlâ4–5 aşamasıdır. Ziyaret edilmemiş duraklar açılmaz; mevcut otomatik geçişler kaldırılmaz. Fiziksel mobil/WebGL uzun kullanım QA'sı açıktır.
+
+### 0.16.0 kesin kabul ve yayın — 8 Kasım 2026
+
+Kaynak **7de6f0dc180e68564c97f669cccfefef85953311**, [Actions42463741437](https://github.com/rizaaltun/catpat-godot/actions/runs/42463741437): verify ve deploy başarılı. Zorunlu native harita denetimi ve iki kare artifact'i, diyalog/odak/varsayılan otomatik akış, kıyı, kayıt/yeniden başlatma/geçiş/kurtarma, tam fizik rotaları, B00–B05 görüntü/sözleşme testleri ve Web export geçti. Son kaynak yerel headless101/101; native görüntülü105/105. Ek kilitli festival önizlemesi ve tamamlanmış festivalin ayrı devam/replay eylemleri native görüntülerde incelendi.
+
+Canlı `https://rizaaltun.github.io/catpat-godot/?v=0.16.0` HTTP200 ve executable `catpat-7de6f0dc180e68564c97f669cccfefef85953311` ile doğrulandı. Ana menüde ve gerçek mola ekranlarında **Yol haritası** açılır. Bu kanıt fiziksel mobil/WebGL uzun oynanış testi değildir. Önceki adayın yayın bekleme durumu geçersizdir.
+
+Kesin sonraki iş: gerçek zemin/konumla açılan güvenli durak geçmişi, yalnız aktif bölümde atomik hızlı geçiş, eski kayıt ve geri alma hata matrisi; sonra bölüm sonlarının harita akışına dönüşümü. Harita ekranı bu işler bitmiş gibi göstermez ve ziyaret geçmişi uydurmaz. Mevcut rutin uygulama/doğrulama/yayın yetkisi korunur; aynı projede bu sohbetten devam edilebilir.
