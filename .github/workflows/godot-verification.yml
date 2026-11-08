@@ -52,6 +52,16 @@ jobs:
           timeout -k 10s 120s python3 tools/run_godot_check.py --headless --path . --script res://tests/dialogue_test.gd
           timeout -k 10s 120s python3 tools/run_godot_check.py --require-output 'DIALOGUE FOCUS:' --headless --path . --script res://tests/dialogue_focus_test.gd
 
+      - name: Verify painted journey map, read-only continuation and isolated replay
+        run: timeout -k 10s 180s xvfb-run -a python3 tools/run_godot_check.py --require-output 'JOURNEY MAP:' --path . --rendering-method gl_compatibility --script res://tests/journey_map_test.gd -- --map-capture
+
+      - name: Preserve journey map review frames
+        uses: actions/upload-artifact@v4
+        with:
+          name: journey-map-frames
+          path: build/journey-map
+          if-no-files-found: error
+
       - name: Verify tap dialogues and automatic chapter flow with shipping UI
         run: timeout -k 10s 240s xvfb-run -a python3 tools/run_godot_check.py --require-output 'NATURAL FLOW:' --path . --rendering-method gl_compatibility --script res://tests/natural_flow_test.gd -- --natural-capture
 

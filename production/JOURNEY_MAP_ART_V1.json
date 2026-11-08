@@ -1,0 +1,43 @@
+{
+  "asset_id": "catpat.journey-map.forest-v1",
+  "runtime_path": "res://assets/journey-map/forest-journey-v1.webp",
+  "size": [
+    1536,
+    1024
+  ],
+  "sha256": "86f55c23dc3f6a9bc30b2f83c714601df70aef2d22de937d315beac895504806",
+  "origin": "built-in image generation, 8 November 2026",
+  "style_reference": "assets/chapter-v5/forest.webp",
+  "source_rights": "existing project runtime art; no book PDF/PSD or new character designs",
+  "prompt": "New production storybook journey world, oblique overhead view. Hand-painted matte gouache woodland in deep teal/moss green and warm honey sunlight, style reference forest.webp. Six landmark clearings: cozy tree-trunk home; three glowing lanterns; blue creek with wood bridge; white daisy garden; breezy hillside rope crossing; festival stage with bunting. One winding ochre footpath. No people, animals, words, numbers, labels, UI, pins, panels, borders or watermark. Full-bleed 3:2 landscape.",
+  "landmark_points_normalized": [
+    [
+      0.13,
+      0.82
+    ],
+    [
+      0.34,
+      0.7
+    ],
+    [
+      0.36,
+      0.38
+    ],
+    [
+      0.65,
+      0.57
+    ],
+    [
+      0.71,
+      0.28
+    ],
+    [
+      0.9,
+      0.15
+    ]
+  ],
+  "live_text": "region names, preview, numbers and status are runtime Labels/Buttons",
+  "node_art": "existing polish-v3/button.webp amber skin; no new node artwork",
+  "safe_text_areas": "runtime right detail area x884..1256; titles and prose never embedded in illustration",
+  "review": "wide/small native frames inspected; final server acceptance tracked in DEVAM-NOTU"
+}

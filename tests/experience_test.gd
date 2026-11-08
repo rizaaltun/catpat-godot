@@ -100,7 +100,7 @@ func run():
  service._update_entries(festival)
  check(not service.settings_entry.visible,"B05 gameplay has no global settings button")
  festival.toggle_pause();service._update_entries(festival)
- check(service.settings_entry.visible and not service.chapters_entry.visible,"actual B05 pause menu exposes only settings")
+ check(service.settings_entry.visible and service.chapters_entry.visible,"actual B05 pause menu exposes settings and journey map")
  service.open_settings(festival);service.active_modal.close();await process_frame
  check(festival.paused and festival.pause_panel.visible,"closing settings preserves an existing B05 pause")
  festival.toggle_pause();service.open_settings(festival)

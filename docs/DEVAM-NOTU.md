@@ -464,3 +464,11 @@ Sıradaki ürün işleri: B04 kalan geri dönüşler, JOURNEY-MAP-NEXT sözleşm
 Kaynak **cf6abcad57afae8e0c49538427c158b7486732c4**, [Actions42461341445](https://github.com/rizaaltun/catpat-godot/actions/runs/42461341445): verify ve deploy başarılı. Godot4.4.1 yeni16/16 odak denetimi, varsayılan görüntülü dokunma/otomatik akış, kıyı, kayıt/geçiş/kurtarma, eski tam fizik rotaları, B00–B05 görüntü/sözleşme kontrolleri ve Web export geçti. Yerel4.4.1 tam akış da81/81 tamamlandı.
 
 Canlı `https://rizaaltun.github.io/catpat-godot/?v=0.15.8` HTTP200; executable `catpat-cf6abcad57afae8e0c49538427c158b7486732c4` olarak doğrulandı. Bu bir canlı paket doğrulamasıdır; fiziksel mobil/WebGL uzun oynanış veya çocuk kullanılabilirliği testi değildir. Kaynakta artık0.15.8-focus-alpha yayımlanmıştır; önceki aday notunun yayın bekleme durumu geçersizdir. Sıradaki ürün kapsamı değişmedi.
+
+## 8 Kasım 2026 — 0.16.0 resimli yolculuk haritası adayı
+
+`JOURNEY-MAP-2026-11-08.md`: ana menü ve molada altı bölgelik boyalı harita; kanonik kayıt okuma, aynı dünyaya moladan dönüş, izole replay ve kilitli bölge önizlemesi. Dar ekranda ham dokunmayla kaydırma; büyük yazı ve klavye erişimi. `production/JOURNEY_MAP_ART_V1.json` kaynak/brif/ölçü/sha ve canlı metin alanlarını kaydeder. Yeni karakter tasarımı veya kitap orijinali eklenmedi.
+
+Yerel Godot4.4.1 native105/105, iki gerçek kare açılıp incelendi; experience42/42 ve replay93/93. Test yeni bir eski-ekran durumundan yanlışlıkla replay başlatma yolunu, B04 farklı devam düğmesini ve B05'in donmuş oyun/pause panelini birlikte çözme gereğini yakaladı; düzeltildi. Ham dokunma, iptal, sürükleme ve türetilmiş fare testleri zorunlu. Yeni CI native harita adımı ve kare artifact'i eklendi. Son ek görünürlük koruması dahil sunucuCI/export/yayın ayrıca doğrulanacak; bu aday henüz canlı sayılmaz.
+
+Bu teslim JOURNEY-MAP-NEXT üretim sırasının1–3 aşamasıdır. Yeni durak geçmişi/hızlı geçiş ve bölüm sonlarını harita akışına dönüştürme hâlâ4–5 aşamasıdır. Ziyaret edilmemiş duraklar açılmaz; mevcut otomatik geçişler kaldırılmaz. Fiziksel mobil/WebGL uzun kullanım QA'sı açıktır.

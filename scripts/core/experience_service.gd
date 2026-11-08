@@ -2,7 +2,7 @@ extends Node
 ## Host-side preferences and modal lifecycle; chapters keep their own story/save logic.
 const Preferences=preload("res://scripts/core/preferences.gd")
 const SettingsPanel=preload("res://scripts/ui/settings_panel.gd")
-const ChapterSelect=preload("res://scripts/ui/chapter_select_panel.gd")
+const JourneyMap=preload("res://scripts/ui/journey_map_panel.gd")
 const Replay=preload("res://scripts/core/replay_service.gd")
 const UI=preload("res://scripts/polish_ui.gd")
 const ChapterSupport=preload("res://scripts/core/chapter_support.gd")
@@ -126,7 +126,7 @@ func _update_entries(scene):
   entry_layer=CanvasLayer.new();entry_layer.name="ExperienceEntries";entry_layer.layer=90;scene.add_child(entry_layer)
   settings_entry=UI.button("Ayarlar",Rect2(1010,24,230,86),entry_layer,open_settings.bind(scene),true)
   settings_entry.name="ExperienceSettings"
-  chapters_entry=UI.button("Bölümler",Rect2(760,24,230,86),entry_layer,open_chapters.bind(scene),true)
+  chapters_entry=UI.button("Yol haritası",Rect2(760,24,230,86),entry_layer,open_chapters.bind(scene),true)
   chapters_entry.name="ExperienceChapters"
   help_entry=UI.button("Görev yardımı",Rect2(24,368,210,100),entry_layer,open_help.bind(scene),true)
   help_entry.name="ExperienceHelp"
@@ -136,7 +136,7 @@ func _update_entries(scene):
  var menu=actual_main_menu(scene)
  var pause=actual_pause_menu(scene)
  settings_entry.visible=(menu or pause) and not is_instance_valid(active_modal)
- chapters_entry.visible=menu and not is_instance_valid(active_modal)
+ chapters_entry.visible=(menu or pause) and not is_instance_valid(active_modal)
  help_entry.visible=pause and not has_property(scene,"help_panel") and not is_instance_valid(active_modal)
  restart_entry.visible=pause and not is_instance_valid(active_modal)
  if pause:
@@ -144,6 +144,7 @@ func _update_entries(scene):
    if button.text in ["Dereyi baştan oyna","Bahçeyi baştan oyna"]:button.hide()
  settings_entry.position=Vector2(1010,24) if menu else Vector2(24,250)
  settings_entry.size=Vector2(230,86) if menu else Vector2(210,100)
+ chapters_entry.position=Vector2(760,24) if menu else Vector2(1010,24)
 func _begin_modal(scene)->bool:
  if not is_instance_valid(scene) or is_instance_valid(active_modal):return false
  modal_host=scene
@@ -164,10 +165,20 @@ func open_settings(candidate=null):
  _update_entries(scene)
 func open_chapters(candidate=null):
  var scene=current_scene(candidate)
- if not actual_main_menu(scene) or not _begin_modal(scene):return
- active_modal=ChapterSelect.new();modal_layer.add_child(active_modal)
- active_modal.setup(path_for(scene),func():_close_modal())
+ if not (actual_main_menu(scene) or actual_pause_menu(scene)) or not _begin_modal(scene):return
+ active_modal=JourneyMap.new();modal_layer.add_child(active_modal)
+ active_modal.setup(path_for(scene),func():_close_modal(),Callable(),func(path,chapter):return _resume_map_host(scene,path,chapter))
  _update_entries(scene)
+func _resume_map_host(scene,path:String,chapter:String)->bool:
+ if not is_instance_valid(scene) or scene!=get_tree().current_scene or actual_main_menu(scene):return false
+ if get_tree().has_meta("replay_primary_path") or path_for(scene)!=path or chapter_support.chapter_for(scene)!=chapter:return false
+ var resume_buttons=buttons_under(scene).filter(func(b):return b.text=="Devam et" and b.is_visible_in_tree())
+ var route_resume=value(scene,"resume_button")
+ if resume_buttons.is_empty() and is_instance_valid(route_resume) and route_resume.is_visible_in_tree():resume_buttons.append(route_resume)
+ if resume_buttons.size()!=1:return false
+ _close_modal(false)
+ resume_buttons[0].pressed.emit()
+ return true
 func open_help(candidate=null):
  var scene=current_scene(candidate)
  var context=chapter_support.help_context(scene)
